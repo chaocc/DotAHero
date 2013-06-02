@@ -40,14 +40,52 @@
 		DCC1A27013A94EE6005BD75D /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A26F13A94EE6005BD75D /* icon.icns */; };
 		DCC1A3A913A94F1A005BD75D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A38E13A94F1A005BD75D /* AppDelegate.m */; };
 		DCC1A3AA13A94F1A005BD75D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A38E13A94F1A005BD75D /* AppDelegate.m */; };
-		DCC1A3AB13A94F1A005BD75D /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39013A94F1A005BD75D /* HelloWorldLayer.m */; };
-		DCC1A3AC13A94F1A005BD75D /* HelloWorldLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39013A94F1A005BD75D /* HelloWorldLayer.m */; };
+		DCC1A3AB13A94F1A005BD75D /* DotaHeroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39013A94F1A005BD75D /* DotaHeroLayer.m */; };
+		DCC1A3AC13A94F1A005BD75D /* DotaHeroLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39013A94F1A005BD75D /* DotaHeroLayer.m */; };
 		DCC1A3AD13A94F1A005BD75D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39113A94F1A005BD75D /* main.m */; };
 		DCC1A3AE13A94F1A005BD75D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39113A94F1A005BD75D /* main.m */; };
 		DCC1A3AF13A94F1A005BD75D /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A39513A94F1A005BD75D /* config.lua */; };
 		DCC1A3B013A94F1A005BD75D /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A39513A94F1A005BD75D /* config.lua */; };
 		DCF95CD213A97EC500AE3B80 /* libcocos2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF95CC913A97EC500AE3B80 /* libcocos2d-mac.a */; };
 		DCF95CD413A97EC500AE3B80 /* libkobold2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF95CCB13A97EC500AE3B80 /* libkobold2d-mac.a */; };
+		E33EADCD175655A000A46952 /* BGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADCC175655A000A46952 /* BGObject.m */; };
+		E33EADCE175655A000A46952 /* BGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADCC175655A000A46952 /* BGObject.m */; };
+		E33EADD1175655CD00A46952 /* BGObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADD0175655CD00A46952 /* BGObjectManager.m */; };
+		E33EADD2175655CD00A46952 /* BGObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADD0175655CD00A46952 /* BGObjectManager.m */; };
+		E33EADD5175655E500A46952 /* BGObjectFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADD4175655E500A46952 /* BGObjectFactory.m */; };
+		E33EADD6175655E500A46952 /* BGObjectFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADD4175655E500A46952 /* BGObjectFactory.m */; };
+		E33EADD91756560000A46952 /* BGComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADD81756560000A46952 /* BGComponent.m */; };
+		E33EADDA1756560000A46952 /* BGComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADD81756560000A46952 /* BGComponent.m */; };
+		E33EADE117565EA000A46952 /* BGRenderComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE017565EA000A46952 /* BGRenderComponent.m */; };
+		E33EADE217565EA000A46952 /* BGRenderComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE017565EA000A46952 /* BGRenderComponent.m */; };
+		E33EADE517565F2500A46952 /* BGCharacterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE417565F2500A46952 /* BGCharacterComponent.m */; };
+		E33EADE617565F2500A46952 /* BGCharacterComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE417565F2500A46952 /* BGCharacterComponent.m */; };
+		E33EADE917565F3E00A46952 /* BGEquipmentComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE817565F3E00A46952 /* BGEquipmentComponent.m */; };
+		E33EADEA17565F3E00A46952 /* BGEquipmentComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE817565F3E00A46952 /* BGEquipmentComponent.m */; };
+		E33EADED17565F5500A46952 /* BGDeterminationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADEC17565F5500A46952 /* BGDeterminationComponent.m */; };
+		E33EADEE17565F5500A46952 /* BGDeterminationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADEC17565F5500A46952 /* BGDeterminationComponent.m */; };
+		E33EADF117565F6900A46952 /* BGInformationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADF017565F6900A46952 /* BGInformationComponent.m */; };
+		E33EADF217565F6900A46952 /* BGInformationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADF017565F6900A46952 /* BGInformationComponent.m */; };
+		E33EADF51756629A00A46952 /* BGPlayerComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADF41756629A00A46952 /* BGPlayerComponent.m */; };
+		E33EADF61756629A00A46952 /* BGPlayerComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADF41756629A00A46952 /* BGPlayerComponent.m */; };
+		E33EADF9175669FD00A46952 /* BGPhaseComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADF8175669FD00A46952 /* BGPhaseComponent.m */; };
+		E33EADFA175669FD00A46952 /* BGPhaseComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADF8175669FD00A46952 /* BGPhaseComponent.m */; };
+		E33EADFD17566C8900A46952 /* BGRoleCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADFC17566C8900A46952 /* BGRoleCardComponent.m */; };
+		E33EADFE17566C8900A46952 /* BGRoleCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADFC17566C8900A46952 /* BGRoleCardComponent.m */; };
+		E33EAE0117566CB100A46952 /* BGCharacterCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EAE0017566CB100A46952 /* BGCharacterCardComponent.m */; };
+		E33EAE0217566CB100A46952 /* BGCharacterCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EAE0017566CB100A46952 /* BGCharacterCardComponent.m */; };
+		E395325D17566DCF00C1FA2C /* BGDensityCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325C17566DCF00C1FA2C /* BGDensityCardComponent.m */; };
+		E395326017566E3100C1FA2C /* BGPlayingCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325F17566E3000C1FA2C /* BGPlayingCardComponent.m */; };
+		E395326117566E3100C1FA2C /* BGPlayingCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325F17566E3000C1FA2C /* BGPlayingCardComponent.m */; };
+		E395326217566E7300C1FA2C /* BGDensityCardComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325C17566DCF00C1FA2C /* BGDensityCardComponent.m */; };
+		E395326C17567C5700C1FA2C /* RoleCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326B17567C5700C1FA2C /* RoleCardArray.plist */; };
+		E395326D17567C5700C1FA2C /* RoleCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326B17567C5700C1FA2C /* RoleCardArray.plist */; };
+		E395326F17567C9100C1FA2C /* PlayingCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326E17567C9100C1FA2C /* PlayingCardArray.plist */; };
+		E395327017567C9100C1FA2C /* PlayingCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326E17567C9100C1FA2C /* PlayingCardArray.plist */; };
+		E39532721756818600C1FA2C /* CharacterCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532711756818600C1FA2C /* CharacterCardArray.plist */; };
+		E39532731756818600C1FA2C /* CharacterCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532711756818600C1FA2C /* CharacterCardArray.plist */; };
+		E39532751756819400C1FA2C /* DensityCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532741756819400C1FA2C /* DensityCardArray.plist */; };
+		E39532761756819400C1FA2C /* DensityCardArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532741756819400C1FA2C /* DensityCardArray.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,8 +130,8 @@
 		DCC1A27113A94EE6005BD75D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
 		DCC1A38D13A94F1A005BD75D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DCC1A38E13A94F1A005BD75D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DCC1A38F13A94F1A005BD75D /* HelloWorldLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelloWorldLayer.h; sourceTree = "<group>"; };
-		DCC1A39013A94F1A005BD75D /* HelloWorldLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelloWorldLayer.m; sourceTree = "<group>"; };
+		DCC1A38F13A94F1A005BD75D /* DotaHeroLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DotaHeroLayer.h; sourceTree = "<group>"; };
+		DCC1A39013A94F1A005BD75D /* DotaHeroLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DotaHeroLayer.m; sourceTree = "<group>"; };
 		DCC1A39113A94F1A005BD75D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DCC1A39213A94F1A005BD75D /* Prefix-iOS.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Prefix-iOS.pch"; sourceTree = "<group>"; };
 		DCC1A39313A94F1A005BD75D /* Prefix-Mac.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Prefix-Mac.pch"; sourceTree = "<group>"; };
@@ -102,6 +140,40 @@
 		DCF95CCB13A97EC500AE3B80 /* libkobold2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libkobold2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-iOS.xcconfig"; sourceTree = "<group>"; };
 		DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Release-iOS.xcconfig"; sourceTree = "<group>"; };
+		E33EADCB175655A000A46952 /* BGObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGObject.h; sourceTree = "<group>"; };
+		E33EADCC175655A000A46952 /* BGObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGObject.m; sourceTree = "<group>"; };
+		E33EADCF175655CD00A46952 /* BGObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGObjectManager.h; sourceTree = "<group>"; };
+		E33EADD0175655CD00A46952 /* BGObjectManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGObjectManager.m; sourceTree = "<group>"; };
+		E33EADD3175655E500A46952 /* BGObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGObjectFactory.h; sourceTree = "<group>"; };
+		E33EADD4175655E500A46952 /* BGObjectFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGObjectFactory.m; sourceTree = "<group>"; };
+		E33EADD71756560000A46952 /* BGComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGComponent.h; sourceTree = "<group>"; };
+		E33EADD81756560000A46952 /* BGComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGComponent.m; sourceTree = "<group>"; };
+		E33EADDF17565EA000A46952 /* BGRenderComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGRenderComponent.h; sourceTree = "<group>"; };
+		E33EADE017565EA000A46952 /* BGRenderComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGRenderComponent.m; sourceTree = "<group>"; };
+		E33EADE317565F2500A46952 /* BGCharacterComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCharacterComponent.h; sourceTree = "<group>"; };
+		E33EADE417565F2500A46952 /* BGCharacterComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCharacterComponent.m; sourceTree = "<group>"; };
+		E33EADE717565F3E00A46952 /* BGEquipmentComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGEquipmentComponent.h; sourceTree = "<group>"; };
+		E33EADE817565F3E00A46952 /* BGEquipmentComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGEquipmentComponent.m; sourceTree = "<group>"; };
+		E33EADEB17565F5500A46952 /* BGDeterminationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDeterminationComponent.h; sourceTree = "<group>"; };
+		E33EADEC17565F5500A46952 /* BGDeterminationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGDeterminationComponent.m; sourceTree = "<group>"; };
+		E33EADEF17565F6900A46952 /* BGInformationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGInformationComponent.h; sourceTree = "<group>"; };
+		E33EADF017565F6900A46952 /* BGInformationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGInformationComponent.m; sourceTree = "<group>"; };
+		E33EADF31756629A00A46952 /* BGPlayerComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayerComponent.h; sourceTree = "<group>"; };
+		E33EADF41756629A00A46952 /* BGPlayerComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayerComponent.m; sourceTree = "<group>"; };
+		E33EADF7175669FD00A46952 /* BGPhaseComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPhaseComponent.h; sourceTree = "<group>"; };
+		E33EADF8175669FD00A46952 /* BGPhaseComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPhaseComponent.m; sourceTree = "<group>"; };
+		E33EADFB17566C8900A46952 /* BGRoleCardComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGRoleCardComponent.h; sourceTree = "<group>"; };
+		E33EADFC17566C8900A46952 /* BGRoleCardComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGRoleCardComponent.m; sourceTree = "<group>"; };
+		E33EADFF17566CB100A46952 /* BGCharacterCardComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCharacterCardComponent.h; sourceTree = "<group>"; };
+		E33EAE0017566CB100A46952 /* BGCharacterCardComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCharacterCardComponent.m; sourceTree = "<group>"; };
+		E395325B17566DCF00C1FA2C /* BGDensityCardComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDensityCardComponent.h; sourceTree = "<group>"; };
+		E395325C17566DCF00C1FA2C /* BGDensityCardComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGDensityCardComponent.m; sourceTree = "<group>"; };
+		E395325E17566E3000C1FA2C /* BGPlayingCardComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingCardComponent.h; sourceTree = "<group>"; };
+		E395325F17566E3000C1FA2C /* BGPlayingCardComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingCardComponent.m; sourceTree = "<group>"; };
+		E395326B17567C5700C1FA2C /* RoleCardArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RoleCardArray.plist; sourceTree = "<group>"; };
+		E395326E17567C9100C1FA2C /* PlayingCardArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PlayingCardArray.plist; sourceTree = "<group>"; };
+		E39532711756818600C1FA2C /* CharacterCardArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CharacterCardArray.plist; sourceTree = "<group>"; };
+		E39532741756819400C1FA2C /* DensityCardArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DensityCardArray.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -226,8 +298,10 @@
 		DCC1A38C13A94F1A005BD75D /* Projectfiles */ = {
 			isa = PBXGroup;
 			children = (
-				DCC1A38F13A94F1A005BD75D /* HelloWorldLayer.h */,
-				DCC1A39013A94F1A005BD75D /* HelloWorldLayer.m */,
+				E33EADCA1756554800A46952 /* Components */,
+				E33EADC9175654D300A46952 /* Base Class */,
+				DCC1A38F13A94F1A005BD75D /* DotaHeroLayer.h */,
+				DCC1A39013A94F1A005BD75D /* DotaHeroLayer.m */,
 				DCC1A38D13A94F1A005BD75D /* AppDelegate.h */,
 				DCC1A38E13A94F1A005BD75D /* AppDelegate.m */,
 				DCC1A39413A94F1A005BD75D /* Resources */,
@@ -240,6 +314,10 @@
 			isa = PBXGroup;
 			children = (
 				DCC1A39513A94F1A005BD75D /* config.lua */,
+				E395326B17567C5700C1FA2C /* RoleCardArray.plist */,
+				E395326E17567C9100C1FA2C /* PlayingCardArray.plist */,
+				E39532711756818600C1FA2C /* CharacterCardArray.plist */,
+				E39532741756819400C1FA2C /* DensityCardArray.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -265,6 +343,74 @@
 				DC9C33E813B5024400931BF2 /* BuildSettings-Mac.xcconfig */,
 			);
 			path = BuildSettings;
+			sourceTree = "<group>";
+		};
+		E33EADC9175654D300A46952 /* Base Class */ = {
+			isa = PBXGroup;
+			children = (
+				E33EADD71756560000A46952 /* BGComponent.h */,
+				E33EADD81756560000A46952 /* BGComponent.m */,
+				E33EADCB175655A000A46952 /* BGObject.h */,
+				E33EADCC175655A000A46952 /* BGObject.m */,
+				E33EADD3175655E500A46952 /* BGObjectFactory.h */,
+				E33EADD4175655E500A46952 /* BGObjectFactory.m */,
+				E33EADCF175655CD00A46952 /* BGObjectManager.h */,
+				E33EADD0175655CD00A46952 /* BGObjectManager.m */,
+			);
+			name = "Base Class";
+			sourceTree = "<group>";
+		};
+		E33EADCA1756554800A46952 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				E395325A17566D4C00C1FA2C /* CardSystem */,
+				E395325917566D4600C1FA2C /* Card */,
+				E33EAE0317566CC900A46952 /* Player */,
+				E33EADDF17565EA000A46952 /* BGRenderComponent.h */,
+				E33EADE017565EA000A46952 /* BGRenderComponent.m */,
+			);
+			name = Components;
+			sourceTree = "<group>";
+		};
+		E33EAE0317566CC900A46952 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				E33EADE717565F3E00A46952 /* BGEquipmentComponent.h */,
+				E33EADE817565F3E00A46952 /* BGEquipmentComponent.m */,
+				E33EADEB17565F5500A46952 /* BGDeterminationComponent.h */,
+				E33EADEC17565F5500A46952 /* BGDeterminationComponent.m */,
+				E33EADEF17565F6900A46952 /* BGInformationComponent.h */,
+				E33EADF017565F6900A46952 /* BGInformationComponent.m */,
+				E33EADF31756629A00A46952 /* BGPlayerComponent.h */,
+				E33EADF41756629A00A46952 /* BGPlayerComponent.m */,
+				E33EADF7175669FD00A46952 /* BGPhaseComponent.h */,
+				E33EADF8175669FD00A46952 /* BGPhaseComponent.m */,
+				E33EADE317565F2500A46952 /* BGCharacterComponent.h */,
+				E33EADE417565F2500A46952 /* BGCharacterComponent.m */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		E395325917566D4600C1FA2C /* Card */ = {
+			isa = PBXGroup;
+			children = (
+				E33EADFF17566CB100A46952 /* BGCharacterCardComponent.h */,
+				E33EAE0017566CB100A46952 /* BGCharacterCardComponent.m */,
+				E395325B17566DCF00C1FA2C /* BGDensityCardComponent.h */,
+				E395325C17566DCF00C1FA2C /* BGDensityCardComponent.m */,
+				E395325E17566E3000C1FA2C /* BGPlayingCardComponent.h */,
+				E395325F17566E3000C1FA2C /* BGPlayingCardComponent.m */,
+				E33EADFB17566C8900A46952 /* BGRoleCardComponent.h */,
+				E33EADFC17566C8900A46952 /* BGRoleCardComponent.m */,
+			);
+			name = Card;
+			sourceTree = "<group>";
+		};
+		E395325A17566D4C00C1FA2C /* CardSystem */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = CardSystem;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -310,7 +456,7 @@
 		DCC1A0D813A94EC0005BD75D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0460;
 			};
 			buildConfigurationList = DCC1A0DB13A94EC0005BD75D /* Build configuration list for PBXProject "DotAHero" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -349,6 +495,10 @@
 				DC21B88D1511078F00FD4891 /* fps_images.png in Resources */,
 				DC27219F160CADFF00D88944 /* Default-568h@2x.png in Resources */,
 				DC2721A8160CAFA600D88944 /* iTunesArtwork in Resources */,
+				E395326C17567C5700C1FA2C /* RoleCardArray.plist in Resources */,
+				E395326F17567C9100C1FA2C /* PlayingCardArray.plist in Resources */,
+				E39532721756818600C1FA2C /* CharacterCardArray.plist in Resources */,
+				E39532751756819400C1FA2C /* DensityCardArray.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -361,6 +511,10 @@
 				DCC1A27013A94EE6005BD75D /* icon.icns in Resources */,
 				DCC1A3B013A94F1A005BD75D /* config.lua in Resources */,
 				DC21B88F1511079900FD4891 /* fps_images.png in Resources */,
+				E395326D17567C5700C1FA2C /* RoleCardArray.plist in Resources */,
+				E395327017567C9100C1FA2C /* PlayingCardArray.plist in Resources */,
+				E39532731756818600C1FA2C /* CharacterCardArray.plist in Resources */,
+				E39532761756819400C1FA2C /* DensityCardArray.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,8 +526,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCC1A3A913A94F1A005BD75D /* AppDelegate.m in Sources */,
-				DCC1A3AB13A94F1A005BD75D /* HelloWorldLayer.m in Sources */,
+				DCC1A3AB13A94F1A005BD75D /* DotaHeroLayer.m in Sources */,
 				DCC1A3AD13A94F1A005BD75D /* main.m in Sources */,
+				E33EADCD175655A000A46952 /* BGObject.m in Sources */,
+				E33EADD1175655CD00A46952 /* BGObjectManager.m in Sources */,
+				E33EADD5175655E500A46952 /* BGObjectFactory.m in Sources */,
+				E33EADD91756560000A46952 /* BGComponent.m in Sources */,
+				E33EADE117565EA000A46952 /* BGRenderComponent.m in Sources */,
+				E33EADE517565F2500A46952 /* BGCharacterComponent.m in Sources */,
+				E33EADE917565F3E00A46952 /* BGEquipmentComponent.m in Sources */,
+				E33EADED17565F5500A46952 /* BGDeterminationComponent.m in Sources */,
+				E33EADF117565F6900A46952 /* BGInformationComponent.m in Sources */,
+				E33EADF51756629A00A46952 /* BGPlayerComponent.m in Sources */,
+				E33EADF9175669FD00A46952 /* BGPhaseComponent.m in Sources */,
+				E33EADFD17566C8900A46952 /* BGRoleCardComponent.m in Sources */,
+				E33EAE0117566CB100A46952 /* BGCharacterCardComponent.m in Sources */,
+				E395325D17566DCF00C1FA2C /* BGDensityCardComponent.m in Sources */,
+				E395326017566E3100C1FA2C /* BGPlayingCardComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,8 +551,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				DCC1A3AA13A94F1A005BD75D /* AppDelegate.m in Sources */,
-				DCC1A3AC13A94F1A005BD75D /* HelloWorldLayer.m in Sources */,
+				DCC1A3AC13A94F1A005BD75D /* DotaHeroLayer.m in Sources */,
 				DCC1A3AE13A94F1A005BD75D /* main.m in Sources */,
+				E33EADCE175655A000A46952 /* BGObject.m in Sources */,
+				E33EADD2175655CD00A46952 /* BGObjectManager.m in Sources */,
+				E33EADD6175655E500A46952 /* BGObjectFactory.m in Sources */,
+				E33EADDA1756560000A46952 /* BGComponent.m in Sources */,
+				E33EADE217565EA000A46952 /* BGRenderComponent.m in Sources */,
+				E33EADE617565F2500A46952 /* BGCharacterComponent.m in Sources */,
+				E33EADEA17565F3E00A46952 /* BGEquipmentComponent.m in Sources */,
+				E33EADEE17565F5500A46952 /* BGDeterminationComponent.m in Sources */,
+				E33EADF217565F6900A46952 /* BGInformationComponent.m in Sources */,
+				E33EADF61756629A00A46952 /* BGPlayerComponent.m in Sources */,
+				E33EADFA175669FD00A46952 /* BGPhaseComponent.m in Sources */,
+				E33EADFE17566C8900A46952 /* BGRoleCardComponent.m in Sources */,
+				E33EAE0217566CB100A46952 /* BGCharacterCardComponent.m in Sources */,
+				E395326117566E3100C1FA2C /* BGPlayingCardComponent.m in Sources */,
+				E395326217566E7300C1FA2C /* BGDensityCardComponent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,6 +609,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../__Kobold2D__/libs/GoogleAdMobAdsSDK\"",
@@ -436,6 +621,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../__Kobold2D__/libs/GoogleAdMobAdsSDK\"",
@@ -447,6 +633,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DC9C33E713B5024400931BF2 /* BuildSettings-Debug-Mac.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Debug;
 		};
@@ -454,6 +641,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = DC9C33E913B5024400931BF2 /* BuildSettings-Release-Mac.xcconfig */;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 			};
 			name = Release;
 		};

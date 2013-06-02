@@ -17,7 +17,7 @@ local config =
 	KKStartupConfig = 
 	{
 		-- load first scene from a class with this name, or from a Lua script with this name with .lua appended
-		FirstSceneClassName = "HelloWorldLayer",
+		FirstSceneClassName = "DotaHeroLayer",
 
 		MaxFrameRate = 60,
 		DisplayFPS = YES,
@@ -57,6 +57,13 @@ local config =
 		AcceptsMouseMovedEvents = NO,
 		EnableFullScreen = NO,
 	},
+
+    -- you can create your own config sections using the same mechanism and use KKConfig to access the parameters
+    -- or use the KKConfig injectPropertiesFromKeyPath method
+    GameSettings =
+    {
+        
+    },
 }
 
 return config

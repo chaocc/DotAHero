@@ -5,12 +5,12 @@
  * Released under MIT License in Germany (LICENSE-Kobold2D.txt).
  */
 
-#import "HelloWorldLayer.h"
+#import "DotaHeroLayer.h"
 
-@interface HelloWorldLayer (PrivateMethods)
+@interface DotaHeroLayer (PrivateMethods)
 @end
 
-@implementation HelloWorldLayer
+@implementation DotaHeroLayer
 
 -(id) init
 {
