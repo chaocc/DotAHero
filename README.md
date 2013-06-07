@@ -1,4 +1,4 @@
 DotAHero
 ========
 
-Board/Card Game base on DotA
+Client: Board/Card Game base on DotA
