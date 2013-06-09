@@ -32,7 +32,6 @@
         _onlyEquipOne = [(NSNumber *)dictionary[kOnlyEquipOne] boolValue];
         _attackRange = [(NSNumber *)dictionary[kAttackRange] integerValue];
     }
-
     return self;
 }
 
