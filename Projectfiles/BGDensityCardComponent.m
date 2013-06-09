@@ -19,7 +19,6 @@
         _density = aDensity;
         _taskName = _densityArray[aDensity];
     }
-    
     return self;
 }
 
