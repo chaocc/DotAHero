@@ -23,10 +23,12 @@ typedef NS_ENUM(NSInteger, BGDensityCard) {
 @interface BGDensityCardComponent : BGComponent
 
 @property (nonatomic, strong) NSArray *densityArray;
-@property (nonatomic, readonly) BGDensityCard density;
+
+@property (nonatomic, readonly) BGDensityCard densityId;
+
 @property (nonatomic, copy, readonly) NSString *taskName;
 
-- (id)initWithDensity:(BGDensityCard)aDensity;
-+ (id)densityCardComponentWithCard:(BGDensityCard)aDensity;
+- (id)initWithDensityId:(BGDensityCard)aDensityId;
++ (id)densityCardComponentWithId:(BGDensityCard)aDensityId;
 
 @end

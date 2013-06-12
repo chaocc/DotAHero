@@ -8,9 +8,16 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "BGObjectManager.h"
+#import "BGObject.h"
 
 @interface BGObjectFactory : CCNode
 
+- (id)initWithObjectManager:(BGObjectManager *)objectManager;
++ (id)objectFactoryWithObjectManager:(BGObjectManager *)objectManager;
 
+- (BGObject *)createCardSystem;
+- (BGObject *)createHumanPlayer:(NSArray *)characterCards;
+- (BGObject *)createAIPlayer;
 
 @end

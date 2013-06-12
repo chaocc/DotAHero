@@ -8,7 +8,6 @@
 #import "kobold2d.h"
 
 @interface DotaHeroLayer : CCLayer
-{
-}
+
 
 @end

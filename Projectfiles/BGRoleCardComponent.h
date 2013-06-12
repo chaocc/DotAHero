@@ -18,10 +18,12 @@ typedef NS_ENUM(NSInteger, BGRoleCard) {
 @interface BGRoleCardComponent : BGComponent
 
 @property (nonatomic, strong) NSArray *roleArray;
-@property (nonatomic, readonly) BGRoleCard role;
+
+@property (nonatomic, readonly) BGRoleCard roleId;
+
 @property (nonatomic, copy, readonly) NSString *faction;
 
-- (id)initWithRole:(BGRoleCard)aRole;
-+ (id)roleCardComponentWithCard:(BGRoleCard)aRole;
+- (id)initWithRoleId:(BGRoleCard)aRoleId;
++ (id)roleCardComponentWithId:(BGRoleCard)aRoleId;
 
 @end

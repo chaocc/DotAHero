@@ -10,21 +10,21 @@
 
 @implementation BGDensityCardComponent
 
-- (id)initWithDensity:(BGDensityCard)aDensity
+- (id)initWithDensityId:(BGDensityCard)aDensityId
 {
     if (self = [super init]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"DensityCardArray" ofType:@"plist"];
         self.densityArray = [NSArray arrayWithContentsOfFile:path];
         
-        _density = aDensity;
-        _taskName = _densityArray[aDensity];
+        _densityId = aDensityId;
+        _taskName = _densityArray[aDensityId];
     }
     return self;
 }
 
-+ (id)densityCardComponentWithCard:(BGDensityCard)aDensity
++ (id)densityCardComponentWithId:(BGDensityCard)aDensityId
 {
-    return [[self alloc]initWithDensity:aDensity];
+    return [[self alloc]initWithDensityId:aDensityId];
 }
 
 @end

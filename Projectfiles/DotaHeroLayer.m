@@ -6,6 +6,9 @@
  */
 
 #import "DotaHeroLayer.h"
+#import "BGObjectManager.h"
+#import "BGObjectFactory.h"
+#import "BGObject.h"
 
 @interface DotaHeroLayer (PrivateMethods)
 @end
@@ -17,14 +20,15 @@
 	if ((self = [super init]))
 	{
 		glClearColor(0.1f, 0.1f, 0.3f, 1.0f);
-
-		// "empty" as in "minimal code & resources"
-		CCLabelTTF* label = [CCLabelTTF labelWithString:@"Minimal Kobold2D Project"
-											   fontName:@"Arial"
-											   fontSize:20];
-		label.position = [CCDirector sharedDirector].screenCenter;
-		label.color = ccCYAN;
-		[self addChild:label];
+        [CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
+        
+        CCSpriteFrameCache *spriteFrameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+        [spriteFrameCache addSpriteFramesWithFile:@"test.plist"];
+        
+        NSArray *characters = [NSArray arrayWithObjects:@(2), @(5), @(10), @(11), nil];
+        BGObjectFactory *objectFactory = [BGObjectFactory objectFactoryWithObjectManager:[BGObjectManager sharedObjectManager]];
+        BGObject *humanPlayer = [objectFactory createHumanPlayer:characters];
+        [self addChild:humanPlayer];
 	}
 
 	return self;

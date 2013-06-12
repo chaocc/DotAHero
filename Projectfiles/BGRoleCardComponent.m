@@ -10,22 +10,21 @@
 
 @implementation BGRoleCardComponent
 
-- (id)initWithRole:(BGRoleCard)aRole
+- (id)initWithRoleId:(BGRoleCard)aRoleId
 {
     if (self = [super init]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"RoleCardArray" ofType:@"plist"];
         self.roleArray = [NSArray arrayWithContentsOfFile:path];
         
-        _role = aRole;
-        _faction = _roleArray[aRole];
+        _roleId = aRoleId;
+        _faction = _roleArray[aRoleId];
     }
-    
     return self;
 }
 
-+ (id)roleCardComponentWithCard:(BGRoleCard)aRole
++ (id)roleCardComponentWithId:(BGRoleCard)aRoleId
 {
-    return [[self alloc]initWithRole:aRole];
+    return [[self alloc]initWithRoleId:aRoleId];
 }
 
 @end

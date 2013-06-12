@@ -128,12 +128,12 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @interface BGPlayingCardComponent : BGComponent
 
 @property (nonatomic, strong) NSArray *playingCardArray;
-@property (nonatomic, readonly) BGPlayingCard playingCard;
 
-@property (nonatomic, readonly) BGCardColor cardColor;
+@property (nonatomic, readonly) BGPlayingCard playingCardId;
 @property (nonatomic, readonly) BGCardSuits cardSuits;
 @property (nonatomic, readonly) BGCardFigure cardFigure;
 
+@property (nonatomic, readonly) BGCardColor cardColor;
 @property (nonatomic, copy, readonly) NSString *cardName;
 @property (nonatomic, readonly) BGCardType cardType;
 @property (nonatomic, readonly) NSString *cardEffect;
@@ -152,7 +152,7 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, readonly) BOOL onlyEquipOne;  // 武器和防具是否只能装备一个
 @property (nonatomic, readonly) NSUInteger attackRange;
 
-- (id)initWithPlayingCard:(BGPlayingCard)aPlayingCard;
-+ (id)playingCardComponentWithCard:(BGPlayingCard)aPlayingCard;
+- (id)initWithPlayingCardId:(BGPlayingCard)aPlayingCardId;
++ (id)playingCardComponentWithId:(BGPlayingCard)aPlayingCardId;
 
 @end

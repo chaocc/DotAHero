@@ -10,14 +10,16 @@
 
 @implementation BGPlayingCardComponent
 
-- (id)initWithPlayingCard:(BGPlayingCard)aPlayingCard
+@synthesize cardColor = _cardColor;
+
+- (id)initWithPlayingCardId:(BGPlayingCard)aPlayingCardId
 {
     if (self = [super init]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"PlayingCardArray" ofType:@"plist"];
         self.playingCardArray = [NSArray arrayWithContentsOfFile:path];
-        NSDictionary *dictionary = _playingCardArray[aPlayingCard];
+        NSDictionary *dictionary = _playingCardArray[aPlayingCardId];
         
-        _playingCard = aPlayingCard;
+        _playingCardId = aPlayingCardId;
         _cardName = dictionary[kCardName];
         
         _cardType = [(NSNumber *)dictionary[kCardType] integerValue];
@@ -35,9 +37,19 @@
     return self;
 }
 
-+ (id)playingCardComponentWithCard:(BGPlayingCard)aPlayingCard
++ (id)playingCardComponentWithId:(BGPlayingCard)aPlayingCardId
 {
-    return [[self alloc]initWithPlayingCard:aPlayingCard];
+    return [[self alloc]initWithPlayingCardId:aPlayingCardId];
+}
+
+- (BGCardColor)cardColor
+{
+    if (_cardSuits == kHearts || _cardSuits == kDiamonds) {
+        _cardColor = kRedColor;
+    } else {
+        _cardColor = kBlackColor;
+    }
+    return _cardColor;
 }
 
 @end
