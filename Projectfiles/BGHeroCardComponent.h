@@ -1,12 +1,12 @@
 //
-//  BGCharacterCardComponent.h
+//  BGHeroCardComponent.h
 //  DotAHero
 //
 //  Created by Killua Liu on 5/30/13.
 //
 //
 
-#import "BGComponent.h"
+#import <Foundation/Foundation.h>
 
 #define kHeroName               @"heroName"
 #define kHeroAttribute          @"heroAttribute"
@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, BGHeroCard) {
     kSacredWarrior,             // 神灵武士
     kOmniknight,                // 全能骑士
     kAxe,                       // 斧王
+    kCentaurWarchief,           // 半人马酋长
+    kDragonKnight,              // 龙骑士
     kGuardianKnight,            // 守护骑士
     
     kGorgon,                    // 蛇发女妖
@@ -35,17 +37,21 @@ typedef NS_ENUM(NSInteger, BGHeroCard) {
     kDwarvenSniper,             // 矮人火枪手
     kNerubianAssassin,          // 地穴刺客
     kAntimage,                  // 敌法师
+    kNerubianWeaver,            // 地穴编织者
+    kUrsaWarrior,               // 熊战士
     kChenYunSheng,              // 陈云生
     
     kSlayer,                    // 秀逗魔导师
-    kTwinHeadDragon,            // 双头龙
     kNecrolyte,                 // 死灵法师
+    kTwinHeadDragon,            // 双头龙
     kCrystalMaiden,             // 水晶室女
     kLich,                      // 巫妖
     kShadowPriest,              // 暗影牧师
     kOrgeMagi,                  // 食人魔法师
     kKeeperOfTheLight,          // 光之守卫
     kGoblinTechies,             // 哥布林工程师
+    kStormSpirit,               // 风暴之灵
+    kEnchantress,               // 魅惑魔女
     kElfLily                    // 精灵莉莉
 };
 
@@ -59,85 +65,114 @@ typedef NS_ENUM(NSInteger, BGHeroSkill) {
     kDeathCoil = 0,             // 死亡缠绕
     kFrostmourne = 1,           // 霜之哀伤
     
-    kReincarnation = 2,         // 重生
-    kVampiricAura = 3,          // 吸血
+    kReincarnation = 5,         // 重生
+    kVampiricAura = 6,          // 吸血
     
-    kWarpath = 4,               // 战意
-    kBristlebackSkill = 5,      // 刚毛后背
+    kWarpath = 10,              // 战意
+    kBristlebackSkill = 11,     // 刚毛后背
     
-    kLifeBreak = 6,             // 牺牲
-    kBurningSpear = 7,          // 沸血之矛
+    kLifeBreak = 15,            // 牺牲
+    kBurningSpear = 16,         // 沸血之矛
     
-    kPurification = 8,          // 洗礼
+    kPurification = 20,         // 洗礼
+    kHolyLight = 21,            // 圣光
     
-    kBattleHunger = 9,          // 战争饥渴
-    kCounterHelix = 10,         // 反转螺旋
+    kBattleHunger = 25,         // 战争饥渴
+    kCounterHelix = 26,         // 反转螺旋
     
-    kGuardian = 11,             // 援护
-    kFaith = 12,                // 信仰
-    kFatherlyLove = 13,         // 父爱
+    kDoubleEdge = 30,           // 双刃剑
     
-    kMysticSnake = 14,          // 秘术异蛇
-    kManaShield = 15,           // 魔法护盾
+    kBreatheFire = 35,          // 火焰气息
+    kDragonBlood = 36,          // 龙族血统
     
-    kPlasmaField = 16,          // 等离子场
-    kUnstableCurrent = 17,      // 不定电流
+    kGuardian = 40,             // 援护
+    kFaith = 41,                // 信仰
+    kFatherlyLove = 42,         // 父爱
     
-    kOmnislash = 18,            // 无敌斩
-    kBladeDance = 19,           // 剑舞
+    kMysticSnake = 45,          // 秘术异蛇
+    kManaShield = 46,           // 魔法护盾
     
-    kNetherSwap = 20,           // 移形换位
-    kWaveOfTerror = 21,         // 恐怖波动
+    kPlasmaField = 50,          // 等离子场
+    kUnstableCurrent = 51,      // 不定电流
     
-    kBloodrage = 22,            // 血之狂暴
-    kStrygwyrsThirst = 23,      // 嗜血
-    kBloodBath = 24,            // 屠戮
+    kOmnislash = 55,            // 无敌斩
+    kBladeDance = 56,           // 剑舞
     
-    kBattleTrance = 25,         // 战斗专注
-    kFervor = 26,               // 热血战魂
+    kNetherSwap = 60,           // 移形换位
+    kWaveOfTerror = 61,         // 恐怖波动
     
-    kHeadshot = 27,             // 爆头
-    kTakeAim = 28,              // 瞄准
+    kBloodrage = 65,            // 血之狂暴
+    kStrygwyrsThirst = 66,      // 嗜血
+    kBloodBath = 67,            // 屠戮
     
-    kManaBurn = 29,             // 法力燃烧
+    kBattleTrance = 70,         // 战斗专注
+    kFervor = 71,               // 热血战魂
     
-    kManaBreak = 30,            // 法力损毁
-    kBlink = 31,                // 闪烁
+    kHeadshot = 75,             // 爆头
+    kTakeAim = 76,              // 瞄准
+    kShrapnel = 77,             // 散弹
     
-    kOrdeal = 32,               // 神判
-    kSpecialBody = 33,          // 特殊体质
+    kManaBurn = 80,             // 法力燃烧
+    kVendetta = 81,             // 复仇
+    kSpikedCarapace = 82,       // 穿刺护甲
     
-    kFierySoul = 34,            // 炽魂
-    kLagunaBlade = 35,          // 神灭斩
+    kManaBreak = 85,            // 法力损毁
+    kBlink = 86,                // 闪烁
+    kManaVoid = 87,             // 法力虚空
     
-    kHeartstopperAura = 36,     // 竭心光环
-    kSadist = 37,               // 施虐之心
+    kTheSwarm = 90,             // 蝗虫群
+    kTimeLapse = 91,            // 时光倒流
     
-    kIcePath = 38,              // 冰封
-    kLiquidFire = 39,           // 液态火
+    kFurySwipes = 95,           // 怒意狂击
+    kEnrage = 96,               // 激怒
     
-    kFrostbite = 40,            // 冰封禁制
-    kBrillianceAura = 41,       // 辉煌光环
+    kOrdeal = 100,              // 神判
+    kSpecialBody = 101,         // 特殊体质
     
-    kDarkRitual = 42,           // 邪恶祭祀
-    kFrostArmor = 43,           // 霜冻护甲
+    kFierySoul = 105,           // 炽魂
+    kLagunaBladeSkill = 106,    // 神灭斩
     
-    kShallowGrave = 44,         // 薄葬
-    kShadowWave = 45,           // 暗影波
+    kHeartstopperAura = 110,    // 竭心光环
+    kSadist = 111,              // 施虐之心
     
-    kMultiCast = 46,            // 多重施法
+    kIcePath = 115,             // 冰封
+    kLiquidFire = 116,          // 液态火
     
-    kIlluminate = 47,           // 冲击波
-    kChakraMagic = 48,          // 查克拉
-    kGrace = 49,                // 恩惠
+    kFrostbite = 120,           // 冰封禁制
+    kBrillianceAura = 121,      // 辉煌光环
     
-    kRemoteMines = 50,          // 遥控炸弹
-    kFocusedDetonate = 51,      // 引爆
-    kSuicideSquad = 52,         // 自爆
+    kDarkRitual = 125,          // 邪恶祭祀
+    kFrostArmor = 126,          // 霜冻护甲
     
-    kHealingSpell = 53,         // 治疗术
-    kDispelWizard = 54,         // 驱散精灵
-    kMagicControl = 55          // 魔法掌控
+    kShallowGrave = 130,        // 薄葬
+    kShadowWave = 131,          // 暗影波
+    
+    kFireblast = 135,           // 火焰爆轰
+    kMultiCast = 136,           // 多重施法
+    
+    kIlluminate = 140,          // 冲击波
+    kChakraMagic = 141,         // 查克拉
+    kGrace = 142,               // 恩惠
+    
+    kRemoteMines = 145,         // 遥控炸弹
+    kFocusedDetonate = 146,     // 引爆
+    kSuicideSquad = 147,        // 自爆
+    
+    kOverload = 150,            // 超负荷
+    kBallLightning = 151,       // 球状闪电
+    
+    kUntouchable = 155,         // 不可侵犯
+    kEnchant = 156,             // 魅惑
+    kNaturesAttendants = 157,   // 自然之助
+    
+    kHealingSpell = 160,        // 治疗术
+    kDispelWizard = 161,        // 驱散精灵
+    kMagicControl = 162         // 魔法掌控
+};
+
+typedef NS_ENUM(NSInteger, BGHeroSkillCategory) {
+    kActiveSkill,               // 主动技能
+    kPassiveSkill,              // 被动技能
 };
 
 typedef NS_ENUM(NSInteger, BGHeroSkillType) {
@@ -147,9 +182,7 @@ typedef NS_ENUM(NSInteger, BGHeroSkillType) {
 };
 
 
-@interface BGHeroCardComponent : BGComponent
-
-@property (nonatomic, strong) NSArray *heroArray;
+@interface BGHeroCardComponent : NSObject
 
 @property (nonatomic, readonly) BGHeroCard heroId;
 
@@ -159,10 +192,6 @@ typedef NS_ENUM(NSInteger, BGHeroSkillType) {
 @property (nonatomic, readonly) NSUInteger manaPointLimit;
 @property (nonatomic, readonly) NSUInteger handSizeLimit;   // 手牌上限
 @property (nonatomic, readonly) NSArray *heroSkills;
-
-@property (nonatomic) NSUInteger healthPoint;
-@property (nonatomic) NSUInteger manaPoint;
-@property (nonatomic) NSUInteger playingCardCount;
 
 - (id)initWithHeroId:(BGHeroCard)aHeroId;
 + (id)heroCardComponentWithId:(BGHeroCard)aHeroId;

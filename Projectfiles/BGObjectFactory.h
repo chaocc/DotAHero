@@ -16,7 +16,7 @@
 - (id)initWithObjectManager:(BGObjectManager *)objectManager;
 + (id)objectFactoryWithObjectManager:(BGObjectManager *)objectManager;
 
-- (BGObject *)createCardSystem;
+- (BGObject *)createGameRoom;
 - (BGObject *)createHumanPlayer:(NSArray *)characterCards;
 - (BGObject *)createAIPlayer;
 

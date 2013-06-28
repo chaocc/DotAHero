@@ -7,7 +7,7 @@
 //
 
 #import "BGObjectFactory.h"
-#import "BGHero.h"
+#import "BGCurrentPlayer.h"
 
 
 @interface BGObjectFactory ()
@@ -31,19 +31,18 @@
     return [[self alloc] initWithObjectManager:objectManager];
 }
 
-- (BGObject *)createCardSystem
+- (BGObject *)createGameRoom
 {
-    BGObject *cardSystem = [_objectManager createObject];
-    return cardSystem;
+    BGObject *gameRoom = [_objectManager createObject];
+    return gameRoom;
 }
 
 - (BGObject *)createHumanPlayer:(NSArray *)heroCards
 {
     BGObject *humanPlayer = [_objectManager createObject];
     
-    BGHero *hero = [BGHero heroWithHeroCards:heroCards];
-    [_objectManager addComponent:hero toObject:humanPlayer];
-    [humanPlayer addChild:hero];
+//    BGCurrentPlayer *player = [BGCurrentPlayer playerWithHeroCards:heroCards];
+//    [_objectManager addComponent:(BGComponent *)player toObject:humanPlayer];
     
     return humanPlayer;
 }

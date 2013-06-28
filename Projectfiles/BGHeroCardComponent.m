@@ -1,5 +1,5 @@
 //
-//  BGCharacterCardComponent.m
+//  BGHeroCardComponent.m
 //  DotAHero
 //
 //  Created by Killua Liu on 5/30/13.
@@ -7,6 +7,12 @@
 //
 
 #import "BGHeroCardComponent.h"
+
+@interface BGHeroCardComponent ()
+
+@property (nonatomic, strong) NSArray *heroArray;
+
+@end
 
 @implementation BGHeroCardComponent
 
@@ -22,7 +28,7 @@
         _heroSkills = dictionary[kHeroSkills];
         
         _heroAttibute = [(NSNumber *)dictionary[kHeroAttribute] integerValue];
-        _healthPointLimit = [(NSNumber *)dictionary[kHandSizeLimit] integerValue];
+        _healthPointLimit = [(NSNumber *)dictionary[kHealthPointLimit] integerValue];
         _manaPointLimit = [(NSNumber *)dictionary[kManaPointLimit] integerValue];
         _handSizeLimit = [(NSNumber *)dictionary[kHandSizeLimit] integerValue];
     }

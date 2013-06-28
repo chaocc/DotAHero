@@ -8,6 +8,12 @@
 
 #import "BGPlayingCardComponent.h"
 
+@interface BGPlayingCardComponent ()
+
+@property (nonatomic, strong) NSArray *playingCardArray;
+
+@end
+
 @implementation BGPlayingCardComponent
 
 @synthesize cardColor = _cardColor;

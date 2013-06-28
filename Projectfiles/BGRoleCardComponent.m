@@ -8,6 +8,12 @@
 
 #import "BGRoleCardComponent.h"
 
+@interface BGRoleCardComponent ()
+
+@property (nonatomic, strong) NSArray *roleArray;
+
+@end
+
 @implementation BGRoleCardComponent
 
 - (id)initWithRoleId:(BGRoleCard)aRoleId

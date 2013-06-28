@@ -8,6 +8,12 @@
 
 #import "BGDensityCardComponent.h"
 
+@interface BGDensityCardComponent()
+
+@property (nonatomic, strong) NSArray *densityArray;
+
+@end
+
 @implementation BGDensityCardComponent
 
 - (id)initWithDensityId:(BGDensityCard)aDensityId

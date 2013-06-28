@@ -7,9 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
 
-@interface BGObject : CCNode
+@interface BGObject : NSObject
 
 @property (nonatomic, readonly) NSInteger objectId;
 

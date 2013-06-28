@@ -6,7 +6,7 @@
 //
 //
 
-#import "BGComponent.h"
+#import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, BGDensityCard) {
     kShadowPunisher,            // 暗影惩戒者
@@ -20,9 +20,7 @@ typedef NS_ENUM(NSInteger, BGDensityCard) {
 };
 
 
-@interface BGDensityCardComponent : BGComponent
-
-@property (nonatomic, strong) NSArray *densityArray;
+@interface BGDensityCardComponent : NSObject
 
 @property (nonatomic, readonly) BGDensityCard densityId;
 

@@ -2,14 +2,12 @@
 //  BGComponent.h
 //  DotAHero
 //
-//  Created by Killua Liu on 5/29/13.
-//  Copyright 2013 __MyCompanyName__. All rights reserved.
+//  Created by Killua Liu on 6/14/13.
+//
 //
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
 
-@interface BGComponent : CCNode
-
+@interface BGComponent : NSObject
 
 @end

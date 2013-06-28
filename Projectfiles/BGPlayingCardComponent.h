@@ -6,7 +6,7 @@
 //
 //
 
-#import "BGComponent.h"
+#import <Foundation/Foundation.h>
 
 #define kCardName               @"cardName"
 #define kCardType               @"cardType"
@@ -92,7 +92,6 @@ typedef NS_ENUM(NSInteger, BGCardFigure) {
 };
 
 typedef NS_ENUM(NSInteger, BGCardWhenToUse) {
-    kCastingMagic = 0,      // 施法阶段
     kDeterming = 1,         // 判定阶段
     kDrawing = 2,           // 摸牌阶段
     kPlaying = 3,           // 出牌阶段
@@ -125,21 +124,19 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 };
 
 
-@interface BGPlayingCardComponent : BGComponent
-
-@property (nonatomic, strong) NSArray *playingCardArray;
+@interface BGPlayingCardComponent : NSObject
 
 @property (nonatomic, readonly) BGPlayingCard playingCardId;
+
 @property (nonatomic, readonly) BGCardSuits cardSuits;
+@property (nonatomic, readonly) BGCardColor cardColor;
 @property (nonatomic, readonly) BGCardFigure cardFigure;
 
-@property (nonatomic, readonly) BGCardColor cardColor;
 @property (nonatomic, copy, readonly) NSString *cardName;
 @property (nonatomic, readonly) BGCardType cardType;
 @property (nonatomic, readonly) NSString *cardEffect;
 @property (nonatomic, readonly) NSArray *whenToUse;         // 使用时机
 @property (nonatomic, readonly) NSUInteger maxTargetCount;  // 最多指定的目标数量
-@property (nonatomic, readonly) NSUInteger targetCount;
 
 // Magic
 @property (nonatomic, readonly) BOOL canBeStrengthed;

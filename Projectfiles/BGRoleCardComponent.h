@@ -6,7 +6,7 @@
 //
 //
 
-#import "BGComponent.h"
+#import <Foundation/Foundation.h>
 
 typedef NS_ENUM(NSInteger, BGRoleCard) {
     kSentinel,      // 近卫
@@ -15,9 +15,7 @@ typedef NS_ENUM(NSInteger, BGRoleCard) {
 };
 
 
-@interface BGRoleCardComponent : BGComponent
-
-@property (nonatomic, strong) NSArray *roleArray;
+@interface BGRoleCardComponent : NSObject
 
 @property (nonatomic, readonly) BGRoleCard roleId;
 

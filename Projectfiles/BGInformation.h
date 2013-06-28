@@ -6,8 +6,11 @@
 //
 //
 
-#import "BGComponent.h"
+#import "CCNode.h"
 
-@interface BGInformation : BGComponent
+@interface BGInformation : CCNode
+
+//- (id)initWithPlayerId:(NSInteger)id;
+//+ (id)informationWithPlayerId:(NSInteger)id;
 
 @end

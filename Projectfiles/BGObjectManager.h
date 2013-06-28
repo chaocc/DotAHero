@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "cocos2d.h"
 #import "BGObject.h"
 #import "BGComponent.h"
 
-@interface BGObjectManager : CCNode
+@interface BGObjectManager : NSObject
 
 + (id)sharedObjectManager;
 
