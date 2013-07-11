@@ -8,13 +8,13 @@
 
 #import "CCNode.h"
 
-#import "BGDensityCardComponent.h"
+#import "BGDensityCard.h"
 
 @interface BGDensity : CCNode
 
-@property(nonatomic, readonly) BGDensityCardComponent *densityCard;
+@property(nonatomic, readonly) BGDensityCard *densityCard;
 
-- (id)initWithDensityCard:(BGDensityCard)card;
-+ (id)densityWithDensityCard:(BGDensityCard)card;
+- (id)initWithDensityCardId:(NSInteger)cardId;
++ (id)densityWithDensityCardId:(NSInteger)cardId;
 
 @end

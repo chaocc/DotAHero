@@ -6,26 +6,28 @@
  */
 
 #import "BGGameLayer.h"
+#import "BGFileConstants.h"
+#import "BGDefines.h"
 #import "BGDensity.h"
 #import "BGFaction.h"
-#import "BGMenu.h"
-#import "BGCurrentPlayer.h"
-#import "BGOtherPlayer.h"
+#import "BGGameMenu.h"
+#import "BGPlayer.h"
 #import "BGMoveComponent.h"
 
-typedef NS_ENUM(NSUInteger, BGOtherPlayerCount) {
-    kOneOtherPlayer = 1,
-    kTwoOtherPlayers,
-    kThreeOtherPlayers,
-    kFourOtherPlayers,
-    kFiveOtherPlayers,
-    kSixOtherPlayers,
-    kSevenOtherPlayers
+typedef NS_ENUM(NSUInteger, BGPlayerCount) {
+    kPlayerCountTwo = 2,
+    kPlayerCountThree,
+    kPlayerCountFour,
+    kPlayerCountFive,
+    kPlayerCountSix,
+    kPlayerCountSeven,
+    kPlayerCountEight
 };
 
 @interface BGGameLayer ()
 
-@property (nonatomic, strong) CCSpriteBatchNode *spriteBatch;
+@property (nonatomic, strong) NSArray *toBeSelectedHeroIds;
+@property (nonatomic, strong) EsObject *esObject;
 
 @end
 
@@ -33,7 +35,7 @@ typedef NS_ENUM(NSUInteger, BGOtherPlayerCount) {
 
 static BGGameLayer *instanceOfGameLayer = nil;
 
-+ (id)sharedGameLayer
++ (BGGameLayer *)sharedGameLayer
 {
     NSAssert(instanceOfGameLayer, @"GameLayer instance not yet initialized!");
 	return instanceOfGameLayer;
@@ -54,145 +56,60 @@ static BGGameLayer *instanceOfGameLayer = nil;
 	{
         instanceOfGameLayer = self;
         
+//      Enable pre multiplied alpha for PVR textures to avoid artifacts
         [CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
         
+//      Load all of the game's artwork up front
         CCSpriteFrameCache *spriteFrameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-        [spriteFrameCache addSpriteFramesWithFile:@"GameBackground.plist"];
-        [spriteFrameCache addSpriteFramesWithFile:@"GameImage.plist"];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistGameArtwork];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistHeroCard];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistHeroAvatar];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistPlayingCard];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistEquipmentAvatar];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistCardEffect];
         
-        self.spriteBatch = [CCSpriteBatchNode batchNodeWithFile:@"GameImage.pvr.ccz"];
-        [self addChild:_spriteBatch];
+        _gameArtworkBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
+        [self addChild:_gameArtworkBatch z:1];
         
-//        [self addBackground];
-        [self addFaction];
+        _es = [BGRoomLayer sharedRoomLayer].es;
+        _users = _es.managerHelper.userManager.users;
+        
         [self addDensity];
+        [self addFaction];
         [self addMenu];
         [self addCardPile];
         [self addPlayers];
         
-//      ...TODO...
-//      监听Server端发送的Event，可以获得所有Player及其所选择的HeroId
+//      Send plugin request to server
+        [self sendStartGameRequest];
 	}
 
 	return self;
 }
 
-- (void)addBackground
+- (void)sendStartGameRequest
 {
-    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"Background.png"];
-    sprite.position = [CCDirector sharedDirector].screenCenter;
-    [self addChild:sprite z:-1];
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionStartGame forKey:kAction];
+    [[BGRoomLayer sharedRoomLayer] sendPluginRequestWithObject:obj pluginName:@"GamePlugin" andEventListener:self];
 }
 
-- (void)addFaction
+- (void)onPluginMessageEvent:(EsPluginMessageEvent *)e
 {
-    BGFaction *faction = [BGFaction factionWithSentinelCount:3 scourgeCount:3 andNeutralCount:2];
-    [self addChild:faction];
-}
-
-- (void)addDensity
-{
+    _esObject = e.parameters;
     
-}
-
-- (void)addMenu
-{
-    [self addChild:[BGMenu menu]];
-}
-
-- (void)addCardPile
-{
-    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"CardPile.png"];
-    CGSize winSize = [[CCDirector sharedDirector] winSize];
-    sprite.position = ccp(winSize.width - sprite.contentSize.width*0.6, winSize.height - sprite.contentSize.height*1.8);
-    [self addChild:sprite];
-}
-
-- (void)addPlayers
-{
-    [self addOtherPlayers];
-    [self addCurrentPlayer];
-}
-
-- (void)addCurrentPlayer
-{
-    NSArray *heroCards = [NSArray arrayWithObjects:@(2), @(3), @(5), @(12), nil];
-    
-    BGCurrentPlayer *player = [BGCurrentPlayer playerWithName:[(EsUser *)_players[0] userName]
-                                                 andHeroCards:heroCards];
-    [self addChild:player];
-}
-
-- (void)addOtherPlayers
-{
-    NSMutableArray *otherPlayers = [NSMutableArray arrayWithCapacity:7]; // (_players.count - 1)
-    
-//    [_players enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        if (idx > 0) {
-//            BGOtherPlayer *player = [BGOtherPlayer otherPlayerWithName:[(EsUser *)obj userName]
-//                                                           andHeroCard:_heroIds[idx]];
-//            [otherPlayers addObject:player];
-//            [self addChild:player];
-//        }
-//    }];
-    
-    for (NSUInteger i = 0; i < 7; i++) {
-        BGOtherPlayer *player = [BGOtherPlayer otherPlayerWithName:nil andHeroCard:i];
-        [otherPlayers addObject:player];
-        [self addChild:player];
-    }
-    
-    CGSize winSize = [[CCDirector sharedDirector] winSize];
-    CGSize spriteSize = [[CCSprite spriteWithSpriteFrameName:@"OtherPlayerArea.png"] contentSize];
-    
-    switch (7) {
-        case kOneOtherPlayer:
-            [otherPlayers[0] setPosition:ccp(winSize.width/2, winSize.height - spriteSize.height/2)];
+    switch ([e.parameters intWithKey:kAction]) {
+        case kActionSendSortedPlayerNames:
+//            _users = _es.managerHelper.userManager.users;
+            
             break;
             
-        case kTwoOtherPlayers:
-            [otherPlayers[0] setPosition:ccp(winSize.width*2/3, winSize.height - spriteSize.height/2)];
-            [otherPlayers[1] setPosition:ccp(winSize.width*1/3, winSize.height - spriteSize.height/2)];
+        case kActionDealHeroCards:      // Set to be selected hero ids for current player
+            [self dealHeroCards];
             break;
             
-        case kThreeOtherPlayers:
-            [otherPlayers[0] setPosition:ccp(winSize.width - spriteSize.width/2, winSize.height*0.6)];
-            [otherPlayers[1] setPosition:ccp(winSize.width/2, winSize.height - spriteSize.height/2)];
-            [otherPlayers[2] setPosition:ccp(spriteSize.width/2, winSize.height*0.6)];
-            break;
-            
-        case kFourOtherPlayers:
-            [otherPlayers[0] setPosition:ccp(winSize.width - spriteSize.width/2, winSize.height*0.6)];
-            [otherPlayers[1] setPosition:ccp(winSize.width*0.63, winSize.height - spriteSize.height/2)];
-            [otherPlayers[2] setPosition:ccp(winSize.width*0.37, winSize.height - spriteSize.height/2)];
-            [otherPlayers[3] setPosition:ccp(spriteSize.width/2, winSize.height*0.6)];
-            break;
-            
-        case kFiveOtherPlayers:
-            [otherPlayers[0] setPosition:ccp(winSize.width - spriteSize.width/2, winSize.height*0.6)];
-            [otherPlayers[1] setPosition:ccp(winSize.width*3/4, winSize.height - spriteSize.height/2)];
-            [otherPlayers[2] setPosition:ccp(winSize.width*1/2, winSize.height - spriteSize.height/2)];
-            [otherPlayers[3] setPosition:ccp(winSize.width*1/4, winSize.height - spriteSize.height/2)];
-            [otherPlayers[4] setPosition:ccp(spriteSize.width/2, winSize.height*0.6)];
-            break;
-            
-        case kSixOtherPlayers:
-            [otherPlayers[0] setPosition:ccp(winSize.width - spriteSize.width/2, winSize.height*0.5)];
-            [otherPlayers[1] setPosition:ccp(winSize.width - spriteSize.width/2, winSize.height*0.7)];
-            [otherPlayers[2] setPosition:ccp(winSize.width*0.63, winSize.height - spriteSize.height/2)];
-            [otherPlayers[3] setPosition:ccp(winSize.width*0.37, winSize.height - spriteSize.height/2)];
-            [otherPlayers[4] setPosition:ccp(spriteSize.width/2, winSize.height*0.5)];
-            [otherPlayers[5] setPosition:ccp(spriteSize.width/2, winSize.height*0.7)];
-            break;
-            
-        case kSevenOtherPlayers:
-            [otherPlayers[0] setPosition:ccp(winSize.width - spriteSize.width/2, winSize.height*0.5)];
-            [otherPlayers[1] setPosition:ccp(winSize.width - spriteSize.width/2, winSize.height*0.7)];
-            [otherPlayers[2] setPosition:ccp(winSize.width*3/4, winSize.height - spriteSize.height/2)];
-            [otherPlayers[3] setPosition:ccp(winSize.width*1/2, winSize.height - spriteSize.height/2)];
-            [otherPlayers[4] setPosition:ccp(winSize.width*1/4, winSize.height - spriteSize.height/2)];
-            [otherPlayers[5] setPosition:ccp(spriteSize.width/2, winSize.height*0.5)];
-            [otherPlayers[6] setPosition:ccp(spriteSize.width/2, winSize.height*0.7)];
+        case kActionSendAllHeroIds:     // Send hero id selected by all players
+            [self sendAllHeroIds];
             break;
             
         default:
@@ -200,19 +117,172 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
 }
 
-- (void)transferRoleCardToNextPlayer
+- (void)dealHeroCards
 {
-    [[_spriteBatch.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CCSprite *nextSprite = nil;
-        if (![obj isEqual:_spriteBatch.children.lastObject]) {
-            nextSprite = [_spriteBatch.children objectAtIndex:idx + 1];
-        } else {
-            nextSprite = [_spriteBatch.children objectAtIndex:0];
+    [_players[0] setToBeSelectedHeroIds:[_esObject stringArrayWithKey:kParamToBeSelectedHeroIds]];
+}
+
+- (void)sendAllHeroIds
+{
+    self.allHeroIds = [_esObject stringArrayWithKey:kParamAllHeroIds];
+    [self addHeroAreaForOtherPlayers];
+}
+
+- (void)setAllHeroIds:(NSArray *)allHeroIds
+{
+    NSMutableArray *mutableHeroIds = [allHeroIds mutableCopy];
+    NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
+    
+    [mutableHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj unsignedIntegerValue] == [_players[0] selectedHeroId]) {
+            [mutableHeroIds removeObjectsAtIndexes:idxSet];
+            [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
+            _allHeroIds = mutableHeroIds;
+            return;
         }
         
-        BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:nextSprite.position ofNode:obj];
-        [moveComp runActionEaseMoveScale];
+        [idxSet addIndex:idx];
     }];
+}
+
+- (void)addHeroAreaForOtherPlayers
+{
+    for (NSUInteger i = 1; i < _players.count; i++) {
+        [_players[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
+    }
+}
+
+- (void)addDensity
+{
+    CCSprite *sprite = [CCSprite spriteWithFile:kImageBackground];
+    sprite.position = [CCDirector sharedDirector].screenCenter;
+    [self addChild:sprite];
+}
+
+- (void)addFaction
+{
+    NSArray *roleIds = [NSArray arrayWithObjects:@(0), @(1), @(2), @(3), @(4), @(5), @(6), @(7), nil];
+    BGFaction *faction = [BGFaction factionWithRoleIds:roleIds];
+    [self addChild:faction];
+}
+
+- (void)addMenu
+{
+    [self addChild:[BGGameMenu menu]];
+}
+
+- (void)addCardPile
+{
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageCardPile];
+    CGSize spriteSize = sprite.contentSize;
+    sprite.position = ccp(SCREEN_WIDTH - spriteSize.width*0.6, SCREEN_HEIGHT - spriteSize.height*1.8);
+    [_gameArtworkBatch addChild:sprite];
+}
+
+- (void)addPlayers
+{
+//  ...TODO... Capacity should be "_users.count"
+    _players = [NSMutableArray arrayWithCapacity:8];
+    [self addCurrentPlayer];
+    [self addOtherPlayers];
+}
+
+- (void)addCurrentPlayer
+{    
+    BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] isCurrentPlayer:YES];
+    [self addChild:player];
+    [_players addObject:player];
+    
+//    [player setToBeSelectedHeroIds:[NSArray arrayWithObjects:@(2), @(3), @(12), nil]];
+}
+
+- (void)addOtherPlayers
+{    
+    for (NSUInteger i = 1; i < _users.count; i++) {
+        BGPlayer *player = [BGPlayer playerWithUserName:[_users[i] userName] isCurrentPlayer:NO];
+        [self addChild:player];
+        [_players addObject:player];
+    }
+    
+    CGSize spriteSize = [[CCSprite spriteWithSpriteFrameName:kImageOtherPlayerArea] contentSize];
+    CGFloat spriteWidth = spriteSize.width;
+    CGFloat spriteHeight = spriteSize.height;
+    
+    switch (_users.count) {
+        case kPlayerCountTwo:
+            [_players[1] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
+            break;
+            
+        case kPlayerCountThree:
+            [_players[1] setPosition:ccp(SCREEN_WIDTH*2/3, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[2] setPosition:ccp(SCREEN_WIDTH*1/3, SCREEN_HEIGHT - spriteHeight/2)];
+            break;
+            
+        case kPlayerCountFour:
+            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_players[2] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[3] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            break;
+            
+        case kPlayerCountFive:
+            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_players[2] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[3] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[4] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            break;
+            
+        case kPlayerCountSix:
+            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_players[2] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[3] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[4] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[5] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            break;
+            
+        case kPlayerCountSeven:
+            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_players[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_players[3] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[4] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_players[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            break;
+            
+        case kPlayerCountEight:
+            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_players[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_players[3] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[4] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[5] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_players[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_players[7] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+//// ...TODO...
+//// 发手牌给某个玩家
+//- (void)dealPlayingCardIds:(NSArray *)cardIds toPlayer:(BGPlayer *)player
+//{
+//    [player drawPlayingCardIds:cardIds];
+//}
+
+- (void)transferRoleCardToNextPlayer
+{
+//    [[_spriteBatch.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        CCSprite *nextSprite = nil;
+//        if (![obj isEqual:_spriteBatch.children.lastObject]) {
+//            nextSprite = [_spriteBatch.children objectAtIndex:idx + 1];
+//        } else {
+//            nextSprite = [_spriteBatch.children objectAtIndex:0];
+//        }
+//        
+//        BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:nextSprite.position ofNode:obj];
+//        [moveComp runActionEaseMoveScale];
+//    }];
 }
 
 @end

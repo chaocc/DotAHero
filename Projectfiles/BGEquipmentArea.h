@@ -7,13 +7,17 @@
 //
 
 #import "CCNode.h"
-#import "BGPlayingCardComponent.h"
+#import "BGMenuFactory.h"
 
-@interface BGEquipmentArea : CCNode
+@class BGPlayer;
 
-@property(nonatomic, strong) BGPlayingCardComponent *equipmentCard;
+@interface BGEquipmentArea : CCNode <BGMenuFactoryDelegate>
 
-- (id)initWithEquipmentCard:(BGPlayingCard)card;
-+ (id)equipmentWithEquipmentCard:(BGPlayingCard)card;
+@property(nonatomic, strong) NSMutableArray *equipmentCards;    // [0] is Weapon, [1] is Armer
+
+- (id)initWithPlayer:(BGPlayer *)player;
++ (id)equipmentAreaWithPlayer:(BGPlayer *)player;
+
+- (void)addEquipmentWithCardId:(NSInteger) cardId;
 
 @end

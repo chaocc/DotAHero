@@ -8,12 +8,13 @@
 
 #import "BGLoginLayer.h"
 #import "BGRoomListLayer.h"
+#import "BGFileConstants.h"
 
 @implementation BGLoginLayer
 
 static BGLoginLayer *instanceOfLoginLayer = nil;
 
-+ (id)sharedLoginScene
++ (id)sharedLoginLayer
 {
     NSAssert(instanceOfLoginLayer != nil, @"LoginLayer instance not yet initialized!");
 	return instanceOfLoginLayer;
@@ -32,8 +33,8 @@ static BGLoginLayer *instanceOfLoginLayer = nil;
 
 - (void)conntectServer
 {
-    self.es = [[ElectroServer alloc] init];
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:@"settings.xml"];
+    _es = [[ElectroServer alloc] init];
+    NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:kXmlSettings];
     [_es loadAndConnect:path];
     
     [_es.engine addEventListenerWithTarget:self action:@selector(onConnectionResponse:) eventIdentifier:EsMessageType_ConnectionResponse];
@@ -47,8 +48,15 @@ static BGLoginLayer *instanceOfLoginLayer = nil;
         [_es.engine addEventListenerWithTarget:self action:@selector(onLoginResponse:) eventIdentifier:EsMessageType_LoginResponse];
         
         EsLoginRequest *lr = [[EsLoginRequest alloc] init];
-        lr.userName = [NSString stringWithFormat:@"Guest%li", lrint(1000 * random())];
+        srandom(time(NULL));
+        lr.userName = [NSString stringWithFormat:@"Killua%li", lrint(1000 * random())];
         [_es.engine sendMessage:lr];
+    } else {
+        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Network Connection Failed"
+                                               fontName:@"Arial"
+                                               fontSize:30.0f];
+        label.position = [CCDirector sharedDirector].screenCenter;
+        [self addChild:label];
     }
 }
 

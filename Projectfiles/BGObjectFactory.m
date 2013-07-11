@@ -7,7 +7,6 @@
 //
 
 #import "BGObjectFactory.h"
-#import "BGCurrentPlayer.h"
 
 
 @interface BGObjectFactory ()

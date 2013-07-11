@@ -4,14 +4,274 @@
     <dict>
         <key>frames</key>
         <dict>
+            <key>HealingSalve0.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{996,392},{28,28}}</string>
+                <key>offset</key>
+                <string>{-18,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{224,242},{28,28}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve1.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1824,1418},{168,168}}</string>
+                <key>offset</key>
+                <string>{-18,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{154,172},{168,168}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve10.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{996,766},{436,474}}</string>
+                <key>offset</key>
+                <string>{-18,19}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{20,0},{436,474}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve11.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,1670},{436,436}}</string>
+                <key>offset</key>
+                <string>{-18,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{20,38},{436,436}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve12.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{944,1204},{436,444}}</string>
+                <key>offset</key>
+                <string>{-18,4}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{20,30},{436,444}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve13.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{456,1266},{436,436}}</string>
+                <key>offset</key>
+                <string>{-18,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{20,38},{436,436}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve14.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1472,832},{436,450}}</string>
+                <key>offset</key>
+                <string>{-18,7}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{20,24},{436,450}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve15.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{478,828},{436,464}}</string>
+                <key>offset</key>
+                <string>{-18,14}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{20,10},{436,464}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve16.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,394},{436,474}}</string>
+                <key>offset</key>
+                <string>{-18,19}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{20,0},{436,474}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve17.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1824,1588},{162,254}}</string>
+                <key>offset</key>
+                <string>{-6,77}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{169,52},{162,254}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve18.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1824,1270},{146,200}}</string>
+                <key>offset</key>
+                <string>{1,110}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{184,46},{146,200}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve19.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2026,400},{12,14}}</string>
+                <key>offset</key>
+                <string>{-31,230}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{219,19},{12,14}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve2.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1716,1844},{324,324}}</string>
+                <key>offset</key>
+                <string>{-18,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{76,94},{324,324}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve3.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{846,2068},{352,352}}</string>
+                <key>offset</key>
+                <string>{-18,-1}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{62,81},{352,352}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve4.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1324,1982},{378,378}}</string>
+                <key>offset</key>
+                <string>{-18,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{49,67},{378,378}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve5.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{440,1704},{396,404}}</string>
+                <key>offset</key>
+                <string>{-18,-5}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{40,59},{396,404}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve6.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,1256},{412,452}}</string>
+                <key>offset</key>
+                <string>{-18,-20}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{32,50},{412,452}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve7.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,832},{422,456}}</string>
+                <key>offset</key>
+                <string>{-18,-18}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{27,46},{422,456}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve8.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{1544,400},{430,480}}</string>
+                <key>offset</key>
+                <string>{-18,-9}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{23,25},{430,480}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
+            <key>HealingSalve9.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{516,392},{434,478}}</string>
+                <key>offset</key>
+                <string>{-18,3}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{21,14},{434,478}}</string>
+                <key>sourceSize</key>
+                <string>{512,512}</string>
+            </dict>
             <key>NormalAttack0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{302,1548},{248,254}}</string>
+                <string>{{1704,2170},{248,254}}</string>
                 <key>offset</key>
                 <string>{-10,14}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{122,115},{248,254}}</string>
                 <key>sourceSize</key>
@@ -20,11 +280,11 @@
             <key>NormalAttack1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1548},{390,298}}</string>
+                <string>{{1324,1682},{390,298}}</string>
                 <key>offset</key>
                 <string>{2,-31}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{63,138},{390,298}}</string>
                 <key>sourceSize</key>
@@ -33,7 +293,7 @@
             <key>NormalAttack2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1172},{512,374}}</string>
+                <string>{{1030,390},{512,374}}</string>
                 <key>offset</key>
                 <string>{0,-61}</string>
                 <key>rotated</key>
@@ -46,7 +306,7 @@
             <key>NormalAttack3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,784},{512,386}}</string>
+                <string>{{1030,2},{512,386}}</string>
                 <key>offset</key>
                 <string>{0,-55}</string>
                 <key>rotated</key>
@@ -72,7 +332,7 @@
             <key>NormalAttack5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,394},{512,388}}</string>
+                <string>{{516,2},{512,388}}</string>
                 <key>offset</key>
                 <string>{0,-54}</string>
                 <key>rotated</key>
@@ -85,7 +345,7 @@
             <key>NormalAttack6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{516,400},{432,410}}</string>
+                <string>{{1390,1270},{432,410}}</string>
                 <key>offset</key>
                 <string>{4,-45}</string>
                 <key>rotated</key>
@@ -98,7 +358,7 @@
             <key>NormalAttack7.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{516,2},{494,396}}</string>
+                <string>{{1544,2},{494,396}}</string>
                 <key>offset</key>
                 <string>{6,-56}</string>
                 <key>rotated</key>
@@ -111,7 +371,7 @@
             <key>NormalAttack8.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{516,812},{424,428}}</string>
+                <string>{{894,1642},{424,428}}</string>
                 <key>offset</key>
                 <string>{-1,-29}</string>
                 <key>rotated</key>
@@ -129,9 +389,9 @@
             <key>realTextureFileName</key>
             <string>CardEffect.pvr.ccz</string>
             <key>size</key>
-            <string>{1024,2048}</string>
+            <string>{2048,4096}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:972b39702725d92d161e386e5dd9e3cf$</string>
+            <string>$TexturePacker:SmartUpdate:b876c1c660124e42ae7711da7af4c77e$</string>
             <key>textureFileName</key>
             <string>CardEffect.pvr.ccz</string>
         </dict>

@@ -7,17 +7,23 @@
 //
 
 #import "BGRoomListLayer.h"
-#import "ElectroServer.h"
-#import "BGLoginLayer.h"
 #import "BGRoomLayer.h"
 
 @interface BGRoomListLayer ()
 
-@property (weak, nonatomic) ElectroServer *es;
+
 
 @end
 
 @implementation BGRoomListLayer 
+
+static BGRoomListLayer *instanceOfRoomListLayer = nil;
+
++ (BGRoomListLayer *)sharedRoomListLayer
+{
+    NSAssert(instanceOfRoomListLayer, @"RoomListLayer instance not yet initialized!");
+	return instanceOfRoomListLayer;
+}
 
 + (id)scene
 {
@@ -31,7 +37,9 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.es = [[BGLoginLayer sharedLoginScene] es];
+        instanceOfRoomListLayer = self;
+        
+        _es = [BGLoginLayer sharedLoginLayer].es;
         
         [self joinRoom];
     }
@@ -50,18 +58,29 @@
     crr.roomName = @"TestRoom";
     crr.zoneName = @"TestZone";
     
-//    EsPluginListEntry *ple = [[EsPluginListEntry alloc] init];
-//    ple.extensionName = @"HelloWorld";
-//    ple.pluginHandle = @"HelloWorld";
-//    ple.pluginName = @"HelloWorld";
-//    crr.plugins = [NSMutableArray arrayWithObject:ple];
+    EsPluginListEntry *pleRoom = [[EsPluginListEntry alloc] init];
+    pleRoom.extensionName = @"ChatLogger";
+    pleRoom.pluginHandle = @"ChatPlugin";
+    pleRoom.pluginName = @"ChatPlugin";
+    
+    EsPluginListEntry *pleGame = [[EsPluginListEntry alloc] init];
+    pleGame.extensionName = @"ChatLogger";
+    pleGame.pluginHandle = @"GamePlugin";
+    pleGame.pluginName = @"GamePlugin";
+    
+    crr.plugins = [NSMutableArray arrayWithObjects:pleRoom, pleGame, nil];
     
     [_es.engine sendMessage:crr];
 }
 
 - (void)onJoinRoomEvent:(EsJoinRoomEvent *)e
-{    
+{
 	[[CCDirector sharedDirector] replaceScene:[BGRoomLayer scene]];
+    [BGRoomLayer sharedRoomLayer].room = [[_es.managerHelper.zoneManager zoneById:e.zoneId] roomById:e.roomId];
+    
+    if (e.users.count >= 2) {
+        [[BGRoomLayer sharedRoomLayer] sendStartGameRequestWithEventListener:[BGRoomLayer sharedRoomLayer]];
+    }
 }
 
 @end

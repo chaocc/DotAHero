@@ -10,17 +10,17 @@
 
 @implementation BGDensity
 
-- (id)initWithDensityCard:(BGDensityCard)card
+- (id)initWithDensityCardId:(NSInteger)cardId
 {
     if (self = [super init]) {
-        _densityCard = [BGDensityCardComponent densityCardComponentWithId:card];
+        _densityCard = [BGDensityCard cardWithCardId:cardId];
     }
     return self;
 }
 
-+ (id)densityWithDensityCard:(BGDensityCard)card
++ (id)densityWithDensityCardId:(NSInteger)cardId
 {
-    return [[self alloc] initWithDensityCard:card];
+    return [[self alloc] initWithDensityCardId:cardId];
 }
 
 @end

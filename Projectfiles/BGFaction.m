@@ -7,70 +7,86 @@
 //
 
 #import "BGFaction.h"
-#import "BGRoleCardComponent.h"
+#import "BGGameLayer.h"
+#import "BGRoleCard.h"
+#import "BGFileConstants.h"
+#import "BGDefines.h"
 
 @interface BGFaction ()
 
-@property (nonatomic, strong) CCSpriteBatchNode *spriteBatch;
+
 
 @end
 
 @implementation BGFaction
 
-- (id)initWithSentinelCount:(NSUInteger)sentinelCount scourgeCount:(NSUInteger)scourgeCount andNeutralCount:(NSUInteger)neutralCount
+- (id)initWithRoleIds:(NSArray *)roleIds
 {
     if (self = [super init]) {
-        _totalSentinelCount = sentinelCount;
-        _totalScourgeCount = scourgeCount;
-        _totalNeutralCount = neutralCount;
-        
-        self.spriteBatch = [CCSpriteBatchNode batchNodeWithFile:@"GameImage.pvr.ccz"];
-        CGSize winSize = [[CCDirector sharedDirector] winSize];
-        CGFloat increment;
-        
-        for (NSUInteger i = 0; i < 3; i++) {
-            CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"FactionFrame.png"];
-            sprite.position = ccp(sprite.contentSize.width/2, winSize.height - sprite.contentSize.height*(increment+0.7));
-            [_spriteBatch addChild:sprite];
-            
-            switch (i) {
-                case kSentinel: {
-                    CCSprite *sentinel = [CCSprite spriteWithSpriteFrameName:@"Sentinel.png"];
-                    sentinel.position = ccp(sprite.position.x*0.35, sprite.position.y);
-                    [_spriteBatch addChild:sentinel];
-                }
+        [roleIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            BGRoleCard *roleCard = [BGRoleCard cardWithCardId:[obj integerValue]];
+            switch (roleCard.cardEnum) {
+                case kRoleCardSentinel:
+                    ++_totalSentinelCount;
                     break;
-                
-                case kScourge: {
-                    CCSprite *scourge = [CCSprite spriteWithSpriteFrameName:@"Scourge.png"];
-                    scourge.position = ccp(sprite.position.x*0.35, sprite.position.y);
-                    [_spriteBatch addChild:scourge];
-                }
+                case kRoleCardScourge:
+                    ++_totalScourgeCount;
                     break;
-                    
-                case kNeutral: {
-                    CCSprite *neutral = [CCSprite spriteWithSpriteFrameName:@"Neutral.png"];
-                    neutral.position = ccp(sprite.position.x*0.35, sprite.position.y);
-                    [_spriteBatch addChild:neutral];
-                }
+                case kRoleCardNeutral:
+                    ++_totalNeutralCount;
                     break;
-                    
                 default:
                     break;
             }
-            
-            increment += 1.2f;
-        }
+        }];
         
-        [self addChild:_spriteBatch];
+        _aliveSentinelCount = _totalSentinelCount;
+        _aliveScourgeCount = _totalScourgeCount;
+        _aliveNeutralCount = _totalNeutralCount;
+        
+        [self renderFaction];
     }
     
     return self;
 }
 
-+ (id)factionWithSentinelCount:(NSUInteger)sentinelCount scourgeCount:(NSUInteger)scourgeCount andNeutralCount:(NSUInteger)neutralCount
++ (id)factionWithRoleIds:(NSArray *)roleIds
 {
-    return [[self alloc] initWithSentinelCount:scourgeCount scourgeCount:scourgeCount andNeutralCount:neutralCount];
+    return [[self alloc] initWithRoleIds:roleIds];
+}
+
+- (void)renderFaction
+{
+    CCSpriteBatchNode *spriteBatch = [BGGameLayer sharedGameLayer].gameArtworkBatch;
+    CGFloat increment;
+    
+    for (NSUInteger i = 0; i < 3; i++) {
+        CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageFactionFrame];
+        sprite.position = ccp(sprite.contentSize.width/2, SCREEN_HEIGHT - sprite.contentSize.height*(increment+0.7));
+        [spriteBatch addChild:sprite];
+        
+        CCSprite *faction = nil;
+        switch (i) {
+            case kRoleCardSentinel:
+                faction = [CCSprite spriteWithSpriteFrameName:kImageSentinel];
+                break;
+                
+            case kRoleCardScourge:
+                faction = [CCSprite spriteWithSpriteFrameName:kImageScourge];
+                break;
+                
+            case kRoleCardNeutral:
+                faction = [CCSprite spriteWithSpriteFrameName:kImageNeutral];
+                break;
+                
+            default:
+                break;
+        }
+        faction.position = ccpSub(sprite.position, ccp(sprite.contentSize.width*0.32, 0.0f));
+        [spriteBatch addChild:faction];
+        
+        increment += 1.2f;
+    }
 }
 
 @end

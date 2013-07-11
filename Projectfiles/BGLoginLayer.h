@@ -8,11 +8,13 @@
 
 #import "CCLayer.h"
 #import "ElectroServer.h"
+#import "BGPluginConstants.h"
 
 @interface BGLoginLayer : CCLayer
 
-@property (strong, nonatomic) ElectroServer *es;
+@property (nonatomic, strong, readonly) ElectroServer *es;
+@property (nonatomic, copy, readonly) NSString *userName;
 
-+ (BGLoginLayer *)sharedLoginScene;
++ (BGLoginLayer *)sharedLoginLayer;
 
 @end

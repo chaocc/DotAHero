@@ -31,19 +31,15 @@
     return [[self alloc] initWithTarget:target ofNode:node];
 }
 
-- (void)runActionEaseMoveScale
+- (void)runActionEaseMoveScaleWithDuration:(ccTime)t scale:(float)s block:(void (^)())block
 {
-    CCMoveTo *move = [CCMoveTo actionWithDuration:0.5f position:_target];
+    CCMoveTo *move = [CCMoveTo actionWithDuration:t position:_target];
     CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
-    CCScaleTo *scale = [CCScaleTo actionWithDuration:0.5f scale:0.5f];
-    
-    CCCallBlock *block = [CCCallBlock actionWithBlock:^{
-        [_node.parent removeAllChildrenWithCleanup:YES];
-        [_delegate moveActionEnded:_node];
-    }];
+    CCScaleTo *scale = [CCScaleTo actionWithDuration:t scale:s];
+    CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
     
 	[_node runAction:ease];
-    [_node runAction:[CCSequence actions: scale, block, nil]];
+    [_node runAction:[CCSequence actions: scale, callBlock, nil]];
 }
 
 @end

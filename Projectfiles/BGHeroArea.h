@@ -7,11 +7,14 @@
 //
 
 #import "CCNode.h"
-#import "BGHeroCardComponent.h"
+#import "BGHeroCard.h"
+#import "BGMenuFactory.h"
 
-@interface BGHeroArea : CCNode
+@class BGPlayer;
 
-@property (nonatomic, strong, readonly) BGHeroCardComponent *heroCard;
+@interface BGHeroArea : CCNode <BGMenuFactoryDelegate>
+
+@property (nonatomic, strong, readonly) BGHeroCard *heroCard;
 
 @property (nonatomic) NSUInteger healthPoint;
 @property (nonatomic) NSUInteger manaPoint;
@@ -24,8 +27,13 @@
 @property (nonatomic) BGHeroSkill usedSkill;
 
 
-- (id)initWithHeroCard:(BGHeroCard)card inPlayerAreaBox:(CGRect)playerAreaBox;
-+ (id)heroAreaWithHeroCard:(BGHeroCard)card inPlayerAreaBox:(CGRect)playerAreaBox;
+- (id)initWithHeroCardId:(NSUInteger)cardId ofPlayer:(BGPlayer *)player;
++ (id)heroAreaWithHeroCardId:(NSUInteger)cardId ofPlayer:(BGPlayer *)player;
+
+- (void)addBloodPointWithCount:(NSUInteger)count;
+- (void)subtractBloodPointWithCount:(NSUInteger)count;
+- (void)addAngerPointWithCount:(NSUInteger)count;
+- (void)subtractAngerPointWithCount:(NSUInteger)count;
 
 - (void)useSkill;
 

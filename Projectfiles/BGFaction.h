@@ -18,7 +18,7 @@
 @property (nonatomic) NSUInteger aliveScourgeCount;
 @property (nonatomic) NSUInteger aliveNeutralCount;
 
-- (id)initWithSentinelCount:(NSUInteger)sentinelCount scourgeCount:(NSUInteger)scourgeCount andNeutralCount:(NSUInteger)neutralCount;
-+ (id)factionWithSentinelCount:(NSUInteger)sentinelCount scourgeCount:(NSUInteger)scourgeCount andNeutralCount:(NSUInteger)neutralCount;
+- (id)initWithRoleIds:(NSArray *)roleIds;
++ (id)factionWithRoleIds:(NSArray *)roleIds;
 
 @end

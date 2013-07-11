@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>cardName</key>
+		<string>ShadowPunisher</string>
+		<key>cardText</key>
+		<string>Shadow Punisher</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>cardName</key>
+		<string>ConquerorOfHolyLight</string>
+		<key>cardText</key>
+		<string>Conqueror of HolyLight</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>cardName</key>
+		<string>SpreadingPlague</string>
+		<key>cardText</key>
+		<string>Spreading Plague</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>cardName</key>
+		<string>GameOfFate</string>
+		<key>cardText</key>
+		<string>Game of Fate</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>cardName</key>
+		<string>PuppetOfBackfire</string>
+		<key>cardText</key>
+		<string>Puppet of Backfire</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>cardName</key>
+		<string>SummonerOfDeath</string>
+		<key>cardText</key>
+		<string>Summoner of Death</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>cardName</key>
+		<string>ParanoidMathematician</string>
+		<key>cardText</key>
+		<string>Paranoid Mathematician</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+	<dict>
+		<key>cardName</key>
+		<string>RoshanPossession</string>
+		<key>cardText</key>
+		<string>Roshan Possession</string>
+		<key>description</key>
+		<string></string>
+	</dict>
+</array>
+</plist>

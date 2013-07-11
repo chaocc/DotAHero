@@ -6,12 +6,17 @@
  */
 
 #import "kobold2d.h"
-#import "ElectroServer.h"
+#import "BGRoomLayer.h"
 
 @interface BGGameLayer : CCLayer
 
-@property (nonatomic, strong) NSArray *players;     // [0] is current player
-@property (nonatomic, strong) NSArray *heroIds;     // [0] is selected by current player
+@property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
+
+@property (strong, nonatomic, readonly) ElectroServer *es;
+@property (nonatomic, strong, readonly) NSArray *users;               // [0] is current user
+@property (nonatomic, strong, readonly) NSArray *allHeroIds;          // [0] is selected by current user
+@property (nonatomic, strong, readonly) NSMutableArray *players;      // Player instances
+
 @property (nonatomic, readonly) ccTime gameDuration;
 
 + (BGGameLayer *)sharedGameLayer;

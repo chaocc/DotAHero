@@ -7,14 +7,23 @@
 //
 
 #import "CCNode.h"
+#import "BGMenuFactory.h"
 
-@interface BGPlayingArea : CCNode
+@class BGPlayer;
 
-@property (nonatomic) NSUInteger playingCardCount;
+@interface BGPlayingArea : CCNode <BGMenuFactoryDelegate>
+
+//@property (nonatomic) NSUInteger playingCardCount;
 @property (nonatomic, strong) NSMutableArray *playingCards;     // 现存的手牌
+@property (nonatomic, strong) NSMutableArray *selectedCards;
 @property (nonatomic, strong) NSMutableArray *usedCards;        // 用掉或弃掉的手牌
 
-- (id)initWithPlayingCards:(NSArray *)cards;
-+ (id)playingAreaWithPlayingCards:(NSArray *)cards;
+@property (nonatomic) NSUInteger canBeSelectedCardCount;
+
+- (id)initWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player;
++ (id)playingAreaWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player;
+
+- (void)addPlayingCardsWithCardIds:(NSArray *)cardIds;
+- (void)removePlayingCardsWithCardIds:(NSArray *)cardIds;
 
 @end

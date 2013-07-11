@@ -8,6 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, BGMenuTag) {
+    kMenuTagGameMenu,
+    kMenuTagTrust,
+    kMenuTagChat,
+    kMenuTagViewGame,
+    kMenuTagSetting,
+    kMenuTagExitGame,
+    
+    kMenuTagOkay,
+    kMenuTagCancel,
+    kMenuTagDiscard,
+    kMenuTagIgnoreDispel
+};
+
 @protocol BGMenuFactoryDelegate <NSObject>
 
 - (void)menuItemTouched:(CCMenuItem *)menuItem;
@@ -20,8 +34,12 @@
 
 + (id)menuFactory;
 
-- (id)createMenuWithSpriteFrameName:(NSString *)frameName selectedFrameName:(NSString *)selectedFrameName disabledFrameName:(NSString *)disabledFrameName;
-- (id)createMenuWithSpriteFrameNames:(NSArray *)frameNames;
-- (id)createMenuWithSpriteFrameNames:(NSArray *)frameNames ofObjects:(NSArray *)objects;
+- (id)createEmptyMenu;
+- (id)createMenuWithSpriteFrameName:(NSString *)frameName selectedFrameName:(NSString *)selFrameName disabledFrameName:(NSString *)disFrameName;
+- (id)createMenuWithSpriteFrameNames:(NSArray *)frameNames selectedFrameNames:(NSArray *)selFrameNames disabledFrameNames:(NSArray *)disFrameNames;
+- (id)createMenuWithCards:(NSArray *)cards;
+- (void)addMenuItemsWithCards:(NSArray *)cards toMenu:(CCMenu *)menu;
+
+//- (id)createMenuWithSpriteFrameNames:(NSArray *)frameNames ofObjects:(NSArray *)objects;
 
 @end
