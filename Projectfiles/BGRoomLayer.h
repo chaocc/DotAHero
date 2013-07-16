@@ -11,14 +11,12 @@
 
 @interface BGRoomLayer : CCLayer
 
-@property (strong, nonatomic, readonly) ElectroServer *es;
-@property (nonatomic, strong) EsRoom *room;
-@property (nonatomic, strong) NSArray *users;           // [0] is current user
+@property (nonatomic) BOOL isRoomOwner;
 
 + (BGRoomLayer *)sharedRoomLayer;
 + (id)scene;
 
-- (void)sendPluginRequestWithObject:(EsObject *)obj pluginName:(NSString *)name andEventListener:(id)target;
-- (void)sendStartGameRequestWithEventListener:(id)target;
+- (void)readyStartGame;
+- (void)showGameLayer;
 
 @end

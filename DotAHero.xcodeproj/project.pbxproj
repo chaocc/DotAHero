@@ -60,10 +60,6 @@
 		E31075F9176B252900E01AA0 /* BGPlayingArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075F7176B252900E01AA0 /* BGPlayingArea.m */; };
 		E31DDB5817811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
 		E31DDB5917811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
-		E320B62B1788748B00DEF693 /* CardEffect.plist in Resources */ = {isa = PBXBuildFile; fileRef = E320B6291788748B00DEF693 /* CardEffect.plist */; };
-		E320B62C1788748B00DEF693 /* CardEffect.plist in Resources */ = {isa = PBXBuildFile; fileRef = E320B6291788748B00DEF693 /* CardEffect.plist */; };
-		E320B62D1788748B00DEF693 /* CardEffect.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E320B62A1788748B00DEF693 /* CardEffect.pvr.ccz */; };
-		E320B62E1788748B00DEF693 /* CardEffect.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E320B62A1788748B00DEF693 /* CardEffect.pvr.ccz */; };
 		E320B63017888FD500DEF693 /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = E320B62F17888FD500DEF693 /* ReadMe */; };
 		E320B63117888FD500DEF693 /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = E320B62F17888FD500DEF693 /* ReadMe */; };
 		E320D09C1768E71B00A1F32D /* bn_error.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE0A1768E71900A1F32D /* bn_error.c */; };
@@ -471,6 +467,24 @@
 		E33EADFE17566C8900A46952 /* BGRoleCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADFC17566C8900A46952 /* BGRoleCard.m */; };
 		E33EAE0117566CB100A46952 /* BGHeroCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EAE0017566CB100A46952 /* BGHeroCard.m */; };
 		E33EAE0217566CB100A46952 /* BGHeroCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EAE0017566CB100A46952 /* BGHeroCard.m */; };
+		E34206501793750400990145 /* NormalAttack.plist in Resources */ = {isa = PBXBuildFile; fileRef = E342064C1793750400990145 /* NormalAttack.plist */; };
+		E34206511793750400990145 /* NormalAttack.plist in Resources */ = {isa = PBXBuildFile; fileRef = E342064C1793750400990145 /* NormalAttack.plist */; };
+		E34206521793750400990145 /* NormalAttack.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E342064D1793750400990145 /* NormalAttack.pvr.ccz */; };
+		E34206531793750400990145 /* NormalAttack.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E342064D1793750400990145 /* NormalAttack.pvr.ccz */; };
+		E34206541793750400990145 /* SangeAndYasha.plist in Resources */ = {isa = PBXBuildFile; fileRef = E342064E1793750400990145 /* SangeAndYasha.plist */; };
+		E34206551793750400990145 /* SangeAndYasha.plist in Resources */ = {isa = PBXBuildFile; fileRef = E342064E1793750400990145 /* SangeAndYasha.plist */; };
+		E34206561793750400990145 /* SangeAndYasha.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */; };
+		E34206571793750400990145 /* SangeAndYasha.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */; };
+		E34D6E55179378B8006758B8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E54179378B8006758B8 /* Settings.bundle */; };
+		E34D6E56179378B8006758B8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E54179378B8006758B8 /* Settings.bundle */; };
+		E34D6E59179382A0006758B8 /* HealingSalve.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E57179382A0006758B8 /* HealingSalve.plist */; };
+		E34D6E5A179382A0006758B8 /* HealingSalve.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E57179382A0006758B8 /* HealingSalve.plist */; };
+		E34D6E5B179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */; };
+		E34D6E5C179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */; };
+		E350D6C01792EA8400FD1A40 /* Damage.plist in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BE1792EA8400FD1A40 /* Damage.plist */; };
+		E350D6C11792EA8400FD1A40 /* Damage.plist in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BE1792EA8400FD1A40 /* Damage.plist */; };
+		E350D6C21792EA8400FD1A40 /* Damage.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */; };
+		E350D6C31792EA8400FD1A40 /* Damage.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */; };
 		E37BFCD6177959B2009C02BB /* BGGameMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E37BFCD5177959B2009C02BB /* BGGameMenu.m */; };
 		E37BFCD7177959B2009C02BB /* BGGameMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E37BFCD5177959B2009C02BB /* BGGameMenu.m */; };
 		E387E6E9178E73D7003F0DAD /* BGClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E387E6E8178E73D7003F0DAD /* BGClient.m */; };
@@ -495,12 +509,14 @@
 		E3A3DEFF178A92C500C0F1D9 /* GameArtwork.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3A3DEFC178A92C500C0F1D9 /* GameArtwork.plist */; };
 		E3A3DF00178A92C500C0F1D9 /* GameArtwork.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3A3DEFD178A92C500C0F1D9 /* GameArtwork.pvr.ccz */; };
 		E3A3DF01178A92C500C0F1D9 /* GameArtwork.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3A3DEFD178A92C500C0F1D9 /* GameArtwork.pvr.ccz */; };
+		E3B3547A179131B900C07B3F /* PlayingCardIds in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds */; };
+		E3B3547B179131B900C07B3F /* PlayingCardIds in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds */; };
+		E3B3547E1791A9EC00C07B3F /* HeroCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547C1791A9EC00C07B3F /* HeroCard.plist */; };
+		E3B3547F1791A9EC00C07B3F /* HeroCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547C1791A9EC00C07B3F /* HeroCard.plist */; };
+		E3B354801791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */; };
+		E3B354811791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */; };
 		E3C15A77177084E600869966 /* settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = E3C15A76177084E600869966 /* settings.xml */; };
 		E3C15A78177084E600869966 /* settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = E3C15A76177084E600869966 /* settings.xml */; };
-		E3C3E642177D52B40090CCAE /* HeroCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C3E640177D52B40090CCAE /* HeroCard.plist */; };
-		E3C3E643177D52B40090CCAE /* HeroCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C3E640177D52B40090CCAE /* HeroCard.plist */; };
-		E3C3E644177D52B40090CCAE /* HeroCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C3E641177D52B40090CCAE /* HeroCard.pvr.ccz */; };
-		E3C3E645177D52B40090CCAE /* HeroCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C3E641177D52B40090CCAE /* HeroCard.pvr.ccz */; };
 		E3C60E21177FEE6700CA88F8 /* BGCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C60E20177FEE6700CA88F8 /* BGCard.m */; };
 		E3C60E22177FEE6700CA88F8 /* BGCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C60E20177FEE6700CA88F8 /* BGCard.m */; };
 		E3F5C875176A3B2200E44169 /* BGComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F5C874176A3B2200E44169 /* BGComponent.m */; };
@@ -583,8 +599,6 @@
 		E31075F7176B252900E01AA0 /* BGPlayingArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingArea.m; sourceTree = "<group>"; };
 		E31DDB5617811E1100789EDF /* BGPlayingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingMenu.h; sourceTree = "<group>"; };
 		E31DDB5717811E1100789EDF /* BGPlayingMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingMenu.m; sourceTree = "<group>"; };
-		E320B6291788748B00DEF693 /* CardEffect.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = CardEffect.plist; sourceTree = "<group>"; };
-		E320B62A1788748B00DEF693 /* CardEffect.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = CardEffect.pvr.ccz; sourceTree = "<group>"; };
 		E320B62F17888FD500DEF693 /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ReadMe; path = Resources/ReadMe; sourceTree = "<group>"; };
 		E320CE071768E3C700A1F32D /* BGPluginConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPluginConstants.h; sourceTree = "<group>"; };
 		E320CE0A1768E71900A1F32D /* bn_error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bn_error.c; sourceTree = "<group>"; };
@@ -1264,6 +1278,15 @@
 		E33EADFC17566C8900A46952 /* BGRoleCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGRoleCard.m; sourceTree = "<group>"; };
 		E33EADFF17566CB100A46952 /* BGHeroCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGHeroCard.h; sourceTree = "<group>"; };
 		E33EAE0017566CB100A46952 /* BGHeroCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHeroCard.m; sourceTree = "<group>"; };
+		E342064C1793750400990145 /* NormalAttack.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NormalAttack.plist; sourceTree = "<group>"; };
+		E342064D1793750400990145 /* NormalAttack.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = NormalAttack.pvr.ccz; sourceTree = "<group>"; };
+		E342064E1793750400990145 /* SangeAndYasha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SangeAndYasha.plist; sourceTree = "<group>"; };
+		E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = SangeAndYasha.pvr.ccz; sourceTree = "<group>"; };
+		E34D6E54179378B8006758B8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		E34D6E57179382A0006758B8 /* HealingSalve.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HealingSalve.plist; sourceTree = "<group>"; };
+		E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = HealingSalve.pvr.ccz; sourceTree = "<group>"; };
+		E350D6BE1792EA8400FD1A40 /* Damage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Damage.plist; sourceTree = "<group>"; };
+		E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Damage.pvr.ccz; sourceTree = "<group>"; };
 		E37BFCD4177959B2009C02BB /* BGGameMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGGameMenu.h; sourceTree = "<group>"; };
 		E37BFCD5177959B2009C02BB /* BGGameMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGGameMenu.m; sourceTree = "<group>"; };
 		E387E6E7178E73D7003F0DAD /* BGClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGClient.h; sourceTree = "<group>"; };
@@ -1284,9 +1307,10 @@
 		E3A3DEFC178A92C500C0F1D9 /* GameArtwork.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameArtwork.plist; sourceTree = "<group>"; };
 		E3A3DEFD178A92C500C0F1D9 /* GameArtwork.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameArtwork.pvr.ccz; sourceTree = "<group>"; };
 		E3B29B5F177F349600C18728 /* BGDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDefines.h; sourceTree = "<group>"; };
+		E3B35479179131B900C07B3F /* PlayingCardIds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlayingCardIds; sourceTree = "<group>"; };
+		E3B3547C1791A9EC00C07B3F /* HeroCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroCard.plist; sourceTree = "<group>"; };
+		E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeroCard.pvr.ccz; sourceTree = "<group>"; };
 		E3C15A76177084E600869966 /* settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.xml; sourceTree = "<group>"; };
-		E3C3E640177D52B40090CCAE /* HeroCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroCard.plist; sourceTree = "<group>"; };
-		E3C3E641177D52B40090CCAE /* HeroCard.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeroCard.pvr.ccz; sourceTree = "<group>"; };
 		E3C60E1F177FEE6700CA88F8 /* BGCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCard.h; sourceTree = "<group>"; };
 		E3C60E20177FEE6700CA88F8 /* BGCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCard.m; sourceTree = "<group>"; };
 		E3F5C873176A3B2200E44169 /* BGComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGComponent.h; sourceTree = "<group>"; };
@@ -1444,6 +1468,7 @@
 				E3988207177D539A00FA0B0A /* BGMenuFactory.h */,
 				E3988208177D539A00FA0B0A /* BGMenuFactory.m */,
 				E320B62F17888FD500DEF693 /* ReadMe */,
+				E3B35479179131B900C07B3F /* PlayingCardIds */,
 				DCC1A39413A94F1A005BD75D /* Resources */,
 				DCC1A3CF13A94F2C005BD75D /* Supporting Files */,
 			);
@@ -1460,6 +1485,7 @@
 				E395326E17567C9100C1FA2C /* PlayingCardArray.plist */,
 				E395326B17567C5700C1FA2C /* RoleCardArray.plist */,
 				E3C15A76177084E600869966 /* settings.xml */,
+				E34D6E54179378B8006758B8 /* Settings.bundle */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2240,6 +2266,21 @@
 			name = Player;
 			sourceTree = "<group>";
 		};
+		E34206581793750B00990145 /* CardEffect */ = {
+			isa = PBXGroup;
+			children = (
+				E350D6BE1792EA8400FD1A40 /* Damage.plist */,
+				E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */,
+				E34D6E57179382A0006758B8 /* HealingSalve.plist */,
+				E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */,
+				E342064C1793750400990145 /* NormalAttack.plist */,
+				E342064D1793750400990145 /* NormalAttack.pvr.ccz */,
+				E342064E1793750400990145 /* SangeAndYasha.plist */,
+				E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */,
+			);
+			name = CardEffect;
+			sourceTree = "<group>";
+		};
 		E387E6E6178E6D1B003F0DAD /* Include */ = {
 			isa = PBXGroup;
 			children = (
@@ -2281,15 +2322,14 @@
 		E3B29B4C177F1F3400C18728 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E34206581793750B00990145 /* CardEffect */,
 				E32A37EC1785B115004C386F /* Background.jpg */,
-				E320B6291788748B00DEF693 /* CardEffect.plist */,
-				E320B62A1788748B00DEF693 /* CardEffect.pvr.ccz */,
 				E3A3DEFC178A92C500C0F1D9 /* GameArtwork.plist */,
 				E3A3DEFD178A92C500C0F1D9 /* GameArtwork.pvr.ccz */,
 				E32A38011785C81C004C386F /* HeroAvatar.plist */,
 				E32A38021785C81C004C386F /* HeroAvatar.pvr.ccz */,
-				E3C3E640177D52B40090CCAE /* HeroCard.plist */,
-				E3C3E641177D52B40090CCAE /* HeroCard.pvr.ccz */,
+				E3B3547C1791A9EC00C07B3F /* HeroCard.plist */,
+				E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */,
 				E32A37F31785C78E004C386F /* PlayingCard.plist */,
 				E32A37F41785C78E004C386F /* PlayingCard.pvr.ccz */,
 			);
@@ -2383,18 +2423,26 @@
 				E39532721756818600C1FA2C /* HeroCardArray.plist in Resources */,
 				E39532751756819400C1FA2C /* DensityCardArray.plist in Resources */,
 				E3C15A77177084E600869966 /* settings.xml in Resources */,
-				E3C3E642177D52B40090CCAE /* HeroCard.plist in Resources */,
-				E3C3E644177D52B40090CCAE /* HeroCard.pvr.ccz in Resources */,
 				E32A37ED1785B115004C386F /* Background.jpg in Resources */,
 				E32A37FD1785C78E004C386F /* PlayingCard.plist in Resources */,
 				E32A37FF1785C78E004C386F /* PlayingCard.pvr.ccz in Resources */,
 				E32A38031785C81C004C386F /* HeroAvatar.plist in Resources */,
 				E32A38051785C81C004C386F /* HeroAvatar.pvr.ccz in Resources */,
-				E320B62B1788748B00DEF693 /* CardEffect.plist in Resources */,
-				E320B62D1788748B00DEF693 /* CardEffect.pvr.ccz in Resources */,
 				E320B63017888FD500DEF693 /* ReadMe in Resources */,
 				E3A3DEFE178A92C500C0F1D9 /* GameArtwork.plist in Resources */,
 				E3A3DF00178A92C500C0F1D9 /* GameArtwork.pvr.ccz in Resources */,
+				E3B3547A179131B900C07B3F /* PlayingCardIds in Resources */,
+				E3B3547E1791A9EC00C07B3F /* HeroCard.plist in Resources */,
+				E3B354801791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */,
+				E350D6C01792EA8400FD1A40 /* Damage.plist in Resources */,
+				E350D6C21792EA8400FD1A40 /* Damage.pvr.ccz in Resources */,
+				E34206501793750400990145 /* NormalAttack.plist in Resources */,
+				E34206521793750400990145 /* NormalAttack.pvr.ccz in Resources */,
+				E34206541793750400990145 /* SangeAndYasha.plist in Resources */,
+				E34206561793750400990145 /* SangeAndYasha.pvr.ccz in Resources */,
+				E34D6E55179378B8006758B8 /* Settings.bundle in Resources */,
+				E34D6E59179382A0006758B8 /* HealingSalve.plist in Resources */,
+				E34D6E5B179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2412,18 +2460,26 @@
 				E39532731756818600C1FA2C /* HeroCardArray.plist in Resources */,
 				E39532761756819400C1FA2C /* DensityCardArray.plist in Resources */,
 				E3C15A78177084E600869966 /* settings.xml in Resources */,
-				E3C3E643177D52B40090CCAE /* HeroCard.plist in Resources */,
-				E3C3E645177D52B40090CCAE /* HeroCard.pvr.ccz in Resources */,
 				E32A37EE1785B115004C386F /* Background.jpg in Resources */,
 				E32A37FE1785C78E004C386F /* PlayingCard.plist in Resources */,
 				E32A38001785C78E004C386F /* PlayingCard.pvr.ccz in Resources */,
 				E32A38041785C81C004C386F /* HeroAvatar.plist in Resources */,
 				E32A38061785C81C004C386F /* HeroAvatar.pvr.ccz in Resources */,
-				E320B62C1788748B00DEF693 /* CardEffect.plist in Resources */,
-				E320B62E1788748B00DEF693 /* CardEffect.pvr.ccz in Resources */,
 				E320B63117888FD500DEF693 /* ReadMe in Resources */,
 				E3A3DEFF178A92C500C0F1D9 /* GameArtwork.plist in Resources */,
 				E3A3DF01178A92C500C0F1D9 /* GameArtwork.pvr.ccz in Resources */,
+				E3B3547B179131B900C07B3F /* PlayingCardIds in Resources */,
+				E3B3547F1791A9EC00C07B3F /* HeroCard.plist in Resources */,
+				E3B354811791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */,
+				E350D6C11792EA8400FD1A40 /* Damage.plist in Resources */,
+				E350D6C31792EA8400FD1A40 /* Damage.pvr.ccz in Resources */,
+				E34206511793750400990145 /* NormalAttack.plist in Resources */,
+				E34206531793750400990145 /* NormalAttack.pvr.ccz in Resources */,
+				E34206551793750400990145 /* SangeAndYasha.plist in Resources */,
+				E34206571793750400990145 /* SangeAndYasha.pvr.ccz in Resources */,
+				E34D6E56179378B8006758B8 /* Settings.bundle in Resources */,
+				E34D6E5A179382A0006758B8 /* HealingSalve.plist in Resources */,
+				E34D6E5C179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

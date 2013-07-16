@@ -14,7 +14,7 @@
 #define kPlistHeroAvatar            @"HeroAvatar.plist"
 #define kPlistPlayingCard           @"PlayingCard.plist"
 #define kPlistEquipmentAvatar       @"EquipmentAvatar.plist"
-#define kPlistCardEffect            @"CardEffect.plist"
+#define kPlistDamage                @"Damage.plist"
 
 #define kZlibGameArtwork            @"GameArtwork.pvr.ccz"
 #define kZlibHeroCard               @"HeroCard.pvr.ccz"

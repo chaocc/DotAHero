@@ -7,8 +7,9 @@
 //
 
 #import "BGLoginLayer.h"
+#import "BGClient.h"
 #import "BGRoomListLayer.h"
-#import "BGFileConstants.h"
+#import "BGRoomLayer.h"
 
 @implementation BGLoginLayer
 
@@ -25,44 +26,36 @@ static BGLoginLayer *instanceOfLoginLayer = nil;
 	if ((self = [super init]))
 	{
         instanceOfLoginLayer = self;
-        [self conntectServer];
+        if ([BGClient sharedClient].isSingleMode) {
+//          ...TEMP...
+            CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Single Mode" block:^(id sender) {
+                if ([BGClient sharedClient].isSingleMode) {
+                    [self showRoomListLayer];
+                    [[BGRoomLayer sharedRoomLayer] showGameLayer];
+                }
+            }];
+            CCMenu *menu = [CCMenu menuWithItems:item, nil];
+            menu.position = [CCDirector sharedDirector].screenCenter;
+            [self addChild:menu];
+        } else {
+            [[BGClient sharedClient] conntectServer];
+        }
 	}
     
 	return self;
 }
 
-- (void)conntectServer
+- (NSString *)userName
 {
-    _es = [[ElectroServer alloc] init];
-    NSString *path = [[CCFileUtils sharedFileUtils] fullPathFromRelativePath:kXmlSettings];
-    [_es loadAndConnect:path];
-    
-    [_es.engine addEventListenerWithTarget:self action:@selector(onConnectionResponse:) eventIdentifier:EsMessageType_ConnectionResponse];
+    srandom(time(NULL));
+    return [NSString stringWithFormat:@"Killua%li", lrint(1000 * random())];
 }
 
-- (void)onConnectionResponse:(EsConnectionResponse *)e
+/*
+ * Show room list layer after receive login successful response
+ */
+- (void)showRoomListLayer
 {
-    NSAssert(e.successful, @"Connnection Failed");
-    
-    if (e.successful) {
-        [_es.engine addEventListenerWithTarget:self action:@selector(onLoginResponse:) eventIdentifier:EsMessageType_LoginResponse];
-        
-        EsLoginRequest *lr = [[EsLoginRequest alloc] init];
-        srandom(time(NULL));
-        lr.userName = [NSString stringWithFormat:@"Killua%li", lrint(1000 * random())];
-        [_es.engine sendMessage:lr];
-    } else {
-        CCLabelTTF *label = [CCLabelTTF labelWithString:@"Network Connection Failed"
-                                               fontName:@"Arial"
-                                               fontSize:30.0f];
-        label.position = [CCDirector sharedDirector].screenCenter;
-        [self addChild:label];
-    }
-}
-
-- (void)onLoginResponse:(EsLoginResponse *)e
-{
-    NSAssert(e.successful, @"Login Failed");
     [self addChild:[BGRoomListLayer scene]];
 //	[[CCDirector sharedDirector] replaceScene:transitionScene];
 }

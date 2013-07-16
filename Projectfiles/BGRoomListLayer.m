@@ -7,6 +7,7 @@
 //
 
 #import "BGRoomListLayer.h"
+#import "BGClient.h"
 #import "BGRoomLayer.h"
 
 @interface BGRoomListLayer ()
@@ -39,48 +40,25 @@ static BGRoomListLayer *instanceOfRoomListLayer = nil;
     if (self = [super init]) {
         instanceOfRoomListLayer = self;
         
-        _es = [BGLoginLayer sharedLoginLayer].es;
-        
-        [self joinRoom];
+        if ([BGClient sharedClient].isSingleMode) {
+            [self showRoomLayer];
+        } else {
+            [[BGClient sharedClient] joinRoom];
+        }
     }
     return self;
+}
+
+/*
+ * Show room layer after create a new room or join existing room
+ */
+- (void)showRoomLayer
+{
+    [[CCDirector sharedDirector] replaceScene:[BGRoomLayer scene]];
 }
 
 // ...TODO...
 // showRoomList
 // joinExistingRoom
-
-- (void)joinRoom
-{
-    [_es.engine addEventListenerWithTarget:self action:@selector(onJoinRoomEvent:) eventIdentifier:EsMessageType_JoinRoomEvent];
-    
-    EsCreateRoomRequest *crr = [[EsCreateRoomRequest alloc] init];
-    crr.roomName = @"TestRoom";
-    crr.zoneName = @"TestZone";
-    
-    EsPluginListEntry *pleRoom = [[EsPluginListEntry alloc] init];
-    pleRoom.extensionName = @"ChatLogger";
-    pleRoom.pluginHandle = @"ChatPlugin";
-    pleRoom.pluginName = @"ChatPlugin";
-    
-    EsPluginListEntry *pleGame = [[EsPluginListEntry alloc] init];
-    pleGame.extensionName = @"ChatLogger";
-    pleGame.pluginHandle = @"GamePlugin";
-    pleGame.pluginName = @"GamePlugin";
-    
-    crr.plugins = [NSMutableArray arrayWithObjects:pleRoom, pleGame, nil];
-    
-    [_es.engine sendMessage:crr];
-}
-
-- (void)onJoinRoomEvent:(EsJoinRoomEvent *)e
-{
-	[[CCDirector sharedDirector] replaceScene:[BGRoomLayer scene]];
-    [BGRoomLayer sharedRoomLayer].room = [[_es.managerHelper.zoneManager zoneById:e.zoneId] roomById:e.roomId];
-    
-    if (e.users.count >= 2) {
-        [[BGRoomLayer sharedRoomLayer] sendStartGameRequestWithEventListener:[BGRoomLayer sharedRoomLayer]];
-    }
-}
 
 @end

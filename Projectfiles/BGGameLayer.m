@@ -6,12 +6,12 @@
  */
 
 #import "BGGameLayer.h"
+#import "BGClient.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 #import "BGDensity.h"
 #import "BGFaction.h"
 #import "BGGameMenu.h"
-#import "BGPlayer.h"
 #import "BGMoveComponent.h"
 
 typedef NS_ENUM(NSUInteger, BGPlayerCount) {
@@ -26,8 +26,9 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 
 @interface BGGameLayer ()
 
+@property (nonatomic, strong) NSArray *users;         // [0] is current user
+@property (nonatomic, strong) NSArray *allHeroIds;    // [0] is selected by current user
 @property (nonatomic, strong) NSArray *toBeSelectedHeroIds;
-@property (nonatomic, strong) EsObject *esObject;
 
 @end
 
@@ -56,6 +57,9 @@ static BGGameLayer *instanceOfGameLayer = nil;
 	{
         instanceOfGameLayer = self;
         
+//      All users in the same room
+        _users = [BGClient sharedClient].users;
+        
 //      Enable pre multiplied alpha for PVR textures to avoid artifacts
         [CCTexture2D PVRImagesHavePremultipliedAlpha:YES];
         
@@ -66,13 +70,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [spriteFrameCache addSpriteFramesWithFile:kPlistHeroAvatar];
         [spriteFrameCache addSpriteFramesWithFile:kPlistPlayingCard];
         [spriteFrameCache addSpriteFramesWithFile:kPlistEquipmentAvatar];
-        [spriteFrameCache addSpriteFramesWithFile:kPlistCardEffect];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistDamage];
         
         _gameArtworkBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
         [self addChild:_gameArtworkBatch z:1];
-        
-        _es = [BGRoomLayer sharedRoomLayer].es;
-        _users = _es.managerHelper.userManager.users;
         
         [self addDensity];
         [self addFaction];
@@ -80,85 +81,26 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [self addCardPile];
         [self addPlayers];
         
-//      Send plugin request to server
-        [self sendStartGameRequest];
-	}
+        if ([BGClient sharedClient].isSingleMode) {
+            [self dealHeroCards:[NSArray arrayWithObjects:@(2), @(12), @(17), nil]];
+            [_currentPlayer addPlayingAreaWithPlayingCardIds:nil];
+        }
+}
 
 	return self;
 }
 
-- (void)sendStartGameRequest
-{
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionStartGame forKey:kAction];
-    [[BGRoomLayer sharedRoomLayer] sendPluginRequestWithObject:obj pluginName:@"GamePlugin" andEventListener:self];
-}
-
-- (void)onPluginMessageEvent:(EsPluginMessageEvent *)e
-{
-    _esObject = e.parameters;
-    
-    switch ([e.parameters intWithKey:kAction]) {
-        case kActionSendSortedPlayerNames:
-//            _users = _es.managerHelper.userManager.users;
-            
-            break;
-            
-        case kActionDealHeroCards:      // Set to be selected hero ids for current player
-            [self dealHeroCards];
-            break;
-            
-        case kActionSendAllHeroIds:     // Send hero id selected by all players
-            [self sendAllHeroIds];
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void)dealHeroCards
-{
-    [_players[0] setToBeSelectedHeroIds:[_esObject stringArrayWithKey:kParamToBeSelectedHeroIds]];
-}
-
-- (void)sendAllHeroIds
-{
-    self.allHeroIds = [_esObject stringArrayWithKey:kParamAllHeroIds];
-    [self addHeroAreaForOtherPlayers];
-}
-
-- (void)setAllHeroIds:(NSArray *)allHeroIds
-{
-    NSMutableArray *mutableHeroIds = [allHeroIds mutableCopy];
-    NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
-    
-    [mutableHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj unsignedIntegerValue] == [_players[0] selectedHeroId]) {
-            [mutableHeroIds removeObjectsAtIndexes:idxSet];
-            [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
-            _allHeroIds = mutableHeroIds;
-            return;
-        }
-        
-        [idxSet addIndex:idx];
-    }];
-}
-
-- (void)addHeroAreaForOtherPlayers
-{
-    for (NSUInteger i = 1; i < _players.count; i++) {
-        [_players[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
-    }
-}
-
+/*
+ * Add density node, game background changes according to different density task.
+ */
 - (void)addDensity
 {
-    CCSprite *sprite = [CCSprite spriteWithFile:kImageBackground];
-    sprite.position = [CCDirector sharedDirector].screenCenter;
-    [self addChild:sprite];
+    [self addChild:[BGDensity densityWithDensityCardId:1]];
 }
 
+/*
+ * Add faction node at left up corner
+ */
 - (void)addFaction
 {
     NSArray *roleIds = [NSArray arrayWithObjects:@(0), @(1), @(2), @(3), @(4), @(5), @(6), @(7), nil];
@@ -166,11 +108,17 @@ static BGGameLayer *instanceOfGameLayer = nil;
     [self addChild:faction];
 }
 
+/*
+ * Add game main menu node at right up corner
+ */
 - (void)addMenu
 {
     [self addChild:[BGGameMenu menu]];
 }
 
+/*
+ * Add card pile node below game main menu
+ */
 - (void)addCardPile
 {
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageCardPile];
@@ -179,23 +127,31 @@ static BGGameLayer *instanceOfGameLayer = nil;
     [_gameArtworkBatch addChild:sprite];
 }
 
+/*
+ * Add all players area node
+ */
 - (void)addPlayers
 {
-//  ...TODO... Capacity should be "_users.count"
-    _players = [NSMutableArray arrayWithCapacity:8];
+    _players = [NSMutableArray arrayWithCapacity:_users.count];
     [self addCurrentPlayer];
     [self addOtherPlayers];
 }
 
+/*
+ * Add current player area node
+ */
 - (void)addCurrentPlayer
-{    
+{   
     BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] isCurrentPlayer:YES];
     [self addChild:player];
-    [_players addObject:player];
     
-//    [player setToBeSelectedHeroIds:[NSArray arrayWithObjects:@(2), @(3), @(12), nil]];
+    _currentPlayer = player;
+    [_players addObject:player];
 }
 
+/*
+ * Add other players area node, set different position for each player according to player count.
+ */
 - (void)addOtherPlayers
 {    
     for (NSUInteger i = 1; i < _users.count; i++) {
@@ -260,6 +216,53 @@ static BGGameLayer *instanceOfGameLayer = nil;
             
         default:
             break;
+    }
+}
+
+/*
+ * Deal to be selected hero cards to current player after receive dealHeroCards action
+ */
+- (void)dealHeroCards:(NSArray *)toBeSelectedHeroIds
+{
+    [_currentPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
+}
+
+/*
+ * Send the hero id of all players selected to each player after receive sendAllHeroIds action
+ */
+- (void)sendAllHeroIds:(NSArray *)allHeroIds
+{
+    self.allHeroIds = allHeroIds;
+    [self addHeroAreaForOtherPlayers];
+}
+
+/*
+ * Adjust the hero id's index, put the hero id of current player selected as first one.
+ */
+- (void)setAllHeroIds:(NSArray *)allHeroIds
+{
+    NSMutableArray *mutableHeroIds = [allHeroIds mutableCopy];
+    NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
+    
+    [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj unsignedIntegerValue] == [_currentPlayer selectedHeroId]) {
+            [mutableHeroIds removeObjectsAtIndexes:idxSet];
+            [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
+            _allHeroIds = mutableHeroIds;
+            return;
+        }
+        
+        [idxSet addIndex:idx];
+    }];
+}
+
+/*
+ * Display the hero avatar of other players selected
+ */
+- (void)addHeroAreaForOtherPlayers
+{
+    for (NSUInteger i = 1; i < _players.count; i++) {
+        [_players[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
     }
 }
 

@@ -8,17 +8,18 @@
 
 #import "BGPlayingArea.h"
 #import "BGPlayer.h"
-#import "BGPlayingCard.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 #import "BGMoveComponent.h"
 #import "BGCheckComponent.h"
+#import "BGEffectComponent.h"
 
 @interface BGPlayingArea ()
 
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
 @property (nonatomic, strong) CCMenu *cardMenu;
+@property (nonatomic, strong) NSMutableArray *selectedMenuItems;
 
 @property (nonatomic) CGFloat cardWidth;
 @property (nonatomic) CGFloat cardHeight;
@@ -33,11 +34,12 @@
         _player = player;
         _canBeSelectedCardCount = 1;
         _selectedCards = [NSMutableArray array];
+        _selectedMenuItems = [NSMutableArray array];
         
-        self.playingCards = [NSMutableArray array];
+        _playingCards = [NSMutableArray array];
         [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            BGCard *playingCard = [BGPlayingCard cardWithCardId:[obj integerValue]];
-            [_playingCards addObject:playingCard];
+            BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
+            [_playingCards addObject:card];
         }];
         
         [self initializePlayingCardsWithCardIds:cardIds];
@@ -50,6 +52,10 @@
     return [[self alloc] initWithPlayingCardIds:cardIds ofPlayer:player];
 }
 
+#pragma mark - Playing cards rendering
+/*
+ * Initialize playing cards while game starting
+ */
 - (void)initializePlayingCardsWithCardIds:(NSArray *)cardIds
 {
     _menuFactory = [BGMenuFactory menuFactory];
@@ -114,6 +120,7 @@
     }
 }
 
+#pragma mark - Playing cards update(Draw/Discard)
 /*
  * 1. Run drawing card animation
  * 2. Render drawn playing cards and update buffer
@@ -138,9 +145,9 @@
     [moveComp runActionEaseMoveScaleWithDuration:0.7f
                                            scale:1.0f
                                            block:^{
-                                               [spritBatch removeAllChildrenWithCleanup:YES];
+                                               [spritBatch removeFromParentAndCleanup:YES];
                                                
-//                                             Render drawn playing cards and update buffer
+                                               // Render drawn playing cards and update buffer
                                                NSMutableArray *cards = [NSMutableArray array];
                                                [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
                                                    BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
@@ -157,59 +164,60 @@
 }
 
 /*
- * Remove card rending on UI and update buffer
+ * Remove playing cards for updating buffer
  */
-- (void)removePlayingCardsWithCardIds:(NSArray *)cardIds
-{
-    NSMutableArray *cards = [NSMutableArray array];
-    [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
-        [cards addObject:card];
-    }];
-    
-    [_playingCards removeObjectsInArray:cards];
+- (void)removePlayingCards
+{   
+    [_playingCards removeObjectsInArray:_selectedCards];
+    [_selectedCards removeAllObjects];
+    [_selectedMenuItems removeAllObjects];
 }
 
-// Check if each playing card can be used during different game state
+#pragma mark - Playing cards usability
+/*
+ * Check if each playing card can be used during different game state
+ */
 - (void)checkPlayingCardsUsability
 {
 //    BGCheckComponent *checkComp = [BGCheckComponent checkComponentWithPlayer:_player];
-//    
+    
 //    [_playingCards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 //        BGPlayingCard *card = obj;
 //        
-//        [checkComp performSelector:NSSelectorFromString([obj cardName]) withObject:self];
-//        
-//        switch (card.cardEnum) {
-//            case kPlayingCardNormalAttack:
-//            case kPlayingCardFlameAttack:
-//            case kPlayingCardChaosAttack:
-//                card.canBeUsed = _player.canUseAttack;
-//                break;
-//                
-//            case kPlayingCardEvasion:
-//                card.canBeUsed = NO;
-//                break;
-//                
-//            default:
-//                break;
-//        }
+////        [checkComp performSelector:NSSelectorFromString([obj cardName]) withObject:self];
+////        
+////        switch (card.cardEnum) {
+////            case kPlayingCardNormalAttack:
+////            case kPlayingCardFlameAttack:
+////            case kPlayingCardChaosAttack:
+////                card.canBeUsed = _player.canUseAttack;
+////                break;
+////                
+////            case kPlayingCardEvasion:
+////                card.canBeUsed = NO;
+////                break;
+////                
+////            default:
+////                break;
+////        }
 //        
 ////      If the card can't be used, need set it disable and dark color
-//        CCMenuItemSprite *menuItem = [_cardMenu.children objectAtIndex:card.cardId];
+//        CCMenuItemSprite *menuItem = (CCMenuItemSprite *)[_cardMenu getChildByTag:card.cardId];
 //        menuItem.isEnabled = card.canBeUsed;
 //        if (!menuItem.isEnabled) {
 //            ccColor3B disabledColor = ccc3(120, 120, 120);
 //            menuItem.normalImage.color = disabledColor;
 //            
-//            for (CCSprite *sprite in menuItem.children) {   // Make card figure and suits be gray
+//            for (CCSprite *sprite in menuItem.children) {   // Make card figure and suits to gray
 //                sprite.color = disabledColor;
 //            }
 //        }
 //    }];
 }
 
-// Need disable all playing cards menu after discard is over
+/*
+ * Need disable all playing cards menu after discard is over
+ */
 - (void)disableAllPlayingCardsMenu
 {
     _cardMenu.enabled = NO;
@@ -224,35 +232,45 @@
     }
 }
 
-#pragma mark - Menu Factory Delegate
+#pragma mark - Playing cards selection
+/*
+ * Menu delegate method is called while selecting a playing card
+ */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     NSAssert([menuItem isKindOfClass:[CCMenuItem class]], @"Not a CCMenuItem");
-    CGFloat height = _player.playerAreaSize.height*0.13;
+    CGFloat moveHeight = _player.playerAreaSize.height*0.13;
     
-    BGPlayingCard *card = _playingCards[menuItem.tag];
+    NSUInteger idx = [_cardMenu.children indexOfObject:menuItem];
+    BGPlayingCard *card = _playingCards[idx];
     card.isSelected = !card.isSelected;
     
+//  Need move up/down while a card is selected/deselected
     if (card.isSelected) {
-        menuItem.position = ccpAdd(menuItem.position, ccp(0.0f, height));
+        menuItem.position = ccpAdd(menuItem.position, ccp(0.0f, moveHeight));
+        [_selectedMenuItems addObject:menuItem];
         [_selectedCards addObject:card];
     } else {
-        menuItem.position = ccpSub(menuItem.position, ccp(0.0f, height));
+        menuItem.position = ccpSub(menuItem.position, ccp(0.0f, moveHeight));
+        [_selectedMenuItems removeObject:menuItem];
         [_selectedCards removeObject:card];
     }
     
+//  If selected cards count great than maximum, deselect and remove the first selected card.
     if (_selectedCards.count > _canBeSelectedCardCount)
     {
         for (CCMenuItem *item in _cardMenu.children) {
             if (item.tag == [_selectedCards[0] cardId]) {
                 [_selectedCards[0] setIsSelected:NO];
-                item.position = ccpSub(item.position, ccp(0.0f, height));
+                item.position = ccpSub(item.position, ccp(0.0f, moveHeight));
                 break;
             }
         }
+        [_selectedMenuItems removeObjectAtIndex:0];
         [_selectedCards removeObjectAtIndex:0];
     }
     
+//  Enable playing menu okay button only if the selected cards count is not zero
     CCMenuItem *item = [_player.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
     item.isEnabled = (_selectedCards.count != 0);
     
@@ -263,34 +281,46 @@
 //            item.isEnabled = isEnabled;
 //        }
 //    }
+}
+
+/*
+ * Use playing cards and run move action
+ */
+- (void)usePlayingCards
+{
+    CGFloat menuWidth = [_selectedMenuItems.lastObject contentSize].width;
+    CGFloat startX = (SCREEN_WIDTH - menuWidth*(_selectedMenuItems.count - 1)) / 2;
+    [_selectedMenuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(startX + menuWidth*idx, SCREEN_HEIGHT*0.55)
+                                                             ofNode:obj];
+        [moveComp runActionEaseMoveScaleWithDuration:1.0f
+                                               scale:1.0f
+                                               block:^{
+                                                   [obj removeFromParentAndCleanup:YES];
+                                                   [self adjustPositionOfPlayingCards];
+                                               }];
+    }];
     
-//    BGEquipmentArea *equip = [BGEquipmentArea equipmentAreaWithPlayer:_player];
-//    [equip addEquipmentWithCardId:27];
-//    [self addChild:equip];
+    [self removePlayingCards];   // Update playing card buffer
+}
+
+/*
+ * Select a playing card to compare the card figure
+ */
+- (void)compareCardFigure
+{
+    [self usePlayingCards];
+}
+
+/*
+ * Use playing cards and run effect animation
+ */
+- (void)usePlayingCardsAndRunAnimation
+{
+    BGEffectComponent *effect = [BGEffectComponent effectCompWithPlayingCardEnum:[_selectedCards.lastObject cardEnum]];
+    [self addChild:effect];
     
-//    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.55)
-//                                                         ofNode:menuItem];
-//    [moveComp runActionEaseMoveScaleWithDuration:1.0f
-//                                           scale:1.0f
-//                                           block:^{
-//                                               [_cardMenu removeChild:menuItem cleanup:YES];
-//                                               [self adjustPositionOfPlayingCards];
-//                                               
-//                                               NSArray *cardIds = [NSArray arrayWithObject:@(menuItem.tag)];
-//                                               [self removePlayingCardsWithCardIds:cardIds];
-//                                               
-//    CCSpriteFrameCache *spriteFrameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
-//    [spriteFrameCache addSpriteFramesWithFile:@"CardEffect.plist"];
-//
-//    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"NormalAttack0.png"];
-////    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:@"HealingSalve0.png"];
-//    sprite.position = [CCDirector sharedDirector].screenCenter;
-//
-//    CCAnimation *animation = [CCAnimation animationWithFrames:@"NormalAttack" frameCount:9 delay:0.08f];
-//    CCAnimate *animate = [CCAnimate actionWithAnimation:animation];
-//    [sprite runAction:animate];
-//    [self addChild:sprite];
-//                                           }];
+    [self usePlayingCards];
 }
 
 @end

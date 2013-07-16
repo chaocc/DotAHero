@@ -41,6 +41,7 @@
     return [[self alloc] initWithHeroCardId:cardId ofPlayer:player];
 }
 
+#pragma mark - Hero avatar/blood/anger rendering
 /*
  * 1. Current player's position is (0,0) at left-bottom corner, hero area's position also (0,0).
  * 2. Other player's position is setted(not 0) in class BGGameLayer, its position should be the center of player area. 
@@ -112,13 +113,38 @@
 //    }
 }
 
-#pragma mark - Menu Factory Delegate
+- (void)addBloodPointWithCount:(NSUInteger)count
+{
+    
+}
+
+- (void)subtractBloodPointWithCount:(NSUInteger)count
+{
+    
+}
+
+- (void)addAngerPointWithCount:(NSUInteger)count
+{
+    
+}
+
+- (void)subtractAngerPointWithCount:(NSUInteger)count
+{
+    
+}
+
+#pragma mark - Hero skill using
+/*
+ * Menu delegate method is called while touching a skill
+ */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     NSAssert([menuItem isKindOfClass:[CCMenuItem class]], @"Not a CCMenuItem");
     
-    NSArray *playingCardIds = [NSArray arrayWithObjects:@(rand()%7), @(rand()%7), nil];
+    NSArray *playingCardIds = [NSArray arrayWithObjects:@(0), @(9), @(46), @(74), nil];
     [_player.playingArea addPlayingCardsWithCardIds:playingCardIds];
+    
+    [[BGGameLayer sharedGameLayer].targetPlayerNames addObject:_player.playerName];
 }
 
 - (void)useSkill

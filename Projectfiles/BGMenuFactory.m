@@ -39,6 +39,7 @@
                                                             block:^(id sender) {
                                                                 [_delegate menuItemTouched:sender];
                                                             }];
+    menuItem.tag = 0;
     return [CCMenu menuWithItems:menuItem, nil];
 }
 
@@ -106,7 +107,7 @@
                                                                     [_delegate menuItemTouched:sender];
                                                                 }];
         menuItem.tag = [obj cardId];
-        [menu addChild:menuItem z:menu.children.count+idx];
+        [menu addChild:menuItem z:menu.children.count];
     }];
 }
 

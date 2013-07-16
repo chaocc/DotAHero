@@ -34,7 +34,7 @@
     return [[self alloc] init];
 }
 
-#pragma mark - MenuFactory Delegate
+#pragma mark - Game menu delegate method
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
 //  ...TODO...

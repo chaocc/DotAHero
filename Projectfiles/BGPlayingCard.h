@@ -92,26 +92,6 @@ typedef NS_ENUM(NSUInteger, BGCardSuits) {
     kCardSuitsClubs                     // 梅花
 };
 
-typedef NS_ENUM(NSUInteger, BGWhenToUse) {
-    kDeterming = 1,         // 判定阶段
-    kDrawing = 2,           // 摸牌阶段
-    kPlaying = 3,           // 出牌阶段
-    kDiscarding = 4,        // 弃牌阶段
-    kTurnEnding = 5,        // 回合结束阶段
-    
-    kIsBeingAttack = 6,     // 被攻击生效前
-    kUsingMagicCard = 7,    // 魔法牌生效前
-    ktargetOfMagicCard = 8, // 成为任意1张魔法牌的目标时
-    kWasDamaged = 9,        // 受到1次伤害时
-    kIsDying = 10,          // 濒死状态
-    kIsDead  = 11,          // 死亡
-    
-    kWasAttacked = 12,      // 使用攻击命中后
-    kDealingDamage = 13,    // 造成一次伤害
-    kWasDamangedX = 14,     // 受到伤害大于1
-    kk
-};
-
 typedef NS_ENUM(NSUInteger, BGCardType) {
     kCardTypeBasic,                     // 基本牌
     kCardTypeMagic,                     // 魔法牌

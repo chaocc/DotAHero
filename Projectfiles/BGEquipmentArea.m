@@ -32,6 +32,9 @@
     return [[self alloc] initWithPlayer:player];
 }
 
+/*
+ * Add a equipment card while euqipping
+ */
 - (void)addEquipmentWithCardId:(NSInteger)cardId
 {
     BGPlayingCard *card = [BGPlayingCard cardWithCardId:cardId];
@@ -39,7 +42,9 @@
     [self updateEquipmentBufferWithCard:card];
 }
 
-//  Update(Add/Replace) card to equipment buffer
+/*
+ * Update(Add/Replace) card to equipment buffer
+ */
 - (void)updateEquipmentBufferWithCard:(BGPlayingCard *)card
 {
     if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
@@ -64,6 +69,9 @@
     }
 }
 
+/*
+ * Render the equipment card after equipped
+ */
 - (void)renderEquipmentWithCard:(BGPlayingCard *)card
 {
     CCNode *equipmentMenu = nil;
@@ -102,7 +110,10 @@
     [self addChild:equipmentMenu z:card.equipmentType];
 }
 
-#pragma mark - Menu Factory Delegate
+#pragma mark - Equipment card using
+/*
+ * Menu delegate method is called while touching a equipment
+ */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     

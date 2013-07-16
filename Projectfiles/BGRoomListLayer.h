@@ -7,13 +7,12 @@
 //
 
 #import "CCLayer.h"
-#import "BGLoginLayer.h"
 
 @interface BGRoomListLayer : CCLayer
 
-@property (strong, nonatomic, readonly) ElectroServer *es;
-
 + (BGRoomListLayer *)sharedRoomListLayer;
 + (id)scene;
+
+- (void)showRoomLayer;
 
 @end

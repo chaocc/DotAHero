@@ -55,6 +55,9 @@
     return [[self alloc] initWithRoleIds:roleIds];
 }
 
+/*
+ * Render all factions at the left up corner
+ */
 - (void)renderFaction
 {
     CCSpriteBatchNode *spriteBatch = [BGGameLayer sharedGameLayer].gameArtworkBatch;

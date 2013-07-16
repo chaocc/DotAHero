@@ -6,22 +6,24 @@
  */
 
 #import "kobold2d.h"
-#import "BGRoomLayer.h"
+#import "BGPlayer.h"
 
 @interface BGGameLayer : CCLayer
 
 @property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
 
-@property (strong, nonatomic, readonly) ElectroServer *es;
-@property (nonatomic, strong, readonly) NSArray *users;               // [0] is current user
-@property (nonatomic, strong, readonly) NSArray *allHeroIds;          // [0] is selected by current user
-@property (nonatomic, strong, readonly) NSMutableArray *players;      // Player instances
+@property (nonatomic, strong, readonly) NSMutableArray *players;    // Player instances
+@property (nonatomic, strong, readonly) BGPlayer *currentPlayer;    // Player Self
+@property (nonatomic, copy) NSString *playerName;                   // 回合开始/出牌的玩家
+@property (nonatomic, strong) NSMutableArray *targetPlayerNames;    // 指定的目标玩家们
 
 @property (nonatomic, readonly) ccTime gameDuration;
 
 + (BGGameLayer *)sharedGameLayer;
 + (id)scene;
 
+- (void)dealHeroCards:(NSArray *)toBeSelectedHeroIds;
+- (void)sendAllHeroIds:(NSArray *)allHeroIds;
 - (void)transferRoleCardToNextPlayer;
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "BGPlayingMenu.h"
+#import "BGClient.h"
 #import "BGPlayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
@@ -35,9 +36,17 @@
     return [[self alloc] initWithMenuType:menuType ofPlayer:player];
 }
 
+#pragma mark - Playing menu items
+/*
+ * Add menu items according to different menu type
+ */
 - (void)addMenuItems
 {
     switch (_menuType) {
+        case kPlayingMenuTypeCardCutting:
+            [self createOkayPlayingMenu];
+            break;
+            
         case kPlayingMenuTypeCardUsing:
             [self createPlayingMenuForUsing];
             break;
@@ -51,6 +60,9 @@
     }
 }
 
+/*
+ * Create menu items with Okay/Cancel/Discard
+ */
 - (void)createPlayingMenuForUsing
 {
     NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageCancel, kImageDiscard, nil];
@@ -69,6 +81,9 @@
     menuFactory.delegate = self;
 }
 
+/*
+ * Create menu items with Okay/Cancel
+ */
 - (void)createPlayingMenuForPlaying
 {
     NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageCancel, nil];
@@ -87,6 +102,9 @@
     menuFactory.delegate = self;
 }
 
+/*
+ * Create menu item with Okay
+ */
 - (void)createOkayPlayingMenu
 {
     BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
@@ -100,17 +118,19 @@
     menuFactory.delegate = self;
 }
 
-#pragma mark - Menu Factory Delegate
+#pragma mark - Menu item touching
+/*
+ * Menu delegate method is called while touching a item
+ */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     switch (menuItem.tag) {
         case kPlayingMenuItemTagOkay:
-//          ...TODO...
-//          Send playing cards to server
+            [self touchOkayMenuItem];
             break;
             
         case kPlayingMenuItemTagDiscard:
-            [_menu removeAllChildrenWithCleanup:YES];
+            [_menu removeFromParentAndCleanup:YES];
             [self createOkayPlayingMenu];
             break;
             
@@ -119,5 +139,40 @@
     }
 }
 
+/*
+ * Touch okay menu item. Call method according to different menu type.
+ */
+- (void)touchOkayMenuItem
+{
+    switch (_menuType) {
+        case kPlayingMenuTypeCardCutting:
+            [self cutCard];
+            break;
+            
+        case kPlayingMenuTypeCardUsing:
+            [self useCard];
+            break;
+            
+        case kPlayingMenuTypeCardPlaying:
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)cutCard
+{
+    [[BGClient sharedClient] sendCutCardRequestWithPlayingCardId:[_player.playingArea.selectedCards.lastObject cardId]];
+    [_player.playingArea compareCardFigure];    // 通过拼点的方式切牌
+//    [self removeFromParentAndCleanup:YES];
+}
+
+- (void)useCard
+{
+    [[BGClient sharedClient] sendUseCardRequestWithPlayingCardId:[_player.playingArea.selectedCards.lastObject cardId]];
+    [_player.playingArea usePlayingCardsAndRunAnimation];
+}
 
 @end

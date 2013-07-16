@@ -7,11 +7,10 @@
 //
 
 #import "BGRoomLayer.h"
+#import "BGClient.h"
 #import "BGGameLayer.h"
 
 @interface BGRoomLayer ()
-
-@property (nonatomic) BOOL isRoomOwner;
 
 @end
 
@@ -39,68 +38,40 @@ static BGRoomLayer *instanceOfRoomLayer = nil;
     if (self = [super init]) {
         instanceOfRoomLayer = self;
         
-        _es = [BGLoginLayer sharedLoginLayer].es;
-        
-        if (_es.managerHelper.userManager.users.count == 1) {
-            _isRoomOwner = YES;
-        }
-        
-        [_es.engine addEventListenerWithTarget:self action:@selector(onUserUpdateEvent:) eventIdentifier:EsMessageType_UserUpdateEvent];
-        
+//      ...TEMP...
         CCLabelTTF *label = [CCLabelTTF labelWithString:@"Wait for another player joining the game..."
                                                fontName:@"Arial"
                                                fontSize:30.0f];
-        label.position = [CCDirector sharedDirector].screenCenter;
+        CGSize screenSize = [CCDirector sharedDirector].winSize;
+        label.position = ccp(screenSize.width/2, screenSize.height*0.6);
         [self addChild:label];
+        
+        CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Single Player Test" block:^(id sender) {
+            [self readyStartGame];
+        }];
+        CCMenu *menu = [CCMenu menuWithItems:item, nil];
+        menu.position = ccp(screenSize.width/2, screenSize.height*0.4);
+        [self addChild:menu];
     }
     return self;
 }
 
-- (void)onUserUpdateEvent:(EsZoneUpdateEvent *)e
-{
-    if (_es.managerHelper.userManager.users.count >= 2) {
-        [self sendStartGameRequestWithEventListener:self];
-    }
-}
-
-// Send plugin request to server
-- (void)sendPluginRequestWithObject:(EsObject *)obj pluginName:(NSString *)name andEventListener:(id)target
-{
-    [_es.engine addEventListenerWithTarget:target action:@selector(onPluginMessageEvent:) eventIdentifier:EsMessageType_PluginMessageEvent];
-    
-    EsPluginRequest *pr = [[EsPluginRequest alloc] init];
-    pr.pluginName = name;
-    pr.roomId = _room.roomId;
-    pr.zoneId = _room.zoneId;
-    pr.parameters = obj;
-    [_es.engine sendMessage:pr];
-}
-
-- (void)sendStartGameRequestWithEventListener:(id)target
-{
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionReadyStartGame forKey:kAction];
-    
-    [self sendPluginRequestWithObject:obj pluginName:@"ChatPlugin" andEventListener:target];
-}
-
-- (void)onPluginMessageEvent:(EsPluginMessageEvent *)e
+/*
+ * Prepare stat game after receive readyStatGame action
+ */
+- (void)readyStartGame
 {
     [self removeAllChildrenWithCleanup:YES];
     
-    [_es.engine addEventListenerWithTarget:self action:@selector(onPublicMessageEvent:) eventIdentifier:EsMessageType_PublicMessageEvent];
+    [[BGClient sharedClient] addPublicMessageEventListener];
+    [[BGClient sharedClient] addGamePluginMessageEventListener];
     
+//  ...TEMP...
     if (_isRoomOwner)
     {
         CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Start Game" block:^(id sender) {
-//          Send startGame public message to server
-            EsPublicMessageRequest *pmr = [[EsPublicMessageRequest alloc] init];
-            pmr.roomId = _room.roomId;
-            pmr.zoneId = _room.zoneId;
-            EsObject *obj = [[EsObject alloc] init];
-            [obj setInt:kActionStartGame forKey:kAction];
-            pmr.esObject = obj;
-            [_es.engine sendMessage:pmr];
+            [[BGClient sharedClient] sendStartGamePublicMessage];
+            [[BGClient sharedClient] sendStartGameRequest];
         }];
         CCMenu *menu = [CCMenu menuWithItems:item, nil];
         [self addChild:menu];
@@ -115,17 +86,16 @@ static BGRoomLayer *instanceOfRoomLayer = nil;
     }
 }
 
-- (void)onPublicMessageEvent:(EsPublicMessageEvent *)e
+/*
+ * Show game layer after receive start game public message
+ */
+- (void)showGameLayer
 {
     [self removeAllChildrenWithCleanup:YES];
     
     CCScene *scene = [BGGameLayer node];
-    CCTransitionSlideInR *transitionScene = [CCTransitionSlideInR transitionWithDuration:0.5f scene:scene];
+    CCTransitionSlideInR *transitionScene = [CCTransitionSlideInR transitionWithDuration:0.2f scene:scene];
     [[CCDirector sharedDirector] replaceScene:transitionScene];
 }
-
-// ...TODO...
-// checkRoomOwner
-// if yes, display start game button
 
 @end
