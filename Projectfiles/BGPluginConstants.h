@@ -16,59 +16,61 @@
 // Actions
 #define kAction         @"action"   // 标识要做什么事情
 typedef NS_ENUM(NSInteger, BGAction) {
-    kActionReadyStartGame = 0,                      // 准备开始游戏
-    kActionStartGame = 1,                           // 开始游戏
-    kActionDealHeroCard = 2,                        // 发英雄牌
-    kActionSelectHeroCard = 3,                      // 选中一个英雄
-    kActionSendAllHeroIds = 4,                      // 发送所有玩家选中的英雄
-    kActionDealRoleCard = 5,                        // 发角色牌
-    kActionDealPlayingCard = 6,                     // 发手牌
+    kActionInvalid = 0,
+    kActionReadyStartGame = 1,                      // 准备开始游戏
+    kActionStartGame = 2,                           // 开始游戏
+    kActionDealHeroCard = 3,                        // 发英雄牌
+    kActionSelectHeroCard = 4,                      // 选中一个英雄
+    kActionSendAllHeroIds = 5,                      // 发送所有玩家选中的英雄
+    kActionDealRoleCard = 6,                        // 发角色牌
+    kActionDealPlayingCard = 7,                     // 发手牌
     
-    kActionStartTurn = 7,                           // 回合开始
-    kActionDrawPlayingCard = 8,                     // 开始摸牌
-    kActionCutCard = 9,                             // 切牌(从牌堆抽一张牌)
-    kActionSendPlayingCard = 10,                    // 发送手牌给玩家
-    kActionOkToUseCard = 11,                        // 确定使用手牌
-    kActionOkToPlayCard = 12,                       // 确定打出手牌
-    kActionCancelCard = 13,                         // 受到伤害
+    kActionStartTurn = 8,                           // 回合开始
+    kActionDrawPlayingCard = 9,                     // 开始摸牌
+    kActionCutCard = 10,                            // 切牌(从牌堆抽一张牌)
+    kActionSendPlayingCard = 11,                    // 发送手牌给玩家
+    kActionOkToUseCard = 12,                        // 确定使用手牌
+    kActionOkToPlayCard = 13,                       // 确定打出手牌
+    kActionCancelCard = 14,                         // 取消使用手牌
     
     
-    kActionRestoreBlood = 14,                       // 恢复血量
-    kActionGotAnger = 15,                           // 得到怒气
-    kActionLostAnger = 16,                          // 失去怒气
-    kActionGotSpecificCard = 17,                    // 获得卡牌(比如强化的缴械)
-    kActionLostEquipment = 18,                      // 失去装备
-    
-    kActionWaiting,                                 // 等待
-    kActionOkToDiscard,                             // 确定弃牌
-    kActionContinueDiscard,                         // 继续弃牌
-    kActionCancel,                                  // 取消
-    kActionTriggerHeroSkill,                        // 触发英雄技能
-    kActionUseHeroSkill,                            // 使用英雄技能
-    kActionTriggerEquipmentSkill,                   // 触发装备技能
-    kActionUseEquipmentSkill                        // 使用装备技能
+//    kActionRestoreBlood = 15,                       // 恢复血量
+//    kActionGotAnger = 16,                           // 得到怒气
+//    kActionLostAnger = 17,                          // 失去怒气
+//    kActionGotSpecificCard = 18,                    // 获得卡牌(比如强化的缴械)
+//    kActionLostEquipment = 19,                      // 失去装备
+//    
+//    kActionWaiting,                                 // 等待
+//    kActionOkToDiscard,                             // 确定弃牌
+//    kActionContinueDiscard,                         // 继续弃牌
+//    kActionCancel,                                  // 取消
+//    kActionTriggerHeroSkill,                        // 触发英雄技能
+//    kActionUseHeroSkill,                            // 使用英雄技能
+//    kActionTriggerEquipmentSkill,                   // 触发装备技能
+//    kActionUseEquipmentSkill                        // 使用装备技能
 };
 
 #define kPlayerState    @"playerState"  // 标识玩家状态
-typedef NS_ENUM(NSUInteger, BGPlayerState) {
-    kTurnStarting = 1,      // 回合开始
-    kDeterming = 2,         // 判定阶段
-    kDrawing = 3,           // 摸牌阶段
-    kPlaying = 4,           // 出牌阶段
-    kDiscarding = 5,        // 弃牌阶段
-    kTurnEnding = 6,        // 回合结束阶段
+typedef NS_ENUM(NSInteger, BGPlayerState) {
+    kPlayerStateInvalid = 0,
+    kPlayerStateTurnStarting = 1,                   // 回合开始
+    kPlayerStateDeterming = 2,                      // 判定阶段
+    kPlayerStateDrawing = 3,                        // 摸牌阶段
+    kPlayerStatePlaying = 4,                        // 出牌阶段
+    kPlayerStateDiscarding = 5,                     // 弃牌阶段
+    kPlayerStateTurnEnding = 6,                     // 回合结束阶段
     
-    kIsBeingAttack = 7,     // 被攻击生效前
-    kUsingMagicCard = 8,    // 魔法牌生效前
-    kTargetOfMagicCard = 9, // 成为任意1张魔法牌的目标时
-    kWasDamaged = 10,       // 受到1次伤害时
-    kIsDying = 11,          // 濒死状态
-    kIsDead  = 12,          // 死亡
-    
-    kWasAttacked = 13,      // 使用攻击命中后
-    kDealingDamage = 14,    // 造成一次伤害
-    kWasDamangedX = 15,     // 受到伤害大于1
-    kk
+    kPlayerStateIsBeingAttacked = 7,                // 被攻击生效前
+    kPlayerStateUsingMagicCard = 8,                 // 魔法牌生效前
+    kPlayerStateUsingHeroSkill = 9,                 // 英雄技能生效前
+    kPlayerStateWasAttacked = 10,                   // 受到攻击的伤害
+    kPlayerStateWasDamaged = 11,                    // 受到1次伤害
+    kPlayerStateDealingDamage = 12,                 // 造成1次伤害
+    kPlayerStateIsDying = 13,                       // 濒死状态
+    kPlayerStateAttacked = 14,                      // 攻击造成1次伤害
+    kPlayerStateIsDead = 15,                        // 已死亡
+    kPlayerStateTargetOfMagicCard = 16,             // 成为任意1张魔法牌的目标时
+    kPlayerStateTargetOfHeroSkill = 17              // 成为任意英雄技能的目标时
 };
 
 // Parameters

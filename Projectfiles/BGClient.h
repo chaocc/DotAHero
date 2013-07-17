@@ -27,9 +27,10 @@
 
 - (void)addGamePluginMessageEventListener;
 - (void)sendStartGameRequest;
-- (void)sendSelectHeroCardRequestWithHeroId:(NSUInteger)heroId;
-- (void)sendCutCardRequestWithPlayingCardId:(NSUInteger)cardId;
-- (void)sendUseCardRequestWithPlayingCardId:(NSUInteger)cardId;
+- (void)sendSelectHeroCardRequestWithHeroId:(NSInteger)heroId;
+- (void)sendCutCardRequestWithPlayingCardId:(NSInteger)cardId;
+- (void)sendUseCardRequestWithPlayingCardId:(NSInteger)cardId;
+- (void)sendCancelCardRequest;
 
 - (void)addPublicMessageEventListener;
 - (void)sendStartGamePublicMessage;

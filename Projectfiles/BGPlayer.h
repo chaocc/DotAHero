@@ -22,7 +22,7 @@
 @property (nonatomic) BGPlayerState playerState;
 
 @property (nonatomic, strong) NSArray *toBeSelectedHeroIds;
-@property (nonatomic, readonly) NSUInteger selectedHeroId;
+@property (nonatomic, readonly) NSInteger selectedHeroId;
 //@property (nonatomic, strong) NSArray *playingCardIds;  // 起始手牌
 
 @property (nonatomic, strong, readonly) BGHeroArea *heroArea;
@@ -38,12 +38,13 @@
 
 + (id)playerWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag;
 
-- (void)addHeroAreaWithHeroId:(NSUInteger)heroId;
+- (void)addHeroAreaWithHeroId:(NSInteger)heroId;
 - (void)addPlayingAreaWithPlayingCardIds:(NSArray *)cardIds;
 - (void)addPlayingMenuOfCardUsing;
+- (void)addPlayingMenuOfCardPlaying;
 - (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
 
 - (void)drawPlayingCardIds:(NSArray *)cardIds;
-- (void)updatePlayingCardCountBy:(NSUInteger)count;
+- (void)updatePlayingCardCountBy:(NSInteger)count;
 
 @end

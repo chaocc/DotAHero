@@ -27,13 +27,11 @@
 @property (nonatomic) BGHeroSkill usedSkill;
 
 
-- (id)initWithHeroCardId:(NSUInteger)cardId ofPlayer:(BGPlayer *)player;
-+ (id)heroAreaWithHeroCardId:(NSUInteger)cardId ofPlayer:(BGPlayer *)player;
+- (id)initWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player;
++ (id)heroAreaWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player;
 
-- (void)addBloodPointWithCount:(NSUInteger)count;
-- (void)subtractBloodPointWithCount:(NSUInteger)count;
-- (void)addAngerPointWithCount:(NSUInteger)count;
-- (void)subtractAngerPointWithCount:(NSUInteger)count;
+- (void)updateBloodPointWithCount:(NSInteger)count;
+- (void)updateAngerPointWithCount:(NSInteger)count;
 
 - (void)useSkill;
 

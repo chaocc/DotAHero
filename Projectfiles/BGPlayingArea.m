@@ -13,6 +13,7 @@
 #import "BGMoveComponent.h"
 #import "BGCheckComponent.h"
 #import "BGEffectComponent.h"
+#import "BGPluginConstants.h"
 
 @interface BGPlayingArea ()
 
@@ -80,6 +81,7 @@
     NSUInteger idx = 0;
     for (NSUInteger i = (_cardMenu.children.count-cards.count); i < _cardMenu.children.count; i++) {
         CCMenuItem *menuItem = [_cardMenu.children objectAtIndex:i];
+        NSAssert(menuItem, @"Nil in selector %@", NSStringFromSelector(_cmd));
         
         CCSprite *figureSprite = [CCSprite spriteWithSpriteFrameName:[cards[idx] figureImageName]];
         figureSprite.position = ccp(_cardWidth*0.11, _cardHeight*0.92);
@@ -238,14 +240,24 @@
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
-    NSAssert([menuItem isKindOfClass:[CCMenuItem class]], @"Not a CCMenuItem");
-    CGFloat moveHeight = _player.playerAreaSize.height*0.13;
+    NSAssert(_selectedCards, @"_selectedCards Nil in %@", NSStringFromSelector(_cmd));
+    NSAssert(_selectedMenuItems, @"_selectedMenuItems Nil in %@", NSStringFromSelector(_cmd));
     
-    NSUInteger idx = [_cardMenu.children indexOfObject:menuItem];
-    BGPlayingCard *card = _playingCards[idx];
-    card.isSelected = !card.isSelected;
+    CGFloat moveHeight = _player.playerAreaSize.height*0.13;
+    BGPlayingCard *card = nil;
+    
+    @try {
+        NSUInteger idx = [_cardMenu.children indexOfObject:menuItem];
+        card = _playingCards[idx];
+        NSAssert(card, @"card Nil in %@", NSStringFromSelector(_cmd));
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Catched Exception: %@", exception.description);
+    }
+
     
 //  Need move up/down while a card is selected/deselected
+    card.isSelected = !card.isSelected;
     if (card.isSelected) {
         menuItem.position = ccpAdd(menuItem.position, ccp(0.0f, moveHeight));
         [_selectedMenuItems addObject:menuItem];
@@ -259,20 +271,30 @@
 //  If selected cards count great than maximum, deselect and remove the first selected card.
     if (_selectedCards.count > _canBeSelectedCardCount)
     {
-        for (CCMenuItem *item in _cardMenu.children) {
-            if (item.tag == [_selectedCards[0] cardId]) {
-                [_selectedCards[0] setIsSelected:NO];
-                item.position = ccpSub(item.position, ccp(0.0f, moveHeight));
-                break;
+        @try {
+            for (CCMenuItem *item in _cardMenu.children) {
+                if (item.tag == [_selectedCards[0] cardId]) {
+                    [_selectedCards[0] setIsSelected:NO];
+                    item.position = ccpSub(item.position, ccp(0.0f, moveHeight));
+                    break;
+                }
             }
+            [_selectedMenuItems removeObjectAtIndex:0];
+            [_selectedCards removeObjectAtIndex:0];
         }
-        [_selectedMenuItems removeObjectAtIndex:0];
-        [_selectedCards removeObjectAtIndex:0];
+        @catch (NSException *exception) {
+            NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
+        }
     }
     
 //  Enable playing menu okay button only if the selected cards count is not zero
     CCMenuItem *item = [_player.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
-    item.isEnabled = (_selectedCards.count != 0);
+    NSAssert(item, @"item Nil in %@", NSStringFromSelector(_cmd));
+//    if (_player.playerState != kPlayerStatePlaying) {
+        item.isEnabled = (_selectedCards.count != 0);
+//    }
+
+    
     
 //    BOOL isEnabled = (_canBeSelectedCardCount < 1) ? YES : NO;
 //    
@@ -290,10 +312,11 @@
 {
     CGFloat menuWidth = [_selectedMenuItems.lastObject contentSize].width;
     CGFloat startX = (SCREEN_WIDTH - menuWidth*(_selectedMenuItems.count - 1)) / 2;
+    
     [_selectedMenuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(startX + menuWidth*idx, SCREEN_HEIGHT*0.55)
                                                              ofNode:obj];
-        [moveComp runActionEaseMoveScaleWithDuration:1.0f
+        [moveComp runActionEaseMoveScaleWithDuration:0.5f
                                                scale:1.0f
                                                block:^{
                                                    [obj removeFromParentAndCleanup:YES];

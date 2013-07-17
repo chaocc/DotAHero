@@ -10,7 +10,7 @@
 
 @implementation BGCard
 
-- (id)initWithCardId:(NSUInteger)aCardId
+- (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super init]) {
         _cardId = aCardId;
@@ -18,7 +18,7 @@
     return self;
 }
 
-+ (id)cardWithCardId:(NSUInteger)aCardId
++ (id)cardWithCardId:(NSInteger)aCardId
 {
     return [[self alloc] initWithCardId:aCardId];
 }

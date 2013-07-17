@@ -16,12 +16,13 @@
 
 @implementation BGRoleCard
 
-- (id)initWithCardId:(NSUInteger)aCardId
+- (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"RoleCardArray" ofType:@"plist"];
         self.roleArray = [NSArray arrayWithContentsOfFile:path];
-        NSAssert((aCardId < _roleArray.count), @"Invalid Role card id");
+        NSAssert((aCardId > kRoleCardDefault) &&
+                 (aCardId < (NSInteger)_roleArray.count), @"Invalid Role card id in %@", NSStringFromSelector(_cmd));
         NSDictionary *dictionary = _roleArray[aCardId];
         
         _cardEnum = [dictionary[kCardEnum] integerValue];
@@ -31,7 +32,7 @@
     return self;
 }
 
-+ (id)cardWithCardId:(NSUInteger)aCardId
++ (id)cardWithCardId:(NSInteger)aCardId
 {
     return [[self alloc]initWithCardId:aCardId];
 }

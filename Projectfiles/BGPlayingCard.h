@@ -20,7 +20,8 @@
 #define kAttackRange            @"attackRange"
 #define kOnlyEquipOne           @"onlyEquipOne"
 
-typedef NS_ENUM(NSUInteger, BGPlayingCardEnum) {
+typedef NS_ENUM(NSInteger, BGPlayingCardEnum) {
+    kPlayingCardDefault = -1,
     kPlayingCardNormalAttack,           // 普通攻击
     kPlayingCardFlameAttack,            // 火焰攻击
     kPlayingCardChaosAttack,            // 混乱攻击
@@ -64,12 +65,12 @@ typedef NS_ENUM(NSUInteger, BGPlayingCardEnum) {
     kPlayingCardTalismanOfEvasion       // 闪避护符
 };
 
-typedef NS_ENUM(NSUInteger, BGCardColor) {
+typedef NS_ENUM(NSInteger, BGCardColor) {
     kCardColorRed,                      // 红色
     kCardColorBlack                     // 黑色
 };
 
-typedef NS_ENUM(NSUInteger, BGCardFigure) {
+typedef NS_ENUM(NSInteger, BGCardFigure) {
     kCardFigure1 = 1,
     kCardFigure2,
     kCardFigure3,
@@ -85,21 +86,21 @@ typedef NS_ENUM(NSUInteger, BGCardFigure) {
     kCardFigure13
 };
 
-typedef NS_ENUM(NSUInteger, BGCardSuits) {
+typedef NS_ENUM(NSInteger, BGCardSuits) {
     kCardSuitsHearts,                   // 红桃
     kCardSuitsDiamonds,                 // 方块
     kCardSuitsSpades,                   // 黑桃
     kCardSuitsClubs                     // 梅花
 };
 
-typedef NS_ENUM(NSUInteger, BGCardType) {
+typedef NS_ENUM(NSInteger, BGCardType) {
     kCardTypeBasic,                     // 基本牌
     kCardTypeMagic,                     // 魔法牌
     kCardTypeSuperSkill,                // S技能牌
     kCardTypeEquipment                  // 装备牌
 };
 
-typedef NS_ENUM(NSUInteger, BGEquipmentType) {
+typedef NS_ENUM(NSInteger, BGEquipmentType) {
     kEquipmentTypeWeapon = 1,           // 武器
     kEquipmentTypeArmor = 2             // 防具
 };

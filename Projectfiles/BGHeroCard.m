@@ -16,12 +16,13 @@
 
 @implementation BGHeroCard
 
-- (id)initWithCardId:(NSUInteger)aCardId
+- (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"HeroCardArray" ofType:@"plist"];
         self.heroArray = [NSArray arrayWithContentsOfFile:path];
-        NSAssert((aCardId < _heroArray.count), @"Invalid hero card id");
+        NSAssert((aCardId > kHeroCardDefault) &&
+                 (aCardId < (NSInteger)_heroArray.count), @"Invalid hero card id in %@", NSStringFromSelector(_cmd));
         NSDictionary *dictionary = _heroArray[aCardId];
         
         _cardEnum = aCardId;
@@ -37,7 +38,7 @@
     return self;
 }
 
-+ (id)cardWithCardId:(NSUInteger)aCardId
++ (id)cardWithCardId:(NSInteger)aCardId
 {
     return [[self alloc]initWithCardId:aCardId];
 }

@@ -8,7 +8,7 @@
 
 #import "BGPlayingMenu.h"
 #import "BGClient.h"
-#import "BGPlayer.h"
+#import "BGGameLayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 
@@ -61,20 +61,20 @@
 }
 
 /*
- * Create menu items with Okay/Cancel/Discard
+ * Create menu items with Okay/Discard
  */
 - (void)createPlayingMenuForUsing
 {
-    NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageCancel, kImageDiscard, nil];
-    NSArray *selFrameNames = [NSArray arrayWithObjects:kImageOkaySelected, kImageCancelSelected, kImageDiscardSelected, nil];
-    NSArray *disFrameNames = [NSArray arrayWithObjects:kImageOkayDisabled, kImageCancelDisabled, kImageDiscardDisabled, nil];
+    NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageDiscard, nil];
+    NSArray *selFrameNames = [NSArray arrayWithObjects:kImageOkaySelected, kImageDiscardSelected, nil];
+    NSArray *disFrameNames = [NSArray arrayWithObjects:kImageOkayDisabled, kImageDiscardDisabled, nil];
     
     BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
     _menu = [menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                             selectedFrameNames:selFrameNames
                                             disabledFrameNames:disFrameNames];
     _menu.position = ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.35);
-    [_menu alignItemsHorizontallyWithPadding:20.0f];
+    [_menu alignItemsHorizontallyWithPadding:40.0f];
     [self addChild:_menu];
     [[_menu.children objectAtIndex:kPlayingMenuItemTagOkay] setIsEnabled:NO]; // Okay menu is disabed initial
     
@@ -129,6 +129,10 @@
             [self touchOkayMenuItem];
             break;
             
+        case kPlayingMenuItemTagCancel:
+            [self touchCancelMenuItem];
+            break;
+            
         case kPlayingMenuItemTagDiscard:
             [_menu removeFromParentAndCleanup:YES];
             [self createOkayPlayingMenu];
@@ -154,7 +158,23 @@
             break;
             
         case kPlayingMenuTypeCardPlaying:
+            [self useCard];
+            break;
             
+        default:
+            break;
+    }
+}
+
+/*
+ * Touch cancel menu item. Call method according to different menu type.
+ */
+- (void)touchCancelMenuItem
+{
+    switch (_menuType) {
+        case kPlayingMenuTypeCardPlaying:
+            [self cancelCard];
+            [self removeFromParentAndCleanup:YES];
             break;
             
         default:
@@ -164,15 +184,25 @@
 
 - (void)cutCard
 {
+    NSAssert(_player.playingArea.selectedCards, @"Nil in selector %@", NSStringFromSelector(_cmd));
     [[BGClient sharedClient] sendCutCardRequestWithPlayingCardId:[_player.playingArea.selectedCards.lastObject cardId]];
     [_player.playingArea compareCardFigure];    // 通过拼点的方式切牌
-//    [self removeFromParentAndCleanup:YES];
+    [self removeFromParentAndCleanup:YES];
 }
 
 - (void)useCard
 {
+    NSAssert(_player.playingArea.selectedCards.lastObject, @"Nil in selector %@", NSStringFromSelector(_cmd));
     [[BGClient sharedClient] sendUseCardRequestWithPlayingCardId:[_player.playingArea.selectedCards.lastObject cardId]];
     [_player.playingArea usePlayingCardsAndRunAnimation];
+    [self removeFromParentAndCleanup:YES];
+    [[BGGameLayer sharedGameLayer].targetPlayerNames removeAllObjects];
+}
+
+- (void)cancelCard
+{
+    [[BGClient sharedClient] sendCancelCardRequest];
+    [self removeFromParentAndCleanup:YES];
 }
 
 @end

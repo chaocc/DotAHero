@@ -61,7 +61,7 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)onConnectionResponse:(EsConnectionResponse *)e
 {
-    NSAssert(e.successful, @"Connnection Failed");
+    NSAssert(e.successful, @"Connnection Failed in %@", NSStringFromSelector(_cmd));
     
     BGLoginLayer *login = [BGLoginLayer sharedLoginLayer];
     
@@ -89,7 +89,7 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)onLoginResponse:(EsLoginResponse *)e
 {
-    NSAssert(e.successful, @"Login Failed");
+    NSAssert(e.successful, @"Login Failed in %@", NSStringFromSelector(_cmd));
     
     [[BGLoginLayer sharedLoginLayer] showRoomListLayer];
 }
@@ -133,6 +133,7 @@ static BGClient *instanceOfClient = nil;
     
     if (e.users.count == 1) {
         [BGRoomLayer sharedRoomLayer].isRoomOwner = YES;    // First joiner is room owner
+        NSLog(@"User %@ is room owner", [e.users.lastObject userName]);
     } else {
         [self sendReadyStartGameRequest];
     }
@@ -163,22 +164,40 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
+ * Add room plugin message event listener
+ */
+- (void)addRoomPluginMessageEventListener
+{
+    [_es.engine addEventListenerWithTarget:self action:@selector(onRoomPluginMessageEvent:) eventIdentifier:EsMessageType_PluginMessageEvent];
+}
+
+/*
+ * Remove room plugin message event listener
+ */
+- (void)removeRoomPluginMessageEventListener
+{
+    [_es.engine removeEventListenerWithTarget:self action:@selector(onRoomPluginMessageEvent:) eventIdentifier:EsMessageType_PluginMessageEvent];
+}
+
+/*
  * Send room plugin request to server with specified ES object
  */
 - (void)sendRoomPluginRequestWithObject:(EsObject *)obj
 {
-    [_es.engine addEventListenerWithTarget:self action:@selector(onRoomPluginMessageEvent:) eventIdentifier:EsMessageType_PluginMessageEvent];
+    [self addRoomPluginMessageEventListener];
     [self sendPluginRequestWithPluginName:kPluginRoom andObject:obj];
 }
 
 /*
- * Send readyStartGame action. Called in room layer.
+ * Send room plugin request with action-readyStartGame. Called in room layer.
  */
 - (void)sendReadyStartGameRequest
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionReadyStartGame forKey:kAction];
     [self sendRoomPluginRequestWithObject:obj];
+    
+    NSLog(@"Send room plugin request with action(%i)", kActionReadyStartGame);
 }
 
 /*
@@ -187,10 +206,14 @@ static BGClient *instanceOfClient = nil;
 - (void)onRoomPluginMessageEvent:(EsPluginMessageEvent *)e
 {
     EsObject *obj = e.parameters;
+    NSInteger action = [obj intWithKey:kAction];
+    NSAssert(action != kActionInvalid, @"Invalid action in %@", NSStringFromSelector(_cmd));
+    NSLog(@"Receive room plugin message event with action(%i)", action);
     
-    switch ([obj intWithKey:kAction]) {
+    switch (action) {
         case kActionReadyStartGame:
             [[BGRoomLayer sharedRoomLayer] readyStartGame];
+            [self removeRoomPluginMessageEventListener];
             break;
             
         default:
@@ -200,11 +223,19 @@ static BGClient *instanceOfClient = nil;
 
 #pragma mark - Game plugin message
 /*
- * Add plugin message event listener
+ * Add game plugin message event listener
  */
 - (void)addGamePluginMessageEventListener
 {
     [_es.engine addEventListenerWithTarget:self action:@selector(onGamePluginMessageEvent:) eventIdentifier:EsMessageType_PluginMessageEvent];
+}
+
+/*
+ * Remove game plugin message event listener
+ */
+- (void)removeGamePluginMessageEventListener
+{
+    [_es.engine removeEventListenerWithTarget:self action:@selector(onGamePluginMessageEvent:) eventIdentifier:EsMessageType_PluginMessageEvent];
 }
 
 /*
@@ -216,64 +247,98 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
- * Send startGame action. Called in game layer.
+ * Send game plugin request with action-startGame. Called in game layer.
  */
 - (void)sendStartGameRequest
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionStartGame forKey:kAction];
     [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with action-startGame(%i)", kActionStartGame);
 }
 
 /*
- * Send selectHeroCard action. Called in player class.
+ * Send game plugin request with action-selectHeroCard and heroId. Called in player class.
  */
-- (void)sendSelectHeroCardRequestWithHeroId:(NSUInteger)heroId
+- (void)sendSelectHeroCardRequestWithHeroId:(NSInteger)heroId
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionSelectHeroCard forKey:kAction];
     [obj setInt:heroId forKey:kParamHeroId];
     [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with action-selectHeroCard(%i) and heroId:%i", kActionSelectHeroCard, heroId);
 }
 
 /*
- * Send cutCard action. Called in playing menu.
+ * Send game plugin request with action-cutCard and usedPlayingCardIds. Called in playing menu.
  */
-- (void)sendCutCardRequestWithPlayingCardId:(NSUInteger)cardId
+- (void)sendCutCardRequestWithPlayingCardId:(NSInteger)cardId
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionCutCard forKey:kAction];
-    [obj setIntArray:[NSArray arrayWithObject:@(cardId)] forKey:kParamUsedPlayingCardIds];
+    NSArray *cardIds = [NSArray arrayWithObject:@(cardId)];
+    [obj setIntArray:cardIds forKey:kParamUsedPlayingCardIds];
     [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with action-cutCard(%i) and usedPlayingCardIds:%@", kActionCutCard, cardIds);
 }
 
 /*
- * Send drawCard action. Called in playing menu.
+ * Send game plugin request with action-drawCard. Called in playing menu.
  */
 - (void)sendDrawPlayingCardRequest
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionDrawPlayingCard forKey:kAction];
     [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with action-drawPlayingCard(%i)", kActionDrawPlayingCard);
 }
 
 /*
- * Send use playing card action. Called in playing menu.
+ * 1. Send game plugin request with action-okToUseCard, usedPlayingCardIds and targetPlayerNames. Called in playing menu.
+ * 2. Send public message with action-okToUseCard and usedPlayingCardIds
  */
-- (void)sendUseCardRequestWithPlayingCardId:(NSUInteger)cardId
+- (void)sendUseCardRequestWithPlayingCardId:(NSInteger)cardId
 {
+    NSAssert([BGGameLayer sharedGameLayer].targetPlayerNames.count == 0,
+             @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
+    
     EsObject *obj1 = [[EsObject alloc] init];
     [obj1 setInt:kActionOkToUseCard forKey:kAction];
-    [obj1 setIntArray:[NSArray arrayWithObject:@(cardId)] forKey:kParamUsedPlayingCardIds];
-    [obj1 setString:[BGGameLayer sharedGameLayer].playerName forKey:kParamPlayerName];
+    NSArray *cardIds = [NSArray arrayWithObject:@(cardId)];
+    [obj1 setIntArray:cardIds forKey:kParamUsedPlayingCardIds];
     [obj1 setStringArray:[BGGameLayer sharedGameLayer].targetPlayerNames forKey:kParamTargetPlayerNames];
     [self sendGamePluginRequestWithObject:obj1];
+    
+    NSLog(@"Send game plugin request with action-okToUseCard(%i), usedPlayingCardIds:%@ and targetPlayerNames:%@",
+          kActionOkToUseCard, cardIds, [BGGameLayer sharedGameLayer].targetPlayerNames);
     
 //  Send public message
     EsObject *obj2 = [[EsObject alloc] init];
     [obj2 setInt:kActionOkToUseCard forKey:kAction];
     [obj2 setIntArray:[NSArray arrayWithObject:@(cardId)] forKey:kParamUsedPlayingCardIds];
     [self sendPublicMessageRequestWithObject:obj2];
+    
+    NSLog(@"Send public message with action-okToUseCard(%i) and usedPlayingCardIds:%@", kActionOkToUseCard, cardIds);
+}
+
+/*
+ * Send game plugin request with action-cancelCard. Called in playing menu.
+ */
+- (void)sendCancelCardRequest
+{
+    NSAssert([BGGameLayer sharedGameLayer].playerName, @"playerName is nil");
+    
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionCancelCard forKey:kAction];
+    [obj setString:[BGGameLayer sharedGameLayer].playerName forKey:kParamPlayerName];   //伤害来源的玩家名
+    [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with action-cancelCard(%i) and playerName:%@",
+          kActionCancelCard, [BGGameLayer sharedGameLayer].playerName);
 }
 
 /*
@@ -282,30 +347,53 @@ static BGClient *instanceOfClient = nil;
 - (void)onGamePluginMessageEvent:(EsPluginMessageEvent *)e
 {
     EsObject *obj = e.parameters;
+    NSInteger action = [obj intWithKey:kAction];
+    NSInteger playerState = [obj intWithKey:kPlayerState];
+    NSArray *array = nil;
     BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
     BGPlayer *currentPlayer = gamePlayer.currentPlayer;
     
+    if (action != kActionInvalid) {
+        NSLog(@"Receive game plugin message event with action(%i)", action);
+        goto actionLabel;
+    }
+    if (playerState != kPlayerStateInvalid) {
+        NSLog(@"Receive game plugin message event with playerState(%i)", action);
+        goto playerStateLabel;
+    }
+    
 //  Actions
-    switch ([obj intWithKey:kAction]) {
+actionLabel:
+    switch (action) {
         case kActionDealHeroCard:
-            [gamePlayer dealHeroCards:[obj stringArrayWithKey:kParamToBeSelectedHeroIds]];
+            array = [obj intArrayWithKey:kParamToBeSelectedHeroIds];
+            NSAssert(array, @"Nil in selector %@", NSStringFromSelector(_cmd));
+            [gamePlayer dealHeroCards:array];
             break;
             
         case kActionSendAllHeroIds:
-            [gamePlayer sendAllHeroIds:[obj stringArrayWithKey:kParamAllHeroIds]];
+            array = [obj stringArrayWithKey:kParamAllHeroIds];
+            NSAssert(array, @"Nil in selector %@", NSStringFromSelector(_cmd));
+            [gamePlayer sendAllHeroIds:array];
             break;
             
         case kActionDealPlayingCard:
-            [currentPlayer addPlayingAreaWithPlayingCardIds:[obj stringArrayWithKey:kParamGotPlayingCardIds]];
+            array = [obj stringArrayWithKey:kParamGotPlayingCardIds];
+            NSAssert(array, @"Nil in selector %@", NSStringFromSelector(_cmd));
+            [currentPlayer addPlayingAreaWithPlayingCardIds:array];
             break;
         
         case kActionCutCard:
-            [currentPlayer showAllCuttingCardsWithCardIds:[obj stringArrayWithKey:kParamAllCuttingCardIds]];
+            array = [obj stringArrayWithKey:kParamAllCuttingCardIds];
+            NSAssert(array, @"Nil in selector %@", NSStringFromSelector(_cmd));
+            [currentPlayer showAllCuttingCardsWithCardIds:array];
             break;
             
         case kActionSendPlayingCard:
             [self sendDrawPlayingCardPublicMessage];
-            [currentPlayer drawPlayingCardIds:[obj stringArrayWithKey:kParamGotPlayingCardIds]];
+            array = [obj stringArrayWithKey:kParamGotPlayingCardIds];
+            NSAssert(array, @"Nil in selector %@", NSStringFromSelector(_cmd));
+            [currentPlayer drawPlayingCardIds:array];
             break;
             
         default:
@@ -313,18 +401,38 @@ static BGClient *instanceOfClient = nil;
     }
     
 //  Player state
-    currentPlayer.playerState = [obj intWithKey:kPlayerState];
-    switch (currentPlayer.playerState) {
-        case kTurnStarting:
+playerStateLabel:
+    currentPlayer.playerState = playerState;
+    switch (playerState) {
+        case kPlayerStateTurnStarting:
             [self sendStartTurnPublicMessage];
             break;
             
-        case kDrawing:
+        case kPlayerStateDrawing:
             [self sendDrawPlayingCardRequest];
             break;
             
-        case kPlaying:
+        case kPlayerStatePlaying:
             [currentPlayer addPlayingMenuOfCardUsing];
+            break;
+            
+        case kPlayerStateIsBeingAttacked:
+            gamePlayer.playerName = [obj stringWithKey:kParamPlayerName];
+            NSAssert(gamePlayer.playerName, @"playerName Nil in %@", NSStringFromSelector(_cmd));
+            [gamePlayer.targetPlayerNames addObject:gamePlayer.playerName];
+            [currentPlayer addPlayingMenuOfCardPlaying];
+            break;
+            
+        case kPlayerStateWasAttacked:
+//          掉血／加怒气
+            NSLog(@"BLOOD1: %d", [obj intWithKey:kParamBloodPointChanged]);
+            NSLog(@"ANGER1: %d", [obj intWithKey:kParamAngerPointChanged]);
+            break;
+            
+        case kPlayerStateAttacked:
+//          可能获得怒气
+            NSLog(@"BLOOD2: %d", [obj intWithKey:kParamBloodPointChanged]);
+            NSLog(@"ANGER2: %d", [obj intWithKey:kParamAngerPointChanged]);
             break;
             
         default:
@@ -354,17 +462,19 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
- * Send startGame public message
+ * Send public message with action-startGame
  */
 - (void)sendStartGamePublicMessage
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionStartGame forKey:kAction];
     [self sendPublicMessageRequestWithObject:obj];
+    
+    NSLog(@"Send public message with action-startGame(%i)", kActionStartGame);
 }
 
 /*
- * Send startTurn public message
+ * Send public message with action-startTurn and plyerName
  */
 - (void)sendStartTurnPublicMessage
 {
@@ -372,16 +482,21 @@ static BGClient *instanceOfClient = nil;
     [obj setInt:kActionStartTurn forKey:kAction];
     [obj setString:[BGGameLayer sharedGameLayer].currentPlayer.playerName forKey:kParamPlayerName];
     [self sendPublicMessageRequestWithObject:obj];
+    
+    NSLog(@"Send public message with action-startGame(%i) and playerName:%@",
+          kActionStartGame, [BGGameLayer sharedGameLayer].currentPlayer.playerName);
 }
 
 /*
- * Send drawPlayingCard public message
+ * Send public message with action-drawPlayingCard
  */
 - (void)sendDrawPlayingCardPublicMessage
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionDrawPlayingCard forKey:kAction];
     [self sendPublicMessageRequestWithObject:obj];
+    
+    NSLog(@"Send public message with action-drawPlayingCard(%i)", kActionDrawPlayingCard);
 }
 
 /*
@@ -390,15 +505,20 @@ static BGClient *instanceOfClient = nil;
 - (void)onPublicMessageEvent:(EsPublicMessageEvent *)e
 {
     EsObject *obj = e.esObject;
+    NSInteger action = [obj intWithKey:kAction];
+    NSAssert(action != kActionInvalid, @"Invalid action in %@", NSStringFromSelector(_cmd));
+    NSLog(@"Receive public message event with action(%i)", action);
     
-    switch ([obj intWithKey:kAction]) {
+    switch (action) {
         case kActionStartGame:
             self.users = _es.managerHelper.userManager.users;
             [[BGRoomLayer sharedRoomLayer] showGameLayer];
+            NSLog(@"All login users:%@", self.users);
             break;
             
         case kActionStartTurn:
             [BGGameLayer sharedGameLayer].playerName = [obj stringWithKey:kParamPlayerName];
+            NSLog(@"Parameter-playerName:%@",[BGGameLayer sharedGameLayer].playerName);
             break;
             
         default:

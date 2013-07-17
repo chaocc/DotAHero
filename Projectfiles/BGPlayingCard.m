@@ -19,12 +19,13 @@
 
 @synthesize cardColor = _cardColor;
 
-- (id)initWithCardId:(NSUInteger)aCardId
+- (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"PlayingCardArray" ofType:@"plist"];
         self.playingCardArray = [NSArray arrayWithContentsOfFile:path];
-        NSAssert((aCardId < _playingCardArray.count), @"Invalid playing card id");
+        NSAssert((aCardId > kPlayingCardDefault) &&
+                 (aCardId < (NSInteger)_playingCardArray.count), @"Invalid playing card id in %@", NSStringFromSelector(_cmd));
         NSDictionary *dictionary = _playingCardArray[aCardId];
         
         _cardEnum = [dictionary[kCardEnum] integerValue];
@@ -47,7 +48,7 @@
     return self;
 }
 
-+ (id)cardWithCardId:(NSUInteger)aCardId
++ (id)cardWithCardId:(NSInteger)aCardId
 {
     return [[self alloc]initWithCardId:aCardId];
 }

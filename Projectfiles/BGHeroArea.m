@@ -19,7 +19,7 @@
 
 @implementation BGHeroArea
 
-- (id)initWithHeroCardId:(NSUInteger)cardId ofPlayer:(BGPlayer *)player
+- (id)initWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player
 {
     if (self = [super init]) {
         _player = player;
@@ -36,7 +36,7 @@
     return self;
 }
 
-+ (id)heroAreaWithHeroCardId:(NSUInteger)cardId ofPlayer:(BGPlayer *)player
++ (id)heroAreaWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player
 {
     return [[self alloc] initWithHeroCardId:cardId ofPlayer:player];
 }
@@ -59,6 +59,7 @@
                                                 selectedFrameName:nil
                                                 disabledFrameName:nil];
     heroMenu.position = (_player.isCurrentPlayer) ? ccp(playerAreaWidth*0.099, playerAreaHeight*0.643) : ccp(-playerAreaWidth*0.245, playerAreaHeight*0.045);
+    [heroMenu.children.lastObject setTag:_heroCard.cardId];
     [self addChild:heroMenu];
     menuFactory.delegate = self;
     
@@ -113,22 +114,12 @@
 //    }
 }
 
-- (void)addBloodPointWithCount:(NSUInteger)count
+- (void)updateBloodPointWithCount:(NSInteger)count
 {
     
 }
 
-- (void)subtractBloodPointWithCount:(NSUInteger)count
-{
-    
-}
-
-- (void)addAngerPointWithCount:(NSUInteger)count
-{
-    
-}
-
-- (void)subtractAngerPointWithCount:(NSUInteger)count
+- (void)updateAngerPointWithCount:(NSInteger)count
 {
     
 }
@@ -139,12 +130,32 @@
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
-    NSAssert([menuItem isKindOfClass:[CCMenuItem class]], @"Not a CCMenuItem");
+    if (_player.selectedHeroId != kHeroCardDefault) {
+        return; // Can not touch the hero of current player
+    }
     
     NSArray *playingCardIds = [NSArray arrayWithObjects:@(0), @(9), @(46), @(74), nil];
     [_player.playingArea addPlayingCardsWithCardIds:playingCardIds];
     
-    [[BGGameLayer sharedGameLayer].targetPlayerNames addObject:_player.playerName];
+    CCMenuItem *item = [_player.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
+    NSAssert(item, @"item Nil in %@", NSStringFromSelector(_cmd));
+    
+    NSMutableArray *targetPlayerNames = [BGGameLayer sharedGameLayer].targetPlayerNames;
+    NSAssert(targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
+    
+    if ([targetPlayerNames containsObject:_player.playerName]) {
+        [targetPlayerNames removeObject:_player.playerName];
+        item.isEnabled = NO;
+        
+//        [menuItem stopAllActions];
+    } else {
+        [targetPlayerNames addObject:_player.playerName];
+        item.isEnabled = YES;
+        
+//        CCBlink *blink = [CCBlink actionWithDuration:0.5f blinks:10];
+//        CCRepeatForever *repeat = [CCRepeatForever actionWithAction:blink];
+//        [menuItem runAction:repeat];
+    }
 }
 
 - (void)useSkill

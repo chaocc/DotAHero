@@ -56,6 +56,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 	if ((self = [super init]))
 	{
         instanceOfGameLayer = self;
+        _targetPlayerNames = [NSMutableArray array];
         
 //      All users in the same room
         _users = [BGClient sharedClient].users;
@@ -105,7 +106,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     NSArray *roleIds = [NSArray arrayWithObjects:@(0), @(1), @(2), @(3), @(4), @(5), @(6), @(7), nil];
     BGFaction *faction = [BGFaction factionWithRoleIds:roleIds];
-    [self addChild:faction];
+    [self addChild:faction z:1];
 }
 
 /*
@@ -113,7 +114,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)addMenu
 {
-    [self addChild:[BGGameMenu menu]];
+    [self addChild:[BGGameMenu menu] z:1];
 }
 
 /*
@@ -141,30 +142,41 @@ static BGGameLayer *instanceOfGameLayer = nil;
  * Add current player area node
  */
 - (void)addCurrentPlayer
-{   
-    BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] isCurrentPlayer:YES];
-    [self addChild:player];
-    
-    _currentPlayer = player;
-    [_players addObject:player];
+{
+    @try {
+        BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] isCurrentPlayer:YES];
+        [self addChild:player z:2];
+        
+        _currentPlayer = player;
+        [_players addObject:player];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
+    }
 }
 
 /*
  * Add other players area node, set different position for each player according to player count.
  */
 - (void)addOtherPlayers
-{    
-    for (NSUInteger i = 1; i < _users.count; i++) {
-        BGPlayer *player = [BGPlayer playerWithUserName:[_users[i] userName] isCurrentPlayer:NO];
-        [self addChild:player];
-        [_players addObject:player];
+{
+    @try {
+        for (NSUInteger i = 1; i < 2; i++) {
+//            BGPlayer *player = [BGPlayer playerWithUserName:[_users[i] userName] isCurrentPlayer:NO];
+            BGPlayer *player = [BGPlayer playerWithUserName:@"Test" isCurrentPlayer:NO];
+            [self addChild:player z:1];
+            [_players addObject:player];
+        }
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
     }
     
     CGSize spriteSize = [[CCSprite spriteWithSpriteFrameName:kImageOtherPlayerArea] contentSize];
     CGFloat spriteWidth = spriteSize.width;
     CGFloat spriteHeight = spriteSize.height;
     
-    switch (_users.count) {
+    switch (2) {
         case kPlayerCountTwo:
             [_players[1] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
             break;
@@ -224,6 +236,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)dealHeroCards:(NSArray *)toBeSelectedHeroIds
 {
+    NSAssert(toBeSelectedHeroIds, @"Nil in selector %@", NSStringFromSelector(_cmd));
     [_currentPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
 }
 
@@ -232,6 +245,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)sendAllHeroIds:(NSArray *)allHeroIds
 {
+    NSAssert(allHeroIds, @"Nil in selector %@", NSStringFromSelector(_cmd));
     self.allHeroIds = allHeroIds;
     [self addHeroAreaForOtherPlayers];
 }
@@ -245,7 +259,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
     
     [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj unsignedIntegerValue] == [_currentPlayer selectedHeroId]) {
+        if ([obj integerValue] == [_currentPlayer selectedHeroId]) {
             [mutableHeroIds removeObjectsAtIndexes:idxSet];
             [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
             _allHeroIds = mutableHeroIds;
@@ -262,7 +276,12 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (void)addHeroAreaForOtherPlayers
 {
     for (NSUInteger i = 1; i < _players.count; i++) {
-        [_players[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
+        @try {
+            [_players[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
+        }
     }
 }
 

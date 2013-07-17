@@ -16,12 +16,13 @@
 
 @implementation BGDensityCard
 
-- (id)initWithCardId:(NSUInteger)aCardId
+- (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"DensityCardArray" ofType:@"plist"];
         self.densityArray = [NSArray arrayWithContentsOfFile:path];
-        NSAssert((aCardId < _densityArray.count), @"Invalid density card id");
+        NSAssert((aCardId > kDensityCardDefault) &&
+                 (aCardId < (NSInteger)_densityArray.count), @"Invalid density card id in %@", NSStringFromSelector(_cmd));
         NSDictionary *dictionary = _densityArray[aCardId];
         
         _cardEnum = aCardId;
@@ -32,7 +33,7 @@
     return self;
 }
 
-+ (id)cardWithCardId:(NSUInteger)aCardId
++ (id)cardWithCardId:(NSInteger)aCardId
 {
     return [[self alloc] initWithCardId:aCardId];
 }

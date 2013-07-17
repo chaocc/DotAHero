@@ -10,7 +10,8 @@
 
 #define kDescription        @"description"
 
-typedef NS_ENUM(NSUInteger, BGDensityCardEnum) {
+typedef NS_ENUM(NSInteger, BGDensityCardEnum) {
+    kDensityCardDefault = -1,
     kDensityCardShadowPunisher,            // 暗影惩戒者
     kDensityCardConquerorOfHolyLight,      // 圣光征服者
     kDensityCardSpreadingPlague,           // 蔓延的瘟疫

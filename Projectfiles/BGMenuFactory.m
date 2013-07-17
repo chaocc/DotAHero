@@ -51,9 +51,11 @@
         CCSprite *selectedSprite = nil;
         CCSprite *disabledSprite = nil;
         if (selFrameNames.count != 0) {
+            NSAssert(selFrameNames[idx], @"Nil in selector %@", NSStringFromSelector(_cmd));
             selectedSprite = [CCSprite spriteWithSpriteFrameName:selFrameNames[idx]];
         }
         if (selFrameNames.count != 0) {
+            NSAssert(disFrameNames[idx], @"Nil in selector %@", NSStringFromSelector(_cmd));
             disabledSprite = [CCSprite spriteWithSpriteFrameName:disFrameNames[idx]];
         }
         
@@ -74,7 +76,7 @@
 {
     NSMutableArray *menuArray = [NSMutableArray array];
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard");
+        NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
         CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
         CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
         selectedSprite.color = ccGRAY;
@@ -95,7 +97,7 @@
 - (void)addMenuItemsWithCards:(NSArray *)cards toMenu:(CCMenu *)menu
 {
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard");
+        NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
         CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
         CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
         selectedSprite.color = ccGRAY;

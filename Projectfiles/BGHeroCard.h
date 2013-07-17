@@ -17,7 +17,8 @@
 #define kHeroSkillType          @"heroSkillType"
 #define kIsMandatorySkill       @"isMandatorySkill"
 
-typedef NS_ENUM(NSUInteger, BGHeroCardEnum) {
+typedef NS_ENUM(NSInteger, BGHeroCardEnum) {
+    kHeroCardDefault = -1,
     kHeroCardLordOfAvernus = 0,                 // 死亡骑士
     kHeroCardSkeletonKing = 1,                  // 骷髅王
     kHeroCardBristleback = 2,                   // 刚背兽
@@ -55,13 +56,14 @@ typedef NS_ENUM(NSUInteger, BGHeroCardEnum) {
     kHeroCardElfLily = 32                       // 精灵莉莉
 };
 
-typedef NS_ENUM(NSUInteger, BGHeroAttribute) {
+typedef NS_ENUM(NSInteger, BGHeroAttribute) {
     kHeroAttributeStrength,                 // 力量型
     kHeroAttributeAgility,                  // 敏捷型
     kHeroAttributeIntelligence              // 智力型
 };
 
-typedef NS_ENUM(NSUInteger, BGHeroSkill) {
+typedef NS_ENUM(NSInteger, BGHeroSkill) {
+    kHeroSkillDefault = -1,
     kHeroSkillDeathCoil = 0,                // 死亡缠绕
     kHeroSkillFrostmourne = 1,              // 霜之哀伤
     
@@ -170,12 +172,12 @@ typedef NS_ENUM(NSUInteger, BGHeroSkill) {
     kHeroSkillMagicControl = 162            // 魔法掌控
 };
 
-typedef NS_ENUM(NSUInteger, BGHeroSkillCategory) {
+typedef NS_ENUM(NSInteger, BGHeroSkillCategory) {
     kHeroSkillCategoryActive,               // 主动技能
     kHeroSkillCategoryPassive,              // 被动技能
 };
 
-typedef NS_ENUM(NSUInteger, BGHeroSkillType) {
+typedef NS_ENUM(NSInteger, BGHeroSkillType) {
     kHeroSkillTypeGeneral,                  // 普通技
     kHeroSkillTypeRestricted,               // 限制技
     kHeroSkillTypeLimited                   // 限定技

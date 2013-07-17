@@ -24,7 +24,7 @@
 @property (nonatomic, copy, readonly) NSString *cardName;
 @property (nonatomic, copy, readonly) NSString *cardImageName;
 
-- (id)initWithCardId:(NSUInteger)aCardId;
-+ (id)cardWithCardId:(NSUInteger)aCardId;
+- (id)initWithCardId:(NSInteger)aCardId;
++ (id)cardWithCardId:(NSInteger)aCardId;
 
 @end

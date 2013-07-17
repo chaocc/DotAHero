@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     if (self = [super init]) {
         _playerName = name;
         _isCurrentPlayer = flag;
+        _selectedHeroId = kHeroCardDefault;
         _canUseAttack = YES;
         
         [self renderPlayerArea];
@@ -101,10 +102,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 /*
  * Add hero(avatar) area node
  */
-- (void)addHeroAreaWithHeroId:(NSUInteger)heroId
+- (void)addHeroAreaWithHeroId:(NSInteger)heroId
 {
     _heroArea = [BGHeroArea heroAreaWithHeroCardId:heroId ofPlayer:self];
-    [self addChild: _heroArea z:1];
+    [self addChild: _heroArea];
     
     [self updatePlayingCardCountBy:5];  // 5 playing cards for each player at the beginning
 }
@@ -155,6 +156,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 #pragma mark - Cutting card
 - (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
 {
+    NSAssert(cardIds, @"Nil in selector %@", NSStringFromSelector(_cmd));
     NSMutableArray *cards = [NSMutableArray arrayWithCapacity:[BGGameLayer sharedGameLayer].players.count];
     [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
@@ -174,7 +176,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
-    NSAssert([menuItem isKindOfClass:[CCMenuItem class]], @"Not a CCMenuItem");
     _selectedHeroId = menuItem.tag;
     [self runActionWithSelectedHeroMenu:menuItem];
     
@@ -199,7 +200,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [moveComp runActionEaseMoveScaleWithDuration:0.5f
                                            scale:0.5f
                                            block:^{
-                                               NSAssert([menuItem.parent isKindOfClass:[CCMenu class]], @"Not a CCMenu");
                                                [self addHeroAreaWithHeroId:menuItem.tag];
                                                [menuItem.parent removeFromParentAndCleanup:YES];
                                            }];
@@ -229,13 +229,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                                                 fontName:@"Arial"
                                                 fontSize:22.0f];
     countLabel.position = ccp(-_playerAreaSize.width*0.07, -_playerAreaSize.height*0.23);
-    [self addChild:countLabel z:0 tag:kPlayerTagPlayingCardCount];
+    [self addChild:countLabel z:1 tag:kPlayerTagPlayingCardCount];
 }
 
 /*
  * Update playing card count for other players
  */
-- (void)updatePlayingCardCountBy:(NSUInteger)count
+- (void)updatePlayingCardCountBy:(NSInteger)count
 {
     _playingCardCount += count;
     [self renderPlayingCardCount];
