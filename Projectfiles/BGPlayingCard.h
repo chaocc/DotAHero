@@ -66,8 +66,9 @@ typedef NS_ENUM(NSInteger, BGPlayingCardEnum) {
 };
 
 typedef NS_ENUM(NSInteger, BGCardColor) {
-    kCardColorRed,                      // 红色
-    kCardColorBlack                     // 黑色
+    kCardColorInvalid = 0,
+    kCardColorRed = 1,                  // 红色
+    kCardColorBlack = 2                 // 黑色
 };
 
 typedef NS_ENUM(NSInteger, BGCardFigure) {
@@ -87,14 +88,15 @@ typedef NS_ENUM(NSInteger, BGCardFigure) {
 };
 
 typedef NS_ENUM(NSInteger, BGCardSuits) {
-    kCardSuitsHearts,                   // 红桃
+    kCardSuitsInvalid = 0,
+    kCardSuitsHearts = 1,               // 红桃
     kCardSuitsDiamonds,                 // 方块
     kCardSuitsSpades,                   // 黑桃
     kCardSuitsClubs                     // 梅花
 };
 
 typedef NS_ENUM(NSInteger, BGCardType) {
-    kCardTypeBasic,                     // 基本牌
+    kCardTypeBasic = 0,                 // 基本牌
     kCardTypeMagic,                     // 魔法牌
     kCardTypeSuperSkill,                // S技能牌
     kCardTypeEquipment                  // 装备牌

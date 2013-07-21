@@ -20,18 +20,22 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 @interface BGPlayer ()
 
-@property (nonatomic) NSUInteger playingCardCount;      // 所有手牌数
 
 @end
 
 @implementation BGPlayer
 
-- (id)initWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag
+@synthesize playingCardCount = _playingCardCount;
+
+- (id)initWithUserName:(NSString *)name isCurrentPlayer:(BOOL)isCurrentPlayer
 {
     if (self = [super init]) {
         _playerName = name;
-        _isCurrentPlayer = flag;
+        _isCurrentPlayer = isCurrentPlayer;
         _selectedHeroId = kHeroCardDefault;
+        _selectedCardIds = [NSMutableArray array];
+        _extractedCardIdxes = [NSMutableArray array];
+        _canDrawCardCount = 2;
         _canUseAttack = YES;
         
         [self renderPlayerArea];
@@ -39,9 +43,20 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return self;
 }
 
-+ (id)playerWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag
++ (id)playerWithUserName:(NSString *)name isCurrentPlayer:(BOOL)isCurrentPlayer
 {
-    return [[self alloc] initWithUserName:name isCurrentPlayer:flag];
+    return [[self alloc] initWithUserName:name isCurrentPlayer:isCurrentPlayer];
+}
+
++ (NSArray *)heroCardsWithHeroIds:(NSArray *)heroIds
+{
+    NSMutableArray *heroCards = [NSMutableArray array];
+    [heroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGCard *heroCard = [BGHeroCard cardWithCardId:[obj integerValue]];
+        [heroCards addObject:heroCard];
+    }];
+    
+    return heroCards;
 }
 
 #pragma mark - Player area
@@ -70,11 +85,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     CCDelayTime *delay = [CCDelayTime actionWithDuration:0.21f];
     CCCallBlock *block = [CCCallBlock actionWithBlock:^{
-        NSMutableArray *heroCards = [NSMutableArray array];
-        [heroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            BGCard *heroCard = [BGHeroCard cardWithCardId:[obj integerValue]];
-            [heroCards addObject:heroCard];
-        }];
+        NSArray *heroCards = [self.class heroCardsWithHeroIds:heroIds];
         
         BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
         CCMenu *heroMenu = [menuFactory createMenuWithCards:heroCards];
@@ -91,14 +102,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 /*
  * toBeSelectedHeroIDs setter method and call render method
  */
-- (void)setToBeSelectedHeroIds:(NSArray *)toBeSelectedHeroIds
+- (void)setToBeSelectedHeroIds:(NSArray *)heroIds
 {
-    _toBeSelectedHeroIds = toBeSelectedHeroIds;
-    [self renderToBeSelectedHeros:_toBeSelectedHeroIds];
+    _toBeSelectedHeroIds = heroIds;
+    [self renderToBeSelectedHeros:heroIds];
     _toBeSelectedHeroIds = nil; // Free memory
 }
 
-#pragma mark - Hero/playing area and playing menu
 /*
  * Add hero(avatar) area node
  */
@@ -107,18 +117,117 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _heroArea = [BGHeroArea heroAreaWithHeroCardId:heroId ofPlayer:self];
     [self addChild: _heroArea];
     
-    [self updatePlayingCardCountBy:5];  // 5 playing cards for each player at the beginning
+//  5 playing cards for each player at the beginning, use 1 card for cutting.
+    self.playingCardCount = INITIAL_PLAYING_CARD_COUND;
+}
+
+#pragma mark - Hero card selection
+/*
+ * Menu delegate method is called while selecting a hero card
+ */
+- (void)menuItemTouched:(CCMenuItem *)menuItem
+{
+    _selectedHeroId = menuItem.tag;
+    [self runActionWithSelectedHeroMenu:menuItem];
+    
+    [[BGClient sharedClient] sendSelectHeroCardRequest];
+    
+//  [(BGGameLayer *)self.parent transferRoleCardToNextPlayer];
 }
 
 /*
- * Add playing area node(Delay 0.5 second for performance)
+ * Run animation while selecting a hero card
  */
-- (void)addPlayingAreaWithPlayingCardIds:(NSArray *)cardIds
+- (void)runActionWithSelectedHeroMenu:(CCMenuItem *)menuItem
+{
+    for (CCMenuItem *item in menuItem.parent.children) {
+        if (![item isEqual:menuItem]) {
+            item.visible = NO;
+        }
+    }
+    
+    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(-SCREEN_WIDTH*0.4, -SCREEN_HEIGHT*0.4)
+                                                         ofNode:menuItem];
+    [moveComp runActionEaseMoveScaleWithDuration:0.5f
+                                           scale:0.5f
+                                           block:^{
+                                               [self addHeroAreaWithHeroId:menuItem.tag];
+                                               [menuItem.parent removeFromParentAndCleanup:YES];
+                                           }];
+}
+
+#pragma mark - Playing cards
+/*
+ * Draw playing cards after player confirm drawing
+ */
+- (void)drawPlayingCardIds:(NSArray *)cardIds
+{
+    [_handArea addPlayingCardsWithCardIds:cardIds];
+}
+
+/*
+ * Display playing card count at right corner of hero avatar(Only for other player)
+ */
+- (void)renderPlayingCardCount
+{
+    [[self getChildByTag:kPlayerTagPlayingCardCount] removeFromParentAndCleanup:YES];
+    
+    CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_playingCardCount).stringValue
+                                                fontName:@"Arial"
+                                                fontSize:22.0f];
+    countLabel.position = ccp(-_playerAreaSize.width*0.07, -_playerAreaSize.height*0.23);
+    [self addChild:countLabel z:1 tag:kPlayerTagPlayingCardCount];
+}
+
+- (void)setPlayingCardCount:(NSUInteger)playingCardCount
+{
+    _playingCardCount = playingCardCount;
+    if (!_isCurrentPlayer) {
+        [self renderPlayingCardCount];
+    }
+}
+
+- (NSUInteger)playingCardCount
+{
+    return (_isCurrentPlayer) ? _handArea.playingCards.count : _playingCardCount;
+}
+
+- (void)updateBloodAndAngerWithBloodPoint:(NSInteger)bloodPoint
+                            andAngerPoint:(NSInteger)angerPoint
+{
+    [_heroArea updateBloodPointWithCount:bloodPoint];
+    [_heroArea updateAngerPointWithCount:angerPoint];
+}
+
+- (void)clearSelectedObjectsBuffer
+{
+    _selectedCardIds = nil;
+    [_extractedCardIdxes removeAllObjects];
+    _isSelectedStrenthen = NO;
+    _selectedColor = kCardColorInvalid;
+    _selectedSuits = kCardSuitsInvalid;
+}
+
+#pragma mark - Playing menu
+/*
+ * Determine the initial player by cutting card
+ */
+- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
+{
+    _playingDeck = [BGPlayingDeck playingDeckWithPlayer:self];
+    [_playingDeck addAllCuttingCardsWithCardIds:cardIds];
+    [self addChild:_playingDeck];
+}
+
+/*
+ * Add hand area node(Delay 0.5 second for performance)
+ */
+- (void)addHandAreaWithPlayingCardIds:(NSArray *)cardIds
 {
     CCDelayTime *delay = [CCDelayTime actionWithDuration:0.5f];
     CCCallBlock *block = [CCCallBlock actionWithBlock:^{
-        _playingArea = [BGPlayingArea playingAreaWithPlayingCardIds:cardIds ofPlayer:self];
-        [self addChild:_playingArea z:2];
+        _handArea = [BGHandArea handAreaWithPlayingCardIds:cardIds ofPlayer:self];
+        [self addChild:_handArea z:2];
         
         [self addPlayingMenuOfCardCutting];
     }];
@@ -153,92 +262,39 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [self addChild:_playingMenu];
 }
 
-#pragma mark - Cutting card
-- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
-{
-    NSAssert(cardIds, @"Nil in selector %@", NSStringFromSelector(_cmd));
-    NSMutableArray *cards = [NSMutableArray arrayWithCapacity:[BGGameLayer sharedGameLayer].players.count];
-    [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
-        [cards addObject:card];
-    }];
-    
-    BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
-    CCMenu *menu = [menuFactory createMenuWithCards:cards];
-    [menu alignItemsHorizontally];
-    menu.position = ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.55);
-    [self addChild:menu];
-}
-
-#pragma mark - Hero card selection
 /*
- * Menu delegate method is called while selecting a hero card
+ * Add playing menu items for strengthen(魔法牌强化按钮)
  */
-- (void)menuItemTouched:(CCMenuItem *)menuItem
+- (void)addPlayingMenuOfStrengthen
 {
-    _selectedHeroId = menuItem.tag;
-    [self runActionWithSelectedHeroMenu:menuItem];
-    
-    [[BGClient sharedClient] sendSelectHeroCardRequestWithHeroId:menuItem.tag];
-    
-//  [(BGGameLayer *)self.parent transferRoleCardToNextPlayer];
+    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeStrengthen ofPlayer:self];
+    [self addChild:_playingMenu];
 }
 
 /*
- * Run animation while selecting a hero card
+ * Add playing menu items for card color(选择卡牌颜色)
  */
-- (void)runActionWithSelectedHeroMenu:(CCMenuItem *)menuItem
+- (void)addPlayingMenuOfCardColor
 {
-    for (CCMenuItem *item in menuItem.parent.children) {
-        if (![item isEqual:menuItem]) {
-            item.visible = NO;
-        }
-    }
-    
-    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(-SCREEN_WIDTH*0.4, -SCREEN_HEIGHT*0.4)
-                                                         ofNode:menuItem];
-    [moveComp runActionEaseMoveScaleWithDuration:0.5f
-                                           scale:0.5f
-                                           block:^{
-                                               [self addHeroAreaWithHeroId:menuItem.tag];
-                                               [menuItem.parent removeFromParentAndCleanup:YES];
-                                           }];
+    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardColor ofPlayer:self];
+    [self addChild:_playingMenu];
 }
 
-#pragma mark - Playing cards
-/*
- * Draw playing cards after player confirm drawing
- */
-- (void)drawPlayingCardIds:(NSArray *)cardIds
+#pragma mark - Playing deck
+- (void)addAllFacedDownPlayingCardsOfTargetPlayer
 {
-    if (_isCurrentPlayer) {
-        [_playingArea addPlayingCardsWithCardIds:cardIds];
-    } else {
-        [self updatePlayingCardCountBy:cardIds.count];
-    }
+    [_playingDeck addAllFacedDownPlayingCardsOfTargetPlayer];
 }
 
-/*
- * Display playing card count at right corner of hero avatar(Only for other player)
- */
-- (void)renderPlayingCardCount
+- (void)gotAllFacedDownPlayingCardsWithCardIds:(NSArray *)cardIds
 {
-    [[self getChildByTag:kPlayerTagPlayingCardCount] removeFromParentAndCleanup:YES];
-    
-    CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_playingCardCount).stringValue
-                                                fontName:@"Arial"
-                                                fontSize:22.0f];
-    countLabel.position = ccp(-_playerAreaSize.width*0.07, -_playerAreaSize.height*0.23);
-    [self addChild:countLabel z:1 tag:kPlayerTagPlayingCardCount];
+    [_handArea gotAllFacedDownPlayingCardsWithCardIds:cardIds];
 }
 
-/*
- * Update playing card count for other players
- */
-- (void)updatePlayingCardCountBy:(NSInteger)count
+- (void)lostPlayingCardsWithCardIds:(NSArray *)cardIds
 {
-    _playingCardCount += count;
-    [self renderPlayingCardCount];
+    [_handArea lostPlayingCardsWithCardIds:cardIds];
+    [[BGGameLayer sharedGameLayer] clearTargetObjectBuffer];
 }
 
 @end

@@ -70,7 +70,6 @@ static BGRoomLayer *instanceOfRoomLayer = nil;
     if (_isRoomOwner)
     {
         CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Start Game" block:^(id sender) {
-            [[BGClient sharedClient] sendStartGamePublicMessage];
             [[BGClient sharedClient] sendStartGameRequest];
         }];
         CCMenu *menu = [CCMenu menuWithItems:item, nil];

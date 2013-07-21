@@ -8,22 +8,40 @@
 #import "kobold2d.h"
 #import "BGPlayer.h"
 
+#define TOTAL_CARD_COUNT    80
+
+@protocol BGGameLayerDelegate <NSObject>
+
+- (void)remainingCardCountUpdate:(NSUInteger)count;
+
+@end
+
 @interface BGGameLayer : CCLayer
+
+@property (nonatomic, weak) id<BGGameLayerDelegate> delegate;
 
 @property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
 
-@property (nonatomic, strong, readonly) NSMutableArray *players;    // Player instances
-@property (nonatomic, strong, readonly) BGPlayer *currentPlayer;    // Player Self
-@property (nonatomic, copy) NSString *playerName;                   // 回合开始/出牌的玩家
+@property (nonatomic, strong, readonly) NSMutableArray *allPlayers; // Player instances
+@property (nonatomic, strong, readonly) BGPlayer *selfPlayer;       // Player Self
+@property (nonatomic, strong, readonly) BGPlayer *currentPlayer;    // 回合开始/伤害来源/出牌的玩家
+@property (nonatomic, copy) NSString *currentPlayerName;            // 回合开始/伤害来源/出牌的玩家
 @property (nonatomic, strong) NSMutableArray *targetPlayerNames;    // 指定的目标玩家们
 
+@property (nonatomic) NSUInteger remainingCardCount;                // 牌堆剩余牌数
 @property (nonatomic, readonly) ccTime gameDuration;
 
 + (BGGameLayer *)sharedGameLayer;
 + (id)scene;
 
-- (void)dealHeroCards:(NSArray *)toBeSelectedHeroIds;
-- (void)sendAllHeroIds:(NSArray *)allHeroIds;
+- (void)dealHeroCardsWithHeroIds:(NSArray *)toBeSelectedHeroIds;
+- (void)sendAllSelectedHeroCardsWithHeroIds:(NSArray *)allHeroIds;
+- (void)dealPlayingCardsWithCardIds:(NSArray *)cardIds;
+- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
 - (void)transferRoleCardToNextPlayer;
+
+- (BGPlayer *)playerWithName:(NSString *)playerName;
+
+- (void)clearTargetObjectBuffer;
 
 @end

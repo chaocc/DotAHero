@@ -10,8 +10,8 @@
 
 #define kHeroName               @"heroName"
 #define kHeroAttribute          @"heroAttribute"
-#define kHealthPointLimit       @"healthPointLimit"
-#define kManaPointLimit         @"manaPointLimit"
+#define kBloodPointLimit        @"bloodPointLimit"
+#define kAngerPointLimit        @"angerPointLimit"
 #define kHandSizeLimit          @"handSizeLimit"
 #define kHeroSkills             @"heroSkills"
 #define kHeroSkillType          @"heroSkillType"
@@ -190,8 +190,8 @@ typedef NS_ENUM(NSInteger, BGHeroSkillType) {
 @property (nonatomic, copy, readonly) NSString *bigAvatarName;
 
 @property (nonatomic, readonly) BGHeroAttribute heroAttibute;
-@property (nonatomic, readonly) NSUInteger healthPointLimit;
-@property (nonatomic, readonly) NSUInteger manaPointLimit;
+@property (nonatomic, readonly) NSUInteger bloodPointLimit;
+@property (nonatomic, readonly) NSUInteger angerPointLimit;
 @property (nonatomic, readonly) NSUInteger handSizeLimit;   // 手牌上限
 @property (nonatomic, readonly) NSArray *heroSkills;
 

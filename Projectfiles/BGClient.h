@@ -9,8 +9,6 @@
 #import <Foundation/Foundation.h>
 #import "ElectroServer.h"
 
-@class BGPlayingCard;
-
 @interface BGClient : NSObject
 
 @property (strong, nonatomic, readonly) ElectroServer *es;
@@ -27,12 +25,14 @@
 
 - (void)addGamePluginMessageEventListener;
 - (void)sendStartGameRequest;
-- (void)sendSelectHeroCardRequestWithHeroId:(NSInteger)heroId;
-- (void)sendCutCardRequestWithPlayingCardId:(NSInteger)cardId;
-- (void)sendUseCardRequestWithPlayingCardId:(NSInteger)cardId;
-- (void)sendCancelCardRequest;
+- (void)sendSelectHeroCardRequest;
+- (void)sendCutPlayingCardRequest;
+- (void)sendUsePlayingCardRequest;
+- (void)sendGuessCardColorRequest;
+- (void)sendDiscardPlayingCardRequest;
+- (void)sendCancelPlayingCardRequest;
+- (void)sendExtractCardRequest;
 
 - (void)addPublicMessageEventListener;
-- (void)sendStartGamePublicMessage;
 
 @end

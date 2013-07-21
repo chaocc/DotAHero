@@ -1,12 +1,13 @@
 //
-//  BGPlayingArea.m
+//  BGHandArea.m
 //  DotAHero
 //
 //  Created by Killua Liu on 6/14/13.
 //  Copyright 2013 __MyCompanyName__. All rights reserved.
 //
 
-#import "BGPlayingArea.h"
+#import "BGHandArea.h"
+#import "BGGameLayer.h"
 #import "BGPlayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
@@ -15,7 +16,7 @@
 #import "BGEffectComponent.h"
 #import "BGPluginConstants.h"
 
-@interface BGPlayingArea ()
+@interface BGHandArea ()
 
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
@@ -24,33 +25,49 @@
 
 @property (nonatomic) CGFloat cardWidth;
 @property (nonatomic) CGFloat cardHeight;
+@property (nonatomic) NSUInteger facedDownCardCount;    // 暗置的牌数
 
 @end
 
-@implementation BGPlayingArea
+@implementation BGHandArea
 
 - (id)initWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player
 {
     if (self = [super init]) {
         _player = player;
-        _canBeSelectedCardCount = 1;
+        _canSelectCardCount = 1;
+        _targetPosition = ccp(_player.playerAreaSize.width*0.28, -_player.playerAreaSize.height*0.85);
         _selectedCards = [NSMutableArray array];
         _selectedMenuItems = [NSMutableArray array];
-        
-        _playingCards = [NSMutableArray array];
-        [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
-            [_playingCards addObject:card];
-        }];
+        _playingCards = [[self.class playingCardsWithCardIds:cardIds] mutableCopy];
         
         [self initializePlayingCardsWithCardIds:cardIds];
     }
     return self;
 }
 
-+ (id)playingAreaWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player
++ (id)handAreaWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player
 {
     return [[self alloc] initWithPlayingCardIds:cardIds ofPlayer:player];
+}
+
++ (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds
+{
+    NSMutableArray *cards = [NSMutableArray array];
+    [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
+        [cards addObject:card];
+    }];
+    return cards;
+}
+
++ (NSArray *)playingCardIdsWithCards:(NSArray *)cards
+{
+    NSMutableArray *cardIds = [NSMutableArray array];
+    [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [cardIds addObject:@([obj cardId])];
+    }];
+    return cardIds;
 }
 
 #pragma mark - Playing cards rendering
@@ -65,7 +82,7 @@
     [self addChild:_cardMenu];
     _menuFactory.delegate = self;
     
-    [self renderFigureAndSuitsOfCards:_playingCards];
+    [self renderFigureAndSuitsOfCards:_playingCards forMenu:_cardMenu];
     [self adjustPositionOfPlayingCards];
     [self checkPlayingCardsUsability];
 }
@@ -73,23 +90,27 @@
 /*
  * Render playing card figure and suits
  */
-- (void)renderFigureAndSuitsOfCards:(NSArray *)cards
+- (void)renderFigureAndSuitsOfCards:(NSArray *)cards forMenu:(CCMenu *)menu
 {
-    _cardWidth = [[_cardMenu.children lastObject] contentSize].width;
-    _cardHeight = [[_cardMenu.children lastObject] contentSize].height;
+    _cardWidth = [[menu.children lastObject] contentSize].width;
+    _cardHeight = [[menu.children lastObject] contentSize].height;
     
     NSUInteger idx = 0;
-    for (NSUInteger i = (_cardMenu.children.count-cards.count); i < _cardMenu.children.count; i++) {
-        CCMenuItem *menuItem = [_cardMenu.children objectAtIndex:i];
-        NSAssert(menuItem, @"Nil in selector %@", NSStringFromSelector(_cmd));
-        
-        CCSprite *figureSprite = [CCSprite spriteWithSpriteFrameName:[cards[idx] figureImageName]];
-        figureSprite.position = ccp(_cardWidth*0.11, _cardHeight*0.92);
-        [menuItem addChild:figureSprite];
-        
-        CCSprite *suitsSprite = [CCSprite spriteWithSpriteFrameName:[cards[idx] suitsImageName]];
-        suitsSprite.position = ccp(_cardWidth*0.11, _cardHeight*0.84);
-        [menuItem addChild:suitsSprite];
+    for (NSUInteger i = (menu.children.count-cards.count); i < menu.children.count; i++) {
+        @try {
+            CCMenuItem *menuItem = [menu.children objectAtIndex:i];
+            
+            CCSprite *figureSprite = [CCSprite spriteWithSpriteFrameName:[cards[idx] figureImageName]];
+            figureSprite.position = ccp(_cardWidth*0.11, _cardHeight*0.92);
+            [menuItem addChild:figureSprite];
+            
+            CCSprite *suitsSprite = [CCSprite spriteWithSpriteFrameName:[cards[idx] suitsImageName]];
+            suitsSprite.position = ccp(_cardWidth*0.11, _cardHeight*0.84);
+            [menuItem addChild:suitsSprite];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Exception: %@ in %@", exception.description, NSStringFromSelector(_cmd));
+        }
         
         idx++;
     }
@@ -110,16 +131,15 @@
         cardPadding = -(_cardWidth*(_cardMenu.children.count-6) / (_cardMenu.children.count-1));
     }
     
-    NSUInteger idx = 0;
-    for (CCMenuItem *menuItem in _cardMenu.children) {
+    [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CCMenuItem *menuItem = obj;
         menuItem.position = ccp(cardStartX + (_cardWidth+cardPadding)*idx, cardPosY);
         
 //      Can't exceed playing area's width(Not overlap with equipment area)
         if (menuItem.position.x > maxPlayingAreaWidth) {
             menuItem.position = ccp(maxPlayingAreaWidth, menuItem.position.y);
         }
-        idx++;
-    }
+    }];
 }
 
 #pragma mark - Playing cards update(Draw/Discard)
@@ -142,27 +162,51 @@
         [spritBatch addChild:sprite];
     }
     
-    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(_player.playerAreaSize.width*0.28, -_player.playerAreaSize.height*0.85)
+    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:_targetPosition
                                                          ofNode:spritBatch];
     [moveComp runActionEaseMoveScaleWithDuration:0.7f
                                            scale:1.0f
                                            block:^{
                                                [spritBatch removeFromParentAndCleanup:YES];
-                                               
-                                               // Render drawn playing cards and update buffer
-                                               NSMutableArray *cards = [NSMutableArray array];
-                                               [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-                                                   BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
-                                                   [cards addObject:card];
-                                               }];
-
-                                               [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
-                                               [self renderFigureAndSuitsOfCards:cards];
-                                               [self adjustPositionOfPlayingCards];
-                                               [self checkPlayingCardsUsability];
-
-                                               [_playingCards addObjectsFromArray:cards];
+                                               [self renderPlayingCardsAndUpdateBufferWithCardIds:cardIds];
     }];
+}
+
+/*
+ * Render drawn playing cards and update buffer
+ */
+- (void)renderPlayingCardsAndUpdateBufferWithCardIds:(NSArray *)cardIds;
+{
+    NSArray *cards = [self.class playingCardsWithCardIds:cardIds];
+    
+    [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
+    [self renderFigureAndSuitsOfCards:cards forMenu:_cardMenu];
+    [self adjustPositionOfPlayingCards];
+    [self checkPlayingCardsUsability];
+    
+    [_playingCards addObjectsFromArray:cards];
+}
+
+/*
+ * Add a faced down(暗置) playing card into hand
+ */
+- (void)addAFacedDownPlayingCard
+{
+    [_menuFactory addMenuItemWithCardBackFrameName:kImagePlayingCardBack toMenu:_cardMenu];
+    [self adjustPositionOfPlayingCards];
+    _facedDownCardCount += 1;
+}
+
+/*
+ * Got all faced down playing cards
+ */
+- (void)gotAllFacedDownPlayingCardsWithCardIds:(NSArray *)cardIds
+{
+    for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
+        [_cardMenu.children.lastObject removeFromParentAndCleanup:YES];
+    }
+    
+    [self renderPlayingCardsAndUpdateBufferWithCardIds:cardIds];
 }
 
 /*
@@ -259,6 +303,12 @@
 //  Need move up/down while a card is selected/deselected
     card.isSelected = !card.isSelected;
     if (card.isSelected) {
+//      ...TEMP...
+        if (card.cardEnum == kPlayingCardElunesArrow || card.cardEnum == kPlayingCardGreed) {
+            [_player.playingMenu removeFromParentAndCleanup:YES];
+            [_player addPlayingMenuOfStrengthen];
+        }
+        
         menuItem.position = ccpAdd(menuItem.position, ccp(0.0f, moveHeight));
         [_selectedMenuItems addObject:menuItem];
         [_selectedCards addObject:card];
@@ -269,7 +319,7 @@
     }
     
 //  If selected cards count great than maximum, deselect and remove the first selected card.
-    if (_selectedCards.count > _canBeSelectedCardCount)
+    if (_selectedCards.count > _canSelectCardCount)
     {
         @try {
             for (CCMenuItem *item in _cardMenu.children) {
@@ -290,9 +340,9 @@
 //  Enable playing menu okay button only if the selected cards count is not zero
     CCMenuItem *item = [_player.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
     NSAssert(item, @"item Nil in %@", NSStringFromSelector(_cmd));
-//    if (_player.playerState != kPlayerStatePlaying) {
+    if (_player.playerState != kPlayerStatePlaying || card.cardEnum == kPlayingCardHealingSalve) {
         item.isEnabled = (_selectedCards.count != 0);
-//    }
+    }
 
     
     
@@ -306,7 +356,8 @@
 }
 
 /*
- * Use playing cards and run move action
+ * 1. Use playing cards and run move action
+ * 2. Set selected playing card ids by current player
  */
 - (void)usePlayingCards
 {
@@ -314,25 +365,24 @@
     CGFloat startX = (SCREEN_WIDTH - menuWidth*(_selectedMenuItems.count - 1)) / 2;
     
     [_selectedMenuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(startX + menuWidth*idx, SCREEN_HEIGHT*0.55)
-                                                             ofNode:obj];
-        [moveComp runActionEaseMoveScaleWithDuration:0.5f
-                                               scale:1.0f
-                                               block:^{
-                                                   [obj removeFromParentAndCleanup:YES];
-                                                   [self adjustPositionOfPlayingCards];
-                                               }];
+        [self movePlayingCardWithMenuItem:obj
+                                 toTarget:ccp(startX + menuWidth*idx, SCREEN_HEIGHT*0.55)];
     }];
     
+    _player.selectedCardIds = [self.class playingCardIdsWithCards:_selectedCards];
     [self removePlayingCards];   // Update playing card buffer
 }
 
-/*
- * Select a playing card to compare the card figure
- */
-- (void)compareCardFigure
+- (void)movePlayingCardWithMenuItem:(CCMenuItem *)menuItem toTarget:(CGPoint)target
 {
-    [self usePlayingCards];
+    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:target
+                                                         ofNode:menuItem];
+    [moveComp runActionEaseMoveScaleWithDuration:0.5f
+                                           scale:1.0f
+                                           block:^{
+                                               [menuItem removeFromParentAndCleanup:YES];
+                                               [self adjustPositionOfPlayingCards];
+                                           }];
 }
 
 /*
@@ -344,6 +394,26 @@
     [self addChild:effect];
     
     [self usePlayingCards];
+}
+
+/*
+ * Lost playing cards that are extracted by other player
+ */
+- (void)lostPlayingCardsWithCardIds:(NSArray *)cardIds
+{
+    for (CCMenuItem *item in _cardMenu.children) {
+        if ([cardIds containsObject:@(item.tag)]) {
+            [_selectedMenuItems addObject:item];
+            NSUInteger idx = [_cardMenu.children indexOfObject:item];
+            [_selectedCards addObject:_playingCards[idx]];
+        }
+    }
+    
+    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
+    [_selectedMenuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [self movePlayingCardWithMenuItem:obj
+                                 toTarget:[gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject].position];
+    }];
 }
 
 @end

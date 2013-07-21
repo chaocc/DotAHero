@@ -14,14 +14,12 @@
 #define kPlistHeroAvatar            @"HeroAvatar.plist"
 #define kPlistPlayingCard           @"PlayingCard.plist"
 #define kPlistEquipmentAvatar       @"EquipmentAvatar.plist"
-#define kPlistDamage                @"Damage.plist"
 
 #define kZlibGameArtwork            @"GameArtwork.pvr.ccz"
 #define kZlibHeroCard               @"HeroCard.pvr.ccz"
 #define kZlibHeroAvatar             @"HeroAvatar.pvr.ccz"
 #define kZlibPlayingCard            @"PlayingCard.pvr.ccz"
 #define kZlibEquipmentAvatar        @"EquipmentAvatar.pvr.ccz"
-#define kZlibCardEffect             @"CardEffect.pvr.ccz"
 
 #define kImageBackground            @"Background.jpg"
 #define kImageGameMenu              @"GameMenu.png"
@@ -52,6 +50,10 @@
 #define kImageDiamonds              @"Diamonds.png"
 #define kImageSpades                @"Spades.png"
 #define kImageClubs                 @"Clubs.png"
+#define kImageHeartsBig             @"Hearts_Big.png"
+#define kImageDiamondsBig           @"Diamonds_Big.png"
+#define kImageSpadesBig             @"Spades_Big.png"
+#define kImageClubsBig              @"Clubs_Big.png"
 
 #define kImageOkay                  @"Okay.png"
 #define kImageOkaySelected          @"Okay_Selected.png"
@@ -62,6 +64,13 @@
 #define kImageDiscard               @"Discard.png"
 #define kImageDiscardSelected       @"Discard_Selected.png"
 #define kImageDiscardDisabled       @"Discard_Disabled.png"
+#define kImageStrengthen            @"Strengthen.png"
+#define kImageStrengthenSelected    @"Strengthen_Selected.png"
+#define kImageStrengthenDisabled    @"Strengthen_Disabled.png"
+#define kImageMenuHearts            @"MenuHearts.png"
+#define kImageMenuDiamonds          @"MenuDiamonds.png"
+#define kImageMenuSpades            @"MenuSpades.png"
+#define kImageMenuClubs             @"MenuClubs.png"
 
 #define kXmlSettings                @"settings.xml"
 

@@ -15,8 +15,7 @@
     if (self = [super init]) {
         _playingCardEnum = cardEnum;
         
-        self.position = ccp(512, 650);   // Passed in
-        [self runEffectAnimation];
+        [self runEffectAnimationByCard];
     }
     return self;
 }
@@ -26,7 +25,22 @@
     return [[self alloc] initWithPlayingCardEnum:cardEnum];
 }
 
-- (void)runEffectAnimation
+- (id)initWithEffectType:(BGEffectType)effectType
+{
+    if (self = [super init]) {
+        _effectType = effectType;
+        
+        [self runEffectAnimationByEffectType];
+    }
+    return self;
+}
+
++ (id)effectCompWithEffectType:(BGEffectType)effectType
+{
+    return [[self alloc] initWithEffectType:effectType];
+}
+
+- (void)runEffectAnimationByCard
 {
     switch (_playingCardEnum) {
         case kPlayingCardNormalAttack:
@@ -34,7 +48,7 @@
             break;
             
         case kPlayingCardChaosAttack:
-            [self damage];
+            [self normalAttack];
             break;
             
         case kPlayingCardHealingSalve:
@@ -50,13 +64,32 @@
     }
 }
 
+- (void)runEffectAnimationByEffectType
+{
+    switch (_playingCardEnum) {
+        case kEffectTypeDamaged:
+            [self damage];
+            break;
+            
+        case kEffectTypeRestoreBlood:
+            
+            break;
+            
+        case kEffectTypeGotAnger:
+            
+            break;
+            
+        default:
+            break;
+    }
+}
+
 - (void)runActionWithPlist:(NSString *)plist frameName:(NSString *)frameName frames:(NSString *)frame andFrameCount:(NSUInteger)count
 {
     CCSpriteFrameCache *spriteFrameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
     [spriteFrameCache addSpriteFramesWithFile:plist];
     
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:frameName];
-//    sprite.position = [CCDirector sharedDirector].screenCenter;
     
     CCScaleTo *scale = [CCScaleTo actionWithDuration:0.1f scale:1.0f];
     

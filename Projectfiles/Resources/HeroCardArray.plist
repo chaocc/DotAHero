@@ -7,9 +7,9 @@
 		<string>LordOfAvernus</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -50,9 +50,9 @@
 		<string>SkeletonKing</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -93,9 +93,9 @@
 		<string>Bristleback</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -136,9 +136,9 @@
 		<string>SacredWarrior</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -179,9 +179,9 @@
 		<string>Omniknight</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -222,9 +222,9 @@
 		<string>Axe</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -265,9 +265,9 @@
 		<string>CentaurWarchief</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>5</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -294,9 +294,9 @@
 		<string>DragonKnight</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -337,9 +337,9 @@
 		<string>GuardianKnight</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -394,9 +394,9 @@
 		<string>Gorgon</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -437,9 +437,9 @@
 		<string>LightningRevenant</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -480,9 +480,9 @@
 		<string>Juggernaut</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -523,9 +523,9 @@
 		<string>VengefulSpirit</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -566,9 +566,9 @@
 		<string>Strygwyr</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -623,9 +623,9 @@
 		<string>TrollWarlord</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -666,9 +666,9 @@
 		<string>DwarvenSniper</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -723,9 +723,9 @@
 		<string>NerubianAssassin</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -780,9 +780,9 @@
 		<string>Antimage</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -837,9 +837,9 @@
 		<string>NerubianWeaver</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -880,9 +880,9 @@
 		<string>UrsaWarrior</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -923,9 +923,9 @@
 		<string>ChenYunSheng</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -966,9 +966,9 @@
 		<string>Slayer</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1009,9 +1009,9 @@
 		<string>Necrolyte</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1052,9 +1052,9 @@
 		<string>TwinHeadDragon</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -1095,9 +1095,9 @@
 		<string>CrystalMaiden</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1138,9 +1138,9 @@
 		<string>Lich</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1181,9 +1181,9 @@
 		<string>ShadowPriest</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1224,9 +1224,9 @@
 		<string>OrgeMagi</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>4</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>4</integer>
@@ -1267,9 +1267,9 @@
 		<string>KeeperOfTheLight</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1324,9 +1324,9 @@
 		<string>GoblinTechies</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1381,9 +1381,9 @@
 		<string>StormSpirit</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1424,9 +1424,9 @@
 		<string>Enchantress</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>
@@ -1481,9 +1481,9 @@
 		<string>ElfLily</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
-		<key>healthPointLimit</key>
+		<key>bloodPointLimit</key>
 		<integer>3</integer>
-		<key>manaPointLimit</key>
+		<key>angerPointLimit</key>
 		<integer>3</integer>
 		<key>handSizeLimit</key>
 		<integer>5</integer>

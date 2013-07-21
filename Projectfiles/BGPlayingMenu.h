@@ -13,16 +13,25 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuType) {
     kPlayingMenuTypeCardCutting,    // 通过拼点切牌
     kPlayingMenuTypeCardUsing,      // 使用
     kPlayingMenuTypeCardPlaying,    // 打出
-    kPlayingMenuTypeHeroSkill,
-    kPlayingMenuTypeEquipment,
-    kPlayingMenuTypeDispel
+    kPlayingMenuTypeHeroSkill,      // 英雄技能
+    kPlayingMenuTypeEquipment,      // 发动装备
+    kPlayingMenuTypeDispel,         // 驱散
+    kPlayingMenuTypeStrengthen,     // 强化
+    kPlayingMenuTypeCardColor       // 卡牌颜色
 };
 
-typedef NS_ENUM(NSInteger, BGPlayingMenuItemIndex) {
+typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
     kPlayingMenuItemTagOkay,        // 确定
     kPlayingMenuItemTagCancel,      // 取消
     kPlayingMenuItemTagDiscard,     // 弃牌
-    kPlayingMenuItemTagIgnore       // 忽略驱散
+    kPlayingMenuItemTagStrengthen,  // 强化
+    kPlayingMenuItemTagIgnore,      // 忽略驱散
+    kPlayingMenuItemTagRedColor,    // 红色
+    kPlayingMenuItemTagBlackColor,  // 黑色
+    kPlayingMenuItemTagHearts,      // 红桃
+    kPlayingMenuItemTagDiamonds,    // 方块
+    kPlayingMenuItemTagSpades,      // 黑桃
+    kPlayingMenuItemTagClubs        // 梅花
 };
 
 @class BGPlayer;
@@ -34,7 +43,5 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuItemIndex) {
 
 - (id)initWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player;
 + (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player;
-
-- (void)addMenuItems;
 
 @end

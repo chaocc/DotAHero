@@ -30,8 +30,8 @@
         _heroSkills = dictionary[kHeroSkills];
         
         _heroAttibute = [dictionary[kHeroAttribute] integerValue];
-        _healthPointLimit = [dictionary[kHealthPointLimit] integerValue];
-        _manaPointLimit = [dictionary[kManaPointLimit] integerValue];
+        _bloodPointLimit = [dictionary[kBloodPointLimit] integerValue];
+        _angerPointLimit = [dictionary[kAngerPointLimit] integerValue];
         _handSizeLimit = [dictionary[kHandSizeLimit] integerValue];
     }
     

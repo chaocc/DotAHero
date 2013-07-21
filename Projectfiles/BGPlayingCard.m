@@ -83,6 +83,9 @@
         case kCardSuitsClubs:
             return kImageClubs;
             break;
+        default:
+            return nil;
+            break;
     }
 }
 

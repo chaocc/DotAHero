@@ -12,6 +12,7 @@
 #import "BGDensity.h"
 #import "BGFaction.h"
 #import "BGGameMenu.h"
+#import "BGCardPile.h"
 #import "BGMoveComponent.h"
 
 typedef NS_ENUM(NSUInteger, BGPlayerCount) {
@@ -71,7 +72,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [spriteFrameCache addSpriteFramesWithFile:kPlistHeroAvatar];
         [spriteFrameCache addSpriteFramesWithFile:kPlistPlayingCard];
         [spriteFrameCache addSpriteFramesWithFile:kPlistEquipmentAvatar];
-        [spriteFrameCache addSpriteFramesWithFile:kPlistDamage];
         
         _gameArtworkBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
         [self addChild:_gameArtworkBatch z:1];
@@ -83,8 +83,8 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [self addPlayers];
         
         if ([BGClient sharedClient].isSingleMode) {
-            [self dealHeroCards:[NSArray arrayWithObjects:@(2), @(12), @(17), nil]];
-            [_currentPlayer addPlayingAreaWithPlayingCardIds:nil];
+            [self dealHeroCardsWithHeroIds:[NSArray arrayWithObjects:@(2), @(12), @(17), nil]];
+            [_selfPlayer addHandAreaWithPlayingCardIds:nil];
         }
 }
 
@@ -122,10 +122,17 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)addCardPile
 {
-    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageCardPile];
-    CGSize spriteSize = sprite.contentSize;
-    sprite.position = ccp(SCREEN_WIDTH - spriteSize.width*0.6, SCREEN_HEIGHT - spriteSize.height*1.8);
-    [_gameArtworkBatch addChild:sprite];
+    [self addChild:[BGCardPile cardPile] z:1];
+    self.remainingCardCount = TOTAL_CARD_COUNT;
+}
+
+/*
+ * Set the remaining card count and let card pile update the count on the UI
+ */
+- (void)setRemainingCardCount:(NSUInteger)remainingCardCount
+{
+    _remainingCardCount = remainingCardCount;
+    [_delegate remainingCardCountUpdate:remainingCardCount];
 }
 
 /*
@@ -133,7 +140,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)addPlayers
 {
-    _players = [NSMutableArray arrayWithCapacity:_users.count];
+    _allPlayers = [NSMutableArray arrayWithCapacity:_users.count];
     [self addCurrentPlayer];
     [self addOtherPlayers];
 }
@@ -147,8 +154,8 @@ static BGGameLayer *instanceOfGameLayer = nil;
         BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] isCurrentPlayer:YES];
         [self addChild:player z:2];
         
-        _currentPlayer = player;
-        [_players addObject:player];
+        _selfPlayer = player;
+        [_allPlayers addObject:player];
     }
     @catch (NSException *exception) {
         NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
@@ -161,11 +168,11 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (void)addOtherPlayers
 {
     @try {
-        for (NSUInteger i = 1; i < 2; i++) {
-//            BGPlayer *player = [BGPlayer playerWithUserName:[_users[i] userName] isCurrentPlayer:NO];
-            BGPlayer *player = [BGPlayer playerWithUserName:@"Test" isCurrentPlayer:NO];
+        for (NSUInteger i = 1; i < _users.count; i++) {
+            BGPlayer *player = [BGPlayer playerWithUserName:[_users[i] userName] isCurrentPlayer:NO];
+//            BGPlayer *player = [BGPlayer playerWithUserName:@"Test" isCurrentPlayer:NO];
             [self addChild:player z:1];
-            [_players addObject:player];
+            [_allPlayers addObject:player];
         }
     }
     @catch (NSException *exception) {
@@ -176,54 +183,54 @@ static BGGameLayer *instanceOfGameLayer = nil;
     CGFloat spriteWidth = spriteSize.width;
     CGFloat spriteHeight = spriteSize.height;
     
-    switch (2) {
+    switch (_users.count) {
         case kPlayerCountTwo:
-            [_players[1] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
             break;
             
         case kPlayerCountThree:
-            [_players[1] setPosition:ccp(SCREEN_WIDTH*2/3, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[2] setPosition:ccp(SCREEN_WIDTH*1/3, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH*2/3, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*1/3, SCREEN_HEIGHT - spriteHeight/2)];
             break;
             
         case kPlayerCountFour:
-            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
-            [_players[2] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[3] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountFive:
-            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
-            [_players[2] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[3] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[4] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountSix:
-            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
-            [_players[2] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[3] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[4] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[5] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[5] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountSeven:
-            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_players[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
-            [_players[3] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[4] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_players[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
             break;
             
         case kPlayerCountEight:
-            [_players[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_players[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
-            [_players[3] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[4] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[5] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_players[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_players[7] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[5] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
+            [_allPlayers[7] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
             break;
             
         default:
@@ -232,22 +239,43 @@ static BGGameLayer *instanceOfGameLayer = nil;
 }
 
 /*
- * Deal to be selected hero cards to current player after receive dealHeroCards action
+ * Display the hero avatar of other players selected
  */
-- (void)dealHeroCards:(NSArray *)toBeSelectedHeroIds
+- (void)addHeroAreaForOtherPlayers
 {
-    NSAssert(toBeSelectedHeroIds, @"Nil in selector %@", NSStringFromSelector(_cmd));
-    [_currentPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
+    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+        @try {
+            [_allPlayers[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
+        }
+    }
 }
 
 /*
- * Send the hero id of all players selected to each player after receive sendAllHeroIds action
+ * Deal to be selected hero cards to current player after receive dealHeroCards action
  */
-- (void)sendAllHeroIds:(NSArray *)allHeroIds
+- (void)dealHeroCardsWithHeroIds:(NSArray *)toBeSelectedHeroIds
 {
-    NSAssert(allHeroIds, @"Nil in selector %@", NSStringFromSelector(_cmd));
+    [_selfPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
+}
+
+/*
+ * Send the hero card of all players selected to each player after receive sendAllHeroIds action
+ */
+- (void)sendAllSelectedHeroCardsWithHeroIds:(NSArray *)allHeroIds
+{
     self.allHeroIds = allHeroIds;
     [self addHeroAreaForOtherPlayers];
+}
+
+/*
+ * Deal playing cards to current player after receive dealPlayingCard action
+ */
+- (void)dealPlayingCardsWithCardIds:(NSArray *)cardIds
+{
+    [_selfPlayer addHandAreaWithPlayingCardIds:cardIds];
 }
 
 /*
@@ -259,7 +287,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
     
     [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj integerValue] == [_currentPlayer selectedHeroId]) {
+        if ([obj integerValue] == [_selfPlayer selectedHeroId]) {
             [mutableHeroIds removeObjectsAtIndexes:idxSet];
             [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
             _allHeroIds = mutableHeroIds;
@@ -271,26 +299,37 @@ static BGGameLayer *instanceOfGameLayer = nil;
 }
 
 /*
- * Display the hero avatar of other players selected
+ * Show all cutting(切牌) cards for comparing card figure
  */
-- (void)addHeroAreaForOtherPlayers
+- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
 {
-    for (NSUInteger i = 1; i < _players.count; i++) {
-        @try {
-            [_players[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
-        }
-        @catch (NSException *exception) {
-            NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
-        }
-    }
+    [_selfPlayer showAllCuttingCardsWithCardIds:cardIds];
 }
 
-//// ...TODO...
-//// 发手牌给某个玩家
-//- (void)dealPlayingCardIds:(NSArray *)cardIds toPlayer:(BGPlayer *)player
-//{
-//    [player drawPlayingCardIds:cardIds];
-//}
+- (BGPlayer *)currentPlayer
+{
+    for (BGPlayer *player in _allPlayers) {
+        if ([player.playerName isEqualToString:_currentPlayerName]) {
+            return player;
+        }
+    }
+    return nil;
+}
+
+- (BGPlayer *)playerWithName:(NSString *)playerName
+{
+    for (BGPlayer *player in _allPlayers) {
+        if ([player.playerName isEqualToString:playerName]) {
+            return player;
+        }
+    }
+    return nil;
+}
+
+- (void)clearTargetObjectBuffer
+{
+    [_targetPlayerNames removeAllObjects];
+}
 
 - (void)transferRoleCardToNextPlayer
 {
