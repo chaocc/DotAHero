@@ -15,12 +15,11 @@
 #import "BGPlayingDeck.h"
 #import "BGPluginConstants.h"
 
-#define INITIAL_PLAYING_CARD_COUND  7
-
 @interface BGPlayer : CCNode <BGMenuFactoryDelegate>
 
 @property (nonatomic, copy, readonly) NSString *playerName;
 @property (nonatomic, readonly) BOOL isCurrentPlayer;
+@property (nonatomic, readonly) CGPoint playerAreaPosition;
 @property (nonatomic, readonly) CGSize playerAreaSize;
 @property (nonatomic) BGPlayerState playerState;
 
@@ -40,7 +39,7 @@
 @property (nonatomic) BGCardSuits selectedSuits;
 @property (nonatomic) BGGreedType selectedGreedType;
 
-@property (nonatomic) NSUInteger playingCardCount;      // 手牌数
+@property (nonatomic) NSUInteger handCardCount;      // 手牌数
 @property (nonatomic) NSUInteger canDrawCardCount;      // 可以摸的牌数
 @property (nonatomic) NSUInteger canExtractCardCount;   // 可以抽取的牌数
 @property (nonatomic) BOOL canUseAttack;    // 是否可以使用"攻击"
@@ -49,19 +48,20 @@
 + (id)playerWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag;
 
 - (void)addHeroAreaWithHeroId:(NSInteger)heroId;
-- (void)addHandAreaWithPlayingCardIds:(NSArray *)cardIds;
-- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
+- (void)addHandAreaWithCardIds:(NSArray *)cardIds;
+- (void)drawPlayingCardIds:(NSArray *)cardIds;
+- (void)updateBloodAndAngerWithBloodPoint:(NSInteger)bloodPoint andAngerPoint:(NSInteger)angerPoint;
+
+- (void)clearBuffer;
+
 - (void)addPlayingMenuOfCardUsing;
 - (void)addPlayingMenuOfCardPlaying;
 - (void)addPlayingMenuOfStrengthen;
 - (void)addPlayingMenuOfCardColor;
-- (void)gotAllFacedDownPlayingCardsWithCardIds:(NSArray *)cardIds;
-- (void)addAllFacedDownPlayingCardsOfTargetPlayer;
-- (void)lostPlayingCardsWithCardIds:(NSArray *)cardIds;
 
-- (void)drawPlayingCardIds:(NSArray *)cardIds;
-- (void)updateBloodAndAngerWithBloodPoint:(NSInteger)bloodPoint andAngerPoint:(NSInteger)angerPoint;
-
-- (void)clearSelectedObjectsBuffer;
+- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
+- (void)faceDownAllHandCardsOnDeck;
+- (void)gotExtractedHandCardsWithCardIds:(NSArray *)cardIds;
+- (void)lostHandCardsWithCardIds:(NSArray *)cardIds;
 
 @end

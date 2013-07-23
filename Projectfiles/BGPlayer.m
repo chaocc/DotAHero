@@ -14,7 +14,7 @@
 #import "BGMoveComponent.h"
 
 typedef NS_ENUM(NSInteger, BGPlayerTag) {
-    kPlayerTagPlayingCardCount
+    kPlayerTagHandCardCount
 };
 
 
@@ -25,7 +25,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 @implementation BGPlayer
 
-@synthesize playingCardCount = _playingCardCount;
+@synthesize handCardCount = _handCardCount;
 
 - (id)initWithUserName:(NSString *)name isCurrentPlayer:(BOOL)isCurrentPlayer
 {
@@ -38,6 +38,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _canDrawCardCount = 2;
         _canUseAttack = YES;
         
+        [self renderPlayingDeck];
         [self renderPlayerArea];
     }
     return self;
@@ -59,7 +60,23 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return heroCards;
 }
 
-#pragma mark - Player area
+- (void)clearBuffer
+{
+    [self clearSelectedObjectBuffer];
+    [self clearPlayingDeckObject];
+    [[BGGameLayer sharedGameLayer].targetPlayerNames removeAllObjects];
+}
+
+#pragma mark - Playing deck and player area
+/*
+ * Add playing deck for showing used/cutting cards or others
+ */
+- (void)renderPlayingDeck
+{
+    _playingDeck = [BGPlayingDeck playingDeckWithPlayer:self];
+    [self addChild:_playingDeck];
+}
+
 /*
  * 1. Current player's position is (0,0) and its sprite positon is the "Center" of the player area
  * 2. Other player's position is setted in class BGGameLayer and its sprite position is (0,0)
@@ -72,6 +89,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     if (_isCurrentPlayer) {
         sprite.position = ccp(_playerAreaSize.width/2, _playerAreaSize.height/2);
+        _playerAreaPosition = sprite.position;
     }
     
     [self addChild:sprite];
@@ -83,20 +101,15 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)renderToBeSelectedHeros:(NSArray *)heroIds
 {
-    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.21f];
-    CCCallBlock *block = [CCCallBlock actionWithBlock:^{
-        NSArray *heroCards = [self.class heroCardsWithHeroIds:heroIds];
-        
-        BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
-        CCMenu *heroMenu = [menuFactory createMenuWithCards:heroCards];
-        heroMenu.position = ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6);
-        [heroMenu alignItemsHorizontally];
-        [self addChild:heroMenu];
-        
-        menuFactory.delegate = self;
-    }];
+    NSArray *heroCards = [self.class heroCardsWithHeroIds:heroIds];
     
-    [self runAction:[CCSequence actions:delay, block, nil]];
+    BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
+    CCMenu *heroMenu = [menuFactory createMenuWithCards:heroCards];
+    heroMenu.position = ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6);
+    [heroMenu alignItemsHorizontally];
+    [self addChild:heroMenu];
+    
+    menuFactory.delegate = self;
 }
 
 /*
@@ -117,8 +130,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _heroArea = [BGHeroArea heroAreaWithHeroCardId:heroId ofPlayer:self];
     [self addChild: _heroArea];
     
-//  5 playing cards for each player at the beginning, use 1 card for cutting.
-    self.playingCardCount = INITIAL_PLAYING_CARD_COUND;
+//  5 hand cards for each player at the beginning, use 1 card for cutting.
+    self.handCardCount = INITIAL_HAND_CARD_COUND;
 }
 
 #pragma mark - Hero card selection
@@ -129,8 +142,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     _selectedHeroId = menuItem.tag;
     [self runActionWithSelectedHeroMenu:menuItem];
-    
-    [[BGClient sharedClient] sendSelectHeroCardRequest];
     
 //  [(BGGameLayer *)self.parent transferRoleCardToNextPlayer];
 }
@@ -153,43 +164,44 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                                            block:^{
                                                [self addHeroAreaWithHeroId:menuItem.tag];
                                                [menuItem.parent removeFromParentAndCleanup:YES];
+                                               [[BGClient sharedClient] sendSelectHeroCardRequest];
                                            }];
 }
 
-#pragma mark - Playing cards
+#pragma mark - Hand cards
 /*
- * Draw playing cards after player confirm drawing
+ * Draw hand cards after player confirm drawing
  */
 - (void)drawPlayingCardIds:(NSArray *)cardIds
 {
-    [_handArea addPlayingCardsWithCardIds:cardIds];
+    [_handArea addHandCardsWithCardIds:cardIds];
 }
 
 /*
- * Display playing card count at right corner of hero avatar(Only for other player)
+ * Display hand card count at right corner of hero avatar(Only for other player)
  */
-- (void)renderPlayingCardCount
+- (void)renderHandCardCount
 {
-    [[self getChildByTag:kPlayerTagPlayingCardCount] removeFromParentAndCleanup:YES];
+    [[self getChildByTag:kPlayerTagHandCardCount] removeFromParentAndCleanup:YES];
     
-    CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_playingCardCount).stringValue
+    CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_handCardCount).stringValue
                                                 fontName:@"Arial"
                                                 fontSize:22.0f];
     countLabel.position = ccp(-_playerAreaSize.width*0.07, -_playerAreaSize.height*0.23);
-    [self addChild:countLabel z:1 tag:kPlayerTagPlayingCardCount];
+    [self addChild:countLabel z:1 tag:kPlayerTagHandCardCount];
 }
 
-- (void)setPlayingCardCount:(NSUInteger)playingCardCount
+- (void)setHandCardCount:(NSUInteger)handCardCount
 {
-    _playingCardCount = playingCardCount;
+    _handCardCount = handCardCount;
     if (!_isCurrentPlayer) {
-        [self renderPlayingCardCount];
+        [self renderHandCardCount];
     }
 }
 
-- (NSUInteger)playingCardCount
+- (NSUInteger)handCardCount
 {
-    return (_isCurrentPlayer) ? _handArea.playingCards.count : _playingCardCount;
+    return (_isCurrentPlayer) ? _handArea.handCards.count : _handCardCount;
 }
 
 - (void)updateBloodAndAngerWithBloodPoint:(NSInteger)bloodPoint
@@ -199,7 +211,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [_heroArea updateAngerPointWithCount:angerPoint];
 }
 
-- (void)clearSelectedObjectsBuffer
+- (void)clearSelectedObjectBuffer
 {
     _selectedCardIds = nil;
     [_extractedCardIdxes removeAllObjects];
@@ -210,29 +222,14 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 #pragma mark - Playing menu
 /*
- * Determine the initial player by cutting card
- */
-- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
-{
-    _playingDeck = [BGPlayingDeck playingDeckWithPlayer:self];
-    [_playingDeck addAllCuttingCardsWithCardIds:cardIds];
-    [self addChild:_playingDeck];
-}
-
-/*
  * Add hand area node(Delay 0.5 second for performance)
  */
-- (void)addHandAreaWithPlayingCardIds:(NSArray *)cardIds
+- (void)addHandAreaWithCardIds:(NSArray *)cardIds
 {
-    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.5f];
-    CCCallBlock *block = [CCCallBlock actionWithBlock:^{
-        _handArea = [BGHandArea handAreaWithPlayingCardIds:cardIds ofPlayer:self];
-        [self addChild:_handArea z:2];
-        
-        [self addPlayingMenuOfCardCutting];
-    }];
+    _handArea = [BGHandArea handAreaWithPlayingCardIds:cardIds ofPlayer:self];
+    [self addChild:_handArea];
     
-    [self runAction:[CCSequence actions:delay, block, nil]];
+    [self addPlayingMenuOfCardCutting];
 }
 
 /*
@@ -281,20 +278,44 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 #pragma mark - Playing deck
-- (void)addAllFacedDownPlayingCardsOfTargetPlayer
+/*
+ * Determine the initial player by cutting card
+ */
+- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
 {
-    [_playingDeck addAllFacedDownPlayingCardsOfTargetPlayer];
+    [_playingDeck showAllCuttingCardsWithCardIds:cardIds];
 }
 
-- (void)gotAllFacedDownPlayingCardsWithCardIds:(NSArray *)cardIds
+/*
+ * 1. Face down all hand cards on the deck
+ * 2. Add equipment cards of target player on the deck(使用贪婪的玩家)
+ */
+- (void)faceDownAllHandCardsOnDeck
 {
-    [_handArea gotAllFacedDownPlayingCardsWithCardIds:cardIds];
+    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
+    BGPlayer *targetPlayer = [gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject];
+    
+    if (_playerState == kPlayerStateExtractingCard) {
+        [_playingDeck facedDownAllHandCardsOfPlayer:targetPlayer];
+        [_playingDeck addEquipmentCardsOfTargetPlayer];
+    } else {
+        [_playingDeck facedDownAllHandCardsOfPlayer:gamePlayer.sourcePlayer];
+    }
 }
 
-- (void)lostPlayingCardsWithCardIds:(NSArray *)cardIds
+- (void)gotExtractedHandCardsWithCardIds:(NSArray *)cardIds
 {
-    [_handArea lostPlayingCardsWithCardIds:cardIds];
-    [[BGGameLayer sharedGameLayer] clearTargetObjectBuffer];
+    [_handArea gotExtractedHandCardsWithCardIds:cardIds];
+}
+
+- (void)lostHandCardsWithCardIds:(NSArray *)cardIds
+{
+    [_handArea lostHandCardsWithCardIds:cardIds];
+}
+
+- (void)clearPlayingDeckObject
+{
+    [_playingDeck.cardMenu removeAllChildrenWithCleanup:YES];
 }
 
 @end

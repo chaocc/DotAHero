@@ -84,7 +84,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         
         if ([BGClient sharedClient].isSingleMode) {
             [self dealHeroCardsWithHeroIds:[NSArray arrayWithObjects:@(2), @(12), @(17), nil]];
-            [_selfPlayer addHandAreaWithPlayingCardIds:nil];
+            [_selfPlayer addHandAreaWithCardIds:nil];
         }
 }
 
@@ -258,7 +258,12 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)dealHeroCardsWithHeroIds:(NSArray *)toBeSelectedHeroIds
 {
-    [_selfPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
+    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.201f];
+    CCCallBlock *block = [CCCallBlock actionWithBlock:^{
+        [_selfPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
+    }];
+    
+    [self runAction:[CCSequence actions:delay, block, nil]];
 }
 
 /*
@@ -275,7 +280,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)dealPlayingCardsWithCardIds:(NSArray *)cardIds
 {
-    [_selfPlayer addHandAreaWithPlayingCardIds:cardIds];
+    [_selfPlayer addHandAreaWithCardIds:cardIds];
 }
 
 /*
@@ -306,10 +311,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
     [_selfPlayer showAllCuttingCardsWithCardIds:cardIds];
 }
 
-- (BGPlayer *)currentPlayer
+- (BGPlayer *)sourcePlayer
 {
     for (BGPlayer *player in _allPlayers) {
-        if ([player.playerName isEqualToString:_currentPlayerName]) {
+        if ([player.playerName isEqualToString:_sourcePlayerName]) {
             return player;
         }
     }
@@ -324,11 +329,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
         }
     }
     return nil;
-}
-
-- (void)clearTargetObjectBuffer
-{
-    [_targetPlayerNames removeAllObjects];
 }
 
 - (void)transferRoleCardToNextPlayer

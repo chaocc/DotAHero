@@ -39,7 +39,7 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
 @interface BGPlayingMenu : CCNode <BGMenuFactoryDelegate>
 
 @property(nonatomic, readonly) BGPlayingMenuType menuType;
-@property(nonatomic, strong) CCMenu *menu;
+@property(nonatomic, strong, readonly) CCMenu *menu;
 
 - (id)initWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player;
 + (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player;

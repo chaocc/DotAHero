@@ -34,7 +34,6 @@ typedef NS_ENUM(NSInteger, BGMenuTag) {
 
 + (id)menuFactory;
 
-- (id)createEmptyMenu;
 - (id)createMenuWithSpriteFrameName:(NSString *)frameName selectedFrameName:(NSString *)selFrameName disabledFrameName:(NSString *)disFrameName;
 - (id)createMenuWithSpriteFrameNames:(NSArray *)frameNames selectedFrameNames:(NSArray *)selFrameNames disabledFrameNames:(NSArray *)disFrameNames;
 - (id)createMenuWithCards:(NSArray *)cards;

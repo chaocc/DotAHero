@@ -21,6 +21,7 @@
 - (id)initWithTarget:(CGPoint)target ofNode:(CCNode *)node;
 + (id)moveWithTarget:(CGPoint)target ofNode:(CCNode *)node;
 
+- (void)runActionEaseMoveWithDuration:(ccTime)t block:(void(^)())block;
 - (void)runActionEaseMoveScaleWithDuration:(ccTime)t scale:(float)s block:(void(^)())block;
 
 @end

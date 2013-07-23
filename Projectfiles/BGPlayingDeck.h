@@ -12,10 +12,14 @@
 
 @interface BGPlayingDeck : CCNode
 
+@property (nonatomic, strong, readonly) CCMenu *cardMenu;
+
 - (id)initWithPlayer:(BGPlayer *)player;
 + (id)playingDeckWithPlayer:(BGPlayer *)player;
 
-- (void)addAllCuttingCardsWithCardIds:(NSArray *)cardIds;
-- (void)addAllFacedDownPlayingCardsOfTargetPlayer;
+- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
+- (void)showUsedHandCardsWithCardIds:(NSArray *)cardIds;
+- (void)facedDownAllHandCardsOfPlayer:(BGPlayer *)player;
+- (void)addEquipmentCardsOfTargetPlayer;
 
 @end

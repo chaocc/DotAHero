@@ -177,12 +177,12 @@
 {
     if (_player.selectedHeroId != kHeroCardDefault) {
         NSArray *cards = [NSArray arrayWithObjects:@(1), @(2), @(3), nil];
-        [_player.handArea addPlayingCardsWithCardIds:cards];
+        [_player.handArea addHandCardsWithCardIds:cards];
         return; // Can not touch the hero of current player
     }
     
     BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-    CCMenuItem *item = [_player.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
+    CCMenuItem *item = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
     NSAssert(item, @"Okay menuItem Nil in %@", NSStringFromSelector(_cmd));
     
     NSAssert(gamePlayer.targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));

@@ -11,15 +11,15 @@
 #import "BGPlayingCard.h"
 
 typedef NS_ENUM(NSUInteger, BGGreedType) {
-    kGreedTypeHandCard = 4,     // 手牌
-    kGreedTypeEquipment = 5     // 装备
+    kGreedTypeEquipment = 4,    // 装备
+    kGreedTypeHandCard = 5,     // 手牌
 };
 
 @class BGPlayer;
 
 @interface BGHandArea : CCNode <BGMenuFactoryDelegate>
 
-@property (nonatomic, strong) NSMutableArray *playingCards;     // 现存的手牌
+@property (nonatomic, strong) NSMutableArray *handCards;        // 现存的手牌
 @property (nonatomic, strong) NSMutableArray *selectedCards;    // 选中的手牌
 
 @property (nonatomic, readonly) CGPoint targetPosition; // 摸牌动画移动的目标位置
@@ -31,13 +31,15 @@ typedef NS_ENUM(NSUInteger, BGGreedType) {
 + (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds;
 + (NSArray *)playingCardIdsWithCards:(NSArray *)cards;
 
-- (void)addPlayingCardsWithCardIds:(NSArray *)cardIds;
-- (void)addAFacedDownPlayingCard;
-- (void)gotAllFacedDownPlayingCardsWithCardIds:(NSArray *)cardIds;
-- (void)removePlayingCards;
-- (void)usePlayingCards;
-- (void)usePlayingCardsAndRunAnimation;     // 使用/打出手牌并播放特效动画
-- (void)lostPlayingCardsWithCardIds:(NSArray *)cardIds;
+- (void)addHandCardsWithCardIds:(NSArray *)cardIds;
+- (void)addOneExtractedHandCard;
+- (void)gotExtractedHandCardsWithCardIds:(NSArray *)cardIds;
+- (void)lostHandCardsWithCardIds:(NSArray *)cardIds;
+- (void)removeHandCardsFromSelectedCards;
+
+- (void)useHandCardsWithBlock:(void (^)())block;
+- (void)useHandCardsAndRunAnimationWithBlock:(void (^)())block;     // 使用/打出手牌并播放动画特效
+- (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block;
 
 - (void)renderFigureAndSuitsOfCards:(NSArray *)cards forMenu:(CCMenu *)menu;
 

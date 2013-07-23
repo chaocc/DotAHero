@@ -26,6 +26,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionDealPlayingCard = 7,                     // 发起始手牌
     
     kActionStartTurn = 8,                           // 回合开始
+    kActionStartPlay = 100,                         // 开始出牌
     kActionDrawPlayingCard = 9,                     // 开始摸牌
     kActionCutCard = 10,                            // 切牌(从牌堆抽一张牌)
     kActionSendPlayingCard = 11,                    // 发送手牌给玩家
@@ -88,11 +89,12 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
 #define kParamHeroId                    @"heroId"               // 选中的英雄ID
 #define kParamAllHeroIds                @"allHeroIds"           // 所有英雄选中的英雄
 #define kParamRoleIds                   @"roleIds"              // 两个玩家的身份(自己的和下家的)
-#define kParamCurrentPlayerName         @"playerName"           // 回合开始/伤害来源/出牌的玩家
+#define kParamSourcePlayerName          @"playerName"           // 回合开始/伤害来源/出牌的玩家
 #define kParamAllCuttingCardIds         @"allCuttingCardIds"    // 所有玩家选择的用于拼点的牌
 #define kParamGotPlayingCardIds         @"gotPlayingCardIds"    // 得到的手牌(包括发牌、摸牌及其他方式获得的牌)
 #define kParamUsedPlayingCardIds        @"usedPlayingCardIds"   // 用掉/弃掉的手牌或换掉的装备牌
 #define kParamLostPlayingCardIds        @"targetCard"           // 失去的牌(比如贪婪/缴械)
+#define kParamTransferedCardIds         @"transferedCards"      // 交给目标的牌
 #define kParamMisGuessedCardIds         @"misGuessedCardIds"    // 猜错的牌
 #define kParamExtractedCardIdxes        @"extractedCardIdxes"   // 抽取的哪几张牌
 #define kParamGotCardCount              @"gotCardCount"         // 得到的牌数

@@ -31,6 +31,15 @@
     return [[self alloc] initWithTarget:target ofNode:node];
 }
 
+- (void)runActionEaseMoveWithDuration:(ccTime)t block:(void (^)())block
+{
+    CCMoveTo *move = [CCMoveTo actionWithDuration:t position:_target];
+    CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
+    CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
+    
+    [_node runAction:[CCSequence actions: ease, callBlock, nil]];
+}
+
 - (void)runActionEaseMoveScaleWithDuration:(ccTime)t scale:(float)s block:(void (^)())block
 {
     CCMoveTo *move = [CCMoveTo actionWithDuration:t position:_target];

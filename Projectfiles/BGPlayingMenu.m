@@ -301,12 +301,13 @@
     switch (_menuType) {
         case kPlayingMenuTypeCardPlaying:
             [[BGClient sharedClient] sendCancelPlayingCardRequest];
-            [self clearBuffer];
             break;
             
         default:
             break;
     }
+    
+    [self removeFromParentAndCleanup:YES];
 }
 
 /*
@@ -329,7 +330,7 @@
             break;
     }
     
-    [self clearBuffer];
+    [self removeFromParentAndCleanup:YES];
 }
 
 /*
@@ -339,7 +340,7 @@
 {
     _player.selectedSuits = suits;
     [[BGClient sharedClient] sendUsePlayingCardRequest];
-    [self clearBuffer];
+    [self removeFromParentAndCleanup:YES];
 }
 
 #pragma mark - Playing card using
@@ -350,32 +351,34 @@
 {    
     switch (_player.playerState) {
         case kPlayerStateCutting:
-            [_player.handArea usePlayingCards];
-            [[BGClient sharedClient] sendCutPlayingCardRequest];
+            [_player.handArea useHandCardsWithBlock:^{
+                [[BGClient sharedClient] sendCutPlayingCardRequest];
+            }];
             break;
             
         case kPlayerStatePlaying:
-            [_player.handArea usePlayingCardsAndRunAnimation];
-            [[BGClient sharedClient] sendUsePlayingCardRequest];
+            [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
+                [[BGClient sharedClient] sendUsePlayingCardRequest];
+            }];
             break;
             
         case kPlayerStateThrowingCard:
-            [_player.handArea usePlayingCards];
-            [[BGClient sharedClient] sendDiscardPlayingCardRequest];
+            [_player.handArea useHandCardsWithBlock:^{
+                [[BGClient sharedClient] sendDiscardPlayingCardRequest];
+            }];
+            break;
+            
+        case kPlayerStateExtractingCard:    // 贪婪强化，抽完牌还要分牌
+            [_player.handArea giveSelectedCardsToTargetPlayerWithBlock:^{
+                [[BGClient sharedClient] sendExtractCardRequest];
+            }];
             break;
             
         default:
             break;
     }
     
-    [self clearBuffer];
-}
-
-- (void)clearBuffer
-{
     [self removeFromParentAndCleanup:YES];
-    [_player clearSelectedObjectsBuffer];
-    [[BGGameLayer sharedGameLayer] clearTargetObjectBuffer];
 }
 
 /*
@@ -383,25 +386,36 @@
  */
 - (void)useMagicCardWithStengthened:(BOOL)isStrengthened
 {
-    [_player.handArea usePlayingCardsAndRunAnimation];
-    _player.isSelectedStrenthen = isStrengthened;
-    
-    BGCard *card = [BGPlayingCard cardWithCardId:[_player.selectedCardIds.lastObject integerValue]];
-    switch (card.cardEnum) {
-        case kPlayingCardElunesArrow:
-            [_menu removeFromParentAndCleanup:YES];
-            if (isStrengthened) {
-                [self createPlayingMenuForCardSuits];
-            } else {
-                [self createPlayingMenuForCardColor];
-            }
-            break;
-            
-        default:
-            [[BGClient sharedClient] sendUsePlayingCardRequest];
-            [self removeFromParentAndCleanup:YES];
-            break;
-    }
+    [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
+        _player.isSelectedStrenthen = isStrengthened;
+        
+        BGCard *card = [BGPlayingCard cardWithCardId:[_player.selectedCardIds.lastObject integerValue]];
+        switch (card.cardEnum) {
+            case kPlayingCardElunesArrow:
+                [_menu removeFromParentAndCleanup:YES];
+                if (isStrengthened) {
+                    [self createPlayingMenuForCardSuits];
+                } else {
+                    [self createPlayingMenuForCardColor];
+                }
+                break;
+                
+            case kPlayingCardGreed:
+                if (isStrengthened) {
+                    [_menu removeFromParentAndCleanup:YES];
+                    [self createOkayPlayingMenu];
+                } else {
+                    [[BGClient sharedClient] sendUsePlayingCardRequest];
+                    [self removeFromParentAndCleanup:YES];
+                }
+                break;
+                
+            default:
+                [[BGClient sharedClient] sendUsePlayingCardRequest];
+                [self removeFromParentAndCleanup:YES];
+                break;
+        }
+    }];
 }
 
 @end

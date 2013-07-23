@@ -482,6 +482,7 @@ actionLabel:
             break;
         
         case kActionCutCard:
+            [_player clearBuffer];
             array = [obj stringArrayWithKey:kParamAllCuttingCardIds];
             NSLog(@"Param-allCuttingCardIds: %@", array);
             [_gameLayer showAllCuttingCardsWithCardIds:array];
@@ -498,7 +499,7 @@ actionLabel:
             break;
             
         case kActionGotExtractedCard:
-            [_player gotAllFacedDownPlayingCardsWithCardIds:[obj stringArrayWithKey:kParamGotPlayingCardIds]];
+            [_player gotExtractedHandCardsWithCardIds:[obj stringArrayWithKey:kParamGotPlayingCardIds]];
             NSLog(@"Param-gotPlayingCardIds: %@", array);
             [self sendGotFacedDownCardPublicMessage];
             break;
@@ -526,9 +527,11 @@ playerStateLabel:
             break;
             
         case kPlayerStatePlaying:
+//            [_player clearBuffer];  // Clean buffer befere playing
             [_player addPlayingMenuOfCardUsing];
-            _player.misGuessedCardIds = [obj intArrayWithKey:kParamMisGuessedCardIds];
-            [self sendMisGuessedCardPublicMessage];
+            [self sendStartPlayPublicMessage];
+//            _player.misGuessedCardIds = [obj intArrayWithKey:kParamMisGuessedCardIds];
+//            [self sendMisGuessedCardPublicMessage];
             break;
             
         case kPlayerStateIsBeingAttacked:
@@ -568,18 +571,17 @@ playerStateLabel:
             
         case kPlayerStateExtractingCard:
             _player.canExtractCardCount = 2;    // Greed
-            [_player addAllFacedDownPlayingCardsOfTargetPlayer];
+            [_player faceDownAllHandCardsOnDeck];
             break;
             
         case kPlayerStateTargetExtractingCard:
             _player.canExtractCardCount = 1;    // Was Greeded
-            [_gameLayer.targetPlayerNames addObject:_gameLayer.currentPlayerName];
-            [_player addAllFacedDownPlayingCardsOfTargetPlayer];
+            [_player faceDownAllHandCardsOnDeck];
             break;
             
         case kPlayerStateWasExtracted:
             array = [obj intArrayWithKey:kParamLostPlayingCardIds];
-            [_player lostPlayingCardsWithCardIds:array];
+            [_player lostHandCardsWithCardIds:array];
             NSLog(@"Param-lostPlayingCardIds: %@", array);
             break;
             
@@ -610,17 +612,29 @@ playerStateLabel:
 }
 
 /*
- * Send public message with action-startTurn and currentPlayerName
+ * Send public message with action-startTurn and sourcePlayerName
  */
 - (void)sendStartTurnPublicMessage
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionStartTurn forKey:kAction];
-    [obj setString:_player.playerName forKey:kParamCurrentPlayerName];
+    [obj setString:_player.playerName forKey:kParamSourcePlayerName];
     [self sendPublicMessageRequestWithObject:obj];
     
-    NSLog(@"Send public message with action-startGame(%i)", kActionStartGame);
-    NSLog(@"param-currentPlayerName: %@", _player.playerName);
+    NSLog(@"Send public message with action-startTurn(%i)", kActionStartGame);
+    NSLog(@"param-sourcePlayerName: %@", _player.playerName);
+}
+
+/*
+ * Send public message with action-startPlay
+ */
+- (void)sendStartPlayPublicMessage
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionStartPlay forKey:kAction];
+    [self sendPublicMessageRequestWithObject:obj];
+    
+    NSLog(@"Send public message with action-startPlay(%i)", kActionStartPlay);
 }
 
 /*
@@ -684,8 +698,12 @@ playerStateLabel:
             break;
             
         case kActionStartTurn:
-            _gameLayer.currentPlayerName = [obj stringWithKey:kParamCurrentPlayerName];
-            NSLog(@"Param-playerName: %@",_gameLayer.currentPlayerName);
+            _gameLayer.sourcePlayerName = [obj stringWithKey:kParamSourcePlayerName];
+            NSLog(@"Param-sourcePlayerName: %@",_gameLayer.sourcePlayerName);
+            break;
+            
+        case kActionStartPlay:
+            [_player clearBuffer];
             break;
             
         case kActionDrawPlayingCard:

@@ -16,11 +16,6 @@
 	return [[self alloc] init];
 }
 
-- (id)createEmptyMenu
-{
-    return [CCMenu menuWithItems:nil];
-}
-
 - (id)createMenuWithSpriteFrameName:(NSString *)frameName
                   selectedFrameName:(NSString *)selFrameName
                   disabledFrameName:(NSString *)disFrameName
