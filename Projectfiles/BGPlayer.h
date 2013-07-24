@@ -34,6 +34,8 @@
 @property (nonatomic, strong) NSArray *selectedCardIds;
 @property (nonatomic, strong) NSArray *misGuessedCardIds;
 @property (nonatomic, strong) NSMutableArray *extractedCardIdxes;
+@property (nonatomic, strong) NSMutableArray *extractedCardIds;
+@property (nonatomic, strong) NSArray *transferedCardIds;
 @property (nonatomic) BOOL isSelectedStrenthen;
 @property (nonatomic) BGCardColor selectedColor;
 @property (nonatomic) BGCardSuits selectedSuits;
@@ -56,12 +58,13 @@
 
 - (void)addPlayingMenuOfCardUsing;
 - (void)addPlayingMenuOfCardPlaying;
+- (void)addPlayingMenuOfCardGiving;
 - (void)addPlayingMenuOfStrengthen;
 - (void)addPlayingMenuOfCardColor;
 
 - (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
 - (void)faceDownAllHandCardsOnDeck;
-- (void)gotExtractedHandCardsWithCardIds:(NSArray *)cardIds;
-- (void)lostHandCardsWithCardIds:(NSArray *)cardIds;
+- (void)gotExtractedCardsWithCardIds:(NSArray *)cardIds;
+- (void)lostCardsWithCardIds:(NSArray *)cardIds;
 
 @end

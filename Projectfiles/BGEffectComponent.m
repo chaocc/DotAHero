@@ -51,6 +51,14 @@
             [self normalAttack];
             break;
             
+        case kPlayingCardFlameAttack:
+            [self normalAttack];
+            break;
+            
+        case kPlayingCardEvasion:
+            [self evasion];
+            break;
+            
         case kPlayingCardHealingSalve:
             [self healingSalve];
             break;
@@ -117,7 +125,15 @@
     [self runActionWithPlist:@"NormalAttack.plist"
                    frameName:@"NormalAttack0.png"
                       frames:@"NormalAttack"
-               andFrameCount:14];
+               andFrameCount:15];
+}
+
+- (void)evasion
+{
+    [self runActionWithPlist:@"Evasion.plist"
+                   frameName:@"Evasion0.png"
+                      frames:@"Evasion"
+               andFrameCount:12];
 }
 
 - (void)healingSalve

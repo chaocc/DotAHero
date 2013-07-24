@@ -43,7 +43,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionGotGuessedCard = 22,                     // 获得猜中的牌
     kActionExtractCard = 23,                        // 抽取手牌
     kActionGotExtractedCard = 24,                   // 获得抽取的牌
-    kActionMisGuessedCard = 25                      // 猜错了牌 - TEMP
+    kActionPlayMultipleEvasions = 25,               // 打出多张闪(最多3张)
+    kActionMisGuessedCard = 26                      // 猜错了牌 - TEMP
     
     
 //    kActionWaiting,                                 // 等待
@@ -70,17 +71,21 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
     kPlayerStateGuessingCardColor = 8,              // 猜卡牌颜色
     kPlayerStateWasAttacked = 10,                   // 受到攻击的伤害
     kPlayerStateWasDamaged = 11,                    // 受到1次伤害
-    kPlayerStateDealingDamage = 12,                 // 造成1次伤害
+    kPlayerStateDealedDamage = 12,                  // 造成1次伤害
     kPlayerStateIsDying = 13,                       // 濒死状态
     kPlayerStateAttacked = 14,                      // 攻击造成1次伤害
     kPlayerStateIsDead = 15,                        // 已死亡
     kPlayerStateThrowingCard = 16,                  // 弃置牌(丢掉牌)
     kPlayerStateTargetOfHeroSkill = 17,             // 成为任意英雄技能的目标时
     kPlayerStateBloodRestored = 18,                 // 恢复1点血
-    kPlayerStateExtractingCard = 19,                // 抽牌并暗置
-    kPlayerStateTargetExtractingCard = 20,          // 目标抽牌
-    kPlayerStateWasDisarmed = 21,                   // 被缴械
-    kPlayerStateWasExtracted = 22                   // 被抽牌
+    kPlayerStateGreeding = 19,                      // 贪婪－抽目标玩家牌
+    kPlayerStateIsBeingGreeded = 20,                // 被贪婪－抽源玩家牌
+    kPlayerStateWasDisarmed = 21,                   // 已被缴械
+    kPlayerStateWasExtracted = 22,                  // 已被抽牌
+    kPlayerStateAngerLost = 23,                     // 丢失怒气
+    kPlayerStateAngerGain = 24,                     // 获得怒气
+    kPlayerStateAngerUsed = 25,                     // 使用怒气
+    kPlayerStateIsBeingLagunaBladed = 26            // 被神灭斩
 };
 
 // Parameters
@@ -93,10 +98,12 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
 #define kParamAllCuttingCardIds         @"allCuttingCardIds"    // 所有玩家选择的用于拼点的牌
 #define kParamGotPlayingCardIds         @"gotPlayingCardIds"    // 得到的手牌(包括发牌、摸牌及其他方式获得的牌)
 #define kParamUsedPlayingCardIds        @"usedPlayingCardIds"   // 用掉/弃掉的手牌或换掉的装备牌
-#define kParamLostPlayingCardIds        @"targetCard"           // 失去的牌(比如贪婪/缴械)
-#define kParamTransferedCardIds         @"transferedCards"      // 交给目标的牌
 #define kParamMisGuessedCardIds         @"misGuessedCardIds"    // 猜错的牌
 #define kParamExtractedCardIdxes        @"extractedCardIdxes"   // 抽取的哪几张牌
+#define kParamExtractedCardIds          @"targetCard"           // 抽取的装备
+#define kParamLostPlayingCardIds        @"greedLoseCardIds"     // 失去的牌(比如贪婪/缴械)
+#define kParamTransferedCardIds         @"transferedCardIds"    // 交给目标的牌
+#define kParamHandCardIds               @"handCardIds"          // 手牌列表 - TEMP
 #define kParamGotCardCount              @"gotCardCount"         // 得到的牌数
 #define kParamRemainingCardCount        @"remainingCardCount"   // 牌堆剩余牌数
 #define kParamTargetPlayerNames         @"targetPlayerNames"    // 指定的目标玩家们

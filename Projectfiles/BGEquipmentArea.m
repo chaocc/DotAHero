@@ -7,12 +7,16 @@
 //
 
 #import "BGEquipmentArea.h"
+#import "BGGameLayer.h"
 #import "BGPlayer.h"
-#import "BGPlayingCard.h"
+#import "BGMoveComponent.h"
+#import "BGDefines.h"
 
 @interface BGEquipmentArea ()
 
 @property (nonatomic, weak) BGPlayer *player;
+@property (nonatomic, strong) BGMenuFactory *menuFactory;
+@property (nonatomic, strong) CCMenu *equipmentMenu;
 
 @end
 
@@ -23,6 +27,7 @@
     if (self = [super init]) {
         _player = player;
         self.equipmentCards = [NSMutableArray arrayWithCapacity:2]; // 武器和防具
+        _menuFactory = [BGMenuFactory menuFactory];
     }
     return self;
 }
@@ -33,7 +38,16 @@
 }
 
 /*
- * Add a equipment card while euqipping
+ * Add a equipment card with playing card while euqipping
+ */
+- (void)addEquipmentWithPlayingCard:(BGPlayingCard *)card
+{
+    [self renderEquipmentWithCard:card];
+    [self updateEquipmentBufferWithCard:card];
+}
+
+/*
+ * Add a equipment card with card id while euqipping
  */
 - (void)addEquipmentWithCardId:(NSInteger)cardId
 {
@@ -69,23 +83,24 @@
     }
 }
 
+- (void)removeEquipmentFromBufferWithCard:(BGPlayingCard *)card
+{
+    [_equipmentCards removeObject:card];
+}
+
 /*
  * Render the equipment card after equipped
+ * If exist same type equipment(Weapon/Armor), remove the existing one.
  */
 - (void)renderEquipmentWithCard:(BGPlayingCard *)card
 {
-    CCNode *equipmentMenu = nil;
     CGPoint menuPosition;
     CGFloat playerAreaWidth = _player.playerAreaSize.width;
     CGFloat playerAreaHeight = _player.playerAreaSize.height;
     
-    BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
-    NSString *imageName = (_player.isCurrentPlayer) ? card.bigEquipImageName : card.equipImageName;
-    
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
-            equipmentMenu = [self getChildByTag:kEquipmentTypeWeapon];
-            NSAssert([equipmentMenu isKindOfClass:[CCMenuItem class]], @"Not a CCMenuItem in %@", NSStringFromSelector(_cmd));
+            _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeWeapon];
             menuPosition = (_player.isCurrentPlayer) ?
             ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
             ccp(playerAreaWidth*0.253, playerAreaHeight*0.177);
@@ -95,8 +110,7 @@
             break;
             
         case kEquipmentTypeArmor:
-            equipmentMenu = [self getChildByTag:kEquipmentTypeArmor];
-            NSAssert([equipmentMenu isKindOfClass:[CCMenuItem class]], @"Not a CCMenuItem in %@", NSStringFromSelector(_cmd));
+            _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeArmor];
             menuPosition = (_player.isCurrentPlayer) ?
             ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
             ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222);
@@ -106,12 +120,51 @@
             break;
     }
     
-    [equipmentMenu removeAllChildrenWithCleanup:YES];
-    equipmentMenu = [menuFactory createMenuWithSpriteFrameName:imageName
-                                             selectedFrameName:nil
-                                             disabledFrameName:nil];
-    equipmentMenu.position = menuPosition;
-    [self addChild:equipmentMenu z:card.equipmentType];
+//  If exist same type equipment(Weapon/Armor), remove the existing one.
+    if (_equipmentMenu) {
+        [self removeExistingEquipmentWithCard:card];
+    }
+    
+    NSString *imageName = (_player.isCurrentPlayer) ? card.bigEquipImageName : card.equipImageName;
+    _equipmentMenu = [_menuFactory createMenuWithSpriteFrameName:imageName
+                                              selectedFrameName:nil
+                                              disabledFrameName:nil];
+    _equipmentMenu.position = menuPosition;
+    [_equipmentMenu.children.lastObject setTag:card.cardId];
+    _equipmentMenu.enabled = card.canBeUsedActive;
+    [self addChild:_equipmentMenu z:card.equipmentType];
+}
+
+- (void)removeExistingEquipmentWithCard:(BGPlayingCard *)card
+{   
+    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:USED_CARD_POSITION
+                                                         ofNode:_equipmentMenu];
+    
+    [moveComp runActionEaseMoveScaleWithDuration:CARD_MOVE_DURATION
+                                           scale:0.5f
+                                           block:^{
+                                               [_equipmentMenu removeFromParentAndCleanup:YES];
+                                               [_player.playingDeck showUsedHandCardsWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
+                                           }];
+}
+
+/*
+ * Lost equipment - Was greeded or disarmed
+ */
+- (void)lostEquipmentWithCard:(BGPlayingCard *)card
+{
+    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
+    BGPlayer *targetPlayer = [[BGGameLayer sharedGameLayer] playerWithName:gamePlayer.targetPlayerNames.lastObject];
+    
+    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:targetPlayer.position
+                                                         ofNode:_equipmentMenu];
+    
+    [moveComp runActionEaseMoveScaleWithDuration:CARD_MOVE_DURATION
+                                           scale:0.5f
+                                           block:^{
+                                               [_equipmentMenu removeFromParentAndCleanup:YES];
+                                           }];
+    [self removeEquipmentFromBufferWithCard:card];
 }
 
 #pragma mark - Equipment card using

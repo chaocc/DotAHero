@@ -7,184 +7,197 @@
             <key>NormalAttack0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{770,1222},{250,126}}</string>
+                <string>{{2210,1822},{222,465}}</string>
                 <key>offset</key>
-                <string>{129,-44}</string>
+                <string>{-4,-212}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{260,237},{250,126}}</string>
+                <string>{{110,497},{222,465}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{310,1852},{250,128}}</string>
+                <string>{{2374,2},{444,755}}</string>
                 <key>offset</key>
-                <string>{129,-43}</string>
+                <string>{-3,-140}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{260,235},{250,128}}</string>
+                <string>{{0,280},{444,755}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack10.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1544},{306,314}}</string>
+                <string>{{1584,2},{444,963}}</string>
                 <key>offset</key>
-                <string>{-103,2}</string>
+                <string>{-3,-36}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,97},{306,314}}</string>
+                <string>{{0,72},{444,963}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack11.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1860},{306,186}}</string>
+                <string>{{1378,967},{444,963}}</string>
                 <key>offset</key>
-                <string>{-103,-62}</string>
+                <string>{-3,-36}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,225},{306,186}}</string>
+                <string>{{0,72},{444,963}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack12.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{310,1544},{306,114}}</string>
+                <string>{{1138,2},{444,963}}</string>
                 <key>offset</key>
-                <string>{-103,-98}</string>
+                <string>{-3,-36}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,297},{306,114}}</string>
+                <string>{{0,72},{444,963}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack13.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{426,1544},{304,108}}</string>
+                <string>{{1824,967},{384,945}}</string>
                 <key>offset</key>
-                <string>{-104,-96}</string>
+                <string>{-4,-28}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,298},{304,108}}</string>
+                <string>{{29,73},{384,945}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
+            </dict>
+            <key>NormalAttack14.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2030,2},{342,917}}</string>
+                <key>offset</key>
+                <string>{-4,-14}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{50,73},{342,917}}</string>
+                <key>sourceSize</key>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1030},{512,512}}</string>
+                <string>{{2210,921},{166,899}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{-4,-68}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{512,512}}</string>
+                <string>{{138,136},{166,899}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,516},{512,512}}</string>
+                <string>{{2,2},{242,989}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{12,-23}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{512,512}}</string>
+                <string>{{116,46},{242,989}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,516},{512,512}}</string>
+                <string>{{244,993},{240,989}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{12,-23}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{512,512}}</string>
+                <string>{{117,46},{240,989}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{512,512}}</string>
+                <string>{{2,993},{240,989}}</string>
                 <key>offset</key>
-                <string>{0,0}</string>
+                <string>{12,-23}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{512,512}}</string>
+                <string>{{117,46},{240,989}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{516,1222},{252,264}}</string>
+                <string>{{932,967},{444,963}}</string>
                 <key>offset</key>
-                <string>{130,-16}</string>
+                <string>{-3,-36}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{260,140},{252,264}}</string>
+                <string>{{0,72},{444,963}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack7.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{516,2},{342,466}}</string>
+                <string>{{692,2},{444,963}}</string>
                 <key>offset</key>
-                <string>{85,23}</string>
+                <string>{-3,-36}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{170,0},{342,466}}</string>
+                <string>{{0,72},{444,963}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack8.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{516,708},{512,398}}</string>
+                <string>{{486,967},{444,963}}</string>
                 <key>offset</key>
-                <string>{0,21}</string>
+                <string>{-3,-36}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,36},{512,398}}</string>
+                <string>{{0,72},{444,963}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
             <key>NormalAttack9.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{516,346},{452,360}}</string>
+                <string>{{246,2},{444,963}}</string>
                 <key>offset</key>
-                <string>{-30,10}</string>
+                <string>{-3,-36}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,66},{452,360}}</string>
+                <string>{{0,72},{444,963}}</string>
                 <key>sourceSize</key>
-                <string>{512,512}</string>
+                <string>{450,1035}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -194,9 +207,9 @@
             <key>realTextureFileName</key>
             <string>NormalAttack.pvr.ccz</string>
             <key>size</key>
-            <string>{1024,2048}</string>
+            <string>{4096,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:5010efbcc1c1ca2f9695c50825d614e3$</string>
+            <string>$TexturePacker:SmartUpdate:b19528cc32e5259ec4d4818f063c805f$</string>
             <key>textureFileName</key>
             <string>NormalAttack.pvr.ccz</string>
         </dict>

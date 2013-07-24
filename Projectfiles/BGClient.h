@@ -28,6 +28,7 @@
 - (void)sendSelectHeroCardRequest;
 - (void)sendCutPlayingCardRequest;
 - (void)sendUsePlayingCardRequest;
+- (void)sendPlayMultipleEvasionsRequest;
 - (void)sendGuessCardColorRequest;
 - (void)sendDiscardPlayingCardRequest;
 - (void)sendCancelPlayingCardRequest;

@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         
         [self renderPlayingDeck];
         [self renderPlayerArea];
+        [self renderEquipmentArea];
     }
     return self;
 }
@@ -51,7 +52,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 + (NSArray *)heroCardsWithHeroIds:(NSArray *)heroIds
 {
-    NSMutableArray *heroCards = [NSMutableArray array];
+    NSMutableArray *heroCards = [NSMutableArray arrayWithCapacity:heroIds.count];
     [heroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         BGCard *heroCard = [BGHeroCard cardWithCardId:[obj integerValue]];
         [heroCards addObject:heroCard];
@@ -93,6 +94,26 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     }
     
     [self addChild:sprite];
+}
+
+/*
+ * Add hand area node
+ */
+- (void)addHandAreaWithCardIds:(NSArray *)cardIds
+{
+    _handArea = [BGHandArea handAreaWithPlayingCardIds:cardIds ofPlayer:self];
+    [self addChild:_handArea];
+    
+    [self addPlayingMenuOfCardCutting];
+}
+
+/*
+ * Add equipment area for showing equipment cards
+ */
+- (void)renderEquipmentArea
+{
+    _equipmentArea = [BGEquipmentArea equipmentAreaWithPlayer:self];
+    [self addChild:_equipmentArea];
 }
 
 #pragma mark - To be selected heros
@@ -207,8 +228,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)updateBloodAndAngerWithBloodPoint:(NSInteger)bloodPoint
                             andAngerPoint:(NSInteger)angerPoint
 {
-    [_heroArea updateBloodPointWithCount:bloodPoint];
-    [_heroArea updateAngerPointWithCount:angerPoint];
+    if (bloodPoint != 0) {
+        [_heroArea updateBloodPointWithCount:bloodPoint];
+    }
+    
+    if (angerPoint != 0) {
+        [_heroArea updateAngerPointWithCount:angerPoint];
+    }
 }
 
 - (void)clearSelectedObjectBuffer
@@ -221,17 +247,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 #pragma mark - Playing menu
-/*
- * Add hand area node(Delay 0.5 second for performance)
- */
-- (void)addHandAreaWithCardIds:(NSArray *)cardIds
-{
-    _handArea = [BGHandArea handAreaWithPlayingCardIds:cardIds ofPlayer:self];
-    [self addChild:_handArea];
-    
-    [self addPlayingMenuOfCardCutting];
-}
-
 /*
  * Add playing menu items for card cutting(通过拼点切牌)
  */
@@ -256,6 +271,15 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)addPlayingMenuOfCardPlaying
 {
     _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardPlaying ofPlayer:self];
+    [self addChild:_playingMenu];
+}
+
+/*
+ * Add playing menu items for card giving(交给)
+ */
+- (void)addPlayingMenuOfCardGiving
+{
+    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardGiving ofPlayer:self];
     [self addChild:_playingMenu];
 }
 
@@ -288,34 +312,48 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 /*
  * 1. Face down all hand cards on the deck
- * 2. Add equipment cards of target player on the deck(使用贪婪的玩家)
+ * 2. Also add equipment cards of target player on the deck(使用贪婪的玩家)
  */
 - (void)faceDownAllHandCardsOnDeck
 {
     BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
     BGPlayer *targetPlayer = [gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject];
     
-    if (_playerState == kPlayerStateExtractingCard) {
+    if (_playerState == kPlayerStateGreeding) {
         [_playingDeck facedDownAllHandCardsOfPlayer:targetPlayer];
-        [_playingDeck addEquipmentCardsOfTargetPlayer];
+        [_playingDeck addEquipmentCardsOfTargetPlayer:targetPlayer];
     } else {
         [_playingDeck facedDownAllHandCardsOfPlayer:gamePlayer.sourcePlayer];
     }
 }
 
-- (void)gotExtractedHandCardsWithCardIds:(NSArray *)cardIds
+- (void)gotExtractedCardsWithCardIds:(NSArray *)cardIds
 {
-    [_handArea gotExtractedHandCardsWithCardIds:cardIds];
+    [_handArea gotExtractedCardsWithCardIds:cardIds];
 }
 
-- (void)lostHandCardsWithCardIds:(NSArray *)cardIds
+/*
+ * If is greeding player, only lost hand cards.
+ * If is greeded player, can lost hand cards or equipment.
+ */
+- (void)lostCardsWithCardIds:(NSArray *)cardIds
 {
-    [_handArea lostHandCardsWithCardIds:cardIds];
+    if ([self isEqual:[BGGameLayer sharedGameLayer].sourcePlayer]) {
+        [_handArea lostCardsWithCardIds:cardIds];
+    }
+    else {
+        if ([BGGameLayer sharedGameLayer].sourcePlayer.selectedGreedType == kGreedTypeHandCard) {
+            [_handArea lostCardsWithCardIds:cardIds];   // 手牌
+        } else {
+            NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
+            [_equipmentArea lostEquipmentWithCard:cards.lastObject];    // 装备
+        }
+    }
 }
 
 - (void)clearPlayingDeckObject
 {
-    [_playingDeck.cardMenu removeAllChildrenWithCleanup:YES];
+    [_playingDeck.usedCardMenu removeAllChildrenWithCleanup:YES];
 }
 
 @end

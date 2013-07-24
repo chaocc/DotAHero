@@ -53,6 +53,8 @@
         @try {
             if (selFrameNames) {
                 selectedSprite = [CCSprite spriteWithSpriteFrameName:selFrameNames[idx]];
+            } else {
+                selectedSprite.color = ccGRAY;
             }
             if (selFrameNames) {
                 disabledSprite = [CCSprite spriteWithSpriteFrameName:disFrameNames[idx]];

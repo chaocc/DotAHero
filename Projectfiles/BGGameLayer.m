@@ -170,7 +170,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
     @try {
         for (NSUInteger i = 1; i < _users.count; i++) {
             BGPlayer *player = [BGPlayer playerWithUserName:[_users[i] userName] isCurrentPlayer:NO];
-//            BGPlayer *player = [BGPlayer playerWithUserName:@"Test" isCurrentPlayer:NO];
             [self addChild:player z:1];
             [_allPlayers addObject:player];
         }
@@ -258,7 +257,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)dealHeroCardsWithHeroIds:(NSArray *)toBeSelectedHeroIds
 {
-    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.201f];
+    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.21f];
     CCCallBlock *block = [CCCallBlock actionWithBlock:^{
         [_selfPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
     }];

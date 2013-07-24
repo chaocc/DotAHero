@@ -18,7 +18,7 @@
 			<dict>
 				<key>0</key>
 				<string>deathCoil</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -32,7 +32,7 @@
 			<dict>
 				<key>1</key>
 				<string>Frostmourne</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -61,7 +61,7 @@
 			<dict>
 				<key>5</key>
 				<string>reincarnation</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>2</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -75,7 +75,7 @@
 			<dict>
 				<key>6</key>
 				<string>vampiricAura</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -104,7 +104,9 @@
 			<dict>
 				<key>10</key>
 				<string>warpath</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -118,7 +120,9 @@
 			<dict>
 				<key>11</key>
 				<string>bristlebackSkill</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -147,7 +151,9 @@
 			<dict>
 				<key>15</key>
 				<string>lifeBreak</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>0</integer>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -161,7 +167,9 @@
 			<dict>
 				<key>16</key>
 				<string>burningSpear</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -190,7 +198,7 @@
 			<dict>
 				<key>20</key>
 				<string>purification</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -204,7 +212,7 @@
 			<dict>
 				<key>21</key>
 				<string>holyLight</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -233,7 +241,7 @@
 			<dict>
 				<key>25</key>
 				<string>battleHunger</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -247,7 +255,7 @@
 			<dict>
 				<key>26</key>
 				<string>counterHelix</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -276,7 +284,7 @@
 			<dict>
 				<key>30</key>
 				<string>doubleEdge</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -305,7 +313,7 @@
 			<dict>
 				<key>35</key>
 				<string>breatheFire</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -319,7 +327,7 @@
 			<dict>
 				<key>36</key>
 				<string>dragonBlood</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -348,7 +356,7 @@
 			<dict>
 				<key>40</key>
 				<string>guardian</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -362,7 +370,7 @@
 			<dict>
 				<key>41</key>
 				<string>faith</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -376,7 +384,7 @@
 			<dict>
 				<key>42</key>
 				<string>fatherlyLove</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -405,7 +413,7 @@
 			<dict>
 				<key>45</key>
 				<string>mysticSnake</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -419,7 +427,7 @@
 			<dict>
 				<key>46</key>
 				<string>manaShield</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -448,7 +456,7 @@
 			<dict>
 				<key>50</key>
 				<string>plasmaField</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -462,7 +470,7 @@
 			<dict>
 				<key>51</key>
 				<string>unstableCurrent</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -491,7 +499,7 @@
 			<dict>
 				<key>55</key>
 				<string>omnislash</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -505,7 +513,7 @@
 			<dict>
 				<key>56</key>
 				<string>bladeDance</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -534,7 +542,9 @@
 			<dict>
 				<key>60</key>
 				<string>netherSwap</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>0</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -548,7 +558,9 @@
 			<dict>
 				<key>61</key>
 				<string>waveOfTerror</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -577,7 +589,7 @@
 			<dict>
 				<key>65</key>
 				<string>bloodrage</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -591,7 +603,7 @@
 			<dict>
 				<key>66</key>
 				<string>strygwyrsThirst</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -605,7 +617,7 @@
 			<dict>
 				<key>67</key>
 				<string>bloodBath</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -634,7 +646,7 @@
 			<dict>
 				<key>70</key>
 				<string>battleTrance</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -648,7 +660,7 @@
 			<dict>
 				<key>71</key>
 				<string>fervor</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -677,7 +689,7 @@
 			<dict>
 				<key>75</key>
 				<string>headshot</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -691,7 +703,7 @@
 			<dict>
 				<key>76</key>
 				<string>takeAim</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -705,7 +717,7 @@
 			<dict>
 				<key>77</key>
 				<string>shrapnel</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -734,7 +746,7 @@
 			<dict>
 				<key>80</key>
 				<string>manaBurn</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -748,7 +760,7 @@
 			<dict>
 				<key>81</key>
 				<string>vendetta</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -762,7 +774,7 @@
 			<dict>
 				<key>82</key>
 				<string>spikedCarapace</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -791,7 +803,9 @@
 			<dict>
 				<key>85</key>
 				<string>manaBreak</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -805,7 +819,9 @@
 			<dict>
 				<key>86</key>
 				<string>blink</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -819,7 +835,9 @@
 			<dict>
 				<key>87</key>
 				<string>manaVoid</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>0</integer>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -848,7 +866,7 @@
 			<dict>
 				<key>90</key>
 				<string>theSwarm</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -862,7 +880,7 @@
 			<dict>
 				<key>91</key>
 				<string>timeLapse</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -891,7 +909,7 @@
 			<dict>
 				<key>95</key>
 				<string>furySwipes</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -905,7 +923,7 @@
 			<dict>
 				<key>96</key>
 				<string>enrage</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -934,7 +952,7 @@
 			<dict>
 				<key>100</key>
 				<string>ordeal</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -948,7 +966,7 @@
 			<dict>
 				<key>101</key>
 				<string>specialBody</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -977,7 +995,9 @@
 			<dict>
 				<key>105</key>
 				<string>fierySoul</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -991,10 +1011,28 @@
 			<dict>
 				<key>106</key>
 				<string>lagunaBlade</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>0</integer>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
+				<key>canBeDispelled</key>
+				<false/>
+				<key>whenToUse</key>
+				<array>
+					<string>3</string>
+				</array>
+			</dict>
+			<dict>
+				<key>107</key>
+				<string>fanaticismHeart</string>
+				<key>skillCategory</key>
+				<integer>1</integer>
+				<key>skillType</key>
+				<integer>1</integer>
+				<key>isMandatorySkill</key>
+				<true/>
 				<key>canBeDispelled</key>
 				<false/>
 				<key>whenToUse</key>
@@ -1020,7 +1058,7 @@
 			<dict>
 				<key>110</key>
 				<string>heartstopperAura</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1034,7 +1072,7 @@
 			<dict>
 				<key>111</key>
 				<string>sadist</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1063,7 +1101,7 @@
 			<dict>
 				<key>115</key>
 				<string>icePath</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1077,7 +1115,7 @@
 			<dict>
 				<key>116</key>
 				<string>liquidFire</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1106,7 +1144,7 @@
 			<dict>
 				<key>120</key>
 				<string>frostbite</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1120,7 +1158,7 @@
 			<dict>
 				<key>121</key>
 				<string>brillianceAura</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1149,7 +1187,7 @@
 			<dict>
 				<key>125</key>
 				<string>darkRitual</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1163,7 +1201,7 @@
 			<dict>
 				<key>126</key>
 				<string>frostArmor</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1192,7 +1230,7 @@
 			<dict>
 				<key>130</key>
 				<string>shallowGrave</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1206,7 +1244,7 @@
 			<dict>
 				<key>131</key>
 				<string>shadowWave</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1235,7 +1273,7 @@
 			<dict>
 				<key>135</key>
 				<string>fireblast</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -1249,7 +1287,7 @@
 			<dict>
 				<key>136</key>
 				<string>multiCast</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1278,7 +1316,9 @@
 			<dict>
 				<key>140</key>
 				<string>illuminate</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>0</integer>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1292,7 +1332,9 @@
 			<dict>
 				<key>141</key>
 				<string>chakraMagic</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>0</integer>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1306,7 +1348,9 @@
 			<dict>
 				<key>142</key>
 				<string>grace</string>
-				<key>heroSkillType</key>
+				<key>skillCategory</key>
+				<integer>0</integer>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1335,7 +1379,7 @@
 			<dict>
 				<key>145</key>
 				<string>remoteMines</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1349,7 +1393,7 @@
 			<dict>
 				<key>146</key>
 				<string>focusedDetonate</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1363,7 +1407,7 @@
 			<dict>
 				<key>147</key>
 				<string>suicideSquad</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1392,7 +1436,7 @@
 			<dict>
 				<key>150</key>
 				<string>overload</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1406,7 +1450,7 @@
 			<dict>
 				<key>151</key>
 				<string>ballLightning</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1435,7 +1479,7 @@
 			<dict>
 				<key>155</key>
 				<string>untouchable</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<true/>
@@ -1449,7 +1493,7 @@
 			<dict>
 				<key>156</key>
 				<string>enchant</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1463,7 +1507,7 @@
 			<dict>
 				<key>157</key>
 				<string>naturesAttendants</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>1</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1492,7 +1536,7 @@
 			<dict>
 				<key>160</key>
 				<string>healingSpell</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1506,7 +1550,7 @@
 			<dict>
 				<key>161</key>
 				<string>dispelWizard</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>
@@ -1520,7 +1564,7 @@
 			<dict>
 				<key>162</key>
 				<string>magicControl</string>
-				<key>heroSkillType</key>
+				<key>skillType</key>
 				<integer>0</integer>
 				<key>isMandatorySkill</key>
 				<false/>

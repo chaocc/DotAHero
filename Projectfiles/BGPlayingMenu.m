@@ -8,7 +8,7 @@
 
 #import "BGPlayingMenu.h"
 #import "BGClient.h"
-#import "BGGameLayer.h"
+#import "BGPlayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 
@@ -57,6 +57,10 @@
             [self createPlayingMenuForPlaying];
             break;
             
+        case kPlayingMenuTypeCardGiving:
+            [self createOkayPlayingMenu];
+            break;
+            
         case kPlayingMenuTypeStrengthen:
             [self createPlayingMenuForStrengthen];
             break;
@@ -72,7 +76,7 @@
 
 - (void)addMenuNode
 {
-    _menu.position = ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.35);
+    _menu.position = PLAYING_MENU_POSITION;
     [_menu alignItemsHorizontallyWithPadding:40.0f];
     [self addChild:_menu];
     
@@ -278,17 +282,12 @@
 - (void)touchOkayMenuItem
 {
     switch (_menuType) {
-        case kPlayingMenuTypeCardCutting:
-        case kPlayingMenuTypeCardUsing:
-        case kPlayingMenuTypeCardPlaying:
-            [self usePlayingCard];
-            break;
-            
         case kPlayingMenuTypeStrengthen:
             [self useMagicCardWithStengthened:NO];
             break;
             
         default:
+            [self usePlayingCard];
             break;
     }
 }
@@ -356,25 +355,28 @@
             }];
             break;
             
-        case kPlayerStatePlaying:
-            [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
-                [[BGClient sharedClient] sendUsePlayingCardRequest];
-            }];
-            break;
-            
         case kPlayerStateThrowingCard:
             [_player.handArea useHandCardsWithBlock:^{
                 [[BGClient sharedClient] sendDiscardPlayingCardRequest];
             }];
             break;
             
-        case kPlayerStateExtractingCard:    // 贪婪强化，抽完牌还要分牌
+        case kPlayerStateGreeding:  // 贪婪强化，抽完牌还要分牌
             [_player.handArea giveSelectedCardsToTargetPlayerWithBlock:^{
                 [[BGClient sharedClient] sendExtractCardRequest];
             }];
             break;
             
+        case kPlayerStateIsBeingLagunaBladed:
+            [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
+                [[BGClient sharedClient] sendPlayMultipleEvasionsRequest];
+            }];
+            break;
+            
         default:
+            [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
+                [[BGClient sharedClient] sendUsePlayingCardRequest];
+            }];
             break;
     }
     
@@ -397,16 +399,6 @@
                     [self createPlayingMenuForCardSuits];
                 } else {
                     [self createPlayingMenuForCardColor];
-                }
-                break;
-                
-            case kPlayingCardGreed:
-                if (isStrengthened) {
-                    [_menu removeFromParentAndCleanup:YES];
-                    [self createOkayPlayingMenu];
-                } else {
-                    [[BGClient sharedClient] sendUsePlayingCardRequest];
-                    [self removeFromParentAndCleanup:YES];
                 }
                 break;
                 

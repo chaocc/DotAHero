@@ -70,8 +70,7 @@ static BGClient *instanceOfClient = nil;
     
     BGLoginLayer *login = [BGLoginLayer sharedLoginLayer];
     
-    if (e.successful)
-    {
+    if (e.successful) {
         [_es.engine addEventListenerWithTarget:self
                                         action:@selector(onLoginResponse:)
                                eventIdentifier:EsMessageType_LoginResponse];
@@ -80,8 +79,7 @@ static BGClient *instanceOfClient = nil;
         lr.userName = login.userName;
         [_es.engine sendMessage:lr];
     }
-    else
-    {
+    else {
 //      ...TEMP...
         CCLabelTTF *label = [CCLabelTTF labelWithString:@"Network Connection Failed"
                                                fontName:@"Arial"
@@ -338,11 +336,13 @@ static BGClient *instanceOfClient = nil;
     [obj setIntArray:_player.selectedCardIds forKey:kParamUsedPlayingCardIds];
     NSLog(@"param-usedPlayingCardIds: %@", _player.selectedCardIds);
     
-    BGCard *card = [BGPlayingCard cardWithCardId:[_player.selectedCardIds.lastObject integerValue]];
-    if (card.cardEnum == kPlayingCardElunesArrow) {
+    BGPlayingCard *card = [BGPlayingCard cardWithCardId:[_player.selectedCardIds.lastObject integerValue]];
+    if (card.canBeStrengthed) {
         [obj setBool:_player.isSelectedStrenthen forKey:kParamIsStrengthened];
         NSLog(@"param-isStrengthened: %i", _player.isSelectedStrenthen);
-        
+    }
+    
+    if (card.cardEnum == kPlayingCardElunesArrow) {
         if (_player.isSelectedStrenthen) {
             [obj setInt:_player.selectedSuits forKey:kParamTargetCardSuits];
             NSLog(@"param-targetCardSuits: %i", _player.selectedSuits);
@@ -355,6 +355,23 @@ static BGClient *instanceOfClient = nil;
     [obj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerNames];
     [self sendGamePluginRequestWithObject:obj];
     NSLog(@"param-targetPlayerNames: %@", _gameLayer.targetPlayerNames);
+    
+    [self sendPublicMessageRequestWithObject:obj];
+    NSLog(@"Send public message");
+}
+
+/*
+ * 1. Send game plugin request with action-playMultipleEvasions, usedPlayingCardIds and targetPlayerNames. Called in playing menu.
+ * 2. Send public message
+ */
+- (void)sendPlayMultipleEvasionsRequest
+{
+    NSLog(@"Send game plugin request with action-playMultipleEvasions(%i)", kActionPlayMultipleEvasions);
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionPlayMultipleEvasions forKey:kAction];
+    [obj setIntArray:_player.selectedCardIds forKey:kParamUsedPlayingCardIds];
+    NSLog(@"param-usedPlayingCardIds: %@", _player.selectedCardIds);
+    [self sendGamePluginRequestWithObject:obj];
     
     [self sendPublicMessageRequestWithObject:obj];
     NSLog(@"Send public message");
@@ -432,11 +449,21 @@ static BGClient *instanceOfClient = nil;
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionExtractCard forKey:kAction];
     [obj setInt:_player.selectedGreedType forKey:kParamGreedType];
-    [obj setIntArray:_player.extractedCardIdxes forKey:kParamExtractedCardIdxes];
+    [obj setIntArray:_player.extractedCardIdxes forKey:kParamExtractedCardIdxes];   // 抽取的哪几张牌
+    [obj setIntArray:_player.extractedCardIds forKey:kParamExtractedCardIds];       // 抽取的装备
+    [obj setIntArray:_player.transferedCardIds forKey:kParamTransferedCardIds];     // 交给目标玩家的手牌
+    
+//  ...TEMP...
+    NSArray *cardIds = [BGHandArea playingCardIdsWithCards:_player.handArea.handCards];
+    [obj setIntArray:cardIds forKey:kParamHandCardIds];
+    
     [self sendGamePluginRequestWithObject:obj];
     NSLog(@"Send game plugin request with action-extractCard(%i)", kActionExtractCard);
     NSLog(@"param-greedType: %i", _player.selectedGreedType);
-    NSLog(@"param-usedPlayingCardIds: %@", _player.extractedCardIdxes);
+    NSLog(@"param-extractedCardIdxes: %@", _player.extractedCardIdxes);
+    NSLog(@"param-extractedCardIds: %@", _player.extractedCardIds);
+    NSLog(@"param-transferedCardIds: %@", _player.transferedCardIds);
+    NSLog(@"param-handCardIds: %@", cardIds);
 }
 
 /*
@@ -499,7 +526,8 @@ actionLabel:
             break;
             
         case kActionGotExtractedCard:
-            [_player gotExtractedHandCardsWithCardIds:[obj stringArrayWithKey:kParamGotPlayingCardIds]];
+            array = [obj stringArrayWithKey:kParamGotPlayingCardIds];
+            [_player gotExtractedCardsWithCardIds:array];
             NSLog(@"Param-gotPlayingCardIds: %@", array);
             [self sendGotFacedDownCardPublicMessage];
             break;
@@ -535,6 +563,7 @@ playerStateLabel:
             break;
             
         case kPlayerStateIsBeingAttacked:
+        case kPlayerStateIsBeingLagunaBladed:
             [_player addPlayingMenuOfCardPlaying];
             break;
             
@@ -569,20 +598,43 @@ playerStateLabel:
             [_player addPlayingMenuOfCardColor];
             break;
             
-        case kPlayerStateExtractingCard:
+        case kPlayerStateGreeding:
             _player.canExtractCardCount = 2;    // Greed
             [_player faceDownAllHandCardsOnDeck];
             break;
             
-        case kPlayerStateTargetExtractingCard:
+        case kPlayerStateIsBeingGreeded:
             _player.canExtractCardCount = 1;    // Was Greeded
             [_player faceDownAllHandCardsOnDeck];
             break;
             
         case kPlayerStateWasExtracted:
             array = [obj intArrayWithKey:kParamLostPlayingCardIds];
-            [_player lostHandCardsWithCardIds:array];
+            [_player lostCardsWithCardIds:array];
             NSLog(@"Param-lostPlayingCardIds: %@", array);
+            break;
+            
+        case kPlayerStateAngerLost:
+            angerPoint = [obj intWithKey:kParamAngerPointChanged];
+            NSLog(@"Param-angerPointChanged: %i", angerPoint);
+            [_player updateBloodAndAngerWithBloodPoint:0 andAngerPoint:angerPoint];
+            
+            array = [obj stringArrayWithKey:kParamGotPlayingCardIds];
+            NSLog(@"Param-gotPlayingCardIds: %@", array);
+            [_player drawPlayingCardIds:array];
+            break;
+            
+        case kPlayerStateAngerGain:
+            angerPoint = [obj intWithKey:kParamAngerPointChanged];
+            NSLog(@"Param-angerPointChanged: %i", angerPoint);
+            [_player updateBloodAndAngerWithBloodPoint:0 andAngerPoint:angerPoint];
+            [self sendContinuePlayingRequest];
+            break;
+            
+        case kPlayerStateAngerUsed:
+            angerPoint = [obj intWithKey:kParamAngerPointChanged];
+            NSLog(@"Param-angerPointChanged: %i", angerPoint);
+            [_player updateBloodAndAngerWithBloodPoint:0 andAngerPoint:angerPoint];
             break;
             
         default:

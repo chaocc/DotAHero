@@ -38,11 +38,12 @@
         _cardEffect = dictionary[kCardEffect];
         _maxTargetCount = [dictionary[kMaxTargetCount] integerValue];
         
-        _canBeStrengthed = [dictionary[kCanBeStrengthed] boolValue];
+        _canBeStrengthed = [dictionary[kCanBeStrengthened] boolValue];
         _requiredMana = [dictionary[kRequiredMana] integerValue];
         
         _equipmentType = [dictionary[kEquipmentType] integerValue];
         _attackRange = [dictionary[kAttackRange] integerValue];
+        _canBeUsedActive = [dictionary[kCanBeUsedActive] boolValue];
         _onlyEquipOne = [dictionary[kOnlyEquipOne] boolValue];
     }
     return self;

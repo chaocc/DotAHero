@@ -32,9 +32,9 @@ typedef NS_ENUM(NSUInteger, BGGreedType) {
 + (NSArray *)playingCardIdsWithCards:(NSArray *)cards;
 
 - (void)addHandCardsWithCardIds:(NSArray *)cardIds;
-- (void)addOneExtractedHandCard;
-- (void)gotExtractedHandCardsWithCardIds:(NSArray *)cardIds;
-- (void)lostHandCardsWithCardIds:(NSArray *)cardIds;
+- (void)addOneExtractedCard;
+- (void)gotExtractedCardsWithCardIds:(NSArray *)cardIds;
+- (void)lostCardsWithCardIds:(NSArray *)cardIds;
 - (void)removeHandCardsFromSelectedCards;
 
 - (void)useHandCardsWithBlock:(void (^)())block;

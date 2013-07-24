@@ -7,12 +7,13 @@
 //
 
 #import "CCNode.h"
+#import "BGMenuFactory.h"
 
 @class BGPlayer;
 
-@interface BGPlayingDeck : CCNode
+@interface BGPlayingDeck : CCNode <BGMenuFactoryDelegate>
 
-@property (nonatomic, strong, readonly) CCMenu *cardMenu;
+@property (nonatomic, strong, readonly) CCMenu *usedCardMenu;
 
 - (id)initWithPlayer:(BGPlayer *)player;
 + (id)playingDeckWithPlayer:(BGPlayer *)player;
@@ -20,6 +21,6 @@
 - (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
 - (void)showUsedHandCardsWithCardIds:(NSArray *)cardIds;
 - (void)facedDownAllHandCardsOfPlayer:(BGPlayer *)player;
-- (void)addEquipmentCardsOfTargetPlayer;
+- (void)addEquipmentCardsOfTargetPlayer:(BGPlayer *)player;
 
 @end

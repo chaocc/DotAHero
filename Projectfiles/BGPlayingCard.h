@@ -14,10 +14,11 @@
 #define kCardEffect             @"cardEffect"
 #define kWhenToUse              @"whenToUse"
 #define kMaxTargetCount         @"maxTargetCount"
-#define kCanBeStrengthed        @"canBeStrengthed"
+#define kCanBeStrengthened      @"canBeStrengthened"
 #define kRequiredMana           @"requiredMana"
 #define kEquipmentType          @"equipmentType"
 #define kAttackRange            @"attackRange"
+#define kCanBeUsedActive        @"canBeUsedActive"
 #define kOnlyEquipOne           @"onlyEquipOne"
 
 typedef NS_ENUM(NSInteger, BGPlayingCardEnum) {
@@ -68,7 +69,7 @@ typedef NS_ENUM(NSInteger, BGPlayingCardEnum) {
 typedef NS_ENUM(NSInteger, BGCardColor) {
     kCardColorInvalid = 0,
     kCardColorRed = 1,                  // 红色
-    kCardColorBlack = 2                 // 黑色
+    kCardColorBlack                     // 黑色
 };
 
 typedef NS_ENUM(NSInteger, BGCardFigure) {
@@ -103,8 +104,8 @@ typedef NS_ENUM(NSInteger, BGCardType) {
 };
 
 typedef NS_ENUM(NSInteger, BGEquipmentType) {
-    kEquipmentTypeWeapon = 1,           // 武器
-    kEquipmentTypeArmor = 2             // 防具
+    kEquipmentTypeWeapon = 0,           // 武器
+    kEquipmentTypeArmor                 // 防具
 };
 
 // 攻击的属性: 普通攻击，混乱攻击，火焰攻击
@@ -134,6 +135,7 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, copy, readonly) NSString *bigEquipImageName;
 @property (nonatomic, readonly) BGEquipmentType equipmentType;
 @property (nonatomic, readonly) NSUInteger attackRange;
+@property (nonatomic, readonly) BOOL canBeUsedActive;       // 是否可以主动使用
 @property (nonatomic, readonly) BOOL onlyEquipOne;          // 武器和防具是否只能装备一个
 @property (nonatomic) BOOL isVerticalSet;                   // 是否是竖置状态(闪避护符)
 

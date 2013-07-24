@@ -10,6 +10,12 @@
 #import "BGGameLayer.h"
 #import "BGPlayer.h"
 #import "BGFileConstants.h"
+#import "BGEffectComponent.h"
+
+typedef NS_ENUM(NSInteger, BGHeroTag) {
+    kHeroTagBlood,
+    kHeroTagAnger
+};
 
 @interface BGHeroArea ()
 
@@ -76,6 +82,25 @@
     
 //  Render hero skills if current player
     if (_player.isCurrentPlayer) {
+        [self renderHeroSkills];
+    }
+}
+
+/*
+ * Render hero skills of current player
+ */
+- (void)renderHeroSkills
+{
+    NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:_heroCard.heroSkills.count];
+    [_heroCard.heroSkills enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGHeroCard *hero = obj;
+//        NSString *frameName = ([obj heroAttibute])
+    }];
+    
+    if (_heroCard.heroSkills.count == 3) {
+
+    }
+    else {
         
     }
 }
@@ -88,6 +113,8 @@
     NSString *bloodImageName;
     CGPoint deltaPos;
     CGFloat width, height;
+    
+    [[_spriteBatch getChildByTag:kHeroTagBlood] removeFromParentAndCleanup:YES];
     
     if (_player.isCurrentPlayer) {
         if (_bloodPoint == 1) {
@@ -121,7 +148,7 @@
         
         CCSprite *bloodSprite = [CCSprite spriteWithSpriteFrameName:bloodImageName];
         bloodSprite.position = ccpAdd(deltaPos, ccp(width*(i+1), height));
-        [_spriteBatch addChild:bloodSprite];
+        [_spriteBatch addChild:bloodSprite z:0 tag:kHeroTagBlood];
     }
 }
 
@@ -133,6 +160,8 @@
     NSString *angerImageName;
     CGPoint deltaPos;
     CGFloat width, height, increment;
+    
+    [[_spriteBatch getChildByTag:kHeroTagAnger] removeFromParentAndCleanup:YES];
     
     if (_player.isCurrentPlayer) {
         angerImageName = kImageAngerBig;
@@ -151,12 +180,16 @@
     for (NSUInteger i = 0; i < _angerPoint; i++) {
         CCSprite *angerSprite = [CCSprite spriteWithSpriteFrameName:angerImageName];
         angerSprite.position = ccpAdd(deltaPos, ccp(width, height+increment*i));
-        [_spriteBatch addChild:angerSprite];
+        [_spriteBatch addChild:angerSprite z:0 tag:kHeroTagAnger];
     }
 }
 
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
+    BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:kEffectTypeDamaged];
+    effect.position = ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643);
+    [self addChild:effect];
+    
     _bloodPoint += count;
     _bloodPoint = (_bloodPoint > _heroCard.bloodPointLimit) ? 0 : _bloodPoint;
     [self renderBloodPoint];
@@ -175,11 +208,11 @@
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
-    if (_player.selectedHeroId != kHeroCardDefault) {
-        NSArray *cards = [NSArray arrayWithObjects:@(1), @(2), @(3), nil];
-        [_player.handArea addHandCardsWithCardIds:cards];
-        return; // Can not touch the hero of current player
-    }
+//    if (_player.selectedHeroId != kHeroCardDefault) {
+//        NSArray *cards = [NSArray arrayWithObjects:@(1), @(2), @(3), nil];
+//        [_player.handArea addHandCardsWithCardIds:cards];
+//        return; // Can not touch the hero of current player
+//    }
     
     BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
     CCMenuItem *item = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];

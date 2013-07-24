@@ -465,7 +465,7 @@
 		<string>mislead</string>
 		<key>maxTargetCount</key>
 		<integer>2</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -487,7 +487,7 @@
 		<string>mislead</string>
 		<key>maxTargetCount</key>
 		<integer>2</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -509,7 +509,7 @@
 		<string>greed</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -533,7 +533,7 @@
 		<string>greed</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -557,7 +557,7 @@
 		<string>disarm</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -581,7 +581,7 @@
 		<string>disarm</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -605,7 +605,7 @@
 		<string>disarm</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -629,7 +629,7 @@
 		<string>disarm</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -653,7 +653,7 @@
 		<string>disarm</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -677,7 +677,7 @@
 		<string>chakra</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -699,7 +699,7 @@
 		<string>chakra</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -721,7 +721,7 @@
 		<string>energyTransport</string>
 		<key>maxTargetCount</key>
 		<integer>8</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -745,7 +745,7 @@
 		<string>energyTransport</string>
 		<key>maxTargetCount</key>
 		<integer>8</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -769,7 +769,7 @@
 		<string>elunesArrow</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -793,7 +793,7 @@
 		<string>elunesArrow</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
@@ -817,7 +817,7 @@
 		<string>fanaticism</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -839,7 +839,7 @@
 		<string>fanaticism</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -1129,7 +1129,7 @@
 		<string>dispel</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -1151,7 +1151,7 @@
 		<string>dispel</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -1173,7 +1173,7 @@
 		<string>dispel</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -1195,7 +1195,7 @@
 		<string>dispel</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -1217,7 +1217,7 @@
 		<string>dispel</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -1547,6 +1547,8 @@
 		<integer>1</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
+		<key>canBeUsedActive</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1569,6 +1571,8 @@
 		<integer>1</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
+		<key>canBeUsedActive</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1591,6 +1595,8 @@
 		<integer>1</integer>
 		<key>attackRange</key>
 		<integer>1</integer>
+		<key>canBeUsedActive</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1613,6 +1619,8 @@
 		<integer>1</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
+		<key>canBeUsedActive</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1635,6 +1643,8 @@
 		<integer>1</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
+		<key>canBeUsedActive</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1657,6 +1667,8 @@
 		<integer>1</integer>
 		<key>attackRange</key>
 		<integer>2</integer>
+		<key>canBeUsedActive</key>
+		<true/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1679,6 +1691,8 @@
 		<integer>1</integer>
 		<key>attackRange</key>
 		<integer>2</integer>
+		<key>canBeUsedActive</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1703,6 +1717,8 @@
 		<true/>
 		<key>attackRange</key>
 		<integer>0</integer>
+		<key>canBeUsedActive</key>
+		<false/>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1763,7 +1779,7 @@
 		<string>wildAxe</string>
 		<key>maxTargetCount</key>
 		<integer>4</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
 	<dict>
@@ -1785,7 +1801,7 @@
 		<string>sirenSong</string>
 		<key>maxTargetCount</key>
 		<integer>1</integer>
-		<key>canBeStrengthed</key>
+		<key>canBeStrengthened</key>
 		<true/>
 		<key>requiredMana</key>
 		<integer>0</integer>
