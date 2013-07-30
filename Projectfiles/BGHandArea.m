@@ -355,7 +355,7 @@
 }
 
 /*
- * 1. Use hand cards and run move action
+ * 1. Use hand cards/equip equipment and run move action
  * 2. Set selected hand card ids by current player
  */
 - (void)useHandCardsWithBlock:(void (^)())block

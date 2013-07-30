@@ -27,6 +27,7 @@
         _menuType = menuType;
         _player = player;
         _menuFactory = [BGMenuFactory menuFactory];
+        _menuFactory.delegate = self;
         
         [self createMenu];
     }
@@ -45,7 +46,7 @@
 - (void)createMenu
 {
     switch (_menuType) {
-        case kPlayingMenuTypeCardCutting:
+        case kPlayingMenuTypeCardOkay:
             [self createOkayPlayingMenu];
             break;
             
@@ -55,10 +56,6 @@
             
         case kPlayingMenuTypeCardPlaying:
             [self createPlayingMenuForPlaying];
-            break;
-            
-        case kPlayingMenuTypeCardGiving:
-            [self createOkayPlayingMenu];
             break;
             
         case kPlayingMenuTypeStrengthen:
@@ -74,15 +71,6 @@
     }
 }
 
-- (void)addMenuNode
-{
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:40.0f];
-    [self addChild:_menu];
-    
-    _menuFactory.delegate = self;
-}
-
 /*
  * Create menu items with Okay/Discard
  */
@@ -95,6 +83,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
+    _menu.position = PLAYING_MENU_POSITION;
+    [_menu alignItemsHorizontallyWithPadding:40.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (idx == 0) {
@@ -105,7 +95,7 @@
         }
     }];
     
-    [self addMenuNode];
+    [self addChild:_menu];
 }
 
 /*
@@ -120,6 +110,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
+    _menu.position = PLAYING_MENU_POSITION;
+    [_menu alignItemsHorizontallyWithPadding:40.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (idx == 0) {
@@ -130,7 +122,7 @@
         }
     }];
     
-    [self addMenuNode];
+    [self addChild:_menu];
 }
 
 /*
@@ -145,6 +137,7 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
+    _menu.position = PLAYING_MENU_POSITION;
     [_menu alignItemsHorizontallyWithPadding:20.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -158,7 +151,7 @@
         }
     }];
     
-    [self addMenuNode];
+    [self addChild:_menu];
 }
 
 /*
@@ -169,9 +162,11 @@
     _menu = [_menuFactory createMenuWithSpriteFrameName:kImageOkay
                                       selectedFrameName:kImageOkaySelected
                                       disabledFrameName:kImageOkayDisabled];
+    _menu.position = PLAYING_MENU_POSITION;
+    [_menu alignItemsHorizontallyWithPadding:40.0f];
     [_menu.children.lastObject setIsEnabled:NO];
     
-    [self addMenuNode];
+    [self addChild:_menu];
 }
 
 /*
@@ -179,11 +174,14 @@
  */
 - (void)createPlayingMenuForCardColor
 {
-    NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageMenuHearts, kImageMenuSpades, nil];
+    NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageMenuRed, kImageMenuBlack, nil];
+    NSArray *selFrameNames = [NSArray arrayWithObjects:kImageMenuRedSelected, kImageMenuBlackSelected, nil];
     
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
-                                      selectedFrameNames:nil
+                                      selectedFrameNames:selFrameNames
                                       disabledFrameNames:nil];
+    _menu.position = PLAYING_MENU_POSITION;
+    [_menu alignItemsHorizontallyWithPadding:40.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (idx == 0) {
@@ -193,20 +191,22 @@
         }
     }];
     
-    [self addMenuNode];
+    [self addChild:_menu];
 }
-
+//
 /*
  * Create menu item with Hearts/Diamonds/Spades/Clubs
  */
 - (void)createPlayingMenuForCardSuits
 {
-    NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageMenuHearts, kImageMenuDiamonds, kImageMenuSpades, kImageMenuClubs, nil];
+    NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageMenuSpades, kImageMenuHearts, kImageMenuClubs, kImageMenuDiamonds, nil];
+    NSArray *selFrameNames = [NSArray arrayWithObjects:kImageMenuSpadesSelected, kImageMenuHeartsSelected, kImageMenuClubsSelected, kImageMenuDiamondsSelected, nil];
     
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
-                                      selectedFrameNames:nil
+                                      selectedFrameNames:selFrameNames
                                       disabledFrameNames:nil];
-    [_menu alignItemsHorizontallyWithPadding:20.0f];
+    _menu.position = PLAYING_MENU_POSITION;
+    [_menu alignItemsHorizontallyWithPadding:0.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (idx == 0) {
@@ -220,7 +220,7 @@
         }
     }];
     
-    [self addMenuNode];
+    [self addChild:_menu];
 }
 
 #pragma mark - Menu item touching
@@ -243,8 +243,8 @@
             break;
             
         case kPlayingMenuItemTagDiscard:
-            [_menu removeFromParentAndCleanup:YES];
-            [self createOkayPlayingMenu];
+            [self removeFromParentAndCleanup:YES];
+            [[BGClient sharedClient] sendStartDiscardRequest];
             break;
             
         case kPlayingMenuItemTagRedColor:
@@ -356,6 +356,7 @@
             break;
             
         case kPlayerStateThrowingCard:
+        case kPlayerStateIsBeingViperRaided:
             [_player.handArea useHandCardsWithBlock:^{
                 [[BGClient sharedClient] sendDiscardPlayingCardRequest];
             }];
@@ -370,6 +371,12 @@
         case kPlayerStateIsBeingLagunaBladed:
             [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
                 [[BGClient sharedClient] sendPlayMultipleEvasionsRequest];
+            }];
+            break;
+            
+        case kPlayerStateDiscarding:
+            [_player.handArea useHandCardsWithBlock:^{
+                [[BGClient sharedClient] sendOkToDiscardRequest];
             }];
             break;
             

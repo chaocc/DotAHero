@@ -56,9 +56,9 @@
 
 - (void)clearBuffer;
 
+- (void)addPlayingMenuOfCardOkay;
 - (void)addPlayingMenuOfCardUsing;
 - (void)addPlayingMenuOfCardPlaying;
-- (void)addPlayingMenuOfCardGiving;
 - (void)addPlayingMenuOfStrengthen;
 - (void)addPlayingMenuOfCardColor;
 

@@ -27,12 +27,13 @@
         
         _cardEnum = aCardId;
         _cardName = dictionary[kHeroName];
-        _heroSkills = dictionary[kHeroSkills];
+        _cardText = dictionary[kHeroText];
         
         _heroAttibute = [dictionary[kHeroAttribute] integerValue];
         _bloodPointLimit = [dictionary[kBloodPointLimit] integerValue];
         _angerPointLimit = [dictionary[kAngerPointLimit] integerValue];
         _handSizeLimit = [dictionary[kHandSizeLimit] integerValue];
+        _heroSkills = dictionary[kHeroSkills];
     }
     
     return self;

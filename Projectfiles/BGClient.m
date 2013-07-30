@@ -337,7 +337,7 @@ static BGClient *instanceOfClient = nil;
     NSLog(@"param-usedPlayingCardIds: %@", _player.selectedCardIds);
     
     BGPlayingCard *card = [BGPlayingCard cardWithCardId:[_player.selectedCardIds.lastObject integerValue]];
-    if (card.canBeStrengthed) {
+    if (card.canBeStrengthened) {
         [obj setBool:_player.isSelectedStrenthen forKey:kParamIsStrengthened];
         NSLog(@"param-isStrengthened: %i", _player.isSelectedStrenthen);
     }
@@ -467,6 +467,44 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
+ * 1. Send game plugin request with action-startDiscard. Called in playing menu.
+ * 2. Send public message
+ */
+- (void)sendStartDiscardRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionStartDiscard forKey:kAction];
+    [self sendGamePluginRequestWithObject:obj];
+    NSLog(@"Send game plugin request with action-startDiscard(%i)", kActionStartDiscard);
+    
+    [self sendPublicMessageRequestWithObject:obj];
+    NSLog(@"Send public message");
+}
+
+/*
+ * 1. Send game plugin request with action-okToDiscard. Called in playing menu.
+ * 2. Send public message
+ */
+- (void)sendOkToDiscardRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionOkToDiscard forKey:kAction];
+    [obj setIntArray:_player.selectedCardIds forKey:kParamUsedPlayingCardIds];
+    
+//  ...TEMP...
+    NSArray *cardIds = [BGHandArea playingCardIdsWithCards:_player.handArea.handCards];
+    [obj setIntArray:cardIds forKey:kParamHandCardIds];
+    
+    [self sendGamePluginRequestWithObject:obj];
+    NSLog(@"Send game plugin request with action-okToDiscard(%i)", kActionOkToDiscard);
+    NSLog(@"param-discardPlayingCardIds: %@", _player.selectedCardIds);
+    NSLog(@"param-handCardIds: %@", cardIds);
+    
+    [self sendPublicMessageRequestWithObject:obj];
+    NSLog(@"Send public message");
+}
+
+/*
  * Receive game plugin message event. Handle different returning actions.
  */
 - (void)onGamePluginMessageEvent:(EsPluginMessageEvent *)e
@@ -562,6 +600,10 @@ playerStateLabel:
 //            [self sendMisGuessedCardPublicMessage];
             break;
             
+        case kPlayerStateDiscarding:
+            [_player addPlayingMenuOfCardOkay];
+            break;
+            
         case kPlayerStateIsBeingAttacked:
         case kPlayerStateIsBeingLagunaBladed:
             [_player addPlayingMenuOfCardPlaying];
@@ -574,6 +616,7 @@ playerStateLabel:
             NSLog(@"Param-bloodPointChanged: %i", bloodPoint);
             NSLog(@"Param-angerPointChanged: %i", angerPoint);
             [_player updateBloodAndAngerWithBloodPoint:bloodPoint andAngerPoint:angerPoint];
+            [self sendContinuePlayingRequest];
             break;
             
         case kPlayerStateAttacked:
@@ -582,7 +625,7 @@ playerStateLabel:
             NSLog(@"Param-bloodPointChanged: %i", bloodPoint);
             NSLog(@"Param-angerPointChanged: %i", angerPoint);
             [_player updateBloodAndAngerWithBloodPoint:bloodPoint andAngerPoint:angerPoint];
-            [self sendContinuePlayingRequest];
+//            [self sendContinuePlayingRequest];
             break;
             
         case kPlayerStateBloodRestored:
@@ -635,6 +678,10 @@ playerStateLabel:
             angerPoint = [obj intWithKey:kParamAngerPointChanged];
             NSLog(@"Param-angerPointChanged: %i", angerPoint);
             [_player updateBloodAndAngerWithBloodPoint:0 andAngerPoint:angerPoint];
+            break;
+            
+        case kPlayerStateIsBeingViperRaided:
+            [_player addPlayingMenuOfCardOkay];
             break;
             
         default:

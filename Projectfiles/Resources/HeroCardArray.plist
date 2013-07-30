@@ -5,6 +5,8 @@
 	<dict>
 		<key>heroName</key>
 		<string>LordOfAvernus</string>
+		<key>heroText</key>
+		<string>死亡骑士</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -15,39 +17,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>0</key>
-				<string>deathCoil</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>1</key>
-				<string>Frostmourne</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>0</integer>
+			<integer>1</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>SkeletonKing</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -58,39 +36,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>5</key>
-				<string>reincarnation</string>
-				<key>skillType</key>
-				<integer>2</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>10</string>
-				</array>
-			</dict>
-			<dict>
-				<key>6</key>
-				<string>vampiricAura</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>2</integer>
+			<integer>3</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Bristleback</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -101,43 +55,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>10</key>
-				<string>warpath</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>11</key>
-				<string>bristlebackSkill</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>4</integer>
+			<integer>5</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>SacredWarrior</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -148,43 +74,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>15</key>
-				<string>lifeBreak</string>
-				<key>skillCategory</key>
-				<integer>0</integer>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>16</key>
-				<string>burningSpear</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>6</integer>
+			<integer>7</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Omniknight</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -195,39 +93,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>20</key>
-				<string>purification</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>21</key>
-				<string>holyLight</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>8</integer>
+			<integer>9</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Axe</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -238,39 +112,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>25</key>
-				<string>battleHunger</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>26</key>
-				<string>counterHelix</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>10</integer>
+			<integer>11</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>CentaurWarchief</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -281,25 +131,14 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>30</key>
-				<string>doubleEdge</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>12</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>DragonKnight</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -310,39 +149,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>35</key>
-				<string>breatheFire</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>36</key>
-				<string>dragonBlood</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>5</string>
-				</array>
-			</dict>
+			<integer>13</integer>
+			<integer>14</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>GuardianKnight</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -353,53 +168,16 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>40</key>
-				<string>guardian</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>41</key>
-				<string>faith</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>42</key>
-				<string>fatherlyLove</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>15</integer>
+			<integer>16</integer>
+			<integer>17</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Gorgon</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -410,39 +188,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>45</key>
-				<string>mysticSnake</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>46</key>
-				<string>manaShield</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>18</integer>
+			<integer>19</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>LightningRevenant</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -453,39 +207,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>50</key>
-				<string>plasmaField</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>51</key>
-				<string>unstableCurrent</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>20</integer>
+			<integer>21</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Juggernaut</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -496,39 +226,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>55</key>
-				<string>omnislash</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>56</key>
-				<string>bladeDance</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>22</integer>
+			<integer>23</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>VengefulSpirit</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -539,43 +245,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>60</key>
-				<string>netherSwap</string>
-				<key>skillCategory</key>
-				<integer>0</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>61</key>
-				<string>waveOfTerror</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>24</integer>
+			<integer>25</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Strygwyr</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -586,53 +264,16 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>65</key>
-				<string>bloodrage</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>66</key>
-				<string>strygwyrsThirst</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>67</key>
-				<string>bloodBath</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>26</integer>
+			<integer>27</integer>
+			<integer>28</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>TrollWarlord</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -643,39 +284,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>70</key>
-				<string>battleTrance</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>71</key>
-				<string>fervor</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>29</integer>
+			<integer>30</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>DwarvenSniper</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -686,53 +303,16 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>75</key>
-				<string>headshot</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>76</key>
-				<string>takeAim</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>77</key>
-				<string>shrapnel</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>31</integer>
+			<integer>32</integer>
+			<integer>33</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>NerubianAssassin</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -743,53 +323,16 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>80</key>
-				<string>manaBurn</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>81</key>
-				<string>vendetta</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>82</key>
-				<string>spikedCarapace</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>34</integer>
+			<integer>35</integer>
+			<integer>36</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Antimage</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -800,59 +343,16 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>85</key>
-				<string>manaBreak</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>86</key>
-				<string>blink</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>87</key>
-				<string>manaVoid</string>
-				<key>skillCategory</key>
-				<integer>0</integer>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>37</integer>
+			<integer>38</integer>
+			<integer>39</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>NerubianWeaver</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -863,39 +363,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>90</key>
-				<string>theSwarm</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>91</key>
-				<string>timeLapse</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>40</integer>
+			<integer>41</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>UrsaWarrior</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -906,39 +382,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>95</key>
-				<string>furySwipes</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>96</key>
-				<string>enrage</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>42</integer>
+			<integer>43</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>ChenYunSheng</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -949,39 +401,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>100</key>
-				<string>ordeal</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>101</key>
-				<string>specialBody</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>44</integer>
+			<integer>45</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Slayer</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -992,59 +420,16 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>105</key>
-				<string>fierySoul</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>106</key>
-				<string>lagunaBlade</string>
-				<key>skillCategory</key>
-				<integer>0</integer>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>107</key>
-				<string>fanaticismHeart</string>
-				<key>skillCategory</key>
-				<integer>1</integer>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>46</integer>
+			<integer>47</integer>
+			<integer>48</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Necrolyte</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1055,39 +440,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>110</key>
-				<string>heartstopperAura</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>111</key>
-				<string>sadist</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>49</integer>
+			<integer>50</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>TwinHeadDragon</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1098,39 +459,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>115</key>
-				<string>icePath</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>116</key>
-				<string>liquidFire</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>51</integer>
+			<integer>52</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>CrystalMaiden</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1141,39 +478,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>120</key>
-				<string>frostbite</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>121</key>
-				<string>brillianceAura</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>53</integer>
+			<integer>54</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Lich</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1184,39 +497,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>125</key>
-				<string>darkRitual</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>126</key>
-				<string>frostArmor</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>55</integer>
+			<integer>56</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>ShadowPriest</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1227,39 +516,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>130</key>
-				<string>shallowGrave</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>131</key>
-				<string>shadowWave</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>57</integer>
+			<integer>58</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>OrgeMagi</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1270,39 +535,15 @@
 		<integer>4</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>135</key>
-				<string>fireblast</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>136</key>
-				<string>multiCast</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>59</integer>
+			<integer>60</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>KeeperOfTheLight</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1313,59 +554,16 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>140</key>
-				<string>illuminate</string>
-				<key>skillCategory</key>
-				<integer>0</integer>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>141</key>
-				<string>chakraMagic</string>
-				<key>skillCategory</key>
-				<integer>0</integer>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>142</key>
-				<string>grace</string>
-				<key>skillCategory</key>
-				<integer>0</integer>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>61</integer>
+			<integer>62</integer>
+			<integer>63</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>GoblinTechies</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1376,53 +574,16 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>145</key>
-				<string>remoteMines</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>146</key>
-				<string>focusedDetonate</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>147</key>
-				<string>suicideSquad</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>64</integer>
+			<integer>65</integer>
+			<integer>66</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>StormSpirit</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1433,39 +594,15 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>150</key>
-				<string>overload</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>151</key>
-				<string>ballLightning</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>67</integer>
+			<integer>68</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>Enchantress</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1476,53 +613,16 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>155</key>
-				<string>untouchable</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<true/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>156</key>
-				<string>enchant</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>157</key>
-				<string>naturesAttendants</string>
-				<key>skillType</key>
-				<integer>1</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>69</integer>
+			<integer>70</integer>
+			<integer>71</integer>
 		</array>
 	</dict>
 	<dict>
 		<key>heroName</key>
 		<string>ElfLily</string>
+		<key>heroText</key>
+		<string></string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -1533,48 +633,9 @@
 		<integer>5</integer>
 		<key>heroSkills</key>
 		<array>
-			<dict>
-				<key>160</key>
-				<string>healingSpell</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<true/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>161</key>
-				<string>dispelWizard</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
-			<dict>
-				<key>162</key>
-				<string>magicControl</string>
-				<key>skillType</key>
-				<integer>0</integer>
-				<key>isMandatorySkill</key>
-				<false/>
-				<key>canBeDispelled</key>
-				<false/>
-				<key>whenToUse</key>
-				<array>
-					<string>3</string>
-				</array>
-			</dict>
+			<integer>72</integer>
+			<integer>73</integer>
+			<integer>74</integer>
 		</array>
 	</dict>
 </array>

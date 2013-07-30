@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionCutCard = 10,                            // 切牌(从牌堆抽一张牌)
     kActionSendPlayingCard = 11,                    // 发送手牌给玩家
     kActionOkToUseCard = 12,                        // 确定使用手牌
-    kActionDiscardCard = 13,                        // 弃置1张手牌(比如月神之箭)
+    kActionDiscardCard = 13,                        // 弃置手牌(比如月神之箭)
     kActionCancelCard = 14,                         // 取消使用手牌
     kActionRestoreBlood = 15,                       // 恢复血量 - TEMP
     kActionGotAnger = 16,                           // 得到怒气 - TEMP
@@ -44,12 +44,13 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionExtractCard = 23,                        // 抽取手牌
     kActionGotExtractedCard = 24,                   // 获得抽取的牌
     kActionPlayMultipleEvasions = 25,               // 打出多张闪(最多3张)
-    kActionMisGuessedCard = 26                      // 猜错了牌 - TEMP
+    kActionStartDiscard = 26,                       // 开始弃牌
+    kActionOkToDiscard = 27,                        // 确定弃牌
+    kActionContinueDiscard = 28,                    // 继续弃牌
+    kActionMisGuessedCard = 29                      // 猜错了牌 - TEMP
     
     
 //    kActionWaiting,                                 // 等待
-//    kActionOkToDiscard,                             // 确定弃牌
-//    kActionContinueDiscard,                         // 继续弃牌
 //    kActionTriggerHeroSkill,                        // 触发英雄技能
 //    kActionUseHeroSkill,                            // 使用英雄技能
 //    kActionTriggerEquipmentSkill,                   // 触发装备技能
@@ -76,7 +77,7 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
     kPlayerStateAttacked = 14,                      // 攻击造成1次伤害
     kPlayerStateIsDead = 15,                        // 已死亡
     kPlayerStateThrowingCard = 16,                  // 弃置牌(丢掉牌)
-    kPlayerStateTargetOfHeroSkill = 17,             // 成为任意英雄技能的目标时
+//    kPlayerStateTargetOfHeroSkill = 17,             // 成为任意英雄技能的目标时
     kPlayerStateBloodRestored = 18,                 // 恢复1点血
     kPlayerStateGreeding = 19,                      // 贪婪－抽目标玩家牌
     kPlayerStateIsBeingGreeded = 20,                // 被贪婪－抽源玩家牌
@@ -85,7 +86,8 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
     kPlayerStateAngerLost = 23,                     // 丢失怒气
     kPlayerStateAngerGain = 24,                     // 获得怒气
     kPlayerStateAngerUsed = 25,                     // 使用怒气
-    kPlayerStateIsBeingLagunaBladed = 26            // 被神灭斩
+    kPlayerStateIsBeingLagunaBladed = 26,           // 被神灭斩
+    kPlayerStateIsBeingViperRaided = 27             // 被蝮蛇突袭
 };
 
 // Parameters

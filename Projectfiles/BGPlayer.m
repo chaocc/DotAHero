@@ -104,7 +104,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _handArea = [BGHandArea handAreaWithPlayingCardIds:cardIds ofPlayer:self];
     [self addChild:_handArea];
     
-    [self addPlayingMenuOfCardCutting];
+    [self addPlayingMenuOfCardOkay];
 }
 
 /*
@@ -248,11 +248,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 #pragma mark - Playing menu
 /*
- * Add playing menu items for card cutting(通过拼点切牌)
+ * Add playing menu items for okay
  */
-- (void)addPlayingMenuOfCardCutting
+- (void)addPlayingMenuOfCardOkay
 {
-    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardCutting ofPlayer:self];
+    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardOkay ofPlayer:self];
     [self addChild:_playingMenu];
 }
 
@@ -271,15 +271,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)addPlayingMenuOfCardPlaying
 {
     _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardPlaying ofPlayer:self];
-    [self addChild:_playingMenu];
-}
-
-/*
- * Add playing menu items for card giving(交给)
- */
-- (void)addPlayingMenuOfCardGiving
-{
-    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardGiving ofPlayer:self];
     [self addChild:_playingMenu];
 }
 

@@ -33,6 +33,8 @@
 - (void)sendDiscardPlayingCardRequest;
 - (void)sendCancelPlayingCardRequest;
 - (void)sendExtractCardRequest;
+- (void)sendStartDiscardRequest;
+- (void)sendOkToDiscardRequest;
 
 - (void)addPublicMessageEventListener;
 

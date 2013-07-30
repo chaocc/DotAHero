@@ -181,7 +181,7 @@
                                               [_equipMenu removeFromParentAndCleanup:YES];
                                               
                                               if (_player.isSelectedStrenthen) {    // 强化
-                                                  [_player addPlayingMenuOfCardGiving];
+                                                  [_player addPlayingMenuOfCardOkay];
                                               } else {
                                                   [[BGClient sharedClient] sendExtractCardRequest]; // Send plugin reqeust
                                               }

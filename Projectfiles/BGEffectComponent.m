@@ -133,7 +133,7 @@
     [self runActionWithPlist:@"Evasion.plist"
                    frameName:@"Evasion0.png"
                       frames:@"Evasion"
-               andFrameCount:12];
+               andFrameCount:14];
 }
 
 - (void)healingSalve

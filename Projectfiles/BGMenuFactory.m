@@ -56,7 +56,7 @@
             } else {
                 selectedSprite.color = ccGRAY;
             }
-            if (selFrameNames) {
+            if (disFrameNames) {
                 disabledSprite = [CCSprite spriteWithSpriteFrameName:disFrameNames[idx]];
             }
         }

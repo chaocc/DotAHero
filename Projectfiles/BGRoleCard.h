@@ -18,6 +18,4 @@ typedef NS_ENUM(NSInteger, BGRoleCardEnum) {
 
 @interface BGRoleCard : BGCard
 
-@property (nonatomic, copy, readonly) NSString *cardText;
-
 @end

@@ -16,12 +16,14 @@
     NSInteger _cardId;
     NSInteger _cardEnum;
     NSString *_cardName;
+    NSString *_cardText;
     NSString *_cardImageName;
 }
 
 @property (nonatomic, readonly) NSInteger cardId;
 @property (nonatomic, readonly) NSInteger cardEnum;
 @property (nonatomic, copy, readonly) NSString *cardName;
+@property (nonatomic, copy, readonly) NSString *cardText;
 @property (nonatomic, copy, readonly) NSString *cardImageName;
 
 - (id)initWithCardId:(NSInteger)aCardId;

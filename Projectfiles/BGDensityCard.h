@@ -25,7 +25,6 @@ typedef NS_ENUM(NSInteger, BGDensityCardEnum) {
 
 @interface BGDensityCard : BGCard
 
-@property (nonatomic, copy, readonly) NSString *cardText;
 @property (nonatomic, copy, readonly) NSString *description;
 
 @end

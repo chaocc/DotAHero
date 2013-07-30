@@ -30,6 +30,7 @@
         
         _cardEnum = [dictionary[kCardEnum] integerValue];
         _cardName = dictionary[kCardName];
+        _cardText = dictionary[kCardText];
         _cardFigure = [dictionary[kCardFigure] integerValue];
         _cardSuits = [dictionary[kCardSuits] integerValue];
         
@@ -38,7 +39,7 @@
         _cardEffect = dictionary[kCardEffect];
         _maxTargetCount = [dictionary[kMaxTargetCount] integerValue];
         
-        _canBeStrengthed = [dictionary[kCanBeStrengthened] boolValue];
+        _canBeStrengthened = [dictionary[kCanBeStrengthened] boolValue];
         _requiredMana = [dictionary[kRequiredMana] integerValue];
         
         _equipmentType = [dictionary[kEquipmentType] integerValue];

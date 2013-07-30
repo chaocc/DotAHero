@@ -125,7 +125,7 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, readonly) NSUInteger maxTargetCount;  // 最多指定的目标数量
 
 // Magic
-@property (nonatomic, readonly) BOOL canBeStrengthed;
+@property (nonatomic, readonly) BOOL canBeStrengthened;
 
 // Magic / Super Skill
 @property (nonatomic, readwrite) NSUInteger requiredMana;   // 强化需要魔法

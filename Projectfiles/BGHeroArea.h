@@ -24,7 +24,6 @@
 @property (nonatomic) NSUInteger gotAnger;
 @property (nonatomic) BOOL canBeTarget;
 @property (nonatomic) BOOL isDead;
-@property (nonatomic) BGHeroSkill usedSkill;
 
 - (id)initWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player;
 + (id)heroAreaWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player;

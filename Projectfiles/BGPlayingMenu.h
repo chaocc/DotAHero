@@ -10,10 +10,9 @@
 #import "BGMenuFactory.h"
 
 typedef NS_ENUM(NSInteger, BGPlayingMenuType) {
-    kPlayingMenuTypeCardCutting,    // 通过拼点切牌
+    kPlayingMenuTypeCardOkay,       // 通过拼点切牌/交给其他玩家牌/确定弃牌
     kPlayingMenuTypeCardUsing,      // 使用
     kPlayingMenuTypeCardPlaying,    // 打出
-    kPlayingMenuTypeCardGiving,     // 交给其他玩家牌
     kPlayingMenuTypeHeroSkill,      // 英雄技能
     kPlayingMenuTypeEquipment,      // 发动装备
     kPlayingMenuTypeDispel,         // 驱散

@@ -9,6 +9,7 @@
 #import "BGHeroArea.h"
 #import "BGGameLayer.h"
 #import "BGPlayer.h"
+#import "BGHeroSkill.h"
 #import "BGFileConstants.h"
 #import "BGEffectComponent.h"
 
@@ -22,6 +23,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic) CGFloat playerAreaWidth, playerAreaHeight;
 @property (nonatomic, strong) CCSpriteBatchNode *spriteBatch;
+@property (nonatomic, strong) BGMenuFactory *menuFactory;
 
 @end
 
@@ -38,11 +40,12 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         _distance = 1;
         _attackRange = 1;
         _canBeTarget = YES;
-        _usedSkill = -1;
         
         _playerAreaWidth = _player.playerAreaSize.width;
         _playerAreaHeight = _player.playerAreaSize.height;
         
+        _menuFactory = [BGMenuFactory menuFactory];
+        _menuFactory.delegate = self;
         [self renderSelectedHero];
     }
     return self;
@@ -66,16 +69,14 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     
 //  Render hero avatar
     NSString *avatarName =( _player.isCurrentPlayer) ? _heroCard.bigAvatarName : _heroCard.avatarName;
-    BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
-    CCMenu *heroMenu = [menuFactory createMenuWithSpriteFrameName:avatarName
-                                                selectedFrameName:nil
-                                                disabledFrameName:nil];
+    CCMenu *heroMenu = [_menuFactory createMenuWithSpriteFrameName:avatarName
+                                                 selectedFrameName:nil
+                                                 disabledFrameName:nil];
     heroMenu.position = (_player.isCurrentPlayer) ?
-    ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
-    ccp(-_playerAreaWidth*0.245, _playerAreaHeight*0.045);
+        ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
+        ccp(-_playerAreaWidth*0.245, _playerAreaHeight*0.045);
     [heroMenu.children.lastObject setTag:_heroCard.cardId];
     [self addChild:heroMenu];
-    menuFactory.delegate = self;
     
 //  Render hero blood point
     [self renderBloodPoint];
@@ -91,18 +92,45 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)renderHeroSkills
 {
-    NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:_heroCard.heroSkills.count];
+    NSUInteger skillCount = _heroCard.heroSkills.count;
+    NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:skillCount];
+    NSMutableArray *selFrameNames = [NSMutableArray arrayWithCapacity:skillCount];
+    
     [_heroCard.heroSkills enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGHeroCard *hero = obj;
-//        NSString *frameName = ([obj heroAttibute])
+        BGHeroSkill *skill = [BGHeroSkill heroSkillWithSkillId:[obj integerValue]];
+        
+        NSString *frameName, *selFrameName;
+        if (skill.skillCategory == kHeroSkillCategoryActive) {
+            frameName = [NSString stringWithFormat:@"ActiveSkill%i.png", skillCount];
+            selFrameName = [NSString stringWithFormat:@"ActiveSkill%i_Selected.png", skillCount];
+        } else {
+            frameName = [NSString stringWithFormat:@"PassiveSkill%i.png", skillCount];
+            selFrameName = [NSString stringWithFormat:@"PassiveSkill%i_Selected.png", skillCount];
+        }
+        [frameNames addObject:frameName];
+        [selFrameNames addObject:selFrameName];
     }];
     
-    if (_heroCard.heroSkills.count == 3) {
-
-    }
-    else {
+    CCMenu *skillMenu = [_menuFactory createMenuWithSpriteFrameNames:frameNames
+                                                  selectedFrameNames:selFrameNames
+                                                  disabledFrameNames:nil];
+    skillMenu.position = ccp(_playerAreaWidth*0.114, _playerAreaHeight*0.143);
+    [skillMenu alignItemsHorizontallyWithPadding:0.0f];
+    [self addChild:skillMenu];
+    
+//  Add label text to menu and disable passive skill menu
+    [[skillMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CCMenuItem *menuItem = obj;
+        BGHeroSkill *skill = [BGHeroSkill heroSkillWithSkillId:[_heroCard.heroSkills[idx] integerValue]];
         
-    }
+        CCLabelTTF *label = [CCLabelTTF labelWithString:skill.skillText
+                                               fontName:@"Arial"
+                                               fontSize:14.0f];
+        label.position = ccp(menuItem.contentSize.width/2, menuItem.contentSize.height/2);
+        [menuItem addChild:label];
+        
+        menuItem.isEnabled = (skill.skillCategory == kHeroSkillCategoryActive);
+    }];
 }
 
 /*

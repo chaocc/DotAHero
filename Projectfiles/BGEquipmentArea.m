@@ -102,8 +102,8 @@
         case kEquipmentTypeWeapon:
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeWeapon];
             menuPosition = (_player.isCurrentPlayer) ?
-            ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
-            ccp(playerAreaWidth*0.253, playerAreaHeight*0.177);
+                ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
+                ccp(playerAreaWidth*0.253, playerAreaHeight*0.177);
             if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
                 [[self getChildByTag:kEquipmentTypeArmor] removeAllChildrenWithCleanup:YES];
             }
@@ -112,8 +112,8 @@
         case kEquipmentTypeArmor:
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeArmor];
             menuPosition = (_player.isCurrentPlayer) ?
-            ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
-            ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222);
+                ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
+                ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222);
             break;
             
         default:
@@ -133,6 +133,26 @@
     [_equipmentMenu.children.lastObject setTag:card.cardId];
     _equipmentMenu.enabled = card.canBeUsedActive;
     [self addChild:_equipmentMenu z:card.equipmentType];
+    
+//  Render card suits
+    CCMenuItem *menuItem = _equipmentMenu.children.lastObject;
+    CGFloat width = menuItem.contentSize.width;
+    CGFloat height = menuItem.contentSize.height;
+    
+    CCSprite *figureSprite = [CCSprite spriteWithSpriteFrameName:card.figureImageName];
+    figureSprite.position = ccp(width*0.11, height*0.90);
+    [menuItem addChild:figureSprite];
+    
+    CCSprite *suitsSprite = [CCSprite spriteWithSpriteFrameName:card.suitsImageName];
+    suitsSprite.position = ccp(width*0.11, height*0.75);
+    [menuItem addChild:suitsSprite];
+    
+//  Render equipment name with label text
+//    CCLabelTTF *label = [CCLabelTTF labelWithString:card.cardText
+//                                           fontName:@"Arial"
+//                                           fontSize:14.0f];
+//    label.position = ccp(width*0.90, height/2);
+//    [menuItem addChild:label];
 }
 
 - (void)removeExistingEquipmentWithCard:(BGPlayingCard *)card
