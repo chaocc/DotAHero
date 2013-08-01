@@ -6,6 +6,7 @@
  */
 
 #import "BGAppDelegate.h"
+#import "BGAudioComponent.h"
 
 @implementation BGAppDelegate
 
@@ -16,6 +17,8 @@
 #else
 	CCLOG(@"ARC is either not available or not enabled");
 #endif
+    
+    [[BGAudioComponent sharedAudioComponent] playBackgroundAndLoop];
 }
 
 -(id) alternateView

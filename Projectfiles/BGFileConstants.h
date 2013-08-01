@@ -82,4 +82,9 @@
 
 #define kXmlSettings                    @"settings.xml"
 
+#define kAudioBackground                @"Background.mp3"
+#define kAudioDamaged                   @"Damaged.wav"
+#define kAudioEquipCard                 @"EquipCard.wav"
+#define kAudioRestoreBlood              @"RestoreBlood.wav"
+
 #endif

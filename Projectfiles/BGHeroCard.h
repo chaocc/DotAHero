@@ -7,6 +7,7 @@
 //
 
 #import "BGCard.h"
+#import "BGHeroSkill.h"
 
 #define kHeroName               @"heroName"
 #define kHeroText               @"heroText"

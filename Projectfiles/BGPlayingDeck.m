@@ -61,6 +61,7 @@
  */
 - (void)showUsedHandCardsWithCardIds:(NSArray *)cardIds
 {
+    [_usedCardMenu removeAllChildrenWithCleanup:YES];
     NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
     
     [_menuFactory addMenuItemsWithCards:cards toMenu:_usedCardMenu];
@@ -99,39 +100,6 @@
 }
 
 /*
- * Extract(抽取) a hand card of target player by touch card menu item
- * If only have one hand card, end directly after extracted.
- */
-//- (void)extractCardByTouchMenuItem:(CCMenuItem *)menuItem
-//{
-//    NSUInteger idx = _targetPlayer.handCardCount - menuItem.tag - 1;
-//    [_player.extractedCardIdxes addObject:@(idx)];
-//    
-//    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:_player.handArea.targetPosition
-//                                                         ofNode:menuItem];
-//    [moveComp runActionEaseMoveWithDuration:CARD_MOVE_DURATION
-//                                      block:^{
-//                                          [menuItem removeFromParentAndCleanup:YES];
-//                                          [_handMenu alignItemsHorizontallyWithPadding:_cardPadding];
-//                                          [_player.handArea addOneExtractedHandCard];
-//                                          
-//                                          // Extracted card count can't great than all hand card count
-//                                          if ((_player.extractedCardIdxes.count == _targetPlayer.handCardCount) ||
-//                                              (_player.extractedCardIdxes.count == _player.canExtractCardCount)) {
-//                                              _player.selectedGreedType = kGreedTypeHandCard;
-//                                              [_handMenu removeAllChildrenWithCleanup:YES];
-//                                              
-//                                              if (!_player.isSelectedStrenthen) {   // 没有强化
-//                                                  [[BGClient sharedClient] sendExtractCardRequest]; // Send plugin reqeust
-//                                              }
-//                                              
-//                                              NSAssert(_player.playingMenu, @"Nil in selector %@", NSStringFromSelector(_cmd));
-//                                              [_player.playingMenu createOkayPlayingMenu];
-//                                          }
-//                                      }];
-//}
-
-/*
  * Add equipment cards of target player on the deck
  */
 - (void)addEquipmentCardsOfTargetPlayer:(BGPlayer *)player
@@ -162,6 +130,15 @@
         _player.selectedGreedType = kGreedTypeEquipment;
     }
     
+    [self extractCardByTouchMenuItem:menuItem];
+}
+
+/*
+ * Extract(抽取) a hand card of target player by touch card menu item
+ * If only have one hand card, end directly after extracted.
+ */
+- (void)extractCardByTouchMenuItem:(CCMenuItem *)menuItem
+{
     CGPoint targetPosition = ccp(_player.playerAreaSize.width*0.31, -_player.playerAreaSize.height*0.88);
     BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:targetPosition
                                                          ofNode:menuItem];
@@ -185,6 +162,31 @@
                                               } else {
                                                   [[BGClient sharedClient] sendExtractCardRequest]; // Send plugin reqeust
                                               }
+                                          }
+                                      }];
+}
+
+/*
+ * Throw hand cards of target player by touch card menu item
+ * If only have one hand card, end directly after extracted.
+ */
+- (void)throwCardByTouchMenuItem:(CCMenuItem *)menuItem
+{
+    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:USED_CARD_POSITION
+                                                         ofNode:menuItem];
+    
+    [moveComp runActionEaseMoveWithDuration:CARD_MOVE_DURATION
+                                      block:^{
+                                          [menuItem removeFromParentAndCleanup:YES];
+                                          [_handMenu alignItemsHorizontallyWithPadding:_cardPadding];
+
+                                          // Thrown card count can't great than all hand card count
+                                          if ((_player.extractedCardIdxes.count == _targetPlayer.handCardCount) ||
+                                              (_player.extractedCardIdxes.count == _player.canExtractCardCount))
+                                          {
+                                              [_handMenu removeFromParentAndCleanup:YES];
+                                              [_equipMenu removeFromParentAndCleanup:YES];
+                                              [[BGClient sharedClient] sendThrowCardRequest]; // Send plugin reqeust
                                           }
                                       }];
 }

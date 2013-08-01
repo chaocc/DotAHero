@@ -11,6 +11,7 @@
 #import "BGPlayer.h"
 #import "BGMoveComponent.h"
 #import "BGDefines.h"
+#import "BGAudioComponent.h"
 
 @interface BGEquipmentArea ()
 
@@ -44,6 +45,8 @@
 {
     [self renderEquipmentWithCard:card];
     [self updateEquipmentBufferWithCard:card];
+    
+    [[BGAudioComponent sharedAudioComponent] playEquipCard];
 }
 
 /*

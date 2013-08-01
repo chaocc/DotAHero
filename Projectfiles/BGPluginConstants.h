@@ -47,12 +47,12 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionStartDiscard = 26,                       // 开始弃牌
     kActionOkToDiscard = 27,                        // 确定弃牌
     kActionContinueDiscard = 28,                    // 继续弃牌
-    kActionMisGuessedCard = 29                      // 猜错了牌 - TEMP
+    kActionUseHeroSkill = 30,                       // 使用英雄技能
+    kActionMisGuessedCard = 99                      // 猜错了牌 - TEMP
     
     
 //    kActionWaiting,                                 // 等待
 //    kActionTriggerHeroSkill,                        // 触发英雄技能
-//    kActionUseHeroSkill,                            // 使用英雄技能
 //    kActionTriggerEquipmentSkill,                   // 触发装备技能
 //    kActionUseEquipmentSkill                        // 使用装备技能
 };
@@ -105,7 +105,6 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
 #define kParamExtractedCardIds          @"targetCard"           // 抽取的装备
 #define kParamLostPlayingCardIds        @"greedLoseCardIds"     // 失去的牌(比如贪婪/缴械)
 #define kParamTransferedCardIds         @"transferedCardIds"    // 交给目标的牌
-#define kParamHandCardIds               @"handCardIds"          // 手牌列表 - TEMP
 #define kParamGotCardCount              @"gotCardCount"         // 得到的牌数
 #define kParamRemainingCardCount        @"remainingCardCount"   // 牌堆剩余牌数
 #define kParamTargetPlayerNames         @"targetPlayerNames"    // 指定的目标玩家们
@@ -115,12 +114,9 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
 #define kParamTargetCardColor           @"targetColor"          // 指定的颜色
 #define kParamTargetCardSuits           @"targetSuits"          // 指定的花色
 #define kParamGreedType                 @"greedType"            // 贪婪手牌/装备
+#define kParamUsedHeroSkillId           @"usedSkillId"          // 使用的英雄技能
 
-#define kParamPlayerWithHero            @"pwh"     // 玩家及其所选择的英雄 - setEsObject
-#define kParamOtherPlayersWithHero      @"opwh"    // 其他玩家们及其所选择的英雄 - setEsObjectArray
-#define kParamUsedEquipmentCard         @"uec"     // 使用的装备牌
-#define kParamReducedCardCount          @"rcc"     // 减少的牌数 - setInt
-#define kParamHeroSkillId               @"hsi"     // 英雄技能 - setInt
-#define kParamTargetPlayers             @"tp"      // 指定的目标玩家们 - setIntArray
+#define kParamHandCardIds               @"handCardIds"          // 手牌列表 - TEMP
+#define kParamHeroBlood                 @"heroHP"               // 英雄当前血量
 
 #endif

@@ -56,14 +56,16 @@
 		E305894D17A39655005CEE15 /* Evasion.plist in Resources */ = {isa = PBXBuildFile; fileRef = E305894A17A39655005CEE15 /* Evasion.plist */; };
 		E305894E17A39655005CEE15 /* Evasion.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E305894B17A39655005CEE15 /* Evasion.pvr.ccz */; };
 		E305894F17A39655005CEE15 /* Evasion.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E305894B17A39655005CEE15 /* Evasion.pvr.ccz */; };
+		E30C01B017AAA1980010034F /* Background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E30C01AB17AAA1980010034F /* Background.mp3 */; };
+		E30C01B117AAA1980010034F /* Background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E30C01AB17AAA1980010034F /* Background.mp3 */; };
 		E31075F0176B199100E01AA0 /* BGFaction.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075EF176B199100E01AA0 /* BGFaction.m */; };
 		E31075F1176B199100E01AA0 /* BGFaction.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075EF176B199100E01AA0 /* BGFaction.m */; };
 		E31075F4176B1A9400E01AA0 /* BGRoomLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075F3176B1A9400E01AA0 /* BGRoomLayer.m */; };
 		E31075F5176B1A9400E01AA0 /* BGRoomLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075F3176B1A9400E01AA0 /* BGRoomLayer.m */; };
 		E31075F8176B252900E01AA0 /* BGHandArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075F7176B252900E01AA0 /* BGHandArea.m */; };
 		E31075F9176B252900E01AA0 /* BGHandArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075F7176B252900E01AA0 /* BGHandArea.m */; };
-		E3113F1317A54D0E0011F8DC /* AudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3113F1217A54D0E0011F8DC /* AudioComponent.m */; };
-		E3113F1417A54D0E0011F8DC /* AudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3113F1217A54D0E0011F8DC /* AudioComponent.m */; };
+		E3113F1317A54D0E0011F8DC /* BGAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3113F1217A54D0E0011F8DC /* BGAudioComponent.m */; };
+		E3113F1417A54D0E0011F8DC /* BGAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3113F1217A54D0E0011F8DC /* BGAudioComponent.m */; };
 		E31DDB5817811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
 		E31DDB5917811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
 		E320B63017888FD500DEF693 /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = E320B62F17888FD500DEF693 /* ReadMe */; };
@@ -483,16 +485,14 @@
 		E34D462117A6756F003232C3 /* HeroSkillArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461F17A6756F003232C3 /* HeroSkillArray.plist */; };
 		E34D6E55179378B8006758B8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E54179378B8006758B8 /* Settings.bundle */; };
 		E34D6E56179378B8006758B8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E54179378B8006758B8 /* Settings.bundle */; };
-		E34D6E59179382A0006758B8 /* HealingSalve.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E57179382A0006758B8 /* HealingSalve.plist */; };
-		E34D6E5A179382A0006758B8 /* HealingSalve.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E57179382A0006758B8 /* HealingSalve.plist */; };
-		E34D6E5B179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */; };
-		E34D6E5C179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */; };
 		E350D6C01792EA8400FD1A40 /* Damage.plist in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BE1792EA8400FD1A40 /* Damage.plist */; };
 		E350D6C11792EA8400FD1A40 /* Damage.plist in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BE1792EA8400FD1A40 /* Damage.plist */; };
 		E350D6C21792EA8400FD1A40 /* Damage.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */; };
 		E350D6C31792EA8400FD1A40 /* Damage.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */; };
 		E352CB411798F98D001210D9 /* BGCardPile.m in Sources */ = {isa = PBXBuildFile; fileRef = E352CB401798F98D001210D9 /* BGCardPile.m */; };
 		E352CB421798F98D001210D9 /* BGCardPile.m in Sources */ = {isa = PBXBuildFile; fileRef = E352CB401798F98D001210D9 /* BGCardPile.m */; };
+		E35821CD17A8164200FBFEC7 /* HeroWithSkillIds in Resources */ = {isa = PBXBuildFile; fileRef = E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */; };
+		E35821CE17A8164200FBFEC7 /* HeroWithSkillIds in Resources */ = {isa = PBXBuildFile; fileRef = E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */; };
 		E37A32E6179A9C2900EA2E2F /* BGPlayingDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */; };
 		E37A32E7179A9C2900EA2E2F /* BGPlayingDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */; };
 		E37BFCD6177959B2009C02BB /* BGGameMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E37BFCD5177959B2009C02BB /* BGGameMenu.m */; };
@@ -519,6 +519,16 @@
 		E396B3BC1781F06100A7A15F /* BGPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E396B3BA1781F06100A7A15F /* BGPlayer.m */; };
 		E3988209177D539A00FA0B0A /* BGMenuFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E3988208177D539A00FA0B0A /* BGMenuFactory.m */; };
 		E398820A177D539A00FA0B0A /* BGMenuFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E3988208177D539A00FA0B0A /* BGMenuFactory.m */; };
+		E3A081F117AAAFEC00DDDEFB /* Damaged.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */; };
+		E3A081F217AAAFEC00DDDEFB /* Damaged.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */; };
+		E3A081F317AAAFEC00DDDEFB /* EquipCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */; };
+		E3A081F417AAAFEC00DDDEFB /* EquipCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */; };
+		E3A081F517AAAFEC00DDDEFB /* HealingSalve.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */; };
+		E3A081F617AAAFEC00DDDEFB /* HealingSalve.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */; };
+		E3A081F917AAB90500DDDEFB /* RestoreBlood.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */; };
+		E3A081FA17AAB90500DDDEFB /* RestoreBlood.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */; };
+		E3A081FB17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */; };
+		E3A081FC17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */; };
 		E3B3547A179131B900C07B3F /* PlayingCardIds in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds */; };
 		E3B3547B179131B900C07B3F /* PlayingCardIds in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds */; };
 		E3B3547E1791A9EC00C07B3F /* HeroCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547C1791A9EC00C07B3F /* HeroCard.plist */; };
@@ -607,14 +617,15 @@
 		E301E12A1770DE9A00E8C9D0 /* BGLoginLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGLoginLayer.m; sourceTree = "<group>"; };
 		E305894A17A39655005CEE15 /* Evasion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Evasion.plist; sourceTree = "<group>"; };
 		E305894B17A39655005CEE15 /* Evasion.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Evasion.pvr.ccz; sourceTree = "<group>"; };
+		E30C01AB17AAA1980010034F /* Background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Background.mp3; sourceTree = "<group>"; };
 		E31075EE176B199100E01AA0 /* BGFaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGFaction.h; sourceTree = "<group>"; };
 		E31075EF176B199100E01AA0 /* BGFaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGFaction.m; sourceTree = "<group>"; };
 		E31075F2176B1A9400E01AA0 /* BGRoomLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGRoomLayer.h; sourceTree = "<group>"; };
 		E31075F3176B1A9400E01AA0 /* BGRoomLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGRoomLayer.m; sourceTree = "<group>"; };
 		E31075F6176B252900E01AA0 /* BGHandArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGHandArea.h; sourceTree = "<group>"; };
 		E31075F7176B252900E01AA0 /* BGHandArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHandArea.m; sourceTree = "<group>"; };
-		E3113F1117A54D0E0011F8DC /* AudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioComponent.h; sourceTree = "<group>"; };
-		E3113F1217A54D0E0011F8DC /* AudioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioComponent.m; sourceTree = "<group>"; };
+		E3113F1117A54D0E0011F8DC /* BGAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGAudioComponent.h; sourceTree = "<group>"; };
+		E3113F1217A54D0E0011F8DC /* BGAudioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGAudioComponent.m; sourceTree = "<group>"; };
 		E31DDB5617811E1100789EDF /* BGPlayingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingMenu.h; sourceTree = "<group>"; };
 		E31DDB5717811E1100789EDF /* BGPlayingMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingMenu.m; sourceTree = "<group>"; };
 		E320B62F17888FD500DEF693 /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ReadMe; path = Resources/ReadMe; sourceTree = "<group>"; };
@@ -1302,12 +1313,11 @@
 		E34D461917A67077003232C3 /* BGHeroSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHeroSkill.m; sourceTree = "<group>"; };
 		E34D461F17A6756F003232C3 /* HeroSkillArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroSkillArray.plist; sourceTree = "<group>"; };
 		E34D6E54179378B8006758B8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		E34D6E57179382A0006758B8 /* HealingSalve.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HealingSalve.plist; sourceTree = "<group>"; };
-		E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = HealingSalve.pvr.ccz; sourceTree = "<group>"; };
 		E350D6BE1792EA8400FD1A40 /* Damage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Damage.plist; sourceTree = "<group>"; };
 		E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Damage.pvr.ccz; sourceTree = "<group>"; };
 		E352CB3F1798F98D001210D9 /* BGCardPile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCardPile.h; sourceTree = "<group>"; };
 		E352CB401798F98D001210D9 /* BGCardPile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCardPile.m; sourceTree = "<group>"; };
+		E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeroWithSkillIds; sourceTree = "<group>"; };
 		E37A32E4179A9C2900EA2E2F /* BGPlayingDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingDeck.h; sourceTree = "<group>"; };
 		E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingDeck.m; sourceTree = "<group>"; };
 		E37BFCD4177959B2009C02BB /* BGGameMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGGameMenu.h; sourceTree = "<group>"; };
@@ -1329,6 +1339,11 @@
 		E396B3BD1781F4C600A7A15F /* BGFileConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGFileConstants.h; sourceTree = "<group>"; };
 		E3988207177D539A00FA0B0A /* BGMenuFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMenuFactory.h; sourceTree = "<group>"; };
 		E3988208177D539A00FA0B0A /* BGMenuFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMenuFactory.m; sourceTree = "<group>"; };
+		E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Damaged.wav; sourceTree = "<group>"; };
+		E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = EquipCard.wav; sourceTree = "<group>"; };
+		E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HealingSalve.wav; sourceTree = "<group>"; };
+		E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RestoreBlood.plist; sourceTree = "<group>"; };
+		E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = RestoreBlood.pvr.ccz; sourceTree = "<group>"; };
 		E3B29B5F177F349600C18728 /* BGDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDefines.h; sourceTree = "<group>"; };
 		E3B35479179131B900C07B3F /* PlayingCardIds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlayingCardIds; sourceTree = "<group>"; };
 		E3B3547C1791A9EC00C07B3F /* HeroCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroCard.plist; sourceTree = "<group>"; };
@@ -1493,6 +1508,7 @@
 				E3988207177D539A00FA0B0A /* BGMenuFactory.h */,
 				E3988208177D539A00FA0B0A /* BGMenuFactory.m */,
 				E320B62F17888FD500DEF693 /* ReadMe */,
+				E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */,
 				E3B35479179131B900C07B3F /* PlayingCardIds */,
 				DCC1A39413A94F1A005BD75D /* Resources */,
 				DCC1A3CF13A94F2C005BD75D /* Supporting Files */,
@@ -2262,8 +2278,8 @@
 		E33EADCA1756554800A46952 /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				E3113F1117A54D0E0011F8DC /* AudioComponent.h */,
-				E3113F1217A54D0E0011F8DC /* AudioComponent.m */,
+				E3113F1117A54D0E0011F8DC /* BGAudioComponent.h */,
+				E3113F1217A54D0E0011F8DC /* BGAudioComponent.m */,
 				E3F6D311178D162E001A2372 /* BGCardSkillComponent.h */,
 				E3F6D312178D162E001A2372 /* BGCardSkillComponent.m */,
 				E3F6D309178D15EF001A2372 /* BGCheckComponent.h */,
@@ -2302,14 +2318,14 @@
 		E34206581793750B00990145 /* CardEffect */ = {
 			isa = PBXGroup;
 			children = (
+				E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */,
+				E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */,
 				E305894A17A39655005CEE15 /* Evasion.plist */,
 				E305894B17A39655005CEE15 /* Evasion.pvr.ccz */,
 				E390EA0817A01E4400B4F437 /* NormalAttack.plist */,
 				E390EA0917A01E4400B4F437 /* NormalAttack.pvr.ccz */,
 				E350D6BE1792EA8400FD1A40 /* Damage.plist */,
 				E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */,
-				E34D6E57179382A0006758B8 /* HealingSalve.plist */,
-				E34D6E58179382A0006758B8 /* HealingSalve.pvr.ccz */,
 				E342064E1793750400990145 /* SangeAndYasha.plist */,
 				E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */,
 			);
@@ -2376,6 +2392,10 @@
 		E3B9996C17A437820030047F /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				E30C01AB17AAA1980010034F /* Background.mp3 */,
+				E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */,
+				E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */,
+				E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -2477,8 +2497,6 @@
 				E34206541793750400990145 /* SangeAndYasha.plist in Resources */,
 				E34206561793750400990145 /* SangeAndYasha.pvr.ccz in Resources */,
 				E34D6E55179378B8006758B8 /* Settings.bundle in Resources */,
-				E34D6E59179382A0006758B8 /* HealingSalve.plist in Resources */,
-				E34D6E5B179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */,
 				E3E8630917983704000170DA /* PlayingCard.plist in Resources */,
 				E3E8630B17983704000170DA /* PlayingCard.pvr.ccz in Resources */,
 				E390EA0E17A01E4400B4F437 /* NormalAttack.plist in Resources */,
@@ -2490,6 +2508,13 @@
 				E34D461417A66C15003232C3 /* GameArtwork.plist in Resources */,
 				E34D461617A66C15003232C3 /* GameArtwork.pvr.ccz in Resources */,
 				E34D462017A6756F003232C3 /* HeroSkillArray.plist in Resources */,
+				E35821CD17A8164200FBFEC7 /* HeroWithSkillIds in Resources */,
+				E30C01B017AAA1980010034F /* Background.mp3 in Resources */,
+				E3A081F117AAAFEC00DDDEFB /* Damaged.wav in Resources */,
+				E3A081F317AAAFEC00DDDEFB /* EquipCard.wav in Resources */,
+				E3A081F517AAAFEC00DDDEFB /* HealingSalve.wav in Resources */,
+				E3A081F917AAB90500DDDEFB /* RestoreBlood.plist in Resources */,
+				E3A081FB17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2517,8 +2542,6 @@
 				E34206551793750400990145 /* SangeAndYasha.plist in Resources */,
 				E34206571793750400990145 /* SangeAndYasha.pvr.ccz in Resources */,
 				E34D6E56179378B8006758B8 /* Settings.bundle in Resources */,
-				E34D6E5A179382A0006758B8 /* HealingSalve.plist in Resources */,
-				E34D6E5C179382A0006758B8 /* HealingSalve.pvr.ccz in Resources */,
 				E3E8630A17983704000170DA /* PlayingCard.plist in Resources */,
 				E3E8630C17983704000170DA /* PlayingCard.pvr.ccz in Resources */,
 				E390EA0F17A01E4400B4F437 /* NormalAttack.plist in Resources */,
@@ -2530,6 +2553,13 @@
 				E34D461517A66C15003232C3 /* GameArtwork.plist in Resources */,
 				E34D461717A66C15003232C3 /* GameArtwork.pvr.ccz in Resources */,
 				E34D462117A6756F003232C3 /* HeroSkillArray.plist in Resources */,
+				E35821CE17A8164200FBFEC7 /* HeroWithSkillIds in Resources */,
+				E30C01B117AAA1980010034F /* Background.mp3 in Resources */,
+				E3A081F217AAAFEC00DDDEFB /* Damaged.wav in Resources */,
+				E3A081F417AAAFEC00DDDEFB /* EquipCard.wav in Resources */,
+				E3A081F617AAAFEC00DDDEFB /* HealingSalve.wav in Resources */,
+				E3A081FA17AAB90500DDDEFB /* RestoreBlood.plist in Resources */,
+				E3A081FC17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2952,7 +2982,7 @@
 				E387E6E9178E73D7003F0DAD /* BGClient.m in Sources */,
 				E352CB411798F98D001210D9 /* BGCardPile.m in Sources */,
 				E37A32E6179A9C2900EA2E2F /* BGPlayingDeck.m in Sources */,
-				E3113F1317A54D0E0011F8DC /* AudioComponent.m in Sources */,
+				E3113F1317A54D0E0011F8DC /* BGAudioComponent.m in Sources */,
 				E34D461A17A67077003232C3 /* BGHeroSkill.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2994,7 +3024,7 @@
 				E387E6EA178E73D7003F0DAD /* BGClient.m in Sources */,
 				E352CB421798F98D001210D9 /* BGCardPile.m in Sources */,
 				E37A32E7179A9C2900EA2E2F /* BGPlayingDeck.m in Sources */,
-				E3113F1417A54D0E0011F8DC /* AudioComponent.m in Sources */,
+				E3113F1417A54D0E0011F8DC /* BGAudioComponent.m in Sources */,
 				E34D461B17A67077003232C3 /* BGHeroSkill.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

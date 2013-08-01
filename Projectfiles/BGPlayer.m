@@ -37,6 +37,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _extractedCardIdxes = [NSMutableArray array];
         _canDrawCardCount = 2;
         _canUseAttack = YES;
+        _usedHeroSkillId = kHeroSkillDefault;
         
         [self renderPlayingDeck];
         [self renderPlayerArea];
@@ -151,6 +152,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _heroArea = [BGHeroArea heroAreaWithHeroCardId:heroId ofPlayer:self];
     [self addChild: _heroArea];
     
+    _handSizeLimit = _heroArea.heroCard.handSizeLimit;
+    
 //  5 hand cards for each player at the beginning, use 1 card for cutting.
     self.handCardCount = INITIAL_HAND_CARD_COUND;
 }
@@ -244,6 +247,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _isSelectedStrenthen = NO;
     _selectedColor = kCardColorInvalid;
     _selectedSuits = kCardSuitsInvalid;
+    _usedHeroSkillId = kHeroSkillDefault;
 }
 
 #pragma mark - Playing menu
@@ -263,6 +267,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardUsing ofPlayer:self];
     [self addChild:_playingMenu];
+    
+//    [_handArea checkHandCardsAvailability];
 }
 
 /*
@@ -272,6 +278,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardPlaying ofPlayer:self];
     [self addChild:_playingMenu];
+    
+    [_handArea checkHandCardsAvailability];
 }
 
 /*

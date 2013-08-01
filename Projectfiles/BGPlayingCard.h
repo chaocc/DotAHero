@@ -11,15 +11,15 @@
 #define kCardType               @"cardType"
 #define kCardFigure             @"cardFigure"
 #define kCardSuits              @"cardSuits"
-#define kCardEffect             @"cardEffect"
-#define kWhenToUse              @"whenToUse"
-#define kMaxTargetCount         @"maxTargetCount"
+#define kNeedSpecifyTarget      @"needSpecifyTarget"
+#define kTargetCount            @"targetCount"
 #define kCanBeStrengthened      @"canBeStrengthened"
-#define kRequiredMana           @"requiredMana"
+#define kRequiredAnger          @"requiredAnger"
 #define kEquipmentType          @"equipmentType"
 #define kAttackRange            @"attackRange"
 #define kCanBeUsedActive        @"canBeUsedActive"
 #define kOnlyEquipOne           @"onlyEquipOne"
+#define kCheckSelector          @"checkSelector"
 
 typedef NS_ENUM(NSInteger, BGPlayingCardEnum) {
     kPlayingCardDefault = -1,
@@ -118,17 +118,15 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, readonly) BGCardColor cardColor;
 @property (nonatomic, copy, readonly) NSString *figureImageName;
 @property (nonatomic, copy, readonly) NSString *suitsImageName;
-
 @property (nonatomic, readonly) BGCardType cardType;
-@property (nonatomic, readonly) NSString *cardEffect;
-@property (nonatomic, readonly) NSArray *whenToUse;         // 使用时机
-@property (nonatomic, readonly) NSUInteger maxTargetCount;  // 最多指定的目标数量
+@property (nonatomic, readonly) BOOL needSpecifyTarget;     // 使用卡牌是否需要手动指定目标
+@property (nonatomic, readonly) NSUInteger targetCount;     // 需要手动指定的目标数量
 
 // Magic
 @property (nonatomic, readonly) BOOL canBeStrengthened;
 
 // Magic / Super Skill
-@property (nonatomic, readwrite) NSUInteger requiredMana;   // 强化需要魔法
+@property (nonatomic, readonly) NSUInteger requiredAnger;   // 强化需要怒气
 
 // Equipment
 @property (nonatomic, copy, readonly) NSString *equipImageName;
@@ -137,8 +135,11 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, readonly) NSUInteger attackRange;
 @property (nonatomic, readonly) BOOL canBeUsedActive;       // 是否可以主动使用
 @property (nonatomic, readonly) BOOL onlyEquipOne;          // 武器和防具是否只能装备一个
-@property (nonatomic) BOOL isVerticalSet;                   // 是否是竖置状态(闪避护符)
 
+// Check selector
+@property (nonatomic, copy, readonly) NSString *checkSelector;
+
+@property (nonatomic) BOOL isVerticalSet;                   // 是否是竖置状态(闪避护符)
 @property (nonatomic) BOOL canBeUsed;
 @property (nonatomic) BOOL isSelected;
 

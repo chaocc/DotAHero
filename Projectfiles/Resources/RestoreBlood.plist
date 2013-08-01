@@ -270,13 +270,13 @@
             <key>format</key>
             <integer>2</integer>
             <key>realTextureFileName</key>
-            <string>HealingSalve.pvr.ccz</string>
+            <string>RestoreBlood.pvr.ccz</string>
             <key>size</key>
             <string>{2048,2048}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:8211e79ce99517617332d5a9e5bbeb19$</string>
+            <string>$TexturePacker:SmartUpdate:7ff88218d1fed5a3f9fff64d7da1b7c8$</string>
             <key>textureFileName</key>
-            <string>HealingSalve.pvr.ccz</string>
+            <string>RestoreBlood.pvr.ccz</string>
         </dict>
     </dict>
 </plist>

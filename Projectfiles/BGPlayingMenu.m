@@ -245,6 +245,9 @@
         case kPlayingMenuItemTagDiscard:
             [self removeFromParentAndCleanup:YES];
             [[BGClient sharedClient] sendStartDiscardRequest];
+            [_player.handArea enableAllHandCardsMenuItem];
+            _player.handArea.canSelectCardCount = _player.handArea.handCards.count - _player.handSizeLimit;
+//          如果现有手牌数<手牌上限，不需要弃牌，Sever自动结束当前玩家的回合
             break;
             
         case kPlayingMenuItemTagRedColor:
@@ -353,6 +356,7 @@
             [_player.handArea useHandCardsWithBlock:^{
                 [[BGClient sharedClient] sendCutPlayingCardRequest];
             }];
+            [_player.handArea checkHandCardsAvailability];
             break;
             
         case kPlayerStateThrowingCard:
@@ -381,9 +385,15 @@
             break;
             
         default:
-            [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
-                [[BGClient sharedClient] sendUsePlayingCardRequest];
-            }];
+            if (_player.usedHeroSkillId == kHeroSkillDefault) {
+                [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
+                    [[BGClient sharedClient] sendUsePlayingCardRequest];
+                }];
+            } else {
+                [_player.handArea useHandCardsWithBlock:^{
+                    [[BGClient sharedClient] sendUseHeroSkillRequest];
+                }];
+            }
             break;
     }
     

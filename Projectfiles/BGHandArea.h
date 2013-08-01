@@ -37,6 +37,10 @@ typedef NS_ENUM(NSUInteger, BGGreedType) {
 - (void)lostCardsWithCardIds:(NSArray *)cardIds;
 - (void)removeHandCardsFromSelectedCards;
 
+- (void)checkHandCardsAvailability;
+- (void)enableAllHandCardsMenuItem;
+- (void)disableAllHandCardsMenuItem;
+
 - (void)useHandCardsWithBlock:(void (^)())block;
 - (void)useHandCardsAndRunAnimationWithBlock:(void (^)())block;     // 使用/打出手牌并播放动画特效
 - (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block;

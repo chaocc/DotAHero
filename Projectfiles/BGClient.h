@@ -33,8 +33,11 @@
 - (void)sendDiscardPlayingCardRequest;
 - (void)sendCancelPlayingCardRequest;
 - (void)sendExtractCardRequest;
+- (void)sendThrowCardRequest;
 - (void)sendStartDiscardRequest;
 - (void)sendOkToDiscardRequest;
+
+- (void)sendUseHeroSkillRequest;
 
 - (void)addPublicMessageEventListener;
 

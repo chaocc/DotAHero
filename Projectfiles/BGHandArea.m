@@ -22,6 +22,7 @@
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
 @property (nonatomic, strong) CCMenu *cardMenu;
 @property (nonatomic, strong) NSMutableArray *selectedMenuItems;
+@property (nonatomic, strong) BGCheckComponent *checkComp;
 
 @property (nonatomic) CGFloat cardWidth;
 @property (nonatomic) CGFloat cardHeight;
@@ -40,6 +41,7 @@
         _selectedCards = [NSMutableArray array];
         _selectedMenuItems = [NSMutableArray array];
         _handCards = [[self.class playingCardsWithCardIds:cardIds] mutableCopy];
+        _checkComp = [BGCheckComponent checkComponentWithPlayer:_player];
         
         [self initializeHandCardsWithCardIds:cardIds];
     }
@@ -84,7 +86,6 @@
     
     [self renderFigureAndSuitsOfCards:_handCards forMenu:_cardMenu];
     [self adjustPositionOfHandCards];
-    [self checkHandCardsUsability];
 }
 
 /*
@@ -180,9 +181,9 @@
     [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
     [self renderFigureAndSuitsOfCards:cards forMenu:_cardMenu];
     [self adjustPositionOfHandCards];
-    [self checkHandCardsUsability];
     
     [_handCards addObjectsFromArray:cards];
+    [self checkHandCardsAvailability];
 }
 
 /*
@@ -218,61 +219,67 @@
     [_selectedMenuItems removeAllObjects];
 }
 
-#pragma mark - Hand cards usability
+#pragma mark - Hand cards availability
 /*
- * Check if each hand card can be used during different game state
+ * Check if each hand card can be used according to different player state
  */
-- (void)checkHandCardsUsability
+- (void)checkHandCardsAvailability
 {
-//    BGCheckComponent *checkComp = [BGCheckComponent checkComponentWithPlayer:_player];
+    _cardMenu.enabled = YES;
     
-//    [_HandCards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        BGPlayingCard *card = obj;
-//        
-////        [checkComp performSelector:NSSelectorFromString([obj cardName]) withObject:self];
-////        
-////        switch (card.cardEnum) {
-////            case kPlayingCardNormalAttack:
-////            case kPlayingCardFlameAttack:
-////            case kPlayingCardChaosAttack:
-////                card.canBeUsed = _player.canUseAttack;
-////                break;
-////                
-////            case kPlayingCardEvasion:
-////                card.canBeUsed = NO;
-////                break;
-////                
-////            default:
-////                break;
-////        }
-//        
-////      If the card can't be used, need set it disable and dark color
-//        CCMenuItemSprite *menuItem = (CCMenuItemSprite *)[_cardMenu getChildByTag:card.cardId];
-//        menuItem.isEnabled = card.canBeUsed;
-//        if (!menuItem.isEnabled) {
-//            ccColor3B disabledColor = ccc3(120, 120, 120);
-//            menuItem.normalImage.color = disabledColor;
-//            
-//            for (CCSprite *sprite in menuItem.children) {   // Make card figure and suits to gray
-//                sprite.color = disabledColor;
-//            }
-//        }
-//    }];
+    [_handCards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGPlayingCard *card = obj;
+        SUPPRESS_PERFORM_SELECTOR_LEAK_WARNING([_checkComp performSelector:NSSelectorFromString(card.checkSelector)
+                                                                withObject:card]);
+        
+//      If the card can't be used, need set it disable and dark color
+        CCMenuItemSprite *menuItem = (CCMenuItemSprite *)[_cardMenu getChildByTag:card.cardId];
+        menuItem.isEnabled = card.canBeUsed;
+        
+        ccColor3B cardColor;
+        if (menuItem.isEnabled) {
+            cardColor = ccWHITE;                // Restore to bright color
+        } else {
+            cardColor = ccc3(120, 120, 120);    // Make card figure and suits to gray
+        }
+        [self setCardColorWithColor:cardColor ofMenuItem:menuItem];
+    }];
+}
+
+- (void)setCardColorWithColor:(ccColor3B)color ofMenuItem:(CCMenuItemSprite *)menuItem
+{
+    menuItem.normalImage.color = color;
+    
+    for (CCSprite *sprite in menuItem.children) {
+        sprite.color = color;
+    }
+}
+
+/*
+ * Need enable all hand cards menu while discarding
+ */
+- (void)enableAllHandCardsMenuItem
+{
+    _cardMenu.enabled = YES;
+    
+    for (CCMenuItemSprite *item in _cardMenu.children) {
+        if (!item.isEnabled) {
+            item.isEnabled = YES;
+            [self setCardColorWithColor:ccWHITE ofMenuItem:item];
+        }
+    }
 }
 
 /*
  * Need disable all hand cards menu after discard is over
  */
-- (void)disableAllHandCardsMenu
+- (void)disableAllHandCardsMenuItem
 {
     _cardMenu.enabled = NO;
+    
     for (CCMenuItemSprite *item in _cardMenu.children) {
         if (!item.isEnabled) {
-            item.normalImage.color = ccWHITE;   // Restore to bright color
-            
-            for (CCSprite *sprite in item.children) {
-                sprite.color = ccWHITE;
-            }
+            [self setCardColorWithColor:ccWHITE ofMenuItem:item];
         }
     }
 }
@@ -302,12 +309,6 @@
 //  Need move up/down while a card is selected/deselected
     card.isSelected = !card.isSelected;
     if (card.isSelected) {
-//      ...TEMP...
-        if (card.cardEnum == kPlayingCardElunesArrow || card.cardEnum == kPlayingCardGreed) {
-            [_player.playingMenu removeFromParentAndCleanup:YES];
-            [_player addPlayingMenuOfStrengthen];
-        }
-        
         menuItem.position = ccpAdd(menuItem.position, ccp(0.0f, moveHeight));
         [_selectedMenuItems addObject:menuItem];
         [_selectedCards addObject:card];
@@ -336,24 +337,10 @@
         }
     }
     
-//  Enable playing menu okay button only if the selected cards count is not zero
-    CCMenuItem *item = [_player.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
-    NSAssert(item, @"item Nil in %@", NSStringFromSelector(_cmd));
-    if (_player.playerState != kPlayerStatePlaying || card.cardEnum == kPlayingCardHealingSalve) {
-        item.isEnabled = (_selectedCards.count != 0);
-    }
-
-    
-    
-//    BOOL isEnabled = (_canBeSelectedCardCount < 1) ? YES : NO;
-//    
-//    for (CCMenuItem *item in _cardMenu.children) {
-//        if (![item isEqual:menuItem]) {
-//            item.isEnabled = isEnabled;
-//        }
-//    }
+    [_checkComp checkPlayingMenuAvailabilityWithSelectedCard:card];
 }
 
+#pragma mark - Hand cards using
 /*
  * 1. Use hand cards/equip equipment and run move action
  * 2. Set selected hand card ids by current player

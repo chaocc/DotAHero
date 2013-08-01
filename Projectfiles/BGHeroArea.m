@@ -24,6 +24,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 @property (nonatomic) CGFloat playerAreaWidth, playerAreaHeight;
 @property (nonatomic, strong) CCSpriteBatchNode *spriteBatch;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
+@property (nonatomic, strong) CCMenu *heroMenu;
+@property (nonatomic, strong) CCMenu *skillMenu;
 
 @end
 
@@ -69,14 +71,14 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     
 //  Render hero avatar
     NSString *avatarName =( _player.isCurrentPlayer) ? _heroCard.bigAvatarName : _heroCard.avatarName;
-    CCMenu *heroMenu = [_menuFactory createMenuWithSpriteFrameName:avatarName
-                                                 selectedFrameName:nil
-                                                 disabledFrameName:nil];
-    heroMenu.position = (_player.isCurrentPlayer) ?
+    _heroMenu = [_menuFactory createMenuWithSpriteFrameName:avatarName
+                                          selectedFrameName:nil
+                                          disabledFrameName:nil];
+    _heroMenu.position = (_player.isCurrentPlayer) ?
         ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
         ccp(-_playerAreaWidth*0.245, _playerAreaHeight*0.045);
-    [heroMenu.children.lastObject setTag:_heroCard.cardId];
-    [self addChild:heroMenu];
+    [_heroMenu.children.lastObject setTag:_heroCard.cardId];
+    [self addChild:_heroMenu];
     
 //  Render hero blood point
     [self renderBloodPoint];
@@ -111,17 +113,18 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         [selFrameNames addObject:selFrameName];
     }];
     
-    CCMenu *skillMenu = [_menuFactory createMenuWithSpriteFrameNames:frameNames
-                                                  selectedFrameNames:selFrameNames
-                                                  disabledFrameNames:nil];
-    skillMenu.position = ccp(_playerAreaWidth*0.114, _playerAreaHeight*0.143);
-    [skillMenu alignItemsHorizontallyWithPadding:0.0f];
-    [self addChild:skillMenu];
+    _skillMenu = [_menuFactory createMenuWithSpriteFrameNames:frameNames
+                                           selectedFrameNames:selFrameNames
+                                           disabledFrameNames:nil];
+    _skillMenu.position = ccp(_playerAreaWidth*0.114, _playerAreaHeight*0.143);
+    [_skillMenu alignItemsHorizontallyWithPadding:0.0f];
+    [self addChild:_skillMenu];
     
 //  Add label text to menu and disable passive skill menu
-    [[skillMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [[_skillMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         CCMenuItem *menuItem = obj;
         BGHeroSkill *skill = [BGHeroSkill heroSkillWithSkillId:[_heroCard.heroSkills[idx] integerValue]];
+        menuItem.tag = skill.skillId;
         
         CCLabelTTF *label = [CCLabelTTF labelWithString:skill.skillText
                                                fontName:@"Arial"
@@ -214,7 +217,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
-    BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:kEffectTypeDamaged];
+    BGEffectType effectType = (count > 0) ? kEffectTypeRestoreBlood : kEffectTypeDamaged;
+    BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:effectType];
     effect.position = ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643);
     [self addChild:effect];
     
@@ -242,17 +246,27 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 //        return; // Can not touch the hero of current player
 //    }
     
-    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-    CCMenuItem *item = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
-    NSAssert(item, @"Okay menuItem Nil in %@", NSStringFromSelector(_cmd));
-    
-    NSAssert(gamePlayer.targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
-    if ([gamePlayer.targetPlayerNames containsObject:_player.playerName]) {
-        [gamePlayer.targetPlayerNames removeObject:_player.playerName];
-        item.isEnabled = NO;
-    } else {
-        [gamePlayer.targetPlayerNames addObject:_player.playerName];
-        item.isEnabled = YES;
+    if ([menuItem.parent isEqual:_heroMenu]) {
+        BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
+        CCMenuItem *okayMenu = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
+        NSAssert(okayMenu, @"okayMenu Nil in %@", NSStringFromSelector(_cmd));
+        
+        NSAssert(gamePlayer.targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
+        if ([gamePlayer.targetPlayerNames containsObject:_player.playerName]) {
+            [gamePlayer.targetPlayerNames removeObject:_player.playerName];
+            okayMenu.isEnabled = NO;
+        } else {
+            [gamePlayer.targetPlayerNames addObject:_player.playerName];
+            okayMenu.isEnabled = YES;
+        }
+    }
+    else {
+        _player.usedHeroSkillId = menuItem.tag;
+        _player.handArea.canSelectCardCount = 2;
+        
+//        if (_player.usedHeroSkillId == kHeroSkillLagunaBlade) {
+//            
+//        }
     }
 }
 

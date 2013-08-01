@@ -31,6 +31,8 @@
 
 @property (nonatomic, strong) NSArray *toBeSelectedHeroIds;
 @property (nonatomic, readonly) NSInteger selectedHeroId;
+@property (nonatomic, readonly) NSUInteger handSizeLimit;
+
 @property (nonatomic, strong) NSArray *selectedCardIds;
 @property (nonatomic, strong) NSArray *misGuessedCardIds;
 @property (nonatomic, strong) NSMutableArray *extractedCardIdxes;
@@ -40,11 +42,12 @@
 @property (nonatomic) BGCardColor selectedColor;
 @property (nonatomic) BGCardSuits selectedSuits;
 @property (nonatomic) BGGreedType selectedGreedType;
+@property (nonatomic) NSInteger usedHeroSkillId;
 
-@property (nonatomic) NSUInteger handCardCount;      // 手牌数
+@property (nonatomic) NSUInteger handCardCount;         // 手牌数
 @property (nonatomic) NSUInteger canDrawCardCount;      // 可以摸的牌数
 @property (nonatomic) NSUInteger canExtractCardCount;   // 可以抽取的牌数
-@property (nonatomic) BOOL canUseAttack;    // 是否可以使用"攻击"
+@property (nonatomic) BOOL canUseAttack;                // 是否可以使用"攻击"
 
 - (id)initWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag;
 + (id)playerWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag;

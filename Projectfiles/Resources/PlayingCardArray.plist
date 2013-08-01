@@ -15,18 +15,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -41,18 +35,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -67,18 +55,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -93,18 +75,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -119,18 +95,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -145,18 +115,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -171,18 +135,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -197,18 +155,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -223,18 +175,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>checkSelector</key>
-		<string>checkAttack</string>
-		<key>action</key>
-		<integer>0</integer>
-		<key>cardEffect</key>
-		<string>normalAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -249,14 +195,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chaosAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -271,14 +215,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chaosAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -293,14 +235,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chaosAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -315,14 +255,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chaosAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -337,14 +275,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chaosAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -356,17 +292,15 @@
 		<key>cardFigure</key>
 		<integer>5</integer>
 		<key>cardSuits</key>
-		<integer>3</integer>
+		<integer>4</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chaosAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -381,14 +315,12 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chaosAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -403,16 +335,16 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
 		<key>cardEffect</key>
 		<string>lagunaBlade</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
-		<key>requiredMana</key>
+		<key>requiredAnger</key>
 		<integer>3</integer>
+		<key>checkSelector</key>
+		<string>checkLagunaBlade:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -427,16 +359,14 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>lagunaBlade</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
-		<key>requiredMana</key>
+		<key>requiredAnger</key>
 		<integer>3</integer>
+		<key>checkSelector</key>
+		<string>checkLagunaBlade:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -451,16 +381,14 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>viperRaid</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
-		<key>requiredMana</key>
+		<key>requiredAnger</key>
 		<integer>2</integer>
+		<key>checkSelector</key>
+		<string>checkViperRaid:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -475,16 +403,14 @@
 		<integer>3</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>viperRaid</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
-		<key>requiredMana</key>
+		<key>requiredAnger</key>
 		<integer>2</integer>
+		<key>checkSelector</key>
+		<string>checkViperRaid:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -499,16 +425,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>mislead</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>2</integer>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkMislead:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -523,16 +447,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>mislead</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>2</integer>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkMislead:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -547,18 +469,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>greed</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkGreed:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -573,18 +491,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>greed</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkGreed:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -599,18 +513,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>disarm</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkDisarm:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -625,18 +535,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>disarm</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkDisarm:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -651,18 +557,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>disarm</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkDisarm:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -677,18 +579,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>disarm</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkDisarm:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -703,18 +601,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>disarm</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkDisarm:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -729,16 +623,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chakra</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkChakra:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -753,16 +643,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>chakra</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkChakra:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -777,18 +663,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>energyTransport</string>
-		<key>maxTargetCount</key>
-		<integer>8</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkEnergyTransport:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -803,18 +683,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>energyTransport</string>
-		<key>maxTargetCount</key>
-		<integer>8</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkEnergyTransport:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -829,18 +703,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>elunesArrow</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkElunesArrow:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -855,18 +725,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>elunesArrow</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
-		<integer>0</integer>
+		<key>checkSelector</key>
+		<string>checkElunesArrow:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -881,16 +747,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>fanaticism</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkFanaticism:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -905,16 +767,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>fanaticism</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkFanaticism:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -929,15 +787,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>bootsOfSpeed</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkArmor:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -952,14 +807,12 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>2</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>phyllisRing</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkArmor:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -974,17 +827,14 @@
 		<integer>4</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>talismanOfEvasion</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>1</integer>
 		<key>isVerticalSet</key>
 		<true/>
+		<key>checkSelector</key>
+		<string>checkArmor:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -999,14 +849,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>flameAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1021,14 +869,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>flameAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1043,14 +889,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>flameAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1065,14 +909,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>flameAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1087,14 +929,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>flameAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1109,14 +949,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>flameAttack</string>
-		<key>maxTargetCount</key>
+		<key>needSpecifyTarget</key>
+		<true/>
+		<key>targetCount</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkAttack:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1131,15 +969,10 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>10</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>healingSalve</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkHealingSalve:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1154,15 +987,10 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>10</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>healingSalve</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkHealingSalve:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1177,15 +1005,10 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>10</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>healingSalve</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkHealingSalve:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1200,15 +1023,10 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>10</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>healingSalve</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkHealingSalve:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1223,16 +1041,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>7</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>dispel</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkDispel:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1247,16 +1061,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>7</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>dispel</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkDispel:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1271,16 +1081,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>7</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>dispel</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkDispel:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1295,16 +1101,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>7</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>dispel</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkDispel:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1319,16 +1121,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>7</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>dispel</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>canBeStrengthened</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkDispel:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1343,15 +1141,10 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>10</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>healingSalve</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkHealingSalve:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1366,15 +1159,10 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-			<integer>10</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>healingSalve</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkHealingSalve:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1389,14 +1177,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>8</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>planeswalkersCloak</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkArmor:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1411,16 +1197,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>godsStrength</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
-		<key>requiredMana</key>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>requiredAnger</key>
 		<integer>2</integer>
+		<key>checkSelector</key>
+		<string>checkGodsStrength:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1435,16 +1217,12 @@
 		<integer>1</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>godsStrength</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
-		<key>requiredMana</key>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>requiredAnger</key>
 		<integer>2</integer>
+		<key>checkSelector</key>
+		<string>checkGodsStrength:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1459,14 +1237,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1481,14 +1255,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1503,14 +1273,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1525,14 +1291,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1547,14 +1309,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1569,14 +1327,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1591,14 +1345,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1613,14 +1363,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1635,14 +1381,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1657,14 +1399,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1679,18 +1417,16 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>diffusalBlade</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
 		<key>canBeUsedActive</key>
 		<true/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1705,18 +1441,16 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>lotharsEdge</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
 		<key>canBeUsedActive</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1731,18 +1465,16 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>eyeOfSkadi</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>attackRange</key>
 		<integer>1</integer>
 		<key>canBeUsedActive</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1757,18 +1489,16 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>stygianDesolator</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
 		<key>canBeUsedActive</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1783,18 +1513,16 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>sangeAndYasha</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>attackRange</key>
 		<integer>3</integer>
 		<key>canBeUsedActive</key>
 		<true/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1809,18 +1537,16 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>bladesOfAttack</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>attackRange</key>
 		<integer>2</integer>
 		<key>canBeUsedActive</key>
 		<true/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1835,18 +1561,16 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>demonEdge</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>attackRange</key>
 		<integer>2</integer>
 		<key>canBeUsedActive</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1861,12 +1585,8 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>sacredRelic</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>0</integer>
 		<key>onlyEquipOne</key>
@@ -1875,6 +1595,8 @@
 		<integer>0</integer>
 		<key>canBeUsedActive</key>
 		<false/>
+		<key>checkSelector</key>
+		<string>checkWeapon:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1889,14 +1611,12 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>9</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>bladeMail</string>
+		<key>needSpecifyTarget</key>
+		<false/>
 		<key>equipmentType</key>
 		<integer>1</integer>
+		<key>checkSelector</key>
+		<string>checkArmor:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1911,14 +1631,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>0</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>6</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>evasion</string>
-		<key>maxTargetCount</key>
-		<integer>1</integer>
+		<key>needSpecifyTarget</key>
+		<false/>
+		<key>checkSelector</key>
+		<string>checkEvasion:</string>
 	</dict>
 	<dict>
 		<key>cardEnum</key>
@@ -1931,14 +1647,10 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
 		<key>cardEffect</key>
 		<string>wildAxe</string>
-		<key>maxTargetCount</key>
-		<integer>4</integer>
+		<key>targetCount</key>
+		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<false/>
 	</dict>
@@ -1953,17 +1665,11 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>1</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>sirenSong</string>
-		<key>maxTargetCount</key>
+		<key>targetCount</key>
 		<integer>1</integer>
 		<key>canBeStrengthened</key>
 		<true/>
-		<key>requiredMana</key>
+		<key>requiredAnger</key>
 		<integer>0</integer>
 	</dict>
 	<dict>
@@ -1977,15 +1683,7 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>timeLock</string>
-		<key>maxTargetCount</key>
-		<integer>7</integer>
-		<key>requiredMana</key>
+		<key>requiredAnger</key>
 		<integer>2</integer>
 	</dict>
 	<dict>
@@ -1999,15 +1697,9 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>2</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>sunder</string>
-		<key>maxTargetCount</key>
+		<key>targetCount</key>
 		<integer>1</integer>
-		<key>requiredMana</key>
+		<key>requiredAnger</key>
 		<integer>3</integer>
 	</dict>
 	<dict>
@@ -2021,12 +1713,6 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>plunderAxe</string>
 		<key>equipmentType</key>
 		<integer>1</integer>
 		<key>attackRange</key>
@@ -2043,12 +1729,6 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>mysticStaff</string>
 		<key>equipmentType</key>
 		<integer>1</integer>
 		<key>attackRange</key>
@@ -2065,12 +1745,6 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>eaglehorn</string>
 		<key>equipmentType</key>
 		<integer>1</integer>
 		<key>attackRange</key>
@@ -2087,12 +1761,6 @@
 		<integer>2</integer>
 		<key>cardType</key>
 		<integer>3</integer>
-		<key>whenToUse</key>
-		<array>
-			<integer>3</integer>
-		</array>
-		<key>cardEffect</key>
-		<string>quellingBlade</string>
 		<key>equipmentType</key>
 		<integer>1</integer>
 		<key>attackRange</key>

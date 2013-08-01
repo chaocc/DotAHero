@@ -33,19 +33,19 @@
         _cardText = dictionary[kCardText];
         _cardFigure = [dictionary[kCardFigure] integerValue];
         _cardSuits = [dictionary[kCardSuits] integerValue];
-        
         _cardType = [dictionary[kCardType] integerValue];
-        _whenToUse = dictionary[kWhenToUse];
-        _cardEffect = dictionary[kCardEffect];
-        _maxTargetCount = [dictionary[kMaxTargetCount] integerValue];
+        _needSpecifyTarget = [dictionary[kNeedSpecifyTarget] boolValue];
+        _targetCount = [dictionary[kTargetCount] integerValue];
         
         _canBeStrengthened = [dictionary[kCanBeStrengthened] boolValue];
-        _requiredMana = [dictionary[kRequiredMana] integerValue];
+        _requiredAnger = [dictionary[kRequiredAnger] integerValue];
         
         _equipmentType = [dictionary[kEquipmentType] integerValue];
         _attackRange = [dictionary[kAttackRange] integerValue];
         _canBeUsedActive = [dictionary[kCanBeUsedActive] boolValue];
         _onlyEquipOne = [dictionary[kOnlyEquipOne] boolValue];
+        
+        _checkSelector = dictionary[kCheckSelector];
     }
     return self;
 }

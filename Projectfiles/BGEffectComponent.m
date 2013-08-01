@@ -7,6 +7,7 @@
 //
 
 #import "BGEffectComponent.h"
+#import "BGAudioComponent.h"
 
 @implementation BGEffectComponent
 
@@ -60,11 +61,11 @@
             break;
             
         case kPlayingCardHealingSalve:
-            [self healingSalve];
+//            [self healingSalve];
             break;
             
         case kPlayingCardSangeAndYasha:
-            [self SangeAndYasha];
+//            [self SangeAndYasha];
             break;
             
         default:
@@ -80,7 +81,7 @@
             break;
             
         case kEffectTypeRestoreBlood:
-            
+            [self restoreBlood];
             break;
             
         case kEffectTypeGotAnger:
@@ -118,6 +119,18 @@
                    frameName:@"Damage0.png"
                       frames:@"Damage"
                andFrameCount:9];
+    
+    [[BGAudioComponent sharedAudioComponent] playDamaged];
+}
+
+- (void)restoreBlood
+{
+    [self runActionWithPlist:@"RestoreBlood.plist"
+                   frameName:@"RestoreBlood0.png"
+                      frames:@"RestoreBlood"
+               andFrameCount:20];
+    
+    [[BGAudioComponent sharedAudioComponent] playRestoreBlood];
 }
 
 - (void)normalAttack
@@ -138,10 +151,7 @@
 
 - (void)healingSalve
 {
-    [self runActionWithPlist:@"HealingSalve.plist"
-                   frameName:@"HealingSalve0.png"
-                      frames:@"HealingSalve"
-               andFrameCount:20];
+    
 }
 
 - (void)SangeAndYasha

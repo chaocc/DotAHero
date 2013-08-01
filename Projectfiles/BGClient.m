@@ -336,6 +336,10 @@ static BGClient *instanceOfClient = nil;
     [obj setIntArray:_player.selectedCardIds forKey:kParamUsedPlayingCardIds];
     NSLog(@"param-usedPlayingCardIds: %@", _player.selectedCardIds);
     
+//  ...TEMP...
+    [obj setInt:_player.heroArea.bloodPoint forKey:kParamHeroBlood];
+    NSLog(@"param-heroHP: %i", _player.heroArea.bloodPoint);
+    
     BGPlayingCard *card = [BGPlayingCard cardWithCardId:[_player.selectedCardIds.lastObject integerValue]];
     if (card.canBeStrengthened) {
         [obj setBool:_player.isSelectedStrenthen forKey:kParamIsStrengthened];
@@ -467,6 +471,25 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
+ * Send game plugin request with action-throwCard. Called in playing deck.
+ */
+- (void)sendThrowCardRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionExtractCard forKey:kAction];
+    [obj setIntArray:_player.extractedCardIdxes forKey:kParamExtractedCardIdxes];   // 弃掉目标的哪几张牌
+    
+    //  ...TEMP...
+    NSArray *cardIds = [BGHandArea playingCardIdsWithCards:_player.handArea.handCards];
+    [obj setIntArray:cardIds forKey:kParamHandCardIds];
+    
+    [self sendGamePluginRequestWithObject:obj];
+    NSLog(@"Send game plugin request with action-extractCard(%i)", kActionExtractCard);
+    NSLog(@"param-extractedCardIdxes: %@", _player.extractedCardIdxes);
+    NSLog(@"param-handCardIds: %@", cardIds);
+}
+
+/*
  * 1. Send game plugin request with action-startDiscard. Called in playing menu.
  * 2. Send public message
  */
@@ -499,6 +522,28 @@ static BGClient *instanceOfClient = nil;
     NSLog(@"Send game plugin request with action-okToDiscard(%i)", kActionOkToDiscard);
     NSLog(@"param-discardPlayingCardIds: %@", _player.selectedCardIds);
     NSLog(@"param-handCardIds: %@", cardIds);
+    
+    [self sendPublicMessageRequestWithObject:obj];
+    NSLog(@"Send public message");
+}
+
+/*
+ * 1. Send game plugin request with action-useHeroSkill, usedHeroSkillId and targetPlayerNames. Called in playing menu.
+ * 2. Send public message
+ */
+- (void)sendUseHeroSkillRequest
+{
+    NSLog(@"Send game plugin request with action-useHeroSkill(%i)", kActionUseHeroSkill);
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionUseHeroSkill forKey:kAction];
+    [obj setInt:_player.usedHeroSkillId forKey:kParamUsedHeroSkillId];
+    [obj setIntArray:_player.selectedCardIds forKey:kParamUsedPlayingCardIds];
+    NSLog(@"param-usedHeroSkillId: %i", _player.usedHeroSkillId);
+    NSLog(@"param-usedPlayingCardIds: %@", _player.selectedCardIds);
+    
+    [obj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerNames];
+    [self sendGamePluginRequestWithObject:obj];
+    NSLog(@"param-targetPlayerNames: %@", _gameLayer.targetPlayerNames);
     
     [self sendPublicMessageRequestWithObject:obj];
     NSLog(@"Send public message");
