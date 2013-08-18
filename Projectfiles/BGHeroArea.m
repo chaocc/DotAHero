@@ -8,7 +8,6 @@
 
 #import "BGHeroArea.h"
 #import "BGGameLayer.h"
-#import "BGPlayer.h"
 #import "BGHeroSkill.h"
 #import "BGFileConstants.h"
 #import "BGEffectComponent.h"
@@ -31,14 +30,10 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 
 @implementation BGHeroArea
 
-- (id)initWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player
+- (id)initWithPlayer:(BGPlayer *)player
 {
     if (self = [super init]) {
         _player = player;
-        
-        _heroCard = [BGHeroCard cardWithCardId:cardId];
-        _bloodPoint = _heroCard.bloodPointLimit;
-        _angerPoint = 0;
         _distance = 1;
         _attackRange = 1;
         _canBeTarget = YES;
@@ -48,17 +43,25 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;
-        [self renderSelectedHero];
     }
     return self;
 }
 
-+ (id)heroAreaWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player
++ (id)heroAreaWithPlayer:(BGPlayer *)player
 {
-    return [[self alloc] initWithHeroCardId:cardId ofPlayer:player];
+    return [[self alloc] initWithPlayer:player];
 }
 
-#pragma mark - Hero avatar/skill and blood rendering
+#pragma mark - Hero Initilization
+- (void)initHeroWithHeroId:(NSInteger)heroId
+{
+    _heroCard = [BGHeroCard cardWithCardId:heroId];
+    _bloodPoint = _heroCard.bloodPointLimit;
+    _angerPoint = 0;
+    
+    [self renderSelectedHero];
+}
+
 /*
  * 1. Current player's position is (0,0) at left-bottom corner, hero area's position also (0,0).
  * 2. Other player's position is setted(not 0) in class BGGameLayer, its position should be the center of player area. 
@@ -66,6 +69,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)renderSelectedHero
 {
+    [_spriteBatch removeFromParentAndCleanup:YES];
     _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibHeroAvatar];
     [self addChild:_spriteBatch];
     
@@ -173,7 +177,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     
     [_spriteBatch removeAllChildrenWithCleanup:YES];
     for (NSUInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
-        if (i >= _bloodPoint) {
+        if ((NSInteger)i >= _bloodPoint) {
             bloodImageName = (_player.isCurrentPlayer) ? kImageBloodEmptyBig : kImageBloodEmpty;
         }
         
@@ -215,26 +219,25 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     }
 }
 
+#pragma mark - Hero Initilization
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
-    BGEffectType effectType = (count > 0) ? kEffectTypeRestoreBlood : kEffectTypeDamaged;
+    BGEffectType effectType = (count > _bloodPoint) ? kEffectTypeRestoreBlood : kEffectTypeDamaged;
     BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:effectType];
     effect.position = ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643);
     [self addChild:effect];
     
-    _bloodPoint += count;
-    _bloodPoint = (_bloodPoint > _heroCard.bloodPointLimit) ? 0 : _bloodPoint;
+    _bloodPoint = count;
     [self renderBloodPoint];
 }
 
 - (void)updateAngerPointWithCount:(NSInteger)count
 {
-    _angerPoint += count;
-    _angerPoint = (_angerPoint > _heroCard.angerPointLimit) ? 0 : _angerPoint;
+    _angerPoint = count;
     [self renderAngerPoint];
 }
 
-#pragma mark - Hero avatar and skills touching
+#pragma mark - Hero avatar/skills touching
 /*
  * Menu delegate method is called while touching a skill
  */
@@ -248,7 +251,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     
     if ([menuItem.parent isEqual:_heroMenu]) {
         BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-        CCMenuItem *okayMenu = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
+        CCMenuItem *okayMenu = [gamePlayer.currentPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
         NSAssert(okayMenu, @"okayMenu Nil in %@", NSStringFromSelector(_cmd));
         
         NSAssert(gamePlayer.targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
@@ -261,12 +264,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         }
     }
     else {
-        _player.usedHeroSkillId = menuItem.tag;
-        _player.handArea.canSelectCardCount = 2;
-        
-//        if (_player.usedHeroSkillId == kHeroSkillLagunaBlade) {
-//            
-//        }
+        _player.selectedSkillId = menuItem.tag;
     }
 }
 

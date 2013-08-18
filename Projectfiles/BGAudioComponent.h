@@ -14,7 +14,7 @@
 + (id)sharedAudioComponent;
 
 - (void)playBackgroundAndLoop;
-- (void)playDamaged;
+- (void)playDamage;
 - (void)playEquipCard;
 - (void)playRestoreBlood;
 

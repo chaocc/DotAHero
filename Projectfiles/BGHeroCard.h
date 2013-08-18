@@ -18,7 +18,7 @@
 #define kHeroSkills             @"heroSkills"
 
 typedef NS_ENUM(NSInteger, BGHeroCardEnum) {
-    kHeroCardDefault = -1,
+    kHeroCardInvalid = -1,
     kHeroCardLordOfAvernus = 0,             // 死亡骑士
     kHeroCardSkeletonKing = 1,              // 骷髅王
     kHeroCardBristleback = 2,               // 刚背兽

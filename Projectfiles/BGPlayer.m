@@ -32,16 +32,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     if (self = [super init]) {
         _playerName = name;
         _isCurrentPlayer = isCurrentPlayer;
-        _selectedHeroId = kHeroCardDefault;
+        _selectedHeroId = kHeroCardInvalid;
         _selectedCardIds = [NSMutableArray array];
-        _extractedCardIdxes = [NSMutableArray array];
+        _selectedCardIdxes = [NSMutableArray array];
         _canDrawCardCount = 2;
-        _canUseAttack = YES;
-        _usedHeroSkillId = kHeroSkillDefault;
+        _selectedSkillId = kHeroSkillInvalid;
         
-        [self renderPlayingDeck];
         [self renderPlayerArea];
-        [self renderEquipmentArea];
     }
     return self;
 }
@@ -51,34 +48,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return [[self alloc] initWithUserName:name isCurrentPlayer:isCurrentPlayer];
 }
 
-+ (NSArray *)heroCardsWithHeroIds:(NSArray *)heroIds
-{
-    NSMutableArray *heroCards = [NSMutableArray arrayWithCapacity:heroIds.count];
-    [heroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGCard *heroCard = [BGHeroCard cardWithCardId:[obj integerValue]];
-        [heroCards addObject:heroCard];
-    }];
-    
-    return heroCards;
-}
-
 - (void)clearBuffer
 {
     [self clearSelectedObjectBuffer];
-    [self clearPlayingDeckObject];
     [[BGGameLayer sharedGameLayer].targetPlayerNames removeAllObjects];
 }
 
-#pragma mark - Playing deck and player area
-/*
- * Add playing deck for showing used/cutting cards or others
- */
-- (void)renderPlayingDeck
-{
-    _playingDeck = [BGPlayingDeck playingDeckWithPlayer:self];
-    [self addChild:_playingDeck];
-}
-
+#pragma mark - Player area
 /*
  * 1. Current player's position is (0,0) and its sprite positon is the "Center" of the player area
  * 2. Other player's position is setted in class BGGameLayer and its sprite position is (0,0)
@@ -88,117 +64,90 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     NSString *spriteFrameName = (_isCurrentPlayer) ? kImageCurrentPlayerArea : kImageOtherPlayerArea;
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:spriteFrameName];
     _playerAreaSize = sprite.contentSize;
-    
     if (_isCurrentPlayer) {
         sprite.position = ccp(_playerAreaSize.width/2, _playerAreaSize.height/2);
         _playerAreaPosition = sprite.position;
     }
-    
     [self addChild:sprite];
-}
-
-/*
- * Add hand area node
- */
-- (void)addHandAreaWithCardIds:(NSArray *)cardIds
-{
-    _handArea = [BGHandArea handAreaWithPlayingCardIds:cardIds ofPlayer:self];
-    [self addChild:_handArea];
     
-    [self addPlayingMenuOfCardOkay];
-}
-
-/*
- * Add equipment area for showing equipment cards
- */
-- (void)renderEquipmentArea
-{
-    _equipmentArea = [BGEquipmentArea equipmentAreaWithPlayer:self];
-    [self addChild:_equipmentArea];
-}
-
-#pragma mark - To be selected heros
-/*
- * Render the to be selected heros that are selected by current player
- */
-- (void)renderToBeSelectedHeros:(NSArray *)heroIds
-{
-    NSArray *heroCards = [self.class heroCardsWithHeroIds:heroIds];
+//  Add hero and equipment area for all players
+    [self addHeroArea];
+    [self addEquipmentArea];
     
-    BGMenuFactory *menuFactory = [BGMenuFactory menuFactory];
-    CCMenu *heroMenu = [menuFactory createMenuWithCards:heroCards];
-    heroMenu.position = ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6);
-    [heroMenu alignItemsHorizontally];
-    [self addChild:heroMenu];
-    
-    menuFactory.delegate = self;
-}
-
-/*
- * toBeSelectedHeroIDs setter method and call render method
- */
-- (void)setToBeSelectedHeroIds:(NSArray *)heroIds
-{
-    _toBeSelectedHeroIds = heroIds;
-    [self renderToBeSelectedHeros:heroIds];
-    _toBeSelectedHeroIds = nil; // Free memory
+//  Only add hand area for current player
+    if (_isCurrentPlayer) {
+        [self addHandArea];
+    }
 }
 
 /*
  * Add hero(avatar) area node
  */
+- (void)addHeroArea
+{
+    _heroArea = [BGHeroArea heroAreaWithPlayer:self];
+    [self addChild: _heroArea];
+}
+
+/*
+ * Add hand area node
+ */
+- (void)addHandArea
+{
+    _handArea = [BGHandArea handAreaWithPlayer:self];
+    [self addChild:_handArea];
+}
+
+/*
+ * Add equipment area for showing equipment cards
+ */
+- (void)addEquipmentArea
+{
+    _equipmentArea = [BGEquipmentArea equipmentAreaWithPlayer:self];
+    [self addChild:_equipmentArea];
+}
+
+#pragma mark - Hero area
+- (void)initHeroWithHeroId:(NSInteger)heroId
+{
+    _selectedHeroId = heroId;
+    [_heroArea initHeroWithHeroId:heroId];
+}
+
+/*
+ * Update hero blood and anger point
+ */
+- (void)updateHeroWithBloodPoint:(NSInteger)bloodPoint angerPoint:(NSUInteger)angerPoint
+{
+    [_heroArea updateBloodPointWithCount:bloodPoint];
+    [_heroArea updateAngerPointWithCount:angerPoint];
+}
+
+#pragma mark - Hand cards
+- (void)initHandCardWithCardIds:(NSArray *)cardIds
+{
+    [_handArea updateHandCardWithCardIds:cardIds];
+    _handArea.selectableCardCount = 1;
+}
+
+/*
+ * Update(Draw/Got/Lost) hand card with card id list and update other properties
+ */
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count
+{
+    [_handArea updateHandCardWithCardIds:cardIds];
+    _handArea.selectableCardCount = count;
+}
+
+
+
+
 - (void)addHeroAreaWithHeroId:(NSInteger)heroId
 {
-    _heroArea = [BGHeroArea heroAreaWithHeroCardId:heroId ofPlayer:self];
-    [self addChild: _heroArea];
-    
     _handSizeLimit = _heroArea.heroCard.handSizeLimit;
     
 //  5 hand cards for each player at the beginning, use 1 card for cutting.
     self.handCardCount = INITIAL_HAND_CARD_COUND;
-}
-
-#pragma mark - Hero card selection
-/*
- * Menu delegate method is called while selecting a hero card
- */
-- (void)menuItemTouched:(CCMenuItem *)menuItem
-{
-    _selectedHeroId = menuItem.tag;
-    [self runActionWithSelectedHeroMenu:menuItem];
-    
-//  [(BGGameLayer *)self.parent transferRoleCardToNextPlayer];
-}
-
-/*
- * Run animation while selecting a hero card
- */
-- (void)runActionWithSelectedHeroMenu:(CCMenuItem *)menuItem
-{
-    for (CCMenuItem *item in menuItem.parent.children) {
-        if (![item isEqual:menuItem]) {
-            item.visible = NO;
-        }
-    }
-    
-    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:ccp(-SCREEN_WIDTH*0.4, -SCREEN_HEIGHT*0.4)
-                                                         ofNode:menuItem];
-    [moveComp runActionEaseMoveScaleWithDuration:0.5f
-                                           scale:0.5f
-                                           block:^{
-                                               [self addHeroAreaWithHeroId:menuItem.tag];
-                                               [menuItem.parent removeFromParentAndCleanup:YES];
-                                               [[BGClient sharedClient] sendSelectHeroCardRequest];
-                                           }];
-}
-
-#pragma mark - Hand cards
-/*
- * Draw hand cards after player confirm drawing
- */
-- (void)drawPlayingCardIds:(NSArray *)cardIds
-{
-    [_handArea addHandCardsWithCardIds:cardIds];
 }
 
 /*
@@ -228,131 +177,98 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return (_isCurrentPlayer) ? _handArea.handCards.count : _handCardCount;
 }
 
-- (void)updateBloodAndAngerWithBloodPoint:(NSInteger)bloodPoint
-                            andAngerPoint:(NSInteger)angerPoint
-{
-    if (bloodPoint != 0) {
-        [_heroArea updateBloodPointWithCount:bloodPoint];
-    }
-    
-    if (angerPoint != 0) {
-        [_heroArea updateAngerPointWithCount:angerPoint];
-    }
-}
-
 - (void)clearSelectedObjectBuffer
 {
     _selectedCardIds = nil;
-    [_extractedCardIdxes removeAllObjects];
-    _isSelectedStrenthen = NO;
+    [_selectedCardIdxes removeAllObjects];
     _selectedColor = kCardColorInvalid;
     _selectedSuits = kCardSuitsInvalid;
-    _usedHeroSkillId = kHeroSkillDefault;
+    _selectedSkillId = kHeroSkillInvalid;
 }
 
 #pragma mark - Playing menu
 /*
- * Add playing menu items for okay
+ * Add playing menu items according to different action
  */
-- (void)addPlayingMenuOfCardOkay
+- (void)addPlayingMenu
 {
-    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardOkay ofPlayer:self];
-    [self addChild:_playingMenu];
-}
-
-/*
- * Add playing menu items for card using(使用)
- */
-- (void)addPlayingMenuOfCardUsing
-{
-    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardUsing ofPlayer:self];
-    [self addChild:_playingMenu];
+    switch (_action) {
+        case kActionPlayingCard:            // 主动使用
+            _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypePlaying];
+            break;
+            
+        case kActionChooseCardToUse:        // 被动使用
+            _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeChoosing];
+            break;
+            
+        case kActionChooseCardToCompare:    // 确定拼点
+        case kActionChooseCardToDiscard:    // 确定弃牌
+            _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeOkay];
+            break;
+            
+        case kActionChoosingColor:          // 选择卡牌颜色
+            _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardColor];
+            break;
+            
+        case kActionChoosingSuits:          // 选择卡牌花色
+            _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardSuits];
+            break;
+            
+        default:
+            break;
+    }
     
-//    [_handArea checkHandCardsAvailability];
-}
-
-/*
- * Add playing menu items for card playing(打出)
- */
-- (void)addPlayingMenuOfCardPlaying
-{
-    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardPlaying ofPlayer:self];
-    [self addChild:_playingMenu];
-    
-    [_handArea checkHandCardsAvailability];
-}
-
-/*
- * Add playing menu items for strengthen(魔法牌强化按钮)
- */
-- (void)addPlayingMenuOfStrengthen
-{
-    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeStrengthen ofPlayer:self];
-    [self addChild:_playingMenu];
-}
-
-/*
- * Add playing menu items for card color(选择卡牌颜色)
- */
-- (void)addPlayingMenuOfCardColor
-{
-    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardColor ofPlayer:self];
     [self addChild:_playingMenu];
 }
 
 #pragma mark - Playing deck
-/*
- * Determine the initial player by cutting card
- */
-- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
-{
-    [_playingDeck showAllCuttingCardsWithCardIds:cardIds];
-}
-
-/*
- * 1. Face down all hand cards on the deck
- * 2. Also add equipment cards of target player on the deck(使用贪婪的玩家)
- */
-- (void)faceDownAllHandCardsOnDeck
-{
-    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-    BGPlayer *targetPlayer = [gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject];
-    
-    if (_playerState == kPlayerStateGreeding) {
-        [_playingDeck facedDownAllHandCardsOfPlayer:targetPlayer];
-        [_playingDeck addEquipmentCardsOfTargetPlayer:targetPlayer];
-    } else {
-        [_playingDeck facedDownAllHandCardsOfPlayer:gamePlayer.sourcePlayer];
-    }
-}
-
-- (void)gotExtractedCardsWithCardIds:(NSArray *)cardIds
-{
-    [_handArea gotExtractedCardsWithCardIds:cardIds];
-}
-
-/*
- * If is greeding player, only lost hand cards.
- * If is greeded player, can lost hand cards or equipment.
- */
-- (void)lostCardsWithCardIds:(NSArray *)cardIds
-{
-    if ([self isEqual:[BGGameLayer sharedGameLayer].sourcePlayer]) {
-        [_handArea lostCardsWithCardIds:cardIds];
-    }
-    else {
-        if ([BGGameLayer sharedGameLayer].sourcePlayer.selectedGreedType == kGreedTypeHandCard) {
-            [_handArea lostCardsWithCardIds:cardIds];   // 手牌
-        } else {
-            NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
-            [_equipmentArea lostEquipmentWithCard:cards.lastObject];    // 装备
-        }
-    }
-}
-
-- (void)clearPlayingDeckObject
-{
-    [_playingDeck.usedCardMenu removeAllChildrenWithCleanup:YES];
-}
+///*
+// * Determine the initial player by cutting card
+// */
+//- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
+//{
+//    [_playingDeck showAllCuttingCardsWithCardIds:cardIds];
+//}
+//
+///*
+// * 1. Face down all hand cards on the deck
+// * 2. Also add equipment cards of target player on the deck(使用贪婪的玩家)
+// */
+//- (void)faceDownAllHandCardsOnDeck
+//{
+//    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
+//    BGPlayer *targetPlayer = [gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject];
+//    
+//    if (_playerState == kPlayerStateGreeding) {
+//        [_playingDeck facedDownAllHandCardsOfPlayer:targetPlayer];
+//        [_playingDeck addEquipmentCardsOfTargetPlayer:targetPlayer];
+//    } else {
+//        [_playingDeck facedDownAllHandCardsOfPlayer:gamePlayer.sourcePlayer];
+//    }
+//}
+//
+//- (void)gotExtractedCardsWithCardIds:(NSArray *)cardIds
+//{
+//    [_handArea gotExtractedCardsWithCardIds:cardIds];
+//}
+//
+///*
+// * If is greeding player, only lost hand cards.
+// * If is greeded player, can lost hand cards or equipment.
+// */
+//- (void)lostCardsWithCardIds:(NSArray *)cardIds
+//{
+//    if ([self isEqual:[BGGameLayer sharedGameLayer].sourcePlayer]) {
+//        [_handArea lostCardsWithCardIds:cardIds];
+//    }
+//    else {
+//        if ([BGGameLayer sharedGameLayer].sourcePlayer.selectedGreedType == kGreedTypeHandCard) {
+//            [_handArea lostCardsWithCardIds:cardIds];   // 手牌
+//        } else {
+//            NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
+//            [_equipmentArea lostEquipmentWithCard:cards.lastObject];    // 装备
+//        }
+//    }
+//}
 
 @end

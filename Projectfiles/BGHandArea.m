@@ -8,7 +8,6 @@
 
 #import "BGHandArea.h"
 #import "BGGameLayer.h"
-#import "BGPlayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 #import "BGMoveComponent.h"
@@ -32,25 +31,29 @@
 
 @implementation BGHandArea
 
-- (id)initWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player
+- (id)initWithPlayer:(BGPlayer *)player
 {
     if (self = [super init]) {
         _player = player;
-        _canSelectCardCount = 1;
+        _handCards = [NSMutableArray array];
         _targetPosition = ccpAdd(_player.playerAreaPosition, ccp(_player.playerAreaSize.width/4, 0.0f));
+        
+        _menuFactory = [BGMenuFactory menuFactory];
+        _cardMenu = [CCMenu menuWithArray:nil];
+        _cardMenu.position = CGPointZero;
+        [self addChild:_cardMenu];
+        _menuFactory.delegate = self;
+        
         _selectedCards = [NSMutableArray array];
         _selectedMenuItems = [NSMutableArray array];
-        _handCards = [[self.class playingCardsWithCardIds:cardIds] mutableCopy];
         _checkComp = [BGCheckComponent checkComponentWithPlayer:_player];
-        
-        [self initializeHandCardsWithCardIds:cardIds];
     }
     return self;
 }
 
-+ (id)handAreaWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player
++ (id)handAreaWithPlayer:(BGPlayer *)player
 {
-    return [[self alloc] initWithPlayingCardIds:cardIds ofPlayer:player];
+    return [[self alloc] initWithPlayer:player];
 }
 
 + (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds
@@ -70,6 +73,20 @@
         [cardIds addObject:@([obj cardId])];
     }];
     return cardIds;
+}
+
+#pragma mark - Hand cards updating
+/*
+ * Update(Draw/Got/Lost) hand card with card id list
+ */
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds
+{
+    NSArray *cards = [self.class playingCardsWithCardIds:cardIds];
+    [_handCards addObjectsFromArray:cards];
+    
+    [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
+    [self renderFigureAndSuitsOfCards:cards forMenu:_cardMenu];
+    [self adjustPositionOfHandCards];
 }
 
 #pragma mark - Hand cards rendering
@@ -320,7 +337,7 @@
     }
     
 //  If selected cards count great than maximum, deselect and remove the first selected card.
-    if (_selectedCards.count > _canSelectCardCount) {
+    if (_selectedCards.count > _selectableCardCount) {
         @try {
             for (CCMenuItem *item in _cardMenu.children) {
                 if (item.tag == [_selectedCards[0] cardId]) {
@@ -340,21 +357,28 @@
     [_checkComp checkPlayingMenuAvailabilityWithSelectedCard:card];
 }
 
-#pragma mark - Hand cards using
+#pragma mark - Hand card using
 /*
- * 1. Use hand cards/equip equipment and run move action
+ * 1. Use hand card/equip equipment with effect animation(Yes/No) and run move action
  * 2. Set selected hand card ids by current player
  */
-- (void)useHandCardsWithBlock:(void (^)())block
+- (void)useHandCardWithAnimation:(BOOL)isRun block:(void (^)())block
 {
+    if (isRun) {
+        BGEffectComponent *effect = [BGEffectComponent effectCompWithPlayingCardEnum:[_selectedCards.lastObject cardEnum]];
+        effect.position = CARD_EFFECT_POSITION;
+        [self addChild:effect];
+    }
+    
     _player.selectedCardIds = [self.class playingCardIdsWithCards:_selectedCards];
     
-    if (_player.playerState == kPlayerStatePlaying && _canSelectCardCount == 1 &&
+    if (_player.action == kActionPlayingCard && _selectableCardCount == 1 &&
         [_selectedCards.lastObject cardType] == kCardTypeEquipment) {   // 装备牌
         [self equipEquipmentCard];
     } else {
         [self moveSelectedCardToTarget:USED_CARD_POSITION isShowingOnDeck:YES];
     }
+    
     [self removeHandCardsFromSelectedCards];   // Update hand card buffer
     [self runActionDelayWithBlock:block];
 }
@@ -369,7 +393,7 @@
                                               [obj removeFromParentAndCleanup:YES];
                                               [self adjustPositionOfHandCards];
                                               if (isOnDeck) {
-                                                  [_player.playingDeck showUsedHandCardsWithCardIds:_player.selectedCardIds];
+                                                  [[BGGameLayer sharedGameLayer].playingDeck showUsedHandCardsWithCardIds:_player.selectedCardIds];
                                               }
                                           }];
     }];
@@ -384,6 +408,9 @@
     }
 }
 
+/*
+ * Select a equipment card to equip
+ */
 - (void)equipEquipmentCard
 {
     [_player.equipmentArea addEquipmentWithPlayingCard:_selectedCards.lastObject];
@@ -391,48 +418,36 @@
     [self adjustPositionOfHandCards];
 }
 
-/*
- * Use hand cards and run effect animation
- */
-- (void)useHandCardsAndRunAnimationWithBlock:(void (^)())block
-{
-    BGEffectComponent *effect = [BGEffectComponent effectCompWithPlayingCardEnum:[_selectedCards.lastObject cardEnum]];
-    effect.position = CARD_EFFECT_POSITION;
-    [self addChild:effect];
-    
-    [self useHandCardsWithBlock:block];
-}
-
-/*
- * Lost hand cards or equipment that are extracted by other player
- */
-- (void)lostCardsWithCardIds:(NSArray *)cardIds
-{
-    for (CCMenuItem *item in _cardMenu.children) {
-        if ([cardIds containsObject:@(item.tag)]) {
-            [_selectedMenuItems addObject:item];
-            NSUInteger idx = [_cardMenu.children indexOfObject:item];
-            [_selectedCards addObject:_handCards[idx]];
-        }
-    }
-    
-    _player.selectedCardIds = [self.class playingCardIdsWithCards:_selectedCards];
-    [self giveSelectedCardsToTargetPlayerWithBlock:NULL];
-}
-
-/*
- * Selected cards and give it to target player
- */
-- (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block
-{
-    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-    BGPlayer *targetPlayer = [gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject];
-    BGPlayer *player = ([_player isEqual:gamePlayer.sourcePlayer]) ? targetPlayer : gamePlayer.sourcePlayer;
-    
-    _player.transferedCardIds = [self.class playingCardIdsWithCards:_selectedCards];
-    [self moveSelectedCardToTarget:player.position isShowingOnDeck:NO];
-    [self removeHandCardsFromSelectedCards];   // Update hand card buffer
-    [self runActionDelayWithBlock:block];
-}
+///*
+// * Lost hand cards or equipment that are extracted by other player
+// */
+//- (void)lostCardsWithCardIds:(NSArray *)cardIds
+//{
+//    for (CCMenuItem *item in _cardMenu.children) {
+//        if ([cardIds containsObject:@(item.tag)]) {
+//            [_selectedMenuItems addObject:item];
+//            NSUInteger idx = [_cardMenu.children indexOfObject:item];
+//            [_selectedCards addObject:_handCards[idx]];
+//        }
+//    }
+//    
+//    _player.selectedCardIds = [self.class playingCardIdsWithCards:_selectedCards];
+//    [self giveSelectedCardsToTargetPlayerWithBlock:NULL];
+//}
+//
+///*
+// * Selected cards and give it to target player
+// */
+//- (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block
+//{
+//    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
+//    BGPlayer *targetPlayer = [gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject];
+//    BGPlayer *player = ([_player isEqual:gamePlayer.sourcePlayer]) ? targetPlayer : gamePlayer.sourcePlayer;
+//    
+//    _player.transferedCardIds = [self.class playingCardIdsWithCards:_selectedCards];
+//    [self moveSelectedCardToTarget:player.position isShowingOnDeck:NO];
+//    [self removeHandCardsFromSelectedCards];   // Update hand card buffer
+//    [self runActionDelayWithBlock:block];
+//}
 
 @end

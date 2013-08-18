@@ -15,8 +15,10 @@
 
 @property (nonatomic, strong, readonly) CCMenu *usedCardMenu;
 
-- (id)initWithPlayer:(BGPlayer *)player;
-+ (id)playingDeckWithPlayer:(BGPlayer *)player;
++ (id)sharedPlayingDeck;
+
+- (void)updatePlayingDeckWithHeroIds:(NSArray *)heroIds;
+- (void)updatePlayingDeckWithCardIds:(NSArray *)cardIds;
 
 - (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds;
 - (void)showUsedHandCardsWithCardIds:(NSArray *)cardIds;

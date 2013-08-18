@@ -36,7 +36,7 @@ static BGAudioComponent *instanceOfClient = nil;
 		[_audioManager setResignBehavior:kAMRBStopPlay autoHandle:YES];
         
         [_audioEngine preloadBackgroundMusic:kAudioBackground];
-        [_audioEngine preloadEffect:kAudioDamaged];
+        [_audioEngine preloadEffect:kAudioDamage];
         [_audioEngine preloadEffect:kAudioEquipCard];
         [_audioEngine preloadEffect:kAudioRestoreBlood];
     }
@@ -49,9 +49,9 @@ static BGAudioComponent *instanceOfClient = nil;
     _audioManager.backgroundMusic.volume = 0.5f;
 }
 
-- (void)playDamaged
+- (void)playDamage
 {
-    [_audioEngine playEffect:kAudioDamaged];
+    [_audioEngine playEffect:kAudioDamage];
 }
 
 - (void)playEquipCard

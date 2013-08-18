@@ -16,7 +16,7 @@
 
 @property (nonatomic, strong, readonly) BGHeroCard *heroCard;
 
-@property (nonatomic) NSUInteger bloodPoint;
+@property (nonatomic) NSInteger bloodPoint;
 @property (nonatomic) NSUInteger angerPoint;
 @property (nonatomic) NSUInteger distance;
 @property (nonatomic) NSUInteger attackRange;
@@ -25,9 +25,10 @@
 @property (nonatomic) BOOL canBeTarget;
 @property (nonatomic) BOOL isDead;
 
-- (id)initWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player;
-+ (id)heroAreaWithHeroCardId:(NSInteger)cardId ofPlayer:(BGPlayer *)player;
+- (id)initWithPlayer:(BGPlayer *)player;
++ (id)heroAreaWithPlayer:(BGPlayer *)player;
 
+- (void)initHeroWithHeroId:(NSInteger)heroId;
 - (void)updateBloodPointWithCount:(NSInteger)count;
 - (void)updateAngerPointWithCount:(NSInteger)count;
 

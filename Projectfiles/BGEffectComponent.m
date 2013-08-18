@@ -75,7 +75,7 @@
 
 - (void)runEffectAnimationByEffectType
 {
-    switch (_playingCardEnum) {
+    switch (_effectType) {
         case kEffectTypeDamaged:
             [self damage];
             break;
@@ -120,7 +120,7 @@
                       frames:@"Damage"
                andFrameCount:9];
     
-    [[BGAudioComponent sharedAudioComponent] playDamaged];
+    [[BGAudioComponent sharedAudioComponent] playDamage];
 }
 
 - (void)restoreBlood
@@ -138,7 +138,7 @@
     [self runActionWithPlist:@"NormalAttack.plist"
                    frameName:@"NormalAttack0.png"
                       frames:@"NormalAttack"
-               andFrameCount:15];
+               andFrameCount:29];
 }
 
 - (void)evasion
@@ -159,7 +159,7 @@
     [self runActionWithPlist:@"SangeAndYasha.plist"
                    frameName:@"SangeAndYasha0.png"
                       frames:@"SangeAndYasha"
-               andFrameCount:23];
+               andFrameCount:18];
 }
 
 @end

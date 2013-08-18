@@ -22,7 +22,7 @@
 #define kCheckSelector          @"checkSelector"
 
 typedef NS_ENUM(NSInteger, BGPlayingCardEnum) {
-    kPlayingCardDefault = -1,
+    kPlayingCardInvalid = -1,
     kPlayingCardNormalAttack,           // 普通攻击
     kPlayingCardFlameAttack,            // 火焰攻击
     kPlayingCardChaosAttack,            // 混乱攻击

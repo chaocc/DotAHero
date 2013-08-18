@@ -31,7 +31,7 @@
  */
 - (void)renderBackground
 {
-    CCSprite *sprite = [CCSprite spriteWithFile:kImageBackground];
+    CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageBackground];
     sprite.position = [CCDirector sharedDirector].screenCenter;
     [self addChild:sprite];
 }

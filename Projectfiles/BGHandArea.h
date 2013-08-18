@@ -23,13 +23,20 @@ typedef NS_ENUM(NSUInteger, BGGreedType) {
 @property (nonatomic, strong) NSMutableArray *selectedCards;    // 选中的手牌
 
 @property (nonatomic, readonly) CGPoint targetPosition; // 摸牌动画移动的目标位置
-@property (nonatomic) NSUInteger canSelectCardCount;    // 最多可以选择几张牌
+@property (nonatomic) NSUInteger selectableCardCount;   // 最多可以选择几张牌
 
-- (id)initWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player;
-+ (id)handAreaWithPlayingCardIds:(NSArray *)cardIds ofPlayer:(BGPlayer *)player;
+
+- (id)initWithPlayer:(BGPlayer *)player;
++ (id)handAreaWithPlayer:(BGPlayer *)player;
 
 + (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds;
 + (NSArray *)playingCardIdsWithCards:(NSArray *)cards;
+
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds;
+
+- (void)useHandCardWithAnimation:(BOOL)isRun block:(void (^)())block; // 主动/被动使用手牌
+
+
 
 - (void)addHandCardsWithCardIds:(NSArray *)cardIds;
 - (void)addOneExtractedCard;
@@ -41,8 +48,6 @@ typedef NS_ENUM(NSUInteger, BGGreedType) {
 - (void)enableAllHandCardsMenuItem;
 - (void)disableAllHandCardsMenuItem;
 
-- (void)useHandCardsWithBlock:(void (^)())block;
-- (void)useHandCardsAndRunAnimationWithBlock:(void (^)())block;     // 使用/打出手牌并播放动画特效
 - (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block;
 
 - (void)renderFigureAndSuitsOfCards:(NSArray *)cards forMenu:(CCMenu *)menu;

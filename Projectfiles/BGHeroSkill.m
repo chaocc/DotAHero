@@ -21,7 +21,7 @@
     if (self = [super init]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"HeroSkillArray" ofType:@"plist"];
         self.skillArray = [NSArray arrayWithContentsOfFile:path];
-        NSAssert((aSkillId > kHeroSkillDefault) &&
+        NSAssert((aSkillId > kHeroSkillInvalid) &&
                  (aSkillId < (NSInteger)_skillArray.count), @"Invalid hero skill id in %@", NSStringFromSelector(_cmd));
         NSDictionary *dictionary = _skillArray[aSkillId];
         

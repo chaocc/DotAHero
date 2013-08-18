@@ -39,12 +39,7 @@ static BGRoomListLayer *instanceOfRoomListLayer = nil;
 {
     if (self = [super init]) {
         instanceOfRoomListLayer = self;
-        
-        if ([BGClient sharedClient].isSingleMode) {
-            [self showRoomLayer];
-        } else {
-            [[BGClient sharedClient] joinRoom];
-        }
+        [[BGClient sharedClient] joinRoom];
     }
     return self;
 }

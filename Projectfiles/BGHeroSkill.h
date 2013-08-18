@@ -16,7 +16,7 @@
 #define kCanBeDispelled         @"canBeDispelled"
 
 typedef NS_ENUM(NSInteger, BGHeroSkillEnum) {
-    kHeroSkillDefault = -1,
+    kHeroSkillInvalid = -1,
     kHeroSkillDeathCoil = 0,                // 死亡缠绕
     kHeroSkillFrostmourne = 1,              // 霜之哀伤
     

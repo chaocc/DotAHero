@@ -26,20 +26,7 @@ static BGLoginLayer *instanceOfLoginLayer = nil;
 	if ((self = [super init]))
 	{
         instanceOfLoginLayer = self;
-        if ([BGClient sharedClient].isSingleMode) {
-//          ...TEMP...
-            CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Single Mode" block:^(id sender) {
-                if ([BGClient sharedClient].isSingleMode) {
-                    [self showRoomListLayer];
-                    [[BGRoomLayer sharedRoomLayer] showGameLayer];
-                }
-            }];
-            CCMenu *menu = [CCMenu menuWithItems:item, nil];
-            menu.position = [CCDirector sharedDirector].screenCenter;
-            [self addChild:menu];
-        } else {
-            [[BGClient sharedClient] conntectServer];
-        }
+        [[BGClient sharedClient] conntectServer];
 	}
     
 	return self;

@@ -8,24 +8,24 @@
 
 #import "BGPlayingMenu.h"
 #import "BGClient.h"
-#import "BGPlayer.h"
+#import "BGGameLayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 
 @interface BGPlayingMenu ()
 
 @property (nonatomic, weak) BGPlayer *player;
-@property (nonatomic, strong) BGMenuFactory *menuFactory;
 
 @end
 
 @implementation BGPlayingMenu
 
-- (id)initWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player
+- (id)initWithMenuType:(BGPlayingMenuType)menuType
 {
     if (self = [super init]) {
         _menuType = menuType;
-        _player = player;
+        _player = [BGGameLayer sharedGameLayer].currentPlayer;
+        
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;
         
@@ -34,9 +34,9 @@
     return self;
 }
 
-+ (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player
++ (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType
 {
-    return [[self alloc] initWithMenuType:menuType ofPlayer:player];
+    return [[self alloc] initWithMenuType:menuType];
 }
 
 #pragma mark - Playing menu creation
@@ -46,29 +46,52 @@
 - (void)createMenu
 {
     switch (_menuType) {
-        case kPlayingMenuTypeCardOkay:
-            [self createOkayPlayingMenu];
+        case kPlayingMenuTypeOkay:
+            [self createPlayingMenuForOkay];
             break;
             
-        case kPlayingMenuTypeCardUsing:
+        case kPlayingMenuTypePlaying:
             [self createPlayingMenuForUsing];
             break;
             
-        case kPlayingMenuTypeCardPlaying:
-            [self createPlayingMenuForPlaying];
+        case kPlayingMenuTypeChoosing:
+            [self createPlayingMenuForChoosing];
             break;
             
-        case kPlayingMenuTypeStrengthen:
-            [self createPlayingMenuForStrengthen];
+        case kPlayingMenuTypeStrengthening:
+            [self createPlayingMenuForStrengthening];
+            break;
+            
+        case kPlayingMenuTypeDispelling:
+            [self createPlayingMenuForDispelling];
             break;
             
         case kPlayingMenuTypeCardColor:
             [self createPlayingMenuForCardColor];
             break;
             
+        case kPlayingMenuTypeCardSuits:
+            [self createPlayingMenuForCardSuits];
+            break;
+            
         default:
             break;
     }
+}
+
+/*
+ * Create menu item with Okay
+ */
+- (void)createPlayingMenuForOkay
+{
+    _menu = [_menuFactory createMenuWithSpriteFrameName:kImageOkay
+                                      selectedFrameName:kImageOkaySelected
+                                      disabledFrameName:kImageOkayDisabled];
+    _menu.position = PLAYING_MENU_POSITION;
+    [_menu alignItemsHorizontallyWithPadding:40.0f];
+    [_menu.children.lastObject setIsEnabled:NO];
+    
+    [self addChild:_menu];
 }
 
 /*
@@ -99,9 +122,9 @@
 }
 
 /*
- * Create menu items with Okay/Cancel - Playing
+ * Create menu items with Okay/Cancel - Choosing
  */
-- (void)createPlayingMenuForPlaying
+- (void)createPlayingMenuForChoosing
 {
     NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageCancel, nil];
     NSArray *selFrameNames = [NSArray arrayWithObjects:kImageOkaySelected, kImageCancelSelected, nil];
@@ -128,7 +151,7 @@
 /*
  * Create menu items with Okay/Strengthen/Discard
  */
-- (void)createPlayingMenuForStrengthen
+- (void)createPlayingMenuForStrengthening
 {
     NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageStrengthen, kImageDiscard, nil];
     NSArray *selFrameNames = [NSArray arrayWithObjects:kImageOkaySelected, kImageStrengthenSelected, kImageDiscardSelected, nil];
@@ -146,6 +169,7 @@
             [obj setIsEnabled:NO];  // Disable okay menu
         } else if (idx == 1) {
             [obj setTag:kPlayingMenuItemTagStrengthen];
+            [obj setIsEnabled:NO];  // Disable strengthen menu
         } else if (idx == 2) {
             [obj setTag:kPlayingMenuItemTagDiscard];
         }
@@ -155,16 +179,30 @@
 }
 
 /*
- * Create menu item with Okay
+ * Create menu items with Okay/Discard/IgnoreDispel
  */
-- (void)createOkayPlayingMenu
+- (void)createPlayingMenuForDispelling
 {
-    _menu = [_menuFactory createMenuWithSpriteFrameName:kImageOkay
-                                      selectedFrameName:kImageOkaySelected
-                                      disabledFrameName:kImageOkayDisabled];
+    NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageDiscard, nil];
+    NSArray *selFrameNames = [NSArray arrayWithObjects:kImageOkaySelected, kImageDiscardSelected, nil];
+    NSArray *disFrameNames = [NSArray arrayWithObjects:kImageOkayDisabled, kImageDiscardDisabled, nil];
+    
+    _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
+                                      selectedFrameNames:selFrameNames
+                                      disabledFrameNames:disFrameNames];
     _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:40.0f];
-    [_menu.children.lastObject setIsEnabled:NO];
+    [_menu alignItemsHorizontallyWithPadding:20.0f];
+    
+    [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if (idx == 0) {
+            [obj setTag:kPlayingMenuItemTagOkay];
+            [obj setIsEnabled:NO];  // Disable okay menu
+        } else if (idx == 1) {
+            [obj setTag:kPlayingMenuItemTagStrengthen];
+        } else if (idx == 2) {
+            [obj setTag:kPlayingMenuItemTagDiscard];
+        }
+    }];
     
     [self addChild:_menu];
 }
@@ -229,25 +267,25 @@
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
+    [self removeFromParentAndCleanup:YES];
+    
     switch (menuItem.tag) {
         case kPlayingMenuItemTagOkay:
             [self touchOkayMenuItem];
             break;
             
         case kPlayingMenuItemTagCancel:
-            [self touchCancelMenuItem];
+            [[BGClient sharedClient] sendCancelRequest];
             break;
             
         case kPlayingMenuItemTagStrengthen:
-            [self useMagicCardWithStengthened:YES];
+            [_player.handArea useHandCardWithAnimation:YES block:^{
+                [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:YES];
+            }];
             break;
             
         case kPlayingMenuItemTagDiscard:
-            [self removeFromParentAndCleanup:YES];
-            [[BGClient sharedClient] sendStartDiscardRequest];
-            [_player.handArea enableAllHandCardsMenuItem];
-            _player.handArea.canSelectCardCount = _player.handArea.handCards.count - _player.handSizeLimit;
-//          如果现有手牌数<手牌上限，不需要弃牌，Sever自动结束当前玩家的回合
+            [[BGClient sharedClient] sendDiscardRequest];
             break;
             
         case kPlayingMenuItemTagRedColor:
@@ -280,59 +318,37 @@
 }
 
 /*
- * Touch okay menu item. Call method according to different menu type.
+ * Touch okay menu item:
+ * 1. Use hand card.
+ * 2. Use hero skill and/or hand card.
  */
 - (void)touchOkayMenuItem
 {
-    switch (_menuType) {
-        case kPlayingMenuTypeStrengthen:
-            [self useMagicCardWithStengthened:NO];
-            break;
-            
-        default:
-            [self usePlayingCard];
-            break;
-    }
-}
-
-/*
- * Touch cancel menu item. Call method according to different menu type.
- */
-- (void)touchCancelMenuItem
-{
-    switch (_menuType) {
-        case kPlayingMenuTypeCardPlaying:
-            [[BGClient sharedClient] sendCancelPlayingCardRequest];
-            break;
-            
-        default:
-            break;
-    }
+    BOOL isRunAnimation = (_player.action = kActionPlayingCard || _player.action == kActionChooseCardToUse) ? YES : NO;
     
-    [self removeFromParentAndCleanup:YES];
+    if (_player.selectedSkillId == kHeroSkillInvalid) {
+        [_player.handArea useHandCardWithAnimation:isRunAnimation block:^{
+            [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+        }];
+    }
+    else {
+        if (_player.selectedCardIds.count == 0) {
+            [[BGClient sharedClient] sendUseHeroSkillRequest];
+        } else {
+            [_player.handArea useHandCardWithAnimation:NO block:^{
+                [[BGClient sharedClient] sendUseHeroSkillRequest];
+            }];
+        }
+    }
 }
 
 /*
- * Touch card color menu item. Call method according to different card enum.
+ * Touch card color menu item.
  */
 - (void)touchCardColorMenuItemWithColor:(BGCardColor)color
 {
     _player.selectedColor = color;
-    
-    switch (_player.playerState) {
-        case kPlayerStatePlaying:
-            [[BGClient sharedClient] sendUsePlayingCardRequest];
-            break;
-            
-        case kPlayerStateGuessingCardColor:
-            [[BGClient sharedClient] sendGuessCardColorRequest];
-            break;
-            
-        default:
-            break;
-    }
-    
-    [self removeFromParentAndCleanup:YES];
+    [[BGClient sharedClient] sendChooseColorRequest];
 }
 
 /*
@@ -341,90 +357,7 @@
 - (void)touchCardSuitsMenuItemWithSuits:(BGCardSuits)suits
 {
     _player.selectedSuits = suits;
-    [[BGClient sharedClient] sendUsePlayingCardRequest];
-    [self removeFromParentAndCleanup:YES];
-}
-
-#pragma mark - Playing card using
-/*
- * Use playing card and send request to server
- */
-- (void)usePlayingCard
-{    
-    switch (_player.playerState) {
-        case kPlayerStateCutting:
-            [_player.handArea useHandCardsWithBlock:^{
-                [[BGClient sharedClient] sendCutPlayingCardRequest];
-            }];
-            [_player.handArea checkHandCardsAvailability];
-            break;
-            
-        case kPlayerStateThrowingCard:
-        case kPlayerStateIsBeingViperRaided:
-            [_player.handArea useHandCardsWithBlock:^{
-                [[BGClient sharedClient] sendDiscardPlayingCardRequest];
-            }];
-            break;
-            
-        case kPlayerStateGreeding:  // 贪婪强化，抽完牌还要分牌
-            [_player.handArea giveSelectedCardsToTargetPlayerWithBlock:^{
-                [[BGClient sharedClient] sendExtractCardRequest];
-            }];
-            break;
-            
-        case kPlayerStateIsBeingLagunaBladed:
-            [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
-                [[BGClient sharedClient] sendPlayMultipleEvasionsRequest];
-            }];
-            break;
-            
-        case kPlayerStateDiscarding:
-            [_player.handArea useHandCardsWithBlock:^{
-                [[BGClient sharedClient] sendOkToDiscardRequest];
-            }];
-            break;
-            
-        default:
-            if (_player.usedHeroSkillId == kHeroSkillDefault) {
-                [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
-                    [[BGClient sharedClient] sendUsePlayingCardRequest];
-                }];
-            } else {
-                [_player.handArea useHandCardsWithBlock:^{
-                    [[BGClient sharedClient] sendUseHeroSkillRequest];
-                }];
-            }
-            break;
-    }
-    
-    [self removeFromParentAndCleanup:YES];
-}
-
-/*
- * Use magic card with strengthen flag
- */
-- (void)useMagicCardWithStengthened:(BOOL)isStrengthened
-{
-    [_player.handArea useHandCardsAndRunAnimationWithBlock:^{
-        _player.isSelectedStrenthen = isStrengthened;
-        
-        BGCard *card = [BGPlayingCard cardWithCardId:[_player.selectedCardIds.lastObject integerValue]];
-        switch (card.cardEnum) {
-            case kPlayingCardElunesArrow:
-                [_menu removeFromParentAndCleanup:YES];
-                if (isStrengthened) {
-                    [self createPlayingMenuForCardSuits];
-                } else {
-                    [self createPlayingMenuForCardColor];
-                }
-                break;
-                
-            default:
-                [[BGClient sharedClient] sendUsePlayingCardRequest];
-                [self removeFromParentAndCleanup:YES];
-                break;
-        }
-    }];
+    [[BGClient sharedClient] sendChooseSuitsRequest];
 }
 
 @end

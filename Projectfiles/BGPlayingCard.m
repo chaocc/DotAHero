@@ -24,7 +24,7 @@
     if (self = [super initWithCardId:aCardId]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"PlayingCardArray" ofType:@"plist"];
         self.playingCardArray = [NSArray arrayWithContentsOfFile:path];
-        NSAssert((aCardId > kPlayingCardDefault) &&
+        NSAssert((aCardId > kPlayingCardInvalid) &&
                  (aCardId < (NSInteger)_playingCardArray.count), @"Invalid playing card id in %@", NSStringFromSelector(_cmd));
         NSDictionary *dictionary = _playingCardArray[aCardId];
         

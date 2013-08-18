@@ -8,7 +8,6 @@
 
 #import "BGEquipmentArea.h"
 #import "BGGameLayer.h"
-#import "BGPlayer.h"
 #import "BGMoveComponent.h"
 #import "BGDefines.h"
 #import "BGAudioComponent.h"
@@ -167,7 +166,7 @@
                                            scale:0.5f
                                            block:^{
                                                [_equipmentMenu removeFromParentAndCleanup:YES];
-                                               [_player.playingDeck showUsedHandCardsWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
+                                               [[BGGameLayer sharedGameLayer].playingDeck showUsedHandCardsWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
                                            }];
 }
 

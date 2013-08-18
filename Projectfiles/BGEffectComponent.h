@@ -18,7 +18,7 @@ typedef NS_ENUM(NSInteger, BGEffectType) {
 @interface BGEffectComponent : CCNode
 
 @property (nonatomic, readonly) BGPlayingCardEnum playingCardEnum;
-@property (nonatomic, readonly) BGEffectType *effectType;
+@property (nonatomic, readonly) BGEffectType effectType;
 
 - (id)initWithPlayingCardEnum:(BGPlayingCardEnum)cardEnum;
 - (id)initWithEffectType:(BGEffectType)effectType;

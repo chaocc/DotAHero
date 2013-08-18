@@ -21,7 +21,7 @@
     if (self = [super initWithCardId:aCardId]) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"DensityCardArray" ofType:@"plist"];
         self.densityArray = [NSArray arrayWithContentsOfFile:path];
-        NSAssert((aCardId > kDensityCardDefault) &&
+        NSAssert((aCardId > kDensityCardInvalid) &&
                  (aCardId < (NSInteger)_densityArray.count), @"Invalid density card id in %@", NSStringFromSelector(_cmd));
         NSDictionary *dictionary = _densityArray[aCardId];
         

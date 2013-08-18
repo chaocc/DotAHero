@@ -14,11 +14,76 @@
 #define kPluginGame     @"GamePlugin"
 
 // Actions
-#define kAction         @"action"   // 标识要做什么事情
+#define kAction                         @"action"               // 标识要做什么事情
+
+//#define kActionStartGame                @"startGame"            // 开始游戏
+//
+//#define kActionUseCard                  @"useCard"              // 使用卡牌
+//#define kActionUseHeroSkill             @"useHeroSkill"         // 使用英雄技能
+//#define kActionCancel                   @"cancel"               // 取消
+//#define kActionDiscard                  @"discard"              // 确定弃牌
+//
+//#define kActionChooseHeroId             @"chooseHeroId"         // 选择英雄牌
+//#define kActionChooseCardId             @"chooseCardId"         // 选择卡牌ID
+//#define kActionChooseColor              @"chooseColor"          // 选择卡牌颜色
+//#define kActionChooseSuits              @"chooseSuits"          // 选择卡牌花色
+//#define kActionArrangeCardId            @"arrangeCardId"        // 重新排列卡牌(如能量转移)
+//
+//#define kActionChoosingHeroId           @"choosing_hero_id"     // 选择英雄
+//#define kActionChoosingCardId           @"choosing_card_id"     // 选择卡牌
+//#define kActionChoosingColor            @"choosing_color"       // 选择颜色
+//#define kActionChoosingSuits            @"choosing_suits"       // 选择花色
+//#define kActionArrangingCardId          @"arranging_card_id"    // 重新排列卡牌(如能量转移)
+//#define kActionPlayingCard              @"playing_card"         // 出牌阶段
+//#define kActionUpdatePlayerInfo         @"update_player_info"   // 更新玩家信息
+
+#define kParamRemainingCardCount        @"remaining_count"      // 牌堆剩余牌数
+#define kParamTargetPlayerList          @"target_player_list"   // 目标玩家列表
+#define kParamCardIdList                @"id_list"              // 卡牌列表(英雄牌/摸的牌/获得的牌/使用的牌/弃置的牌)
+#define kParamCardIndexList             @"index_list"           // 选中的哪几张牌
+#define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
+#define kParamSelectedHeroId            @"selected_hero_id"     // 选中的英雄
+#define kParamSelectedSkillId           @"selected_skill_id"    // 选中的英雄技能
+#define kParamSelectedColor             @"selected_color"       // 选中的颜色
+#define kParamSelectedSuits             @"selected_suits"       // 选中的花色
+#define kParamIsStrengthened            @"is_strengthened"      // 是否被强化
+#define kParamHeroBloodPoint            @"hp"                   // 血量值
+#define kParamHeroAngerPoint            @"sp"                   // 怒气值
+
 typedef NS_ENUM(NSInteger, BGAction) {
     kActionInvalid = 0,
-    kActionReadyStartGame = 1,                      // 准备开始游戏
     kActionStartGame = 2,                           // 开始游戏
+    
+    kActionUseHandCard = 100,                       // 使用卡牌
+    kActionUseHeroSkill = 101,                      // 使用英雄技能
+    kActionCancel = 102,                            // 取消
+    kActionDiscard = 103,                           // 确定弃牌
+    
+    kActionChooseHeroId = 200,                      // 选择英雄
+    kActionChooseCardId = 201,                      // 选择卡牌
+    kActionChooseColor = 202,                       // 选择卡牌颜色
+    kActionChooseSuits = 203,                       // 选择卡牌花色
+    kActionArrangeCardId = 204,                     // 重新排列卡牌(如能量转移)
+    
+    kActionUpdateDeckHero = 1000,                   // 更新桌面: 待选英雄
+    kActionUpdateDeckCard = 1001,                   // 更新桌面: 手牌/用掉的牌
+    kActionInitPlayerHero = 1002,                   // 初始化: 选中的英雄
+    kActionInitPlayerHand = 1003,                   // 初始化: 手牌
+    kActionUpdatePlayerHero = 1004,                 // 更新玩家: 英雄的血量/怒气等信息
+    kActionUpdatePlayerHand = 1005,                 // 更新玩家: 手牌
+    
+    kActionPlayingCard = 2000,                      // 出牌阶段
+    kActionChooseCardToUse = 2001,                  // 选择卡牌: 使用
+    kActionChooseCardToCompare = 2002,              // 选择卡牌: 拼点
+    kActionChooseCardToDiscard = 2003,              // 选择卡牌: 弃置
+    kActionChoosingColor = 2204,                    // 选择颜色阶段
+    kActionChoosingSuits = 2205,                    // 选择花色阶段
+    kActionArrangingCardId = 2206,                  // 重新排列卡牌阶段(如能量转移)
+    
+    
+    
+    kActionReadyStartGame = 1,                      // 准备开始游戏
+//    kActionStartGame = 2,                           // 开始游戏
     kActionDealHeroCard = 3,                        // 发英雄牌
     kActionSelectHeroCard = 4,                      // 选中一个英雄
     kActionSendAllHeroIds = 5,                      // 发送所有玩家选中的英雄
@@ -47,14 +112,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionStartDiscard = 26,                       // 开始弃牌
     kActionOkToDiscard = 27,                        // 确定弃牌
     kActionContinueDiscard = 28,                    // 继续弃牌
-    kActionUseHeroSkill = 30,                       // 使用英雄技能
+//    kActionUseHeroSkill = 30,                       // 使用英雄技能
     kActionMisGuessedCard = 99                      // 猜错了牌 - TEMP
-    
-    
-//    kActionWaiting,                                 // 等待
-//    kActionTriggerHeroSkill,                        // 触发英雄技能
-//    kActionTriggerEquipmentSkill,                   // 触发装备技能
-//    kActionUseEquipmentSkill                        // 使用装备技能
 };
 
 #define kPlayerState    @"playerState"  // 标识玩家状态
@@ -106,17 +165,16 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
 #define kParamLostPlayingCardIds        @"greedLoseCardIds"     // 失去的牌(比如贪婪/缴械)
 #define kParamTransferedCardIds         @"transferedCardIds"    // 交给目标的牌
 #define kParamGotCardCount              @"gotCardCount"         // 得到的牌数
-#define kParamRemainingCardCount        @"remainingCardCount"   // 牌堆剩余牌数
+//#define kParamRemainingCardCount        @"remainingCardCount"   // 牌堆剩余牌数
 #define kParamTargetPlayerNames         @"targetPlayerNames"    // 指定的目标玩家们
 #define kParamBloodPointChanged         @"hpChanged"            // 血量(+/-)
 #define kParamAngerPointChanged         @"spChanged"            // 怒气(+/-)
-#define kParamIsStrengthened            @"isStrengthed"         // 是否被强化
 #define kParamTargetCardColor           @"targetColor"          // 指定的颜色
 #define kParamTargetCardSuits           @"targetSuits"          // 指定的花色
 #define kParamGreedType                 @"greedType"            // 贪婪手牌/装备
 #define kParamUsedHeroSkillId           @"usedSkillId"          // 使用的英雄技能
 
 #define kParamHandCardIds               @"handCardIds"          // 手牌列表 - TEMP
-#define kParamHeroBlood                 @"heroHP"               // 英雄当前血量
+#define kParamHeroBlood                 @"heroHP"               // 英雄当前血量 - TEMP
 
 #endif

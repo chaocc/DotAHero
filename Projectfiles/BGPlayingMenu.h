@@ -10,14 +10,13 @@
 #import "BGMenuFactory.h"
 
 typedef NS_ENUM(NSInteger, BGPlayingMenuType) {
-    kPlayingMenuTypeCardOkay,       // 通过拼点切牌/交给其他玩家牌/确定弃牌
-    kPlayingMenuTypeCardUsing,      // 使用
-    kPlayingMenuTypeCardPlaying,    // 打出
-    kPlayingMenuTypeHeroSkill,      // 英雄技能
-    kPlayingMenuTypeEquipment,      // 发动装备
-    kPlayingMenuTypeDispel,         // 驱散
-    kPlayingMenuTypeStrengthen,     // 强化
-    kPlayingMenuTypeCardColor       // 卡牌颜色
+    kPlayingMenuTypeOkay,           // 通过拼点切牌/交给其他玩家牌/确定弃牌
+    kPlayingMenuTypePlaying,        // 自己回合开始 - 主动使用
+    kPlayingMenuTypeChoosing,       // 其他玩家回合 - 被动打出
+    kPlayingMenuTypeStrengthening,  // 主动使用 - 带强化
+    kPlayingMenuTypeDispelling,     // 被动打出 - 带忽略驱散
+    kPlayingMenuTypeCardColor,      // 卡牌颜色
+    kPlayingMenuTypeCardSuits       // 卡片花色
 };
 
 typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
@@ -38,10 +37,11 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
 
 @interface BGPlayingMenu : CCNode <BGMenuFactoryDelegate>
 
-@property(nonatomic, readonly) BGPlayingMenuType menuType;
-@property(nonatomic, strong, readonly) CCMenu *menu;
+@property (nonatomic, strong) BGMenuFactory *menuFactory;
+@property (nonatomic, strong, readonly) CCMenu *menu;
+@property (nonatomic, readonly) BGPlayingMenuType menuType;
 
-- (id)initWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player;
-+ (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType ofPlayer:(BGPlayer *)player;
+- (id)initWithMenuType:(BGPlayingMenuType)menuType;
++ (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType;
 
 @end

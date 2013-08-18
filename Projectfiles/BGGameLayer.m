@@ -13,7 +13,6 @@
 #import "BGFaction.h"
 #import "BGGameMenu.h"
 #import "BGCardPile.h"
-#import "BGMoveComponent.h"
 
 typedef NS_ENUM(NSUInteger, BGPlayerCount) {
     kPlayerCountTwo = 2,
@@ -29,7 +28,6 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 
 @property (nonatomic, strong) NSArray *users;         // [0] is current user
 @property (nonatomic, strong) NSArray *allHeroIds;    // [0] is selected by current user
-@property (nonatomic, strong) NSArray *toBeSelectedHeroIds;
 
 @end
 
@@ -67,6 +65,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         
 //      Load all of the game's artwork up front
         CCSpriteFrameCache *spriteFrameCache = [CCSpriteFrameCache sharedSpriteFrameCache];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistBackground];
         [spriteFrameCache addSpriteFramesWithFile:kPlistGameArtwork];
         [spriteFrameCache addSpriteFramesWithFile:kPlistHeroCard];
         [spriteFrameCache addSpriteFramesWithFile:kPlistHeroAvatar];
@@ -81,11 +80,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [self addMenu];
         [self addCardPile];
         [self addPlayers];
-        
-        if ([BGClient sharedClient].isSingleMode) {
-            [self dealHeroCardsWithHeroIds:[NSArray arrayWithObjects:@(2), @(12), @(17), nil]];
-            [_selfPlayer addHandAreaWithCardIds:nil];
-        }
+        [self addPlayingDeck];
 }
 
 	return self;
@@ -96,6 +91,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)addDensity
 {
+//    [CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
     [self addChild:[BGDensity densityWithDensityCardId:1]];
 }
 
@@ -154,7 +150,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] isCurrentPlayer:YES];
         [self addChild:player z:2];
         
-        _selfPlayer = player;
+        _currentPlayer = player;
         [_allPlayers addObject:player];
     }
     @catch (NSException *exception) {
@@ -238,48 +234,29 @@ static BGGameLayer *instanceOfGameLayer = nil;
 }
 
 /*
- * Display the hero avatar of other players selected
+ * Add playing deck for showing toBeSelectedHeros/used/cutting cards or others
  */
-- (void)addHeroAreaForOtherPlayers
+- (void)addPlayingDeck
 {
+    _playingDeck = [BGPlayingDeck sharedPlayingDeck];
+    [self addChild:_playingDeck];
+}
+
+/*
+ * Initialize the selected hero for other players
+ */
+- (void)initOtherPlayersHeroWithHeroIds:(NSArray *)heroIds
+{
+    self.allHeroIds = heroIds;
+    
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         @try {
-            [_allPlayers[i] addHeroAreaWithHeroId:[_allHeroIds[i] integerValue]];
+            [_allPlayers[i] initHeroWithHeroId:[_allHeroIds[i] integerValue]];
         }
         @catch (NSException *exception) {
             NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
         }
     }
-}
-
-/*
- * Deal to be selected hero cards to current player after receive dealHeroCards action
- */
-- (void)dealHeroCardsWithHeroIds:(NSArray *)toBeSelectedHeroIds
-{
-    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.21f];
-    CCCallBlock *block = [CCCallBlock actionWithBlock:^{
-        [_selfPlayer setToBeSelectedHeroIds:toBeSelectedHeroIds];
-    }];
-    
-    [self runAction:[CCSequence actions:delay, block, nil]];
-}
-
-/*
- * Send the hero card of all players selected to each player after receive sendAllHeroIds action
- */
-- (void)sendAllSelectedHeroCardsWithHeroIds:(NSArray *)allHeroIds
-{
-    self.allHeroIds = allHeroIds;
-    [self addHeroAreaForOtherPlayers];
-}
-
-/*
- * Deal playing cards to current player after receive dealPlayingCard action
- */
-- (void)dealPlayingCardsWithCardIds:(NSArray *)cardIds
-{
-    [_selfPlayer addHandAreaWithCardIds:cardIds];
 }
 
 /*
@@ -291,7 +268,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
     
     [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj integerValue] == [_selfPlayer selectedHeroId]) {
+        if ([obj integerValue] == [_currentPlayer selectedHeroId]) {
             [mutableHeroIds removeObjectsAtIndexes:idxSet];
             [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
             _allHeroIds = mutableHeroIds;
@@ -300,14 +277,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
         
         [idxSet addIndex:idx];
     }];
-}
-
-/*
- * Show all cutting(切牌) cards for comparing card figure
- */
-- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
-{
-    [_selfPlayer showAllCuttingCardsWithCardIds:cardIds];
 }
 
 - (BGPlayer *)sourcePlayer

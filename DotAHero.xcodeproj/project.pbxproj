@@ -52,10 +52,6 @@
 		E301E1281770C67700E8C9D0 /* BGRoomListLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E301E1261770C67700E8C9D0 /* BGRoomListLayer.m */; };
 		E301E12B1770DE9A00E8C9D0 /* BGLoginLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E301E12A1770DE9A00E8C9D0 /* BGLoginLayer.m */; };
 		E301E12C1770DE9A00E8C9D0 /* BGLoginLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E301E12A1770DE9A00E8C9D0 /* BGLoginLayer.m */; };
-		E305894C17A39655005CEE15 /* Evasion.plist in Resources */ = {isa = PBXBuildFile; fileRef = E305894A17A39655005CEE15 /* Evasion.plist */; };
-		E305894D17A39655005CEE15 /* Evasion.plist in Resources */ = {isa = PBXBuildFile; fileRef = E305894A17A39655005CEE15 /* Evasion.plist */; };
-		E305894E17A39655005CEE15 /* Evasion.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E305894B17A39655005CEE15 /* Evasion.pvr.ccz */; };
-		E305894F17A39655005CEE15 /* Evasion.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E305894B17A39655005CEE15 /* Evasion.pvr.ccz */; };
 		E30C01B017AAA1980010034F /* Background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E30C01AB17AAA1980010034F /* Background.mp3 */; };
 		E30C01B117AAA1980010034F /* Background.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = E30C01AB17AAA1980010034F /* Background.mp3 */; };
 		E31075F0176B199100E01AA0 /* BGFaction.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075EF176B199100E01AA0 /* BGFaction.m */; };
@@ -66,391 +62,74 @@
 		E31075F9176B252900E01AA0 /* BGHandArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E31075F7176B252900E01AA0 /* BGHandArea.m */; };
 		E3113F1317A54D0E0011F8DC /* BGAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3113F1217A54D0E0011F8DC /* BGAudioComponent.m */; };
 		E3113F1417A54D0E0011F8DC /* BGAudioComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3113F1217A54D0E0011F8DC /* BGAudioComponent.m */; };
+		E31AA72D17B4C75800241AE1 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = E31AA72C17B4C75800241AE1 /* ReadMe.txt */; };
+		E31AA72E17B4C75800241AE1 /* ReadMe.txt in Resources */ = {isa = PBXBuildFile; fileRef = E31AA72C17B4C75800241AE1 /* ReadMe.txt */; };
+		E31BC25017AB3D9200745E12 /* Damage-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24017AB3D9200745E12 /* Damage-ipad.plist */; };
+		E31BC25117AB3D9200745E12 /* Damage-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24017AB3D9200745E12 /* Damage-ipad.plist */; };
+		E31BC25217AB3D9200745E12 /* Damage-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24117AB3D9200745E12 /* Damage-ipad.pvr.ccz */; };
+		E31BC25317AB3D9200745E12 /* Damage-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24117AB3D9200745E12 /* Damage-ipad.pvr.ccz */; };
+		E31BC25417AB3D9200745E12 /* Damage-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24217AB3D9200745E12 /* Damage-ipadhd.plist */; };
+		E31BC25517AB3D9200745E12 /* Damage-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24217AB3D9200745E12 /* Damage-ipadhd.plist */; };
+		E31BC25617AB3D9200745E12 /* Damage-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24317AB3D9200745E12 /* Damage-ipadhd.pvr.ccz */; };
+		E31BC25717AB3D9200745E12 /* Damage-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24317AB3D9200745E12 /* Damage-ipadhd.pvr.ccz */; };
+		E31BC25817AB3D9200745E12 /* Evasion-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24417AB3D9200745E12 /* Evasion-ipad.plist */; };
+		E31BC25917AB3D9200745E12 /* Evasion-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24417AB3D9200745E12 /* Evasion-ipad.plist */; };
+		E31BC25A17AB3D9200745E12 /* Evasion-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24517AB3D9200745E12 /* Evasion-ipad.pvr.ccz */; };
+		E31BC25B17AB3D9200745E12 /* Evasion-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24517AB3D9200745E12 /* Evasion-ipad.pvr.ccz */; };
+		E31BC25C17AB3D9200745E12 /* Evasion-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24617AB3D9200745E12 /* Evasion-ipadhd.plist */; };
+		E31BC25D17AB3D9200745E12 /* Evasion-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24617AB3D9200745E12 /* Evasion-ipadhd.plist */; };
+		E31BC25E17AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24717AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz */; };
+		E31BC25F17AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC24717AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz */; };
+		E31BC28417AB3DC500745E12 /* EquipmentAvatar-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27017AB3DC500745E12 /* EquipmentAvatar-ipad.plist */; };
+		E31BC28517AB3DC500745E12 /* EquipmentAvatar-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27017AB3DC500745E12 /* EquipmentAvatar-ipad.plist */; };
+		E31BC28617AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27117AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz */; };
+		E31BC28717AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27117AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz */; };
+		E31BC28817AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27217AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist */; };
+		E31BC28917AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27217AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist */; };
+		E31BC28A17AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27317AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz */; };
+		E31BC28B17AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC27317AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz */; };
+		E31BC2A417AB3DC500745E12 /* PlayingCard-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28017AB3DC500745E12 /* PlayingCard-ipad.plist */; };
+		E31BC2A517AB3DC500745E12 /* PlayingCard-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28017AB3DC500745E12 /* PlayingCard-ipad.plist */; };
+		E31BC2A617AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28117AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz */; };
+		E31BC2A717AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28117AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz */; };
+		E31BC2A817AB3DC500745E12 /* PlayingCard-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28217AB3DC500745E12 /* PlayingCard-ipadhd.plist */; };
+		E31BC2A917AB3DC500745E12 /* PlayingCard-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28217AB3DC500745E12 /* PlayingCard-ipadhd.plist */; };
+		E31BC2AA17AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28317AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz */; };
+		E31BC2AB17AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC28317AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz */; };
+		E31BC2C417AB3F6700745E12 /* GameArtwork-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2B817AB3F6700745E12 /* GameArtwork-ipad.plist */; };
+		E31BC2C517AB3F6700745E12 /* GameArtwork-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2B817AB3F6700745E12 /* GameArtwork-ipad.plist */; };
+		E31BC2C617AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2B917AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz */; };
+		E31BC2C717AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2B917AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz */; };
+		E31BC2C817AB3F6700745E12 /* GameArtwork-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BA17AB3F6700745E12 /* GameArtwork-ipadhd.plist */; };
+		E31BC2C917AB3F6700745E12 /* GameArtwork-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BA17AB3F6700745E12 /* GameArtwork-ipadhd.plist */; };
+		E31BC2CA17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BB17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz */; };
+		E31BC2CB17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BB17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz */; };
+		E31BC2CC17AB3F6700745E12 /* HeroAvatar-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BC17AB3F6700745E12 /* HeroAvatar-ipad.plist */; };
+		E31BC2CD17AB3F6700745E12 /* HeroAvatar-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BC17AB3F6700745E12 /* HeroAvatar-ipad.plist */; };
+		E31BC2CE17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BD17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz */; };
+		E31BC2CF17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BD17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz */; };
+		E31BC2D017AB3F6700745E12 /* HeroAvatar-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BE17AB3F6700745E12 /* HeroAvatar-ipadhd.plist */; };
+		E31BC2D117AB3F6700745E12 /* HeroAvatar-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BE17AB3F6700745E12 /* HeroAvatar-ipadhd.plist */; };
+		E31BC2D217AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BF17AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz */; };
+		E31BC2D317AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2BF17AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz */; };
+		E31BC2D417AB3F6700745E12 /* HeroCard-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C017AB3F6700745E12 /* HeroCard-ipad.plist */; };
+		E31BC2D517AB3F6700745E12 /* HeroCard-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C017AB3F6700745E12 /* HeroCard-ipad.plist */; };
+		E31BC2D617AB3F6700745E12 /* HeroCard-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C117AB3F6700745E12 /* HeroCard-ipad.pvr.ccz */; };
+		E31BC2D717AB3F6700745E12 /* HeroCard-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C117AB3F6700745E12 /* HeroCard-ipad.pvr.ccz */; };
+		E31BC2D817AB3F6700745E12 /* HeroCard-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C217AB3F6700745E12 /* HeroCard-ipadhd.plist */; };
+		E31BC2D917AB3F6700745E12 /* HeroCard-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C217AB3F6700745E12 /* HeroCard-ipadhd.plist */; };
+		E31BC2DA17AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C317AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz */; };
+		E31BC2DB17AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2C317AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz */; };
+		E31BC2E617AB68F100745E12 /* RestoreBlood-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E217AB68F100745E12 /* RestoreBlood-ipad.plist */; };
+		E31BC2E717AB68F100745E12 /* RestoreBlood-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E217AB68F100745E12 /* RestoreBlood-ipad.plist */; };
+		E31BC2E817AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E317AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz */; };
+		E31BC2E917AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E317AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz */; };
+		E31BC2EA17AB68F100745E12 /* RestoreBlood-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E417AB68F100745E12 /* RestoreBlood-ipadhd.plist */; };
+		E31BC2EB17AB68F100745E12 /* RestoreBlood-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E417AB68F100745E12 /* RestoreBlood-ipadhd.plist */; };
+		E31BC2EC17AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E517AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz */; };
+		E31BC2ED17AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E517AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz */; };
 		E31DDB5817811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
 		E31DDB5917811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
-		E320B63017888FD500DEF693 /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = E320B62F17888FD500DEF693 /* ReadMe */; };
-		E320B63117888FD500DEF693 /* ReadMe in Resources */ = {isa = PBXBuildFile; fileRef = E320B62F17888FD500DEF693 /* ReadMe */; };
-		E320D09C1768E71B00A1F32D /* bn_error.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE0A1768E71900A1F32D /* bn_error.c */; };
-		E320D09D1768E71B00A1F32D /* bn_fast_mp_invmod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE0B1768E71900A1F32D /* bn_fast_mp_invmod.c */; };
-		E320D09E1768E71B00A1F32D /* bn_fast_mp_montgomery_reduce.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE0C1768E71900A1F32D /* bn_fast_mp_montgomery_reduce.c */; };
-		E320D09F1768E71B00A1F32D /* bn_fast_s_mp_mul_digs.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE0D1768E71900A1F32D /* bn_fast_s_mp_mul_digs.c */; };
-		E320D0A01768E71B00A1F32D /* bn_fast_s_mp_mul_high_digs.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE0E1768E71900A1F32D /* bn_fast_s_mp_mul_high_digs.c */; };
-		E320D0A11768E71B00A1F32D /* bn_fast_s_mp_sqr.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE0F1768E71900A1F32D /* bn_fast_s_mp_sqr.c */; };
-		E320D0A21768E71B00A1F32D /* bn_mp_2expt.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE101768E71900A1F32D /* bn_mp_2expt.c */; };
-		E320D0A31768E71B00A1F32D /* bn_mp_abs.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE111768E71900A1F32D /* bn_mp_abs.c */; };
-		E320D0A41768E71B00A1F32D /* bn_mp_add.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE121768E71900A1F32D /* bn_mp_add.c */; };
-		E320D0A51768E71B00A1F32D /* bn_mp_add_d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE131768E71900A1F32D /* bn_mp_add_d.c */; };
-		E320D0A61768E71B00A1F32D /* bn_mp_addmod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE141768E71900A1F32D /* bn_mp_addmod.c */; };
-		E320D0A71768E71B00A1F32D /* bn_mp_and.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE151768E71900A1F32D /* bn_mp_and.c */; };
-		E320D0A81768E71B00A1F32D /* bn_mp_clamp.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE161768E71900A1F32D /* bn_mp_clamp.c */; };
-		E320D0A91768E71B00A1F32D /* bn_mp_clear.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE171768E71900A1F32D /* bn_mp_clear.c */; };
-		E320D0AA1768E71B00A1F32D /* bn_mp_clear_multi.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE181768E71900A1F32D /* bn_mp_clear_multi.c */; };
-		E320D0AB1768E71B00A1F32D /* bn_mp_cmp.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE191768E71900A1F32D /* bn_mp_cmp.c */; };
-		E320D0AC1768E71B00A1F32D /* bn_mp_cmp_d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE1A1768E71900A1F32D /* bn_mp_cmp_d.c */; };
-		E320D0AD1768E71B00A1F32D /* bn_mp_cmp_mag.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE1B1768E71900A1F32D /* bn_mp_cmp_mag.c */; };
-		E320D0AE1768E71B00A1F32D /* bn_mp_cnt_lsb.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE1C1768E71900A1F32D /* bn_mp_cnt_lsb.c */; };
-		E320D0AF1768E71B00A1F32D /* bn_mp_copy.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE1D1768E71900A1F32D /* bn_mp_copy.c */; };
-		E320D0B01768E71B00A1F32D /* bn_mp_count_bits.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE1E1768E71900A1F32D /* bn_mp_count_bits.c */; };
-		E320D0B11768E71B00A1F32D /* bn_mp_div.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE1F1768E71900A1F32D /* bn_mp_div.c */; };
-		E320D0B21768E71B00A1F32D /* bn_mp_div_2.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE201768E71A00A1F32D /* bn_mp_div_2.c */; };
-		E320D0B31768E71B00A1F32D /* bn_mp_div_2d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE211768E71A00A1F32D /* bn_mp_div_2d.c */; };
-		E320D0B41768E71B00A1F32D /* bn_mp_div_3.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE221768E71A00A1F32D /* bn_mp_div_3.c */; };
-		E320D0B51768E71B00A1F32D /* bn_mp_div_d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE231768E71A00A1F32D /* bn_mp_div_d.c */; };
-		E320D0B61768E71B00A1F32D /* bn_mp_dr_is_modulus.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE241768E71A00A1F32D /* bn_mp_dr_is_modulus.c */; };
-		E320D0B71768E71B00A1F32D /* bn_mp_dr_reduce.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE251768E71A00A1F32D /* bn_mp_dr_reduce.c */; };
-		E320D0B81768E71B00A1F32D /* bn_mp_dr_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE261768E71A00A1F32D /* bn_mp_dr_setup.c */; };
-		E320D0B91768E71B00A1F32D /* bn_mp_exch.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE271768E71A00A1F32D /* bn_mp_exch.c */; };
-		E320D0BA1768E71B00A1F32D /* bn_mp_expt_d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE281768E71A00A1F32D /* bn_mp_expt_d.c */; };
-		E320D0BB1768E71B00A1F32D /* bn_mp_exptmod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE291768E71A00A1F32D /* bn_mp_exptmod.c */; };
-		E320D0BC1768E71B00A1F32D /* bn_mp_exptmod_fast.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE2A1768E71A00A1F32D /* bn_mp_exptmod_fast.c */; };
-		E320D0BD1768E71B00A1F32D /* bn_mp_exteuclid.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE2B1768E71A00A1F32D /* bn_mp_exteuclid.c */; };
-		E320D0BE1768E71B00A1F32D /* bn_mp_fread.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE2C1768E71A00A1F32D /* bn_mp_fread.c */; };
-		E320D0BF1768E71B00A1F32D /* bn_mp_fwrite.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE2D1768E71A00A1F32D /* bn_mp_fwrite.c */; };
-		E320D0C01768E71B00A1F32D /* bn_mp_gcd.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE2E1768E71A00A1F32D /* bn_mp_gcd.c */; };
-		E320D0C11768E71B00A1F32D /* bn_mp_get_int.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE2F1768E71A00A1F32D /* bn_mp_get_int.c */; };
-		E320D0C21768E71B00A1F32D /* bn_mp_grow.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE301768E71A00A1F32D /* bn_mp_grow.c */; };
-		E320D0C31768E71B00A1F32D /* bn_mp_init.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE311768E71A00A1F32D /* bn_mp_init.c */; };
-		E320D0C41768E71B00A1F32D /* bn_mp_init_copy.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE321768E71A00A1F32D /* bn_mp_init_copy.c */; };
-		E320D0C51768E71B00A1F32D /* bn_mp_init_multi.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE331768E71A00A1F32D /* bn_mp_init_multi.c */; };
-		E320D0C61768E71B00A1F32D /* bn_mp_init_set.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE341768E71A00A1F32D /* bn_mp_init_set.c */; };
-		E320D0C71768E71B00A1F32D /* bn_mp_init_set_int.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE351768E71A00A1F32D /* bn_mp_init_set_int.c */; };
-		E320D0C81768E71B00A1F32D /* bn_mp_init_size.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE361768E71A00A1F32D /* bn_mp_init_size.c */; };
-		E320D0C91768E71B00A1F32D /* bn_mp_invmod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE371768E71A00A1F32D /* bn_mp_invmod.c */; };
-		E320D0CA1768E71B00A1F32D /* bn_mp_invmod_slow.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE381768E71A00A1F32D /* bn_mp_invmod_slow.c */; };
-		E320D0CB1768E71B00A1F32D /* bn_mp_is_square.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE391768E71A00A1F32D /* bn_mp_is_square.c */; };
-		E320D0CC1768E71B00A1F32D /* bn_mp_jacobi.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE3A1768E71A00A1F32D /* bn_mp_jacobi.c */; };
-		E320D0CD1768E71B00A1F32D /* bn_mp_karatsuba_mul.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE3B1768E71A00A1F32D /* bn_mp_karatsuba_mul.c */; };
-		E320D0CE1768E71B00A1F32D /* bn_mp_karatsuba_sqr.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE3C1768E71A00A1F32D /* bn_mp_karatsuba_sqr.c */; };
-		E320D0CF1768E71B00A1F32D /* bn_mp_lcm.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE3D1768E71A00A1F32D /* bn_mp_lcm.c */; };
-		E320D0D01768E71B00A1F32D /* bn_mp_lshd.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE3E1768E71A00A1F32D /* bn_mp_lshd.c */; };
-		E320D0D11768E71B00A1F32D /* bn_mp_mod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE3F1768E71A00A1F32D /* bn_mp_mod.c */; };
-		E320D0D21768E71B00A1F32D /* bn_mp_mod_2d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE401768E71A00A1F32D /* bn_mp_mod_2d.c */; };
-		E320D0D31768E71B00A1F32D /* bn_mp_mod_d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE411768E71A00A1F32D /* bn_mp_mod_d.c */; };
-		E320D0D41768E71B00A1F32D /* bn_mp_montgomery_calc_normalization.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE421768E71A00A1F32D /* bn_mp_montgomery_calc_normalization.c */; };
-		E320D0D51768E71B00A1F32D /* bn_mp_montgomery_reduce.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE431768E71A00A1F32D /* bn_mp_montgomery_reduce.c */; };
-		E320D0D61768E71B00A1F32D /* bn_mp_montgomery_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE441768E71A00A1F32D /* bn_mp_montgomery_setup.c */; };
-		E320D0D71768E71B00A1F32D /* bn_mp_mul.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE451768E71A00A1F32D /* bn_mp_mul.c */; };
-		E320D0D81768E71B00A1F32D /* bn_mp_mul_2.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE461768E71A00A1F32D /* bn_mp_mul_2.c */; };
-		E320D0D91768E71B00A1F32D /* bn_mp_mul_2d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE471768E71A00A1F32D /* bn_mp_mul_2d.c */; };
-		E320D0DA1768E71B00A1F32D /* bn_mp_mul_d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE481768E71A00A1F32D /* bn_mp_mul_d.c */; };
-		E320D0DB1768E71B00A1F32D /* bn_mp_mulmod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE491768E71A00A1F32D /* bn_mp_mulmod.c */; };
-		E320D0DC1768E71B00A1F32D /* bn_mp_n_root.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE4A1768E71A00A1F32D /* bn_mp_n_root.c */; };
-		E320D0DD1768E71B00A1F32D /* bn_mp_neg.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE4B1768E71A00A1F32D /* bn_mp_neg.c */; };
-		E320D0DE1768E71B00A1F32D /* bn_mp_or.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE4C1768E71A00A1F32D /* bn_mp_or.c */; };
-		E320D0DF1768E71B00A1F32D /* bn_mp_prime_fermat.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE4D1768E71A00A1F32D /* bn_mp_prime_fermat.c */; };
-		E320D0E01768E71B00A1F32D /* bn_mp_prime_is_divisible.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE4E1768E71A00A1F32D /* bn_mp_prime_is_divisible.c */; };
-		E320D0E11768E71B00A1F32D /* bn_mp_prime_is_prime.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE4F1768E71A00A1F32D /* bn_mp_prime_is_prime.c */; };
-		E320D0E21768E71B00A1F32D /* bn_mp_prime_miller_rabin.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE501768E71A00A1F32D /* bn_mp_prime_miller_rabin.c */; };
-		E320D0E31768E71B00A1F32D /* bn_mp_prime_next_prime.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE511768E71A00A1F32D /* bn_mp_prime_next_prime.c */; };
-		E320D0E41768E71B00A1F32D /* bn_mp_prime_rabin_miller_trials.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE521768E71A00A1F32D /* bn_mp_prime_rabin_miller_trials.c */; };
-		E320D0E51768E71B00A1F32D /* bn_mp_prime_random_ex.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE531768E71A00A1F32D /* bn_mp_prime_random_ex.c */; };
-		E320D0E61768E71B00A1F32D /* bn_mp_radix_size.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE541768E71A00A1F32D /* bn_mp_radix_size.c */; };
-		E320D0E71768E71B00A1F32D /* bn_mp_radix_smap.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE551768E71A00A1F32D /* bn_mp_radix_smap.c */; };
-		E320D0E81768E71B00A1F32D /* bn_mp_rand.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE561768E71A00A1F32D /* bn_mp_rand.c */; };
-		E320D0E91768E71B00A1F32D /* bn_mp_read_radix.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE571768E71A00A1F32D /* bn_mp_read_radix.c */; };
-		E320D0EA1768E71B00A1F32D /* bn_mp_read_signed_bin.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE581768E71A00A1F32D /* bn_mp_read_signed_bin.c */; };
-		E320D0EB1768E71C00A1F32D /* bn_mp_read_unsigned_bin.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE591768E71A00A1F32D /* bn_mp_read_unsigned_bin.c */; };
-		E320D0EC1768E71C00A1F32D /* bn_mp_reduce.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE5A1768E71A00A1F32D /* bn_mp_reduce.c */; };
-		E320D0ED1768E71C00A1F32D /* bn_mp_reduce_2k.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE5B1768E71A00A1F32D /* bn_mp_reduce_2k.c */; };
-		E320D0EE1768E71C00A1F32D /* bn_mp_reduce_2k_l.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE5C1768E71A00A1F32D /* bn_mp_reduce_2k_l.c */; };
-		E320D0EF1768E71C00A1F32D /* bn_mp_reduce_2k_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE5D1768E71A00A1F32D /* bn_mp_reduce_2k_setup.c */; };
-		E320D0F01768E71C00A1F32D /* bn_mp_reduce_2k_setup_l.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE5E1768E71A00A1F32D /* bn_mp_reduce_2k_setup_l.c */; };
-		E320D0F11768E71C00A1F32D /* bn_mp_reduce_is_2k.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE5F1768E71A00A1F32D /* bn_mp_reduce_is_2k.c */; };
-		E320D0F21768E71C00A1F32D /* bn_mp_reduce_is_2k_l.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE601768E71A00A1F32D /* bn_mp_reduce_is_2k_l.c */; };
-		E320D0F31768E71C00A1F32D /* bn_mp_reduce_setup.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE611768E71A00A1F32D /* bn_mp_reduce_setup.c */; };
-		E320D0F41768E71C00A1F32D /* bn_mp_rshd.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE621768E71A00A1F32D /* bn_mp_rshd.c */; };
-		E320D0F51768E71C00A1F32D /* bn_mp_set.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE631768E71A00A1F32D /* bn_mp_set.c */; };
-		E320D0F61768E71C00A1F32D /* bn_mp_set_int.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE641768E71A00A1F32D /* bn_mp_set_int.c */; };
-		E320D0F71768E71C00A1F32D /* bn_mp_shrink.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE651768E71A00A1F32D /* bn_mp_shrink.c */; };
-		E320D0F81768E71C00A1F32D /* bn_mp_signed_bin_size.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE661768E71A00A1F32D /* bn_mp_signed_bin_size.c */; };
-		E320D0F91768E71C00A1F32D /* bn_mp_sqr.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE671768E71A00A1F32D /* bn_mp_sqr.c */; };
-		E320D0FA1768E71C00A1F32D /* bn_mp_sqrmod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE681768E71A00A1F32D /* bn_mp_sqrmod.c */; };
-		E320D0FB1768E71C00A1F32D /* bn_mp_sqrt.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE691768E71A00A1F32D /* bn_mp_sqrt.c */; };
-		E320D0FC1768E71C00A1F32D /* bn_mp_sub.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE6A1768E71A00A1F32D /* bn_mp_sub.c */; };
-		E320D0FD1768E71C00A1F32D /* bn_mp_sub_d.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE6B1768E71A00A1F32D /* bn_mp_sub_d.c */; };
-		E320D0FE1768E71C00A1F32D /* bn_mp_submod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE6C1768E71A00A1F32D /* bn_mp_submod.c */; };
-		E320D0FF1768E71C00A1F32D /* bn_mp_to_signed_bin.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE6D1768E71A00A1F32D /* bn_mp_to_signed_bin.c */; };
-		E320D1001768E71C00A1F32D /* bn_mp_to_signed_bin_n.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE6E1768E71A00A1F32D /* bn_mp_to_signed_bin_n.c */; };
-		E320D1011768E71C00A1F32D /* bn_mp_to_unsigned_bin.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE6F1768E71A00A1F32D /* bn_mp_to_unsigned_bin.c */; };
-		E320D1021768E71C00A1F32D /* bn_mp_to_unsigned_bin_n.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE701768E71A00A1F32D /* bn_mp_to_unsigned_bin_n.c */; };
-		E320D1031768E71C00A1F32D /* bn_mp_toom_mul.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE711768E71A00A1F32D /* bn_mp_toom_mul.c */; };
-		E320D1041768E71C00A1F32D /* bn_mp_toom_sqr.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE721768E71A00A1F32D /* bn_mp_toom_sqr.c */; };
-		E320D1051768E71C00A1F32D /* bn_mp_toradix.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE731768E71A00A1F32D /* bn_mp_toradix.c */; };
-		E320D1061768E71C00A1F32D /* bn_mp_toradix_n.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE741768E71A00A1F32D /* bn_mp_toradix_n.c */; };
-		E320D1071768E71C00A1F32D /* bn_mp_unsigned_bin_size.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE751768E71A00A1F32D /* bn_mp_unsigned_bin_size.c */; };
-		E320D1081768E71C00A1F32D /* bn_mp_xor.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE761768E71A00A1F32D /* bn_mp_xor.c */; };
-		E320D1091768E71C00A1F32D /* bn_mp_zero.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE771768E71A00A1F32D /* bn_mp_zero.c */; };
-		E320D10A1768E71C00A1F32D /* bn_prime_tab.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE781768E71A00A1F32D /* bn_prime_tab.c */; };
-		E320D10B1768E71C00A1F32D /* bn_reverse.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE791768E71A00A1F32D /* bn_reverse.c */; };
-		E320D10C1768E71C00A1F32D /* bn_s_mp_add.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE7A1768E71A00A1F32D /* bn_s_mp_add.c */; };
-		E320D10D1768E71C00A1F32D /* bn_s_mp_exptmod.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE7B1768E71A00A1F32D /* bn_s_mp_exptmod.c */; };
-		E320D10E1768E71C00A1F32D /* bn_s_mp_mul_digs.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE7C1768E71A00A1F32D /* bn_s_mp_mul_digs.c */; };
-		E320D10F1768E71C00A1F32D /* bn_s_mp_mul_high_digs.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE7D1768E71A00A1F32D /* bn_s_mp_mul_high_digs.c */; };
-		E320D1101768E71C00A1F32D /* bn_s_mp_sqr.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE7E1768E71A00A1F32D /* bn_s_mp_sqr.c */; };
-		E320D1111768E71C00A1F32D /* bn_s_mp_sub.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE7F1768E71A00A1F32D /* bn_s_mp_sub.c */; };
-		E320D1121768E71C00A1F32D /* bncore.c in Sources */ = {isa = PBXBuildFile; fileRef = E320CE801768E71A00A1F32D /* bncore.c */; };
-		E320D1131768E71C00A1F32D /* ElectroServer.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF981768E71B00A1F32D /* ElectroServer.m */; };
-		E320D1141768E71C00A1F32D /* EsAddBuddiesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF991768E71B00A1F32D /* EsAddBuddiesRequest.m */; };
-		E320D1151768E71C00A1F32D /* EsAddBuddiesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF9A1768E71B00A1F32D /* EsAddBuddiesResponse.m */; };
-		E320D1161768E71C00A1F32D /* EsAddRoomOperatorRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF9B1768E71B00A1F32D /* EsAddRoomOperatorRequest.m */; };
-		E320D1171768E71C00A1F32D /* EsAggregatePluginMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF9C1768E71B00A1F32D /* EsAggregatePluginMessageEvent.m */; };
-		E320D1181768E71C00A1F32D /* EsAggregatePluginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF9D1768E71B00A1F32D /* EsAggregatePluginRequest.m */; };
-		E320D1191768E71C00A1F32D /* EsAvailableConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF9E1768E71B00A1F32D /* EsAvailableConnection.m */; };
-		E320D11A1768E71C00A1F32D /* EsBuddyStatusUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CF9F1768E71B00A1F32D /* EsBuddyStatusUpdateAction.m */; };
-		E320D11B1768E71C00A1F32D /* EsBuddyStatusUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA01768E71B00A1F32D /* EsBuddyStatusUpdateEvent.m */; };
-		E320D11C1768E71C00A1F32D /* EsConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA11768E71B00A1F32D /* EsConnection.m */; };
-		E320D11D1768E71C00A1F32D /* EsConnectionAttemptResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA21768E71B00A1F32D /* EsConnectionAttemptResponse.m */; };
-		E320D11E1768E71C00A1F32D /* EsConnectionClosedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA31768E71B00A1F32D /* EsConnectionClosedEvent.m */; };
-		E320D11F1768E71C00A1F32D /* EsConnectionEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA41768E71B00A1F32D /* EsConnectionEvent.m */; };
-		E320D1201768E71C00A1F32D /* EsConnectionResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA51768E71B00A1F32D /* EsConnectionResponse.m */; };
-		E320D1211768E71C00A1F32D /* EsCreateOrJoinGameResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA61768E71B00A1F32D /* EsCreateOrJoinGameResponse.m */; };
-		E320D1221768E71C00A1F32D /* EsCreateRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA71768E71B00A1F32D /* EsCreateRoomRequest.m */; };
-		E320D1231768E71C00A1F32D /* EsCreateRoomVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA81768E71B00A1F32D /* EsCreateRoomVariableRequest.m */; };
-		E320D1241768E71C00A1F32D /* EsCrossDomainPolicyRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFA91768E71B00A1F32D /* EsCrossDomainPolicyRequest.m */; };
-		E320D1251768E71C00A1F32D /* EsCrossDomainPolicyResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFAA1768E71B00A1F32D /* EsCrossDomainPolicyResponse.m */; };
-		E320D1261768E71C00A1F32D /* EsCryptoTools.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFAB1768E71B00A1F32D /* EsCryptoTools.m */; };
-		E320D1271768E71C00A1F32D /* EsDataType.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFAC1768E71B00A1F32D /* EsDataType.m */; };
-		E320D1281768E71C00A1F32D /* EsDeleteRoomVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFAD1768E71B00A1F32D /* EsDeleteRoomVariableRequest.m */; };
-		E320D1291768E71C00A1F32D /* EsDeleteUserVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFAE1768E71B00A1F32D /* EsDeleteUserVariableRequest.m */; };
-		E320D12A1768E71C00A1F32D /* EsDhAesEncryptionContext.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFAF1768E71B00A1F32D /* EsDhAesEncryptionContext.m */; };
-		E320D12B1768E71C00A1F32D /* EsDHInitiateKeyExchangeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB01768E71B00A1F32D /* EsDHInitiateKeyExchangeRequest.m */; };
-		E320D12C1768E71C00A1F32D /* EsDHPublicNumbersResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB11768E71B00A1F32D /* EsDHPublicNumbersResponse.m */; };
-		E320D12D1768E71C00A1F32D /* EsDHSharedModulusRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB21768E71B00A1F32D /* EsDHSharedModulusRequest.m */; };
-		E320D12E1768E71C00A1F32D /* EsDHSharedModulusResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB31768E71B00A1F32D /* EsDHSharedModulusResponse.m */; };
-		E320D12F1768E71C00A1F32D /* EsEncryptionStateChangeEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB41768E71B00A1F32D /* EsEncryptionStateChangeEvent.m */; };
-		E320D1301768E71C00A1F32D /* EsEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB51768E71B00A1F32D /* EsEngine.m */; };
-		E320D1311768E71C00A1F32D /* EsEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB61768E71B00A1F32D /* EsEntity.m */; };
-		E320D1321768E71C00A1F32D /* EsErrorType.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB71768E71B00A1F32D /* EsErrorType.m */; };
-		E320D1331768E71C00A1F32D /* EsEsNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB81768E71B00A1F32D /* EsEsNumber.m */; };
-		E320D1341768E71C00A1F32D /* EsEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFB91768E71B00A1F32D /* EsEvent.m */; };
-		E320D1351768E71C00A1F32D /* EsEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFBA1768E71B00A1F32D /* EsEventDispatcher.m */; };
-		E320D1361768E71C00A1F32D /* EsEventDispatcherEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFBB1768E71B00A1F32D /* EsEventDispatcherEvent.m */; };
-		E320D1371768E71C00A1F32D /* EsEvictUserFromRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFBC1768E71B00A1F32D /* EsEvictUserFromRoomRequest.m */; };
-		E320D1381768E71C00A1F32D /* EsFindGamesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFBD1768E71B00A1F32D /* EsFindGamesRequest.m */; };
-		E320D1391768E71C00A1F32D /* EsFindGamesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFBE1768E71B00A1F32D /* EsFindGamesResponse.m */; };
-		E320D13A1768E71C00A1F32D /* EsFindZoneAndRoomByNameRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFBF1768E71B00A1F32D /* EsFindZoneAndRoomByNameRequest.m */; };
-		E320D13B1768E71C00A1F32D /* EsFindZoneAndRoomByNameResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC01768E71B00A1F32D /* EsFindZoneAndRoomByNameResponse.m */; };
-		E320D13C1768E71C00A1F32D /* EsFlattenedEsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC11768E71B00A1F32D /* EsFlattenedEsObject.m */; };
-		E320D13D1768E71C00A1F32D /* EsFlattenedEsObjectRO.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC21768E71B00A1F32D /* EsFlattenedEsObjectRO.m */; };
-		E320D13E1768E71C00A1F32D /* EsGatewayKickUserRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC31768E71B00A1F32D /* EsGatewayKickUserRequest.m */; };
-		E320D13F1768E71C00A1F32D /* EsGatewayStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC41768E71B00A1F32D /* EsGatewayStatistics.m */; };
-		E320D1401768E71C00A1F32D /* EsGenericErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC51768E71B00A1F32D /* EsGenericErrorResponse.m */; };
-		E320D1411768E71C00A1F32D /* EsGetGameTypesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC61768E71B00A1F32D /* EsGetGameTypesRequest.m */; };
-		E320D1421768E71C00A1F32D /* EsGetGameTypesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC71768E71B00A1F32D /* EsGetGameTypesResponse.m */; };
-		E320D1431768E71C00A1F32D /* EsGetRoomsInZoneRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC81768E71B00A1F32D /* EsGetRoomsInZoneRequest.m */; };
-		E320D1441768E71C00A1F32D /* EsGetRoomsInZoneResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFC91768E71B00A1F32D /* EsGetRoomsInZoneResponse.m */; };
-		E320D1451768E71C00A1F32D /* EsGetServerLocalTimeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFCA1768E71B00A1F32D /* EsGetServerLocalTimeRequest.m */; };
-		E320D1461768E71C00A1F32D /* EsGetServerLocalTimeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFCB1768E71B00A1F32D /* EsGetServerLocalTimeResponse.m */; };
-		E320D1471768E71C00A1F32D /* EsGetUserCountRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFCC1768E71B00A1F32D /* EsGetUserCountRequest.m */; };
-		E320D1481768E71C00A1F32D /* EsGetUserCountResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFCD1768E71B00A1F32D /* EsGetUserCountResponse.m */; };
-		E320D1491768E71C00A1F32D /* EsGetUsersInRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFCE1768E71B00A1F32D /* EsGetUsersInRoomRequest.m */; };
-		E320D14A1768E71C00A1F32D /* EsGetUsersInRoomResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFCF1768E71B00A1F32D /* EsGetUsersInRoomResponse.m */; };
-		E320D14B1768E71C00A1F32D /* EsGetUserVariablesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD01768E71B00A1F32D /* EsGetUserVariablesRequest.m */; };
-		E320D14C1768E71C00A1F32D /* EsGetUserVariablesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD11768E71B00A1F32D /* EsGetUserVariablesResponse.m */; };
-		E320D14D1768E71C00A1F32D /* EsGetZonesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD21768E71B00A1F32D /* EsGetZonesRequest.m */; };
-		E320D14E1768E71C00A1F32D /* EsGetZonesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD31768E71B00A1F32D /* EsGetZonesResponse.m */; };
-		E320D14F1768E71C00A1F32D /* EsIdleTimeoutWarningEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD41768E71B00A1F32D /* EsIdleTimeoutWarningEvent.m */; };
-		E320D1501768E71C00A1F32D /* EsJoinGameRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD51768E71B00A1F32D /* EsJoinGameRequest.m */; };
-		E320D1511768E71C00A1F32D /* EsJoinRoomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD61768E71B00A1F32D /* EsJoinRoomEvent.m */; };
-		E320D1521768E71C00A1F32D /* EsJoinRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD71768E71B00A1F32D /* EsJoinRoomRequest.m */; };
-		E320D1531768E71C00A1F32D /* EsJoinZoneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD81768E71B00A1F32D /* EsJoinZoneEvent.m */; };
-		E320D1541768E71C00A1F32D /* EsLeaveRoomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFD91768E71B00A1F32D /* EsLeaveRoomEvent.m */; };
-		E320D1551768E71C00A1F32D /* EsLeaveRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFDA1768E71B00A1F32D /* EsLeaveRoomRequest.m */; };
-		E320D1561768E71C00A1F32D /* EsLeaveZoneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFDB1768E71B00A1F32D /* EsLeaveZoneEvent.m */; };
-		E320D1571768E71C00A1F32D /* EsLoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFDC1768E71B00A1F32D /* EsLoginRequest.m */; };
-		E320D1581768E71C00A1F32D /* EsLoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFDD1768E71B00A1F32D /* EsLoginResponse.m */; };
-		E320D1591768E71C00A1F32D /* EsLogOutRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFDE1768E71B00A1F32D /* EsLogOutRequest.m */; };
-		E320D15A1768E71C00A1F32D /* EsManagerHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFDF1768E71B00A1F32D /* EsManagerHelper.m */; };
-		E320D15B1768E71C00A1F32D /* EsMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE01768E71B00A1F32D /* EsMessage.m */; };
-		E320D15C1768E71C00A1F32D /* EsMessageTranslator.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE11768E71B00A1F32D /* EsMessageTranslator.m */; };
-		E320D15D1768E71C00A1F32D /* EsMessageType.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE21768E71B00A1F32D /* EsMessageType.m */; };
-		E320D15E1768E71C00A1F32D /* EsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE31768E71B00A1F32D /* EsObject.m */; };
-		E320D15F1768E71C00A1F32D /* EsObjectCodec.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE41768E71B00A1F32D /* EsObjectCodec.m */; };
-		E320D1601768E71C00A1F32D /* EsPingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE51768E71B00A1F32D /* EsPingRequest.m */; };
-		E320D1611768E71C00A1F32D /* EsPingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE61768E71B00A1F32D /* EsPingResponse.m */; };
-		E320D1621768E71C00A1F32D /* EsPluginListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE71768E71B00A1F32D /* EsPluginListEntry.m */; };
-		E320D1631768E71C00A1F32D /* EsPluginMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE81768E71B00A1F32D /* EsPluginMessageEvent.m */; };
-		E320D1641768E71C00A1F32D /* EsPluginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFE91768E71B00A1F32D /* EsPluginRequest.m */; };
-		E320D1651768E71C00A1F32D /* EsPrivateMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFEA1768E71B00A1F32D /* EsPrivateMessageEvent.m */; };
-		E320D1661768E71C00A1F32D /* EsPrivateMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFEB1768E71B00A1F32D /* EsPrivateMessageRequest.m */; };
-		E320D1671768E71C00A1F32D /* EsProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFEC1768E71B00A1F32D /* EsProtocol.m */; };
-		E320D1681768E71C00A1F32D /* EsProtocolConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFED1768E71B00A1F32D /* EsProtocolConfiguration.m */; };
-		E320D1691768E71C00A1F32D /* EsPublicMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFEE1768E71B00A1F32D /* EsPublicMessageEvent.m */; };
-		E320D16A1768E71C00A1F32D /* EsPublicMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFEF1768E71B00A1F32D /* EsPublicMessageRequest.m */; };
-		E320D16B1768E71C00A1F32D /* EsQueuedMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF01768E71B00A1F32D /* EsQueuedMessage.m */; };
-		E320D16C1768E71C00A1F32D /* EsQuickJoinGameRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF11768E71B00A1F32D /* EsQuickJoinGameRequest.m */; };
-		E320D16D1768E71C00A1F32D /* EsRegisterUDPConnectionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF21768E71B00A1F32D /* EsRegisterUDPConnectionRequest.m */; };
-		E320D16E1768E71C00A1F32D /* EsRegisterUDPConnectionResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF31768E71B00A1F32D /* EsRegisterUDPConnectionResponse.m */; };
-		E320D16F1768E71C00A1F32D /* EsRegistryConnectToPreferredGatewayRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF41768E71B00A1F32D /* EsRegistryConnectToPreferredGatewayRequest.m */; };
-		E320D1701768E71C00A1F32D /* EsRemoveBuddiesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF51768E71B00A1F32D /* EsRemoveBuddiesRequest.m */; };
-		E320D1711768E71C00A1F32D /* EsRemoveBuddiesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF61768E71B00A1F32D /* EsRemoveBuddiesResponse.m */; };
-		E320D1721768E71C00A1F32D /* EsRemoveRoomOperatorRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF71768E71B00A1F32D /* EsRemoveRoomOperatorRequest.m */; };
-		E320D1731768E71C00A1F32D /* EsRemoveUDPConnectionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF81768E71B00A1F32D /* EsRemoveUDPConnectionRequest.m */; };
-		E320D1741768E71C00A1F32D /* EsRemoveUDPConnectionResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFF91768E71B00A1F32D /* EsRemoveUDPConnectionResponse.m */; };
-		E320D1751768E71C00A1F32D /* EsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFFA1768E71B00A1F32D /* EsRequest.m */; };
-		E320D1761768E71C00A1F32D /* EsRequestDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFFB1768E71B00A1F32D /* EsRequestDetails.m */; };
-		E320D1771768E71C00A1F32D /* EsResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFFC1768E71B00A1F32D /* EsResponse.m */; };
-		E320D1781768E71C00A1F32D /* EsRoom.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFFD1768E71B00A1F32D /* EsRoom.m */; };
-		E320D1791768E71C00A1F32D /* EsRoomListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFFE1768E71B00A1F32D /* EsRoomListEntry.m */; };
-		E320D17A1768E71C00A1F32D /* EsRoomVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = E320CFFF1768E71B00A1F32D /* EsRoomVariable.m */; };
-		E320D17B1768E71C00A1F32D /* EsRoomVariableUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0001768E71B00A1F32D /* EsRoomVariableUpdateAction.m */; };
-		E320D17C1768E71C00A1F32D /* EsRoomVariableUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0011768E71B00A1F32D /* EsRoomVariableUpdateEvent.m */; };
-		E320D17D1768E71C00A1F32D /* EsSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0021768E71B00A1F32D /* EsSearchCriteria.m */; };
-		E320D17E1768E71C00A1F32D /* EsServer.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0031768E71B00A1F32D /* EsServer.m */; };
-		E320D17F1768E71C00A1F32D /* EsServerGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0041768E71B00A1F32D /* EsServerGame.m */; };
-		E320D1801768E71C00A1F32D /* EsServerKickUserEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0051768E71B00A1F32D /* EsServerKickUserEvent.m */; };
-		E320D1811768E71C00A1F32D /* EsServerState.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0061768E71B00A1F32D /* EsServerState.m */; };
-		E320D1821768E71C00A1F32D /* EsSessionIdleEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0071768E71B00A1F32D /* EsSessionIdleEvent.m */; };
-		E320D1831768E71C00A1F32D /* EsSettingsLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0081768E71B00A1F32D /* EsSettingsLoader.m */; };
-		E320D1841768E71C00A1F32D /* EsSettingsXmlParser.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0091768E71B00A1F32D /* EsSettingsXmlParser.m */; };
-		E320D1851768E71C00A1F32D /* EsSocketConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D00A1768E71B00A1F32D /* EsSocketConnection.m */; };
-		E320D1861768E71C00A1F32D /* EsThriftUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D00B1768E71B00A1F32D /* EsThriftUtil.m */; };
-		E320D1871768E71C00A1F32D /* EsTransportType.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D00C1768E71B00A1F32D /* EsTransportType.m */; };
-		E320D1881768E71C00A1F32D /* EsUpdateRoomDetailsEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D00D1768E71B00A1F32D /* EsUpdateRoomDetailsEvent.m */; };
-		E320D1891768E71C00A1F32D /* EsUpdateRoomDetailsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D00E1768E71B00A1F32D /* EsUpdateRoomDetailsRequest.m */; };
-		E320D18A1768E71C00A1F32D /* EsUpdateRoomVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D00F1768E71B00A1F32D /* EsUpdateRoomVariableRequest.m */; };
-		E320D18B1768E71C00A1F32D /* EsUpdateUserVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0101768E71B00A1F32D /* EsUpdateUserVariableRequest.m */; };
-		E320D18C1768E71C00A1F32D /* EsUser.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0111768E71B00A1F32D /* EsUser.m */; };
-		E320D18D1768E71C00A1F32D /* EsUserEvictedFromRoomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0121768E71B00A1F32D /* EsUserEvictedFromRoomEvent.m */; };
-		E320D18E1768E71C00A1F32D /* EsUserListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0131768E71B00A1F32D /* EsUserListEntry.m */; };
-		E320D18F1768E71C00A1F32D /* EsUserManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0141768E71B00A1F32D /* EsUserManager.m */; };
-		E320D1901768E71C00A1F32D /* EsUserServerVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0151768E71B00A1F32D /* EsUserServerVariable.m */; };
-		E320D1911768E71C00A1F32D /* EsUserUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0161768E71B00A1F32D /* EsUserUpdateAction.m */; };
-		E320D1921768E71C00A1F32D /* EsUserUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0171768E71B00A1F32D /* EsUserUpdateEvent.m */; };
-		E320D1931768E71C00A1F32D /* EsUserVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0181768E71B00A1F32D /* EsUserVariable.m */; };
-		E320D1941768E71C00A1F32D /* EsUserVariableUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0191768E71B00A1F32D /* EsUserVariableUpdateAction.m */; };
-		E320D1951768E71C00A1F32D /* EsUserVariableUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D01A1768E71B00A1F32D /* EsUserVariableUpdateEvent.m */; };
-		E320D1961768E71C00A1F32D /* EsUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D01B1768E71B00A1F32D /* EsUtility.m */; };
-		E320D1971768E71C00A1F32D /* EsValidateAdditionalLoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D01C1768E71B00A1F32D /* EsValidateAdditionalLoginRequest.m */; };
-		E320D1981768E71C00A1F32D /* EsValidateAdditionalLoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D01D1768E71B00A1F32D /* EsValidateAdditionalLoginResponse.m */; };
-		E320D1991768E71C00A1F32D /* EsZone.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D01E1768E71B00A1F32D /* EsZone.m */; };
-		E320D19A1768E71C00A1F32D /* EsZoneListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D01F1768E71B00A1F32D /* EsZoneListEntry.m */; };
-		E320D19B1768E71C00A1F32D /* EsZoneManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0201768E71B00A1F32D /* EsZoneManager.m */; };
-		E320D19C1768E71C00A1F32D /* EsZoneUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0211768E71B00A1F32D /* EsZoneUpdateAction.m */; };
-		E320D19D1768E71C00A1F32D /* EsZoneUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0221768E71B00A1F32D /* EsZoneUpdateEvent.m */; };
-		E320D19E1768E71C00A1F32D /* NSData+Base64.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0231768E71B00A1F32D /* NSData+Base64.m */; };
-		E320D19F1768E71C00A1F32D /* TApplicationException.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0241768E71B00A1F32D /* TApplicationException.m */; };
-		E320D1A01768E71C00A1F32D /* TBinaryProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0251768E71B00A1F32D /* TBinaryProtocol.m */; };
-		E320D1A11768E71C00A1F32D /* TException.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0261768E71B00A1F32D /* TException.m */; };
-		E320D1A21768E71C00A1F32D /* ThriftAddBuddiesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0271768E71B00A1F32D /* ThriftAddBuddiesRequest.m */; };
-		E320D1A31768E71C00A1F32D /* ThriftAddBuddiesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0281768E71B00A1F32D /* ThriftAddBuddiesResponse.m */; };
-		E320D1A41768E71C00A1F32D /* ThriftAddRoomOperatorRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0291768E71B00A1F32D /* ThriftAddRoomOperatorRequest.m */; };
-		E320D1A51768E71C00A1F32D /* ThriftAggregatePluginMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D02A1768E71B00A1F32D /* ThriftAggregatePluginMessageEvent.m */; };
-		E320D1A61768E71C00A1F32D /* ThriftAggregatePluginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D02B1768E71B00A1F32D /* ThriftAggregatePluginRequest.m */; };
-		E320D1A71768E71C00A1F32D /* ThriftBuddyStatusUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D02C1768E71B00A1F32D /* ThriftBuddyStatusUpdateAction.m */; };
-		E320D1A81768E71C00A1F32D /* ThriftBuddyStatusUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D02D1768E71B00A1F32D /* ThriftBuddyStatusUpdateEvent.m */; };
-		E320D1A91768E71C00A1F32D /* ThriftConnectionAttemptResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D02E1768E71B00A1F32D /* ThriftConnectionAttemptResponse.m */; };
-		E320D1AA1768E71C00A1F32D /* ThriftConnectionClosedEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D02F1768E71B00A1F32D /* ThriftConnectionClosedEvent.m */; };
-		E320D1AB1768E71C00A1F32D /* ThriftConnectionResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0301768E71B00A1F32D /* ThriftConnectionResponse.m */; };
-		E320D1AC1768E71C00A1F32D /* ThriftCreateOrJoinGameResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0311768E71B00A1F32D /* ThriftCreateOrJoinGameResponse.m */; };
-		E320D1AD1768E71C00A1F32D /* ThriftCreateRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0321768E71B00A1F32D /* ThriftCreateRoomRequest.m */; };
-		E320D1AE1768E71C00A1F32D /* ThriftCreateRoomVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0331768E71B00A1F32D /* ThriftCreateRoomVariableRequest.m */; };
-		E320D1AF1768E71C00A1F32D /* ThriftCrossDomainPolicyRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0341768E71B00A1F32D /* ThriftCrossDomainPolicyRequest.m */; };
-		E320D1B01768E71C00A1F32D /* ThriftCrossDomainPolicyResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0351768E71B00A1F32D /* ThriftCrossDomainPolicyResponse.m */; };
-		E320D1B11768E71C00A1F32D /* ThriftDataType.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0361768E71B00A1F32D /* ThriftDataType.m */; };
-		E320D1B21768E71C00A1F32D /* ThriftDeleteRoomVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0371768E71B00A1F32D /* ThriftDeleteRoomVariableRequest.m */; };
-		E320D1B31768E71C00A1F32D /* ThriftDeleteUserVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0381768E71B00A1F32D /* ThriftDeleteUserVariableRequest.m */; };
-		E320D1B41768E71C00A1F32D /* ThriftDHInitiateKeyExchangeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0391768E71B00A1F32D /* ThriftDHInitiateKeyExchangeRequest.m */; };
-		E320D1B51768E71C00A1F32D /* ThriftDHPublicNumbersResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D03A1768E71B00A1F32D /* ThriftDHPublicNumbersResponse.m */; };
-		E320D1B61768E71C00A1F32D /* ThriftDHSharedModulusRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D03B1768E71B00A1F32D /* ThriftDHSharedModulusRequest.m */; };
-		E320D1B71768E71C00A1F32D /* ThriftDHSharedModulusResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D03C1768E71B00A1F32D /* ThriftDHSharedModulusResponse.m */; };
-		E320D1B81768E71C00A1F32D /* ThriftEncryptionStateChangeEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D03D1768E71B00A1F32D /* ThriftEncryptionStateChangeEvent.m */; };
-		E320D1B91768E71C00A1F32D /* ThriftErrorType.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D03E1768E71B00A1F32D /* ThriftErrorType.m */; };
-		E320D1BA1768E71C00A1F32D /* ThriftEsNumber.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D03F1768E71B00A1F32D /* ThriftEsNumber.m */; };
-		E320D1BB1768E71C00A1F32D /* ThriftEvictUserFromRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0401768E71B00A1F32D /* ThriftEvictUserFromRoomRequest.m */; };
-		E320D1BC1768E71C00A1F32D /* ThriftFindGamesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0411768E71B00A1F32D /* ThriftFindGamesRequest.m */; };
-		E320D1BD1768E71C00A1F32D /* ThriftFindGamesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0421768E71B00A1F32D /* ThriftFindGamesResponse.m */; };
-		E320D1BE1768E71C00A1F32D /* ThriftFindZoneAndRoomByNameRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0431768E71B00A1F32D /* ThriftFindZoneAndRoomByNameRequest.m */; };
-		E320D1BF1768E71C00A1F32D /* ThriftFindZoneAndRoomByNameResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0441768E71B00A1F32D /* ThriftFindZoneAndRoomByNameResponse.m */; };
-		E320D1C01768E71C00A1F32D /* ThriftFlattenedEsObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0451768E71B00A1F32D /* ThriftFlattenedEsObject.m */; };
-		E320D1C11768E71C00A1F32D /* ThriftFlattenedEsObjectRO.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0461768E71B00A1F32D /* ThriftFlattenedEsObjectRO.m */; };
-		E320D1C21768E71C00A1F32D /* ThriftGatewayKickUserRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0471768E71B00A1F32D /* ThriftGatewayKickUserRequest.m */; };
-		E320D1C31768E71C00A1F32D /* ThriftGatewayStatistics.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0481768E71B00A1F32D /* ThriftGatewayStatistics.m */; };
-		E320D1C41768E71C00A1F32D /* ThriftGenericErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0491768E71B00A1F32D /* ThriftGenericErrorResponse.m */; };
-		E320D1C51768E71C00A1F32D /* ThriftGetGameTypesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D04A1768E71B00A1F32D /* ThriftGetGameTypesRequest.m */; };
-		E320D1C61768E71C00A1F32D /* ThriftGetGameTypesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D04B1768E71B00A1F32D /* ThriftGetGameTypesResponse.m */; };
-		E320D1C71768E71C00A1F32D /* ThriftGetRoomsInZoneRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D04C1768E71B00A1F32D /* ThriftGetRoomsInZoneRequest.m */; };
-		E320D1C81768E71C00A1F32D /* ThriftGetRoomsInZoneResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D04D1768E71B00A1F32D /* ThriftGetRoomsInZoneResponse.m */; };
-		E320D1C91768E71C00A1F32D /* ThriftGetServerLocalTimeRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D04E1768E71B00A1F32D /* ThriftGetServerLocalTimeRequest.m */; };
-		E320D1CA1768E71C00A1F32D /* ThriftGetServerLocalTimeResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D04F1768E71B00A1F32D /* ThriftGetServerLocalTimeResponse.m */; };
-		E320D1CB1768E71C00A1F32D /* ThriftGetUserCountRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0501768E71B00A1F32D /* ThriftGetUserCountRequest.m */; };
-		E320D1CC1768E71C00A1F32D /* ThriftGetUserCountResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0511768E71B00A1F32D /* ThriftGetUserCountResponse.m */; };
-		E320D1CD1768E71C00A1F32D /* ThriftGetUsersInRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0521768E71B00A1F32D /* ThriftGetUsersInRoomRequest.m */; };
-		E320D1CE1768E71C00A1F32D /* ThriftGetUsersInRoomResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0531768E71B00A1F32D /* ThriftGetUsersInRoomResponse.m */; };
-		E320D1CF1768E71C00A1F32D /* ThriftGetUserVariablesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0541768E71B00A1F32D /* ThriftGetUserVariablesRequest.m */; };
-		E320D1D01768E71C00A1F32D /* ThriftGetUserVariablesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0551768E71B00A1F32D /* ThriftGetUserVariablesResponse.m */; };
-		E320D1D11768E71C00A1F32D /* ThriftGetZonesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0561768E71B00A1F32D /* ThriftGetZonesRequest.m */; };
-		E320D1D21768E71C00A1F32D /* ThriftGetZonesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0571768E71B00A1F32D /* ThriftGetZonesResponse.m */; };
-		E320D1D31768E71C00A1F32D /* ThriftIdleTimeoutWarningEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0581768E71B00A1F32D /* ThriftIdleTimeoutWarningEvent.m */; };
-		E320D1D41768E71C00A1F32D /* ThriftJoinGameRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0591768E71B00A1F32D /* ThriftJoinGameRequest.m */; };
-		E320D1D51768E71C00A1F32D /* ThriftJoinRoomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D05A1768E71B00A1F32D /* ThriftJoinRoomEvent.m */; };
-		E320D1D61768E71C00A1F32D /* ThriftJoinRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D05B1768E71B00A1F32D /* ThriftJoinRoomRequest.m */; };
-		E320D1D71768E71C00A1F32D /* ThriftJoinZoneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D05C1768E71B00A1F32D /* ThriftJoinZoneEvent.m */; };
-		E320D1D81768E71C00A1F32D /* ThriftLeaveRoomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D05D1768E71B00A1F32D /* ThriftLeaveRoomEvent.m */; };
-		E320D1D91768E71C00A1F32D /* ThriftLeaveRoomRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D05E1768E71B00A1F32D /* ThriftLeaveRoomRequest.m */; };
-		E320D1DA1768E71C00A1F32D /* ThriftLeaveZoneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D05F1768E71B00A1F32D /* ThriftLeaveZoneEvent.m */; };
-		E320D1DB1768E71C00A1F32D /* ThriftLoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0601768E71B00A1F32D /* ThriftLoginRequest.m */; };
-		E320D1DC1768E71C00A1F32D /* ThriftLoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0611768E71B00A1F32D /* ThriftLoginResponse.m */; };
-		E320D1DD1768E71C00A1F32D /* ThriftLogOutRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0621768E71B00A1F32D /* ThriftLogOutRequest.m */; };
-		E320D1DE1768E71C00A1F32D /* ThriftMessageType.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0631768E71B00A1F32D /* ThriftMessageType.m */; };
-		E320D1DF1768E71C00A1F32D /* ThriftPingRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0641768E71B00A1F32D /* ThriftPingRequest.m */; };
-		E320D1E01768E71C00A1F32D /* ThriftPingResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0651768E71B00A1F32D /* ThriftPingResponse.m */; };
-		E320D1E11768E71C00A1F32D /* ThriftPluginListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0661768E71B00A1F32D /* ThriftPluginListEntry.m */; };
-		E320D1E21768E71C00A1F32D /* ThriftPluginMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0671768E71B00A1F32D /* ThriftPluginMessageEvent.m */; };
-		E320D1E31768E71C00A1F32D /* ThriftPluginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0681768E71B00A1F32D /* ThriftPluginRequest.m */; };
-		E320D1E41768E71C00A1F32D /* ThriftPrivateMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0691768E71B00A1F32D /* ThriftPrivateMessageEvent.m */; };
-		E320D1E51768E71C00A1F32D /* ThriftPrivateMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D06A1768E71B00A1F32D /* ThriftPrivateMessageRequest.m */; };
-		E320D1E61768E71C00A1F32D /* ThriftProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D06B1768E71B00A1F32D /* ThriftProtocol.m */; };
-		E320D1E71768E71C00A1F32D /* ThriftProtocolConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D06C1768E71B00A1F32D /* ThriftProtocolConfiguration.m */; };
-		E320D1E81768E71C00A1F32D /* ThriftPublicMessageEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D06D1768E71B00A1F32D /* ThriftPublicMessageEvent.m */; };
-		E320D1E91768E71C00A1F32D /* ThriftPublicMessageRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D06E1768E71B00A1F32D /* ThriftPublicMessageRequest.m */; };
-		E320D1EA1768E71C00A1F32D /* ThriftQuickJoinGameRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D06F1768E71B00A1F32D /* ThriftQuickJoinGameRequest.m */; };
-		E320D1EB1768E71C00A1F32D /* ThriftRegisterUDPConnectionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0701768E71B00A1F32D /* ThriftRegisterUDPConnectionRequest.m */; };
-		E320D1EC1768E71C00A1F32D /* ThriftRegisterUDPConnectionResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0711768E71B00A1F32D /* ThriftRegisterUDPConnectionResponse.m */; };
-		E320D1ED1768E71C00A1F32D /* ThriftRegistryConnectToPreferredGatewayRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0721768E71B00A1F32D /* ThriftRegistryConnectToPreferredGatewayRequest.m */; };
-		E320D1EE1768E71C00A1F32D /* ThriftRemoveBuddiesRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0731768E71B00A1F32D /* ThriftRemoveBuddiesRequest.m */; };
-		E320D1EF1768E71C00A1F32D /* ThriftRemoveBuddiesResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0741768E71B00A1F32D /* ThriftRemoveBuddiesResponse.m */; };
-		E320D1F01768E71C00A1F32D /* ThriftRemoveRoomOperatorRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0751768E71B00A1F32D /* ThriftRemoveRoomOperatorRequest.m */; };
-		E320D1F11768E71C00A1F32D /* ThriftRemoveUDPConnectionRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0761768E71B00A1F32D /* ThriftRemoveUDPConnectionRequest.m */; };
-		E320D1F21768E71C00A1F32D /* ThriftRemoveUDPConnectionResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0771768E71B00A1F32D /* ThriftRemoveUDPConnectionResponse.m */; };
-		E320D1F31768E71C00A1F32D /* ThriftRequestDetails.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0781768E71B00A1F32D /* ThriftRequestDetails.m */; };
-		E320D1F41768E71C00A1F32D /* ThriftRoomListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0791768E71B00A1F32D /* ThriftRoomListEntry.m */; };
-		E320D1F51768E71C00A1F32D /* ThriftRoomVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D07A1768E71B00A1F32D /* ThriftRoomVariable.m */; };
-		E320D1F61768E71C00A1F32D /* ThriftRoomVariableUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D07B1768E71B00A1F32D /* ThriftRoomVariableUpdateAction.m */; };
-		E320D1F71768E71C00A1F32D /* ThriftRoomVariableUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D07C1768E71B00A1F32D /* ThriftRoomVariableUpdateEvent.m */; };
-		E320D1F81768E71C00A1F32D /* ThriftSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D07D1768E71B00A1F32D /* ThriftSearchCriteria.m */; };
-		E320D1F91768E71C00A1F32D /* ThriftServerGame.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D07E1768E71B00A1F32D /* ThriftServerGame.m */; };
-		E320D1FA1768E71C00A1F32D /* ThriftServerKickUserEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D07F1768E71B00A1F32D /* ThriftServerKickUserEvent.m */; };
-		E320D1FB1768E71C00A1F32D /* ThriftServerState.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0801768E71B00A1F32D /* ThriftServerState.m */; };
-		E320D1FC1768E71C00A1F32D /* ThriftSessionIdleEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0811768E71B00A1F32D /* ThriftSessionIdleEvent.m */; };
-		E320D1FD1768E71C00A1F32D /* ThriftUpdateRoomDetailsEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0821768E71B00A1F32D /* ThriftUpdateRoomDetailsEvent.m */; };
-		E320D1FE1768E71C00A1F32D /* ThriftUpdateRoomDetailsRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0831768E71B00A1F32D /* ThriftUpdateRoomDetailsRequest.m */; };
-		E320D1FF1768E71C00A1F32D /* ThriftUpdateRoomVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0841768E71B00A1F32D /* ThriftUpdateRoomVariableRequest.m */; };
-		E320D2001768E71C00A1F32D /* ThriftUpdateUserVariableRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0851768E71B00A1F32D /* ThriftUpdateUserVariableRequest.m */; };
-		E320D2011768E71C00A1F32D /* ThriftUserEvictedFromRoomEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0861768E71B00A1F32D /* ThriftUserEvictedFromRoomEvent.m */; };
-		E320D2021768E71C00A1F32D /* ThriftUserListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0871768E71B00A1F32D /* ThriftUserListEntry.m */; };
-		E320D2031768E71C00A1F32D /* ThriftUserServerVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0881768E71B00A1F32D /* ThriftUserServerVariable.m */; };
-		E320D2041768E71C00A1F32D /* ThriftUserUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0891768E71B00A1F32D /* ThriftUserUpdateAction.m */; };
-		E320D2051768E71C00A1F32D /* ThriftUserUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D08A1768E71B00A1F32D /* ThriftUserUpdateEvent.m */; };
-		E320D2061768E71C00A1F32D /* ThriftUserVariable.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D08B1768E71B00A1F32D /* ThriftUserVariable.m */; };
-		E320D2071768E71C00A1F32D /* ThriftUserVariableUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D08C1768E71B00A1F32D /* ThriftUserVariableUpdateAction.m */; };
-		E320D2081768E71C00A1F32D /* ThriftUserVariableUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D08D1768E71B00A1F32D /* ThriftUserVariableUpdateEvent.m */; };
-		E320D2091768E71C00A1F32D /* ThriftValidateAdditionalLoginRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D08E1768E71B00A1F32D /* ThriftValidateAdditionalLoginRequest.m */; };
-		E320D20A1768E71C00A1F32D /* ThriftValidateAdditionalLoginResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D08F1768E71B00A1F32D /* ThriftValidateAdditionalLoginResponse.m */; };
-		E320D20B1768E71C00A1F32D /* ThriftZoneListEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0901768E71B00A1F32D /* ThriftZoneListEntry.m */; };
-		E320D20C1768E71C00A1F32D /* ThriftZoneUpdateAction.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0911768E71B00A1F32D /* ThriftZoneUpdateAction.m */; };
-		E320D20D1768E71C00A1F32D /* ThriftZoneUpdateEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0921768E71B00A1F32D /* ThriftZoneUpdateEvent.m */; };
-		E320D20E1768E71C00A1F32D /* THTTPClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0931768E71B00A1F32D /* THTTPClient.m */; };
-		E320D20F1768E71C00A1F32D /* TMemoryBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0941768E71B00A1F32D /* TMemoryBuffer.m */; };
-		E320D2101768E71C00A1F32D /* TNSFileHandleTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0951768E71B00A1F32D /* TNSFileHandleTransport.m */; };
-		E320D2111768E71C00A1F32D /* TNSStreamTransport.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0961768E71B00A1F32D /* TNSStreamTransport.m */; };
-		E320D2121768E71C00A1F32D /* TProtocolException.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0971768E71B00A1F32D /* TProtocolException.m */; };
-		E320D2131768E71C00A1F32D /* TProtocolUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0981768E71B00A1F32D /* TProtocolUtil.m */; };
-		E320D2141768E71C00A1F32D /* TSharedProcessorFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D0991768E71B00A1F32D /* TSharedProcessorFactory.m */; };
-		E320D2151768E71C00A1F32D /* TSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D09A1768E71B00A1F32D /* TSocketClient.m */; };
-		E320D2161768E71C00A1F32D /* TTransportException.m in Sources */ = {isa = PBXBuildFile; fileRef = E320D09B1768E71B00A1F32D /* TTransportException.m */; };
-		E32A37ED1785B115004C386F /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E32A37EC1785B115004C386F /* Background.jpg */; };
-		E32A37EE1785B115004C386F /* Background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E32A37EC1785B115004C386F /* Background.jpg */; };
 		E33EADCD175655A000A46952 /* BGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADCC175655A000A46952 /* BGObject.m */; };
 		E33EADCE175655A000A46952 /* BGObject.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADCC175655A000A46952 /* BGObject.m */; };
 		E33EADD1175655CD00A46952 /* BGObjectManager.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADD0175655CD00A46952 /* BGObjectManager.m */; };
@@ -467,42 +146,20 @@
 		E33EADFE17566C8900A46952 /* BGRoleCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADFC17566C8900A46952 /* BGRoleCard.m */; };
 		E33EAE0117566CB100A46952 /* BGHeroCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EAE0017566CB100A46952 /* BGHeroCard.m */; };
 		E33EAE0217566CB100A46952 /* BGHeroCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EAE0017566CB100A46952 /* BGHeroCard.m */; };
-		E34206541793750400990145 /* SangeAndYasha.plist in Resources */ = {isa = PBXBuildFile; fileRef = E342064E1793750400990145 /* SangeAndYasha.plist */; };
-		E34206551793750400990145 /* SangeAndYasha.plist in Resources */ = {isa = PBXBuildFile; fileRef = E342064E1793750400990145 /* SangeAndYasha.plist */; };
-		E34206561793750400990145 /* SangeAndYasha.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */; };
-		E34206571793750400990145 /* SangeAndYasha.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */; };
-		E34BAEFF17A6549900E0A5F5 /* HeroAvatar.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34BAEFD17A6549900E0A5F5 /* HeroAvatar.plist */; };
-		E34BAF0017A6549900E0A5F5 /* HeroAvatar.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34BAEFD17A6549900E0A5F5 /* HeroAvatar.plist */; };
-		E34BAF0117A6549900E0A5F5 /* HeroAvatar.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34BAEFE17A6549900E0A5F5 /* HeroAvatar.pvr.ccz */; };
-		E34BAF0217A6549900E0A5F5 /* HeroAvatar.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34BAEFE17A6549900E0A5F5 /* HeroAvatar.pvr.ccz */; };
-		E34D461417A66C15003232C3 /* GameArtwork.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461217A66C15003232C3 /* GameArtwork.plist */; };
-		E34D461517A66C15003232C3 /* GameArtwork.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461217A66C15003232C3 /* GameArtwork.plist */; };
-		E34D461617A66C15003232C3 /* GameArtwork.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34D461317A66C15003232C3 /* GameArtwork.pvr.ccz */; };
-		E34D461717A66C15003232C3 /* GameArtwork.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E34D461317A66C15003232C3 /* GameArtwork.pvr.ccz */; };
 		E34D461A17A67077003232C3 /* BGHeroSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = E34D461917A67077003232C3 /* BGHeroSkill.m */; };
 		E34D461B17A67077003232C3 /* BGHeroSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = E34D461917A67077003232C3 /* BGHeroSkill.m */; };
 		E34D462017A6756F003232C3 /* HeroSkillArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461F17A6756F003232C3 /* HeroSkillArray.plist */; };
 		E34D462117A6756F003232C3 /* HeroSkillArray.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461F17A6756F003232C3 /* HeroSkillArray.plist */; };
-		E34D6E55179378B8006758B8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E54179378B8006758B8 /* Settings.bundle */; };
-		E34D6E56179378B8006758B8 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E34D6E54179378B8006758B8 /* Settings.bundle */; };
-		E350D6C01792EA8400FD1A40 /* Damage.plist in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BE1792EA8400FD1A40 /* Damage.plist */; };
-		E350D6C11792EA8400FD1A40 /* Damage.plist in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BE1792EA8400FD1A40 /* Damage.plist */; };
-		E350D6C21792EA8400FD1A40 /* Damage.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */; };
-		E350D6C31792EA8400FD1A40 /* Damage.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */; };
 		E352CB411798F98D001210D9 /* BGCardPile.m in Sources */ = {isa = PBXBuildFile; fileRef = E352CB401798F98D001210D9 /* BGCardPile.m */; };
 		E352CB421798F98D001210D9 /* BGCardPile.m in Sources */ = {isa = PBXBuildFile; fileRef = E352CB401798F98D001210D9 /* BGCardPile.m */; };
-		E35821CD17A8164200FBFEC7 /* HeroWithSkillIds in Resources */ = {isa = PBXBuildFile; fileRef = E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */; };
-		E35821CE17A8164200FBFEC7 /* HeroWithSkillIds in Resources */ = {isa = PBXBuildFile; fileRef = E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */; };
+		E35821CD17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */ = {isa = PBXBuildFile; fileRef = E35821CC17A8164200FBFEC7 /* HeroWithSkillIds.txt */; };
+		E35821CE17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */ = {isa = PBXBuildFile; fileRef = E35821CC17A8164200FBFEC7 /* HeroWithSkillIds.txt */; };
 		E37A32E6179A9C2900EA2E2F /* BGPlayingDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */; };
 		E37A32E7179A9C2900EA2E2F /* BGPlayingDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */; };
 		E37BFCD6177959B2009C02BB /* BGGameMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E37BFCD5177959B2009C02BB /* BGGameMenu.m */; };
 		E37BFCD7177959B2009C02BB /* BGGameMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E37BFCD5177959B2009C02BB /* BGGameMenu.m */; };
 		E387E6E9178E73D7003F0DAD /* BGClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E387E6E8178E73D7003F0DAD /* BGClient.m */; };
 		E387E6EA178E73D7003F0DAD /* BGClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E387E6E8178E73D7003F0DAD /* BGClient.m */; };
-		E390EA0E17A01E4400B4F437 /* NormalAttack.plist in Resources */ = {isa = PBXBuildFile; fileRef = E390EA0817A01E4400B4F437 /* NormalAttack.plist */; };
-		E390EA0F17A01E4400B4F437 /* NormalAttack.plist in Resources */ = {isa = PBXBuildFile; fileRef = E390EA0817A01E4400B4F437 /* NormalAttack.plist */; };
-		E390EA1017A01E4400B4F437 /* NormalAttack.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E390EA0917A01E4400B4F437 /* NormalAttack.pvr.ccz */; };
-		E390EA1117A01E4400B4F437 /* NormalAttack.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E390EA0917A01E4400B4F437 /* NormalAttack.pvr.ccz */; };
 		E395325D17566DCF00C1FA2C /* BGDensityCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325C17566DCF00C1FA2C /* BGDensityCard.m */; };
 		E395326017566E3100C1FA2C /* BGPlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325F17566E3000C1FA2C /* BGPlayingCard.m */; };
 		E395326117566E3100C1FA2C /* BGPlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325F17566E3000C1FA2C /* BGPlayingCard.m */; };
@@ -519,30 +176,86 @@
 		E396B3BC1781F06100A7A15F /* BGPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E396B3BA1781F06100A7A15F /* BGPlayer.m */; };
 		E3988209177D539A00FA0B0A /* BGMenuFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E3988208177D539A00FA0B0A /* BGMenuFactory.m */; };
 		E398820A177D539A00FA0B0A /* BGMenuFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E3988208177D539A00FA0B0A /* BGMenuFactory.m */; };
-		E3A081F117AAAFEC00DDDEFB /* Damaged.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */; };
-		E3A081F217AAAFEC00DDDEFB /* Damaged.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */; };
+		E39BD18617C0FD0A0012A867 /* Background-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16817C0FD090012A867 /* Background-hd.plist */; };
+		E39BD18717C0FD0A0012A867 /* Background-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16817C0FD090012A867 /* Background-hd.plist */; };
+		E39BD18817C0FD0A0012A867 /* Background-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16917C0FD090012A867 /* Background-hd.pvr.ccz */; };
+		E39BD18917C0FD0A0012A867 /* Background-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16917C0FD090012A867 /* Background-hd.pvr.ccz */; };
+		E39BD18A17C0FD0A0012A867 /* Background-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16A17C0FD090012A867 /* Background-ipad.plist */; };
+		E39BD18B17C0FD0A0012A867 /* Background-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16A17C0FD090012A867 /* Background-ipad.plist */; };
+		E39BD18C17C0FD0A0012A867 /* Background-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16B17C0FD090012A867 /* Background-ipad.pvr.ccz */; };
+		E39BD18D17C0FD0A0012A867 /* Background-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16B17C0FD090012A867 /* Background-ipad.pvr.ccz */; };
+		E39BD18E17C0FD0A0012A867 /* Background-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16C17C0FD090012A867 /* Background-ipadhd.plist */; };
+		E39BD18F17C0FD0A0012A867 /* Background-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16C17C0FD090012A867 /* Background-ipadhd.plist */; };
+		E39BD19017C0FD0A0012A867 /* Background-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16D17C0FD090012A867 /* Background-ipadhd.pvr.ccz */; };
+		E39BD19117C0FD0A0012A867 /* Background-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16D17C0FD090012A867 /* Background-ipadhd.pvr.ccz */; };
+		E39BD19217C0FD0A0012A867 /* Damage-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16E17C0FD090012A867 /* Damage-hd.plist */; };
+		E39BD19317C0FD0A0012A867 /* Damage-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16E17C0FD090012A867 /* Damage-hd.plist */; };
+		E39BD19417C0FD0A0012A867 /* Damage-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16F17C0FD090012A867 /* Damage-hd.pvr.ccz */; };
+		E39BD19517C0FD0A0012A867 /* Damage-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD16F17C0FD090012A867 /* Damage-hd.pvr.ccz */; };
+		E39BD19617C0FD0A0012A867 /* EquipmentAvatar-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17017C0FD090012A867 /* EquipmentAvatar-hd.plist */; };
+		E39BD19717C0FD0A0012A867 /* EquipmentAvatar-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17017C0FD090012A867 /* EquipmentAvatar-hd.plist */; };
+		E39BD19817C0FD0A0012A867 /* EquipmentAvatar-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17117C0FD090012A867 /* EquipmentAvatar-hd.pvr.ccz */; };
+		E39BD19917C0FD0A0012A867 /* EquipmentAvatar-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17117C0FD090012A867 /* EquipmentAvatar-hd.pvr.ccz */; };
+		E39BD19A17C0FD0A0012A867 /* Evasion-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17217C0FD090012A867 /* Evasion-hd.plist */; };
+		E39BD19B17C0FD0A0012A867 /* Evasion-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17217C0FD090012A867 /* Evasion-hd.plist */; };
+		E39BD19C17C0FD0A0012A867 /* Evasion-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17317C0FD090012A867 /* Evasion-hd.pvr.ccz */; };
+		E39BD19D17C0FD0A0012A867 /* Evasion-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17317C0FD090012A867 /* Evasion-hd.pvr.ccz */; };
+		E39BD19E17C0FD0A0012A867 /* GameArtwork-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17417C0FD090012A867 /* GameArtwork-hd.plist */; };
+		E39BD19F17C0FD0A0012A867 /* GameArtwork-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17417C0FD090012A867 /* GameArtwork-hd.plist */; };
+		E39BD1A017C0FD0A0012A867 /* GameArtwork-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17517C0FD090012A867 /* GameArtwork-hd.pvr.ccz */; };
+		E39BD1A117C0FD0A0012A867 /* GameArtwork-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17517C0FD090012A867 /* GameArtwork-hd.pvr.ccz */; };
+		E39BD1A217C0FD0A0012A867 /* HeroAvatar-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17617C0FD090012A867 /* HeroAvatar-hd.plist */; };
+		E39BD1A317C0FD0A0012A867 /* HeroAvatar-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17617C0FD090012A867 /* HeroAvatar-hd.plist */; };
+		E39BD1A417C0FD0A0012A867 /* HeroAvatar-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17717C0FD090012A867 /* HeroAvatar-hd.pvr.ccz */; };
+		E39BD1A517C0FD0A0012A867 /* HeroAvatar-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17717C0FD090012A867 /* HeroAvatar-hd.pvr.ccz */; };
+		E39BD1A617C0FD0A0012A867 /* HeroCard-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17817C0FD090012A867 /* HeroCard-hd.plist */; };
+		E39BD1A717C0FD0A0012A867 /* HeroCard-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17817C0FD090012A867 /* HeroCard-hd.plist */; };
+		E39BD1A817C0FD0A0012A867 /* HeroCard-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17917C0FD090012A867 /* HeroCard-hd.pvr.ccz */; };
+		E39BD1A917C0FD0A0012A867 /* HeroCard-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17917C0FD090012A867 /* HeroCard-hd.pvr.ccz */; };
+		E39BD1AA17C0FD0A0012A867 /* NormalAttack-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17A17C0FD090012A867 /* NormalAttack-hd.plist */; };
+		E39BD1AB17C0FD0A0012A867 /* NormalAttack-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17A17C0FD090012A867 /* NormalAttack-hd.plist */; };
+		E39BD1AC17C0FD0A0012A867 /* NormalAttack-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17B17C0FD090012A867 /* NormalAttack-hd.pvr.ccz */; };
+		E39BD1AD17C0FD0A0012A867 /* NormalAttack-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17B17C0FD090012A867 /* NormalAttack-hd.pvr.ccz */; };
+		E39BD1AE17C0FD0A0012A867 /* PlayingCard-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17C17C0FD090012A867 /* PlayingCard-hd.plist */; };
+		E39BD1AF17C0FD0A0012A867 /* PlayingCard-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17C17C0FD090012A867 /* PlayingCard-hd.plist */; };
+		E39BD1B017C0FD0A0012A867 /* PlayingCard-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17D17C0FD090012A867 /* PlayingCard-hd.pvr.ccz */; };
+		E39BD1B117C0FD0A0012A867 /* PlayingCard-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17D17C0FD090012A867 /* PlayingCard-hd.pvr.ccz */; };
+		E39BD1B217C0FD0A0012A867 /* RestoreBlood-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17E17C0FD090012A867 /* RestoreBlood-hd.plist */; };
+		E39BD1B317C0FD0A0012A867 /* RestoreBlood-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17E17C0FD090012A867 /* RestoreBlood-hd.plist */; };
+		E39BD1B417C0FD0A0012A867 /* RestoreBlood-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17F17C0FD090012A867 /* RestoreBlood-hd.pvr.ccz */; };
+		E39BD1B517C0FD0A0012A867 /* RestoreBlood-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD17F17C0FD090012A867 /* RestoreBlood-hd.pvr.ccz */; };
+		E39BD1B617C0FD0A0012A867 /* SangeAndYasha-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18017C0FD090012A867 /* SangeAndYasha-hd.plist */; };
+		E39BD1B717C0FD0A0012A867 /* SangeAndYasha-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18017C0FD090012A867 /* SangeAndYasha-hd.plist */; };
+		E39BD1B817C0FD0A0012A867 /* SangeAndYasha-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18117C0FD090012A867 /* SangeAndYasha-hd.pvr.ccz */; };
+		E39BD1B917C0FD0A0012A867 /* SangeAndYasha-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18117C0FD090012A867 /* SangeAndYasha-hd.pvr.ccz */; };
+		E39BD1BA17C0FD0A0012A867 /* SangeAndYasha-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18217C0FD090012A867 /* SangeAndYasha-ipad.plist */; };
+		E39BD1BB17C0FD0A0012A867 /* SangeAndYasha-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18217C0FD090012A867 /* SangeAndYasha-ipad.plist */; };
+		E39BD1BC17C0FD0A0012A867 /* SangeAndYasha-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18317C0FD090012A867 /* SangeAndYasha-ipad.pvr.ccz */; };
+		E39BD1BD17C0FD0A0012A867 /* SangeAndYasha-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18317C0FD090012A867 /* SangeAndYasha-ipad.pvr.ccz */; };
+		E39BD1BE17C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18417C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist */; };
+		E39BD1BF17C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18417C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist */; };
+		E39BD1C017C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18517C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz */; };
+		E39BD1C117C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18517C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz */; };
+		E3A081F117AAAFEC00DDDEFB /* Damage.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damage.wav */; };
+		E3A081F217AAAFEC00DDDEFB /* Damage.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damage.wav */; };
 		E3A081F317AAAFEC00DDDEFB /* EquipCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */; };
 		E3A081F417AAAFEC00DDDEFB /* EquipCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */; };
-		E3A081F517AAAFEC00DDDEFB /* HealingSalve.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */; };
-		E3A081F617AAAFEC00DDDEFB /* HealingSalve.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */; };
-		E3A081F917AAB90500DDDEFB /* RestoreBlood.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */; };
-		E3A081FA17AAB90500DDDEFB /* RestoreBlood.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */; };
-		E3A081FB17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */; };
-		E3A081FC17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */; };
-		E3B3547A179131B900C07B3F /* PlayingCardIds in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds */; };
-		E3B3547B179131B900C07B3F /* PlayingCardIds in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds */; };
-		E3B3547E1791A9EC00C07B3F /* HeroCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547C1791A9EC00C07B3F /* HeroCard.plist */; };
-		E3B3547F1791A9EC00C07B3F /* HeroCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547C1791A9EC00C07B3F /* HeroCard.plist */; };
-		E3B354801791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */; };
-		E3B354811791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */; };
+		E3A081F517AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */; };
+		E3A081F617AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */; };
+		E3B3547A179131B900C07B3F /* PlayingCardIds.txt in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds.txt */; };
+		E3B3547B179131B900C07B3F /* PlayingCardIds.txt in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds.txt */; };
+		E3B951DA17AEC2BE0004BECC /* NormalAttack-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D617AEC2BE0004BECC /* NormalAttack-ipad.plist */; };
+		E3B951DB17AEC2BE0004BECC /* NormalAttack-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D717AEC2BE0004BECC /* NormalAttack-ipad.pvr.ccz */; };
+		E3B951DC17AEC2BE0004BECC /* NormalAttack-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D817AEC2BE0004BECC /* NormalAttack-ipadhd.plist */; };
+		E3B951DD17AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D917AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz */; };
+		E3B951DE17AEC2C50004BECC /* NormalAttack-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D617AEC2BE0004BECC /* NormalAttack-ipad.plist */; };
+		E3B951DF17AEC2C50004BECC /* NormalAttack-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D717AEC2BE0004BECC /* NormalAttack-ipad.pvr.ccz */; };
+		E3B951E017AEC2C50004BECC /* NormalAttack-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D817AEC2BE0004BECC /* NormalAttack-ipadhd.plist */; };
+		E3B951E117AEC2C50004BECC /* NormalAttack-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D917AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz */; };
 		E3C15A77177084E600869966 /* settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = E3C15A76177084E600869966 /* settings.xml */; };
 		E3C15A78177084E600869966 /* settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = E3C15A76177084E600869966 /* settings.xml */; };
 		E3C60E21177FEE6700CA88F8 /* BGCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C60E20177FEE6700CA88F8 /* BGCard.m */; };
 		E3C60E22177FEE6700CA88F8 /* BGCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C60E20177FEE6700CA88F8 /* BGCard.m */; };
-		E3E8630917983704000170DA /* PlayingCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3E8630717983704000170DA /* PlayingCard.plist */; };
-		E3E8630A17983704000170DA /* PlayingCard.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3E8630717983704000170DA /* PlayingCard.plist */; };
-		E3E8630B17983704000170DA /* PlayingCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3E8630817983704000170DA /* PlayingCard.pvr.ccz */; };
-		E3E8630C17983704000170DA /* PlayingCard.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3E8630817983704000170DA /* PlayingCard.pvr.ccz */; };
 		E3F5C875176A3B2200E44169 /* BGComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F5C874176A3B2200E44169 /* BGComponent.m */; };
 		E3F5C876176A3B2200E44169 /* BGComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F5C874176A3B2200E44169 /* BGComponent.m */; };
 		E3F6D30B178D15EF001A2372 /* BGCheckComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F6D30A178D15EF001A2372 /* BGCheckComponent.m */; };
@@ -615,8 +328,6 @@
 		E301E1261770C67700E8C9D0 /* BGRoomListLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGRoomListLayer.m; sourceTree = "<group>"; };
 		E301E1291770DE9900E8C9D0 /* BGLoginLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGLoginLayer.h; sourceTree = "<group>"; };
 		E301E12A1770DE9A00E8C9D0 /* BGLoginLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGLoginLayer.m; sourceTree = "<group>"; };
-		E305894A17A39655005CEE15 /* Evasion.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Evasion.plist; sourceTree = "<group>"; };
-		E305894B17A39655005CEE15 /* Evasion.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Evasion.pvr.ccz; sourceTree = "<group>"; };
 		E30C01AB17AAA1980010034F /* Background.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Background.mp3; sourceTree = "<group>"; };
 		E31075EE176B199100E01AA0 /* BGFaction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGFaction.h; sourceTree = "<group>"; };
 		E31075EF176B199100E01AA0 /* BGFaction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGFaction.m; sourceTree = "<group>"; };
@@ -626,9 +337,45 @@
 		E31075F7176B252900E01AA0 /* BGHandArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHandArea.m; sourceTree = "<group>"; };
 		E3113F1117A54D0E0011F8DC /* BGAudioComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGAudioComponent.h; sourceTree = "<group>"; };
 		E3113F1217A54D0E0011F8DC /* BGAudioComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGAudioComponent.m; sourceTree = "<group>"; };
+		E314F4C817B62DB0001633A9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		E314F4CC17B62DB0001633A9 /* EsClientApi-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EsClientApi-Prefix.pch"; sourceTree = "<group>"; };
+		E314F4CD17B62DB0001633A9 /* EsClientApi.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EsClientApi.h; sourceTree = "<group>"; };
+		E314F4CF17B62DB0001633A9 /* EsClientApi.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EsClientApi.m; sourceTree = "<group>"; };
+		E31AA72C17B4C75800241AE1 /* ReadMe.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ReadMe.txt; sourceTree = "<group>"; };
+		E31BC24017AB3D9200745E12 /* Damage-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Damage-ipad.plist"; sourceTree = "<group>"; };
+		E31BC24117AB3D9200745E12 /* Damage-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Damage-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC24217AB3D9200745E12 /* Damage-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Damage-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC24317AB3D9200745E12 /* Damage-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Damage-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC24417AB3D9200745E12 /* Evasion-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Evasion-ipad.plist"; sourceTree = "<group>"; };
+		E31BC24517AB3D9200745E12 /* Evasion-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Evasion-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC24617AB3D9200745E12 /* Evasion-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Evasion-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC24717AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Evasion-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC27017AB3DC500745E12 /* EquipmentAvatar-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EquipmentAvatar-ipad.plist"; sourceTree = "<group>"; };
+		E31BC27117AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EquipmentAvatar-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC27217AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EquipmentAvatar-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC27317AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EquipmentAvatar-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC28017AB3DC500745E12 /* PlayingCard-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PlayingCard-ipad.plist"; sourceTree = "<group>"; };
+		E31BC28117AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayingCard-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC28217AB3DC500745E12 /* PlayingCard-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PlayingCard-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC28317AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayingCard-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2B817AB3F6700745E12 /* GameArtwork-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GameArtwork-ipad.plist"; sourceTree = "<group>"; };
+		E31BC2B917AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GameArtwork-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2BA17AB3F6700745E12 /* GameArtwork-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GameArtwork-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC2BB17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GameArtwork-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2BC17AB3F6700745E12 /* HeroAvatar-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HeroAvatar-ipad.plist"; sourceTree = "<group>"; };
+		E31BC2BD17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeroAvatar-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2BE17AB3F6700745E12 /* HeroAvatar-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HeroAvatar-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC2BF17AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeroAvatar-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2C017AB3F6700745E12 /* HeroCard-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HeroCard-ipad.plist"; sourceTree = "<group>"; };
+		E31BC2C117AB3F6700745E12 /* HeroCard-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeroCard-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2C217AB3F6700745E12 /* HeroCard-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HeroCard-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC2C317AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeroCard-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2E217AB68F100745E12 /* RestoreBlood-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RestoreBlood-ipad.plist"; sourceTree = "<group>"; };
+		E31BC2E317AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RestoreBlood-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E31BC2E417AB68F100745E12 /* RestoreBlood-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RestoreBlood-ipadhd.plist"; sourceTree = "<group>"; };
+		E31BC2E517AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RestoreBlood-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
 		E31DDB5617811E1100789EDF /* BGPlayingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingMenu.h; sourceTree = "<group>"; };
 		E31DDB5717811E1100789EDF /* BGPlayingMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingMenu.m; sourceTree = "<group>"; };
-		E320B62F17888FD500DEF693 /* ReadMe */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = ReadMe; path = Resources/ReadMe; sourceTree = "<group>"; };
 		E320CE071768E3C700A1F32D /* BGPluginConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPluginConstants.h; sourceTree = "<group>"; };
 		E320CE0A1768E71900A1F32D /* bn_error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bn_error.c; sourceTree = "<group>"; };
 		E320CE0B1768E71900A1F32D /* bn_fast_mp_invmod.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bn_fast_mp_invmod.c; sourceTree = "<group>"; };
@@ -1286,7 +1033,6 @@
 		E320D0991768E71B00A1F32D /* TSharedProcessorFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSharedProcessorFactory.m; sourceTree = "<group>"; };
 		E320D09A1768E71B00A1F32D /* TSocketClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSocketClient.m; sourceTree = "<group>"; };
 		E320D09B1768E71B00A1F32D /* TTransportException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTransportException.m; sourceTree = "<group>"; };
-		E32A37EC1785B115004C386F /* Background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Background.jpg; sourceTree = "<group>"; };
 		E33EADCB175655A000A46952 /* BGObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGObject.h; sourceTree = "<group>"; };
 		E33EADCC175655A000A46952 /* BGObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGObject.m; sourceTree = "<group>"; };
 		E33EADCF175655CD00A46952 /* BGObjectManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGObjectManager.h; sourceTree = "<group>"; };
@@ -1303,29 +1049,18 @@
 		E33EADFC17566C8900A46952 /* BGRoleCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGRoleCard.m; sourceTree = "<group>"; };
 		E33EADFF17566CB100A46952 /* BGHeroCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGHeroCard.h; sourceTree = "<group>"; };
 		E33EAE0017566CB100A46952 /* BGHeroCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHeroCard.m; sourceTree = "<group>"; };
-		E342064E1793750400990145 /* SangeAndYasha.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = SangeAndYasha.plist; sourceTree = "<group>"; };
-		E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = SangeAndYasha.pvr.ccz; sourceTree = "<group>"; };
-		E34BAEFD17A6549900E0A5F5 /* HeroAvatar.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroAvatar.plist; sourceTree = "<group>"; };
-		E34BAEFE17A6549900E0A5F5 /* HeroAvatar.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeroAvatar.pvr.ccz; sourceTree = "<group>"; };
-		E34D461217A66C15003232C3 /* GameArtwork.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = GameArtwork.plist; sourceTree = "<group>"; };
-		E34D461317A66C15003232C3 /* GameArtwork.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = GameArtwork.pvr.ccz; sourceTree = "<group>"; };
 		E34D461817A67077003232C3 /* BGHeroSkill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGHeroSkill.h; sourceTree = "<group>"; };
 		E34D461917A67077003232C3 /* BGHeroSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHeroSkill.m; sourceTree = "<group>"; };
 		E34D461F17A6756F003232C3 /* HeroSkillArray.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroSkillArray.plist; sourceTree = "<group>"; };
-		E34D6E54179378B8006758B8 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		E350D6BE1792EA8400FD1A40 /* Damage.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Damage.plist; sourceTree = "<group>"; };
-		E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = Damage.pvr.ccz; sourceTree = "<group>"; };
 		E352CB3F1798F98D001210D9 /* BGCardPile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCardPile.h; sourceTree = "<group>"; };
 		E352CB401798F98D001210D9 /* BGCardPile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCardPile.m; sourceTree = "<group>"; };
-		E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeroWithSkillIds; sourceTree = "<group>"; };
+		E35821CC17A8164200FBFEC7 /* HeroWithSkillIds.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeroWithSkillIds.txt; sourceTree = "<group>"; };
 		E37A32E4179A9C2900EA2E2F /* BGPlayingDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingDeck.h; sourceTree = "<group>"; };
 		E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingDeck.m; sourceTree = "<group>"; };
 		E37BFCD4177959B2009C02BB /* BGGameMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGGameMenu.h; sourceTree = "<group>"; };
 		E37BFCD5177959B2009C02BB /* BGGameMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGGameMenu.m; sourceTree = "<group>"; };
 		E387E6E7178E73D7003F0DAD /* BGClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGClient.h; sourceTree = "<group>"; };
 		E387E6E8178E73D7003F0DAD /* BGClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGClient.m; sourceTree = "<group>"; };
-		E390EA0817A01E4400B4F437 /* NormalAttack.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = NormalAttack.plist; sourceTree = "<group>"; };
-		E390EA0917A01E4400B4F437 /* NormalAttack.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = NormalAttack.pvr.ccz; sourceTree = "<group>"; };
 		E395325B17566DCF00C1FA2C /* BGDensityCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDensityCard.h; sourceTree = "<group>"; };
 		E395325C17566DCF00C1FA2C /* BGDensityCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGDensityCard.m; sourceTree = "<group>"; };
 		E395325E17566E3000C1FA2C /* BGPlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingCard.h; sourceTree = "<group>"; };
@@ -1339,20 +1074,48 @@
 		E396B3BD1781F4C600A7A15F /* BGFileConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGFileConstants.h; sourceTree = "<group>"; };
 		E3988207177D539A00FA0B0A /* BGMenuFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGMenuFactory.h; sourceTree = "<group>"; };
 		E3988208177D539A00FA0B0A /* BGMenuFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGMenuFactory.m; sourceTree = "<group>"; };
-		E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Damaged.wav; sourceTree = "<group>"; };
+		E39BD16817C0FD090012A867 /* Background-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Background-hd.plist"; sourceTree = "<group>"; };
+		E39BD16917C0FD090012A867 /* Background-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Background-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD16A17C0FD090012A867 /* Background-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Background-ipad.plist"; sourceTree = "<group>"; };
+		E39BD16B17C0FD090012A867 /* Background-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Background-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD16C17C0FD090012A867 /* Background-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Background-ipadhd.plist"; sourceTree = "<group>"; };
+		E39BD16D17C0FD090012A867 /* Background-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Background-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD16E17C0FD090012A867 /* Damage-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Damage-hd.plist"; sourceTree = "<group>"; };
+		E39BD16F17C0FD090012A867 /* Damage-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Damage-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17017C0FD090012A867 /* EquipmentAvatar-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "EquipmentAvatar-hd.plist"; sourceTree = "<group>"; };
+		E39BD17117C0FD090012A867 /* EquipmentAvatar-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "EquipmentAvatar-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17217C0FD090012A867 /* Evasion-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Evasion-hd.plist"; sourceTree = "<group>"; };
+		E39BD17317C0FD090012A867 /* Evasion-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Evasion-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17417C0FD090012A867 /* GameArtwork-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GameArtwork-hd.plist"; sourceTree = "<group>"; };
+		E39BD17517C0FD090012A867 /* GameArtwork-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GameArtwork-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17617C0FD090012A867 /* HeroAvatar-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HeroAvatar-hd.plist"; sourceTree = "<group>"; };
+		E39BD17717C0FD090012A867 /* HeroAvatar-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeroAvatar-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17817C0FD090012A867 /* HeroCard-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "HeroCard-hd.plist"; sourceTree = "<group>"; };
+		E39BD17917C0FD090012A867 /* HeroCard-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "HeroCard-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17A17C0FD090012A867 /* NormalAttack-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NormalAttack-hd.plist"; sourceTree = "<group>"; };
+		E39BD17B17C0FD090012A867 /* NormalAttack-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NormalAttack-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17C17C0FD090012A867 /* PlayingCard-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PlayingCard-hd.plist"; sourceTree = "<group>"; };
+		E39BD17D17C0FD090012A867 /* PlayingCard-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "PlayingCard-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD17E17C0FD090012A867 /* RestoreBlood-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RestoreBlood-hd.plist"; sourceTree = "<group>"; };
+		E39BD17F17C0FD090012A867 /* RestoreBlood-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "RestoreBlood-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD18017C0FD090012A867 /* SangeAndYasha-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SangeAndYasha-hd.plist"; sourceTree = "<group>"; };
+		E39BD18117C0FD090012A867 /* SangeAndYasha-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SangeAndYasha-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD18217C0FD090012A867 /* SangeAndYasha-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SangeAndYasha-ipad.plist"; sourceTree = "<group>"; };
+		E39BD18317C0FD090012A867 /* SangeAndYasha-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SangeAndYasha-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E39BD18417C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SangeAndYasha-ipadhd.plist"; sourceTree = "<group>"; };
+		E39BD18517C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SangeAndYasha-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
+		E3A081EE17AAAFEC00DDDEFB /* Damage.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Damage.wav; sourceTree = "<group>"; };
 		E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = EquipCard.wav; sourceTree = "<group>"; };
-		E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = HealingSalve.wav; sourceTree = "<group>"; };
-		E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RestoreBlood.plist; sourceTree = "<group>"; };
-		E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = RestoreBlood.pvr.ccz; sourceTree = "<group>"; };
+		E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = RestoreBlood.wav; sourceTree = "<group>"; };
 		E3B29B5F177F349600C18728 /* BGDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDefines.h; sourceTree = "<group>"; };
-		E3B35479179131B900C07B3F /* PlayingCardIds */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlayingCardIds; sourceTree = "<group>"; };
-		E3B3547C1791A9EC00C07B3F /* HeroCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroCard.plist; sourceTree = "<group>"; };
-		E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = HeroCard.pvr.ccz; sourceTree = "<group>"; };
+		E3B35479179131B900C07B3F /* PlayingCardIds.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlayingCardIds.txt; sourceTree = "<group>"; };
+		E3B951D617AEC2BE0004BECC /* NormalAttack-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NormalAttack-ipad.plist"; sourceTree = "<group>"; };
+		E3B951D717AEC2BE0004BECC /* NormalAttack-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NormalAttack-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E3B951D817AEC2BE0004BECC /* NormalAttack-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NormalAttack-ipadhd.plist"; sourceTree = "<group>"; };
+		E3B951D917AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NormalAttack-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
 		E3C15A76177084E600869966 /* settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.xml; sourceTree = "<group>"; };
 		E3C60E1F177FEE6700CA88F8 /* BGCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCard.h; sourceTree = "<group>"; };
 		E3C60E20177FEE6700CA88F8 /* BGCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCard.m; sourceTree = "<group>"; };
-		E3E8630717983704000170DA /* PlayingCard.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PlayingCard.plist; sourceTree = "<group>"; };
-		E3E8630817983704000170DA /* PlayingCard.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = PlayingCard.pvr.ccz; sourceTree = "<group>"; };
 		E3F5C873176A3B2200E44169 /* BGComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGComponent.h; sourceTree = "<group>"; };
 		E3F5C874176A3B2200E44169 /* BGComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGComponent.m; sourceTree = "<group>"; };
 		E3F6D309178D15EF001A2372 /* BGCheckComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCheckComponent.h; sourceTree = "<group>"; };
@@ -1412,6 +1175,7 @@
 				DCC1A0F713A94ED5005BD75D /* Projectfiles-iOS */,
 				DCC1A26413A94EE6005BD75D /* Projectfiles-Mac */,
 				DCFA90ED13B4F6A0009DD35A /* BuildSettings */,
+				E314F4CA17B62DB0001633A9 /* EsClientApi */,
 				DCC1A0E613A94ED5005BD75D /* Frameworks */,
 				DCC1A0E413A94ED5005BD75D /* Products */,
 			);
@@ -1429,6 +1193,7 @@
 		DCC1A0E613A94ED5005BD75D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E314F4C817B62DB0001633A9 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1507,9 +1272,9 @@
 				E301E12A1770DE9A00E8C9D0 /* BGLoginLayer.m */,
 				E3988207177D539A00FA0B0A /* BGMenuFactory.h */,
 				E3988208177D539A00FA0B0A /* BGMenuFactory.m */,
-				E320B62F17888FD500DEF693 /* ReadMe */,
-				E35821CC17A8164200FBFEC7 /* HeroWithSkillIds */,
-				E3B35479179131B900C07B3F /* PlayingCardIds */,
+				E35821CC17A8164200FBFEC7 /* HeroWithSkillIds.txt */,
+				E3B35479179131B900C07B3F /* PlayingCardIds.txt */,
+				E31AA72C17B4C75800241AE1 /* ReadMe.txt */,
 				DCC1A39413A94F1A005BD75D /* Resources */,
 				DCC1A3CF13A94F2C005BD75D /* Supporting Files */,
 			);
@@ -1526,7 +1291,6 @@
 				E3B29B4C177F1F3400C18728 /* Images */,
 				E395326E17567C9100C1FA2C /* PlayingCardArray.plist */,
 				E395326B17567C5700C1FA2C /* RoleCardArray.plist */,
-				E34D6E54179378B8006758B8 /* Settings.bundle */,
 				E3C15A76177084E600869966 /* settings.xml */,
 				E3B9996C17A437820030047F /* Sounds */,
 			);
@@ -1569,8 +1333,28 @@
 				DCC1A39013A94F1A005BD75D /* BGGameLayer.m */,
 				E37BFCD4177959B2009C02BB /* BGGameMenu.h */,
 				E37BFCD5177959B2009C02BB /* BGGameMenu.m */,
+				E37A32E4179A9C2900EA2E2F /* BGPlayingDeck.h */,
+				E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */,
 			);
 			name = Game;
+			sourceTree = "<group>";
+		};
+		E314F4CA17B62DB0001633A9 /* EsClientApi */ = {
+			isa = PBXGroup;
+			children = (
+				E314F4CD17B62DB0001633A9 /* EsClientApi.h */,
+				E314F4CF17B62DB0001633A9 /* EsClientApi.m */,
+				E314F4CB17B62DB0001633A9 /* Supporting Files */,
+			);
+			path = EsClientApi;
+			sourceTree = "<group>";
+		};
+		E314F4CB17B62DB0001633A9 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E314F4CC17B62DB0001633A9 /* EsClientApi-Prefix.pch */,
+			);
+			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
 		E320CE081768E71900A1F32D /* EsClientAPI_ARC */ = {
@@ -2307,8 +2091,6 @@
 				E33EADF017565F6900A46952 /* BGInformation.m */,
 				E396B3B91781F06100A7A15F /* BGPlayer.h */,
 				E396B3BA1781F06100A7A15F /* BGPlayer.m */,
-				E37A32E4179A9C2900EA2E2F /* BGPlayingDeck.h */,
-				E37A32E5179A9C2900EA2E2F /* BGPlayingDeck.m */,
 				E31DDB5617811E1100789EDF /* BGPlayingMenu.h */,
 				E31DDB5717811E1100789EDF /* BGPlayingMenu.m */,
 			);
@@ -2318,16 +2100,22 @@
 		E34206581793750B00990145 /* CardEffect */ = {
 			isa = PBXGroup;
 			children = (
-				E3A081F717AAB90500DDDEFB /* RestoreBlood.plist */,
-				E3A081F817AAB90500DDDEFB /* RestoreBlood.pvr.ccz */,
-				E305894A17A39655005CEE15 /* Evasion.plist */,
-				E305894B17A39655005CEE15 /* Evasion.pvr.ccz */,
-				E390EA0817A01E4400B4F437 /* NormalAttack.plist */,
-				E390EA0917A01E4400B4F437 /* NormalAttack.pvr.ccz */,
-				E350D6BE1792EA8400FD1A40 /* Damage.plist */,
-				E350D6BF1792EA8400FD1A40 /* Damage.pvr.ccz */,
-				E342064E1793750400990145 /* SangeAndYasha.plist */,
-				E342064F1793750400990145 /* SangeAndYasha.pvr.ccz */,
+				E3B951D617AEC2BE0004BECC /* NormalAttack-ipad.plist */,
+				E3B951D717AEC2BE0004BECC /* NormalAttack-ipad.pvr.ccz */,
+				E3B951D817AEC2BE0004BECC /* NormalAttack-ipadhd.plist */,
+				E3B951D917AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz */,
+				E31BC2E217AB68F100745E12 /* RestoreBlood-ipad.plist */,
+				E31BC2E317AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz */,
+				E31BC2E417AB68F100745E12 /* RestoreBlood-ipadhd.plist */,
+				E31BC2E517AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz */,
+				E31BC24017AB3D9200745E12 /* Damage-ipad.plist */,
+				E31BC24117AB3D9200745E12 /* Damage-ipad.pvr.ccz */,
+				E31BC24217AB3D9200745E12 /* Damage-ipadhd.plist */,
+				E31BC24317AB3D9200745E12 /* Damage-ipadhd.pvr.ccz */,
+				E31BC24417AB3D9200745E12 /* Evasion-ipad.plist */,
+				E31BC24517AB3D9200745E12 /* Evasion-ipad.pvr.ccz */,
+				E31BC24617AB3D9200745E12 /* Evasion-ipadhd.plist */,
+				E31BC24717AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz */,
 			);
 			name = CardEffect;
 			sourceTree = "<group>";
@@ -2375,16 +2163,57 @@
 		E3B29B4C177F1F3400C18728 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				E34D461217A66C15003232C3 /* GameArtwork.plist */,
-				E34D461317A66C15003232C3 /* GameArtwork.pvr.ccz */,
-				E32A37EC1785B115004C386F /* Background.jpg */,
+				E39BD16817C0FD090012A867 /* Background-hd.plist */,
+				E39BD16917C0FD090012A867 /* Background-hd.pvr.ccz */,
+				E39BD16A17C0FD090012A867 /* Background-ipad.plist */,
+				E39BD16B17C0FD090012A867 /* Background-ipad.pvr.ccz */,
+				E39BD16C17C0FD090012A867 /* Background-ipadhd.plist */,
+				E39BD16D17C0FD090012A867 /* Background-ipadhd.pvr.ccz */,
 				E34206581793750B00990145 /* CardEffect */,
-				E34BAEFD17A6549900E0A5F5 /* HeroAvatar.plist */,
-				E34BAEFE17A6549900E0A5F5 /* HeroAvatar.pvr.ccz */,
-				E3B3547C1791A9EC00C07B3F /* HeroCard.plist */,
-				E3B3547D1791A9EC00C07B3F /* HeroCard.pvr.ccz */,
-				E3E8630717983704000170DA /* PlayingCard.plist */,
-				E3E8630817983704000170DA /* PlayingCard.pvr.ccz */,
+				E39BD16E17C0FD090012A867 /* Damage-hd.plist */,
+				E39BD16F17C0FD090012A867 /* Damage-hd.pvr.ccz */,
+				E39BD17017C0FD090012A867 /* EquipmentAvatar-hd.plist */,
+				E39BD17117C0FD090012A867 /* EquipmentAvatar-hd.pvr.ccz */,
+				E31BC27017AB3DC500745E12 /* EquipmentAvatar-ipad.plist */,
+				E31BC27117AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz */,
+				E31BC27217AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist */,
+				E31BC27317AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz */,
+				E39BD17217C0FD090012A867 /* Evasion-hd.plist */,
+				E39BD17317C0FD090012A867 /* Evasion-hd.pvr.ccz */,
+				E39BD17417C0FD090012A867 /* GameArtwork-hd.plist */,
+				E39BD17517C0FD090012A867 /* GameArtwork-hd.pvr.ccz */,
+				E31BC2B817AB3F6700745E12 /* GameArtwork-ipad.plist */,
+				E31BC2B917AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz */,
+				E31BC2BA17AB3F6700745E12 /* GameArtwork-ipadhd.plist */,
+				E31BC2BB17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz */,
+				E39BD17617C0FD090012A867 /* HeroAvatar-hd.plist */,
+				E39BD17717C0FD090012A867 /* HeroAvatar-hd.pvr.ccz */,
+				E31BC2BC17AB3F6700745E12 /* HeroAvatar-ipad.plist */,
+				E31BC2BD17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz */,
+				E31BC2BE17AB3F6700745E12 /* HeroAvatar-ipadhd.plist */,
+				E31BC2BF17AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz */,
+				E39BD17817C0FD090012A867 /* HeroCard-hd.plist */,
+				E39BD17917C0FD090012A867 /* HeroCard-hd.pvr.ccz */,
+				E31BC2C017AB3F6700745E12 /* HeroCard-ipad.plist */,
+				E31BC2C117AB3F6700745E12 /* HeroCard-ipad.pvr.ccz */,
+				E31BC2C217AB3F6700745E12 /* HeroCard-ipadhd.plist */,
+				E31BC2C317AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz */,
+				E39BD17A17C0FD090012A867 /* NormalAttack-hd.plist */,
+				E39BD17B17C0FD090012A867 /* NormalAttack-hd.pvr.ccz */,
+				E39BD17C17C0FD090012A867 /* PlayingCard-hd.plist */,
+				E39BD17D17C0FD090012A867 /* PlayingCard-hd.pvr.ccz */,
+				E31BC28017AB3DC500745E12 /* PlayingCard-ipad.plist */,
+				E31BC28117AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz */,
+				E31BC28217AB3DC500745E12 /* PlayingCard-ipadhd.plist */,
+				E31BC28317AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz */,
+				E39BD17E17C0FD090012A867 /* RestoreBlood-hd.plist */,
+				E39BD17F17C0FD090012A867 /* RestoreBlood-hd.pvr.ccz */,
+				E39BD18017C0FD090012A867 /* SangeAndYasha-hd.plist */,
+				E39BD18117C0FD090012A867 /* SangeAndYasha-hd.pvr.ccz */,
+				E39BD18217C0FD090012A867 /* SangeAndYasha-ipad.plist */,
+				E39BD18317C0FD090012A867 /* SangeAndYasha-ipad.pvr.ccz */,
+				E39BD18417C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist */,
+				E39BD18517C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -2393,9 +2222,9 @@
 			isa = PBXGroup;
 			children = (
 				E30C01AB17AAA1980010034F /* Background.mp3 */,
-				E3A081EE17AAAFEC00DDDEFB /* Damaged.wav */,
+				E3A081EE17AAAFEC00DDDEFB /* Damage.wav */,
 				E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */,
-				E3A081F017AAAFEC00DDDEFB /* HealingSalve.wav */,
+				E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -2487,34 +2316,80 @@
 				E39532721756818600C1FA2C /* HeroCardArray.plist in Resources */,
 				E39532751756819400C1FA2C /* DensityCardArray.plist in Resources */,
 				E3C15A77177084E600869966 /* settings.xml in Resources */,
-				E32A37ED1785B115004C386F /* Background.jpg in Resources */,
-				E320B63017888FD500DEF693 /* ReadMe in Resources */,
-				E3B3547A179131B900C07B3F /* PlayingCardIds in Resources */,
-				E3B3547E1791A9EC00C07B3F /* HeroCard.plist in Resources */,
-				E3B354801791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */,
-				E350D6C01792EA8400FD1A40 /* Damage.plist in Resources */,
-				E350D6C21792EA8400FD1A40 /* Damage.pvr.ccz in Resources */,
-				E34206541793750400990145 /* SangeAndYasha.plist in Resources */,
-				E34206561793750400990145 /* SangeAndYasha.pvr.ccz in Resources */,
-				E34D6E55179378B8006758B8 /* Settings.bundle in Resources */,
-				E3E8630917983704000170DA /* PlayingCard.plist in Resources */,
-				E3E8630B17983704000170DA /* PlayingCard.pvr.ccz in Resources */,
-				E390EA0E17A01E4400B4F437 /* NormalAttack.plist in Resources */,
-				E390EA1017A01E4400B4F437 /* NormalAttack.pvr.ccz in Resources */,
-				E305894C17A39655005CEE15 /* Evasion.plist in Resources */,
-				E305894E17A39655005CEE15 /* Evasion.pvr.ccz in Resources */,
-				E34BAEFF17A6549900E0A5F5 /* HeroAvatar.plist in Resources */,
-				E34BAF0117A6549900E0A5F5 /* HeroAvatar.pvr.ccz in Resources */,
-				E34D461417A66C15003232C3 /* GameArtwork.plist in Resources */,
-				E34D461617A66C15003232C3 /* GameArtwork.pvr.ccz in Resources */,
+				E3B3547A179131B900C07B3F /* PlayingCardIds.txt in Resources */,
 				E34D462017A6756F003232C3 /* HeroSkillArray.plist in Resources */,
-				E35821CD17A8164200FBFEC7 /* HeroWithSkillIds in Resources */,
+				E35821CD17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */,
 				E30C01B017AAA1980010034F /* Background.mp3 in Resources */,
-				E3A081F117AAAFEC00DDDEFB /* Damaged.wav in Resources */,
+				E3A081F117AAAFEC00DDDEFB /* Damage.wav in Resources */,
 				E3A081F317AAAFEC00DDDEFB /* EquipCard.wav in Resources */,
-				E3A081F517AAAFEC00DDDEFB /* HealingSalve.wav in Resources */,
-				E3A081F917AAB90500DDDEFB /* RestoreBlood.plist in Resources */,
-				E3A081FB17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */,
+				E3A081F517AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */,
+				E31BC25017AB3D9200745E12 /* Damage-ipad.plist in Resources */,
+				E31BC25217AB3D9200745E12 /* Damage-ipad.pvr.ccz in Resources */,
+				E31BC25417AB3D9200745E12 /* Damage-ipadhd.plist in Resources */,
+				E31BC25617AB3D9200745E12 /* Damage-ipadhd.pvr.ccz in Resources */,
+				E31BC25817AB3D9200745E12 /* Evasion-ipad.plist in Resources */,
+				E31BC25A17AB3D9200745E12 /* Evasion-ipad.pvr.ccz in Resources */,
+				E31BC25C17AB3D9200745E12 /* Evasion-ipadhd.plist in Resources */,
+				E31BC25E17AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz in Resources */,
+				E31BC28417AB3DC500745E12 /* EquipmentAvatar-ipad.plist in Resources */,
+				E31BC28617AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz in Resources */,
+				E31BC28817AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist in Resources */,
+				E31BC28A17AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz in Resources */,
+				E31BC2A417AB3DC500745E12 /* PlayingCard-ipad.plist in Resources */,
+				E31BC2A617AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz in Resources */,
+				E31BC2A817AB3DC500745E12 /* PlayingCard-ipadhd.plist in Resources */,
+				E31BC2AA17AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz in Resources */,
+				E31BC2C417AB3F6700745E12 /* GameArtwork-ipad.plist in Resources */,
+				E31BC2C617AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz in Resources */,
+				E31BC2C817AB3F6700745E12 /* GameArtwork-ipadhd.plist in Resources */,
+				E31BC2CA17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz in Resources */,
+				E31BC2CC17AB3F6700745E12 /* HeroAvatar-ipad.plist in Resources */,
+				E31BC2CE17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz in Resources */,
+				E31BC2D017AB3F6700745E12 /* HeroAvatar-ipadhd.plist in Resources */,
+				E31BC2D217AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz in Resources */,
+				E31BC2D417AB3F6700745E12 /* HeroCard-ipad.plist in Resources */,
+				E31BC2D617AB3F6700745E12 /* HeroCard-ipad.pvr.ccz in Resources */,
+				E31BC2D817AB3F6700745E12 /* HeroCard-ipadhd.plist in Resources */,
+				E31BC2DA17AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz in Resources */,
+				E31BC2E617AB68F100745E12 /* RestoreBlood-ipad.plist in Resources */,
+				E31BC2E817AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz in Resources */,
+				E31BC2EA17AB68F100745E12 /* RestoreBlood-ipadhd.plist in Resources */,
+				E31BC2EC17AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz in Resources */,
+				E3B951DA17AEC2BE0004BECC /* NormalAttack-ipad.plist in Resources */,
+				E3B951DB17AEC2BE0004BECC /* NormalAttack-ipad.pvr.ccz in Resources */,
+				E3B951DC17AEC2BE0004BECC /* NormalAttack-ipadhd.plist in Resources */,
+				E3B951DD17AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz in Resources */,
+				E31AA72D17B4C75800241AE1 /* ReadMe.txt in Resources */,
+				E39BD18617C0FD0A0012A867 /* Background-hd.plist in Resources */,
+				E39BD18817C0FD0A0012A867 /* Background-hd.pvr.ccz in Resources */,
+				E39BD18A17C0FD0A0012A867 /* Background-ipad.plist in Resources */,
+				E39BD18C17C0FD0A0012A867 /* Background-ipad.pvr.ccz in Resources */,
+				E39BD18E17C0FD0A0012A867 /* Background-ipadhd.plist in Resources */,
+				E39BD19017C0FD0A0012A867 /* Background-ipadhd.pvr.ccz in Resources */,
+				E39BD19217C0FD0A0012A867 /* Damage-hd.plist in Resources */,
+				E39BD19417C0FD0A0012A867 /* Damage-hd.pvr.ccz in Resources */,
+				E39BD19617C0FD0A0012A867 /* EquipmentAvatar-hd.plist in Resources */,
+				E39BD19817C0FD0A0012A867 /* EquipmentAvatar-hd.pvr.ccz in Resources */,
+				E39BD19A17C0FD0A0012A867 /* Evasion-hd.plist in Resources */,
+				E39BD19C17C0FD0A0012A867 /* Evasion-hd.pvr.ccz in Resources */,
+				E39BD19E17C0FD0A0012A867 /* GameArtwork-hd.plist in Resources */,
+				E39BD1A017C0FD0A0012A867 /* GameArtwork-hd.pvr.ccz in Resources */,
+				E39BD1A217C0FD0A0012A867 /* HeroAvatar-hd.plist in Resources */,
+				E39BD1A417C0FD0A0012A867 /* HeroAvatar-hd.pvr.ccz in Resources */,
+				E39BD1A617C0FD0A0012A867 /* HeroCard-hd.plist in Resources */,
+				E39BD1A817C0FD0A0012A867 /* HeroCard-hd.pvr.ccz in Resources */,
+				E39BD1AA17C0FD0A0012A867 /* NormalAttack-hd.plist in Resources */,
+				E39BD1AC17C0FD0A0012A867 /* NormalAttack-hd.pvr.ccz in Resources */,
+				E39BD1AE17C0FD0A0012A867 /* PlayingCard-hd.plist in Resources */,
+				E39BD1B017C0FD0A0012A867 /* PlayingCard-hd.pvr.ccz in Resources */,
+				E39BD1B217C0FD0A0012A867 /* RestoreBlood-hd.plist in Resources */,
+				E39BD1B417C0FD0A0012A867 /* RestoreBlood-hd.pvr.ccz in Resources */,
+				E39BD1B617C0FD0A0012A867 /* SangeAndYasha-hd.plist in Resources */,
+				E39BD1B817C0FD0A0012A867 /* SangeAndYasha-hd.pvr.ccz in Resources */,
+				E39BD1BA17C0FD0A0012A867 /* SangeAndYasha-ipad.plist in Resources */,
+				E39BD1BC17C0FD0A0012A867 /* SangeAndYasha-ipad.pvr.ccz in Resources */,
+				E39BD1BE17C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist in Resources */,
+				E39BD1C017C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2532,34 +2407,80 @@
 				E39532731756818600C1FA2C /* HeroCardArray.plist in Resources */,
 				E39532761756819400C1FA2C /* DensityCardArray.plist in Resources */,
 				E3C15A78177084E600869966 /* settings.xml in Resources */,
-				E32A37EE1785B115004C386F /* Background.jpg in Resources */,
-				E320B63117888FD500DEF693 /* ReadMe in Resources */,
-				E3B3547B179131B900C07B3F /* PlayingCardIds in Resources */,
-				E3B3547F1791A9EC00C07B3F /* HeroCard.plist in Resources */,
-				E3B354811791A9EC00C07B3F /* HeroCard.pvr.ccz in Resources */,
-				E350D6C11792EA8400FD1A40 /* Damage.plist in Resources */,
-				E350D6C31792EA8400FD1A40 /* Damage.pvr.ccz in Resources */,
-				E34206551793750400990145 /* SangeAndYasha.plist in Resources */,
-				E34206571793750400990145 /* SangeAndYasha.pvr.ccz in Resources */,
-				E34D6E56179378B8006758B8 /* Settings.bundle in Resources */,
-				E3E8630A17983704000170DA /* PlayingCard.plist in Resources */,
-				E3E8630C17983704000170DA /* PlayingCard.pvr.ccz in Resources */,
-				E390EA0F17A01E4400B4F437 /* NormalAttack.plist in Resources */,
-				E390EA1117A01E4400B4F437 /* NormalAttack.pvr.ccz in Resources */,
-				E305894D17A39655005CEE15 /* Evasion.plist in Resources */,
-				E305894F17A39655005CEE15 /* Evasion.pvr.ccz in Resources */,
-				E34BAF0017A6549900E0A5F5 /* HeroAvatar.plist in Resources */,
-				E34BAF0217A6549900E0A5F5 /* HeroAvatar.pvr.ccz in Resources */,
-				E34D461517A66C15003232C3 /* GameArtwork.plist in Resources */,
-				E34D461717A66C15003232C3 /* GameArtwork.pvr.ccz in Resources */,
+				E3B3547B179131B900C07B3F /* PlayingCardIds.txt in Resources */,
 				E34D462117A6756F003232C3 /* HeroSkillArray.plist in Resources */,
-				E35821CE17A8164200FBFEC7 /* HeroWithSkillIds in Resources */,
+				E35821CE17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */,
 				E30C01B117AAA1980010034F /* Background.mp3 in Resources */,
-				E3A081F217AAAFEC00DDDEFB /* Damaged.wav in Resources */,
+				E3A081F217AAAFEC00DDDEFB /* Damage.wav in Resources */,
 				E3A081F417AAAFEC00DDDEFB /* EquipCard.wav in Resources */,
-				E3A081F617AAAFEC00DDDEFB /* HealingSalve.wav in Resources */,
-				E3A081FA17AAB90500DDDEFB /* RestoreBlood.plist in Resources */,
-				E3A081FC17AAB90500DDDEFB /* RestoreBlood.pvr.ccz in Resources */,
+				E3A081F617AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */,
+				E31BC25117AB3D9200745E12 /* Damage-ipad.plist in Resources */,
+				E31BC25317AB3D9200745E12 /* Damage-ipad.pvr.ccz in Resources */,
+				E31BC25517AB3D9200745E12 /* Damage-ipadhd.plist in Resources */,
+				E31BC25717AB3D9200745E12 /* Damage-ipadhd.pvr.ccz in Resources */,
+				E31BC25917AB3D9200745E12 /* Evasion-ipad.plist in Resources */,
+				E31BC25B17AB3D9200745E12 /* Evasion-ipad.pvr.ccz in Resources */,
+				E31BC25D17AB3D9200745E12 /* Evasion-ipadhd.plist in Resources */,
+				E31BC25F17AB3D9200745E12 /* Evasion-ipadhd.pvr.ccz in Resources */,
+				E31BC28517AB3DC500745E12 /* EquipmentAvatar-ipad.plist in Resources */,
+				E31BC28717AB3DC500745E12 /* EquipmentAvatar-ipad.pvr.ccz in Resources */,
+				E31BC28917AB3DC500745E12 /* EquipmentAvatar-ipadhd.plist in Resources */,
+				E31BC28B17AB3DC500745E12 /* EquipmentAvatar-ipadhd.pvr.ccz in Resources */,
+				E31BC2A517AB3DC500745E12 /* PlayingCard-ipad.plist in Resources */,
+				E31BC2A717AB3DC500745E12 /* PlayingCard-ipad.pvr.ccz in Resources */,
+				E31BC2A917AB3DC500745E12 /* PlayingCard-ipadhd.plist in Resources */,
+				E31BC2AB17AB3DC500745E12 /* PlayingCard-ipadhd.pvr.ccz in Resources */,
+				E31BC2C517AB3F6700745E12 /* GameArtwork-ipad.plist in Resources */,
+				E31BC2C717AB3F6700745E12 /* GameArtwork-ipad.pvr.ccz in Resources */,
+				E31BC2C917AB3F6700745E12 /* GameArtwork-ipadhd.plist in Resources */,
+				E31BC2CB17AB3F6700745E12 /* GameArtwork-ipadhd.pvr.ccz in Resources */,
+				E31BC2CD17AB3F6700745E12 /* HeroAvatar-ipad.plist in Resources */,
+				E31BC2CF17AB3F6700745E12 /* HeroAvatar-ipad.pvr.ccz in Resources */,
+				E31BC2D117AB3F6700745E12 /* HeroAvatar-ipadhd.plist in Resources */,
+				E31BC2D317AB3F6700745E12 /* HeroAvatar-ipadhd.pvr.ccz in Resources */,
+				E31BC2D517AB3F6700745E12 /* HeroCard-ipad.plist in Resources */,
+				E31BC2D717AB3F6700745E12 /* HeroCard-ipad.pvr.ccz in Resources */,
+				E31BC2D917AB3F6700745E12 /* HeroCard-ipadhd.plist in Resources */,
+				E31BC2DB17AB3F6700745E12 /* HeroCard-ipadhd.pvr.ccz in Resources */,
+				E31BC2E717AB68F100745E12 /* RestoreBlood-ipad.plist in Resources */,
+				E31BC2E917AB68F100745E12 /* RestoreBlood-ipad.pvr.ccz in Resources */,
+				E31BC2EB17AB68F100745E12 /* RestoreBlood-ipadhd.plist in Resources */,
+				E31BC2ED17AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz in Resources */,
+				E3B951DE17AEC2C50004BECC /* NormalAttack-ipad.plist in Resources */,
+				E3B951DF17AEC2C50004BECC /* NormalAttack-ipad.pvr.ccz in Resources */,
+				E3B951E017AEC2C50004BECC /* NormalAttack-ipadhd.plist in Resources */,
+				E3B951E117AEC2C50004BECC /* NormalAttack-ipadhd.pvr.ccz in Resources */,
+				E31AA72E17B4C75800241AE1 /* ReadMe.txt in Resources */,
+				E39BD18717C0FD0A0012A867 /* Background-hd.plist in Resources */,
+				E39BD18917C0FD0A0012A867 /* Background-hd.pvr.ccz in Resources */,
+				E39BD18B17C0FD0A0012A867 /* Background-ipad.plist in Resources */,
+				E39BD18D17C0FD0A0012A867 /* Background-ipad.pvr.ccz in Resources */,
+				E39BD18F17C0FD0A0012A867 /* Background-ipadhd.plist in Resources */,
+				E39BD19117C0FD0A0012A867 /* Background-ipadhd.pvr.ccz in Resources */,
+				E39BD19317C0FD0A0012A867 /* Damage-hd.plist in Resources */,
+				E39BD19517C0FD0A0012A867 /* Damage-hd.pvr.ccz in Resources */,
+				E39BD19717C0FD0A0012A867 /* EquipmentAvatar-hd.plist in Resources */,
+				E39BD19917C0FD0A0012A867 /* EquipmentAvatar-hd.pvr.ccz in Resources */,
+				E39BD19B17C0FD0A0012A867 /* Evasion-hd.plist in Resources */,
+				E39BD19D17C0FD0A0012A867 /* Evasion-hd.pvr.ccz in Resources */,
+				E39BD19F17C0FD0A0012A867 /* GameArtwork-hd.plist in Resources */,
+				E39BD1A117C0FD0A0012A867 /* GameArtwork-hd.pvr.ccz in Resources */,
+				E39BD1A317C0FD0A0012A867 /* HeroAvatar-hd.plist in Resources */,
+				E39BD1A517C0FD0A0012A867 /* HeroAvatar-hd.pvr.ccz in Resources */,
+				E39BD1A717C0FD0A0012A867 /* HeroCard-hd.plist in Resources */,
+				E39BD1A917C0FD0A0012A867 /* HeroCard-hd.pvr.ccz in Resources */,
+				E39BD1AB17C0FD0A0012A867 /* NormalAttack-hd.plist in Resources */,
+				E39BD1AD17C0FD0A0012A867 /* NormalAttack-hd.pvr.ccz in Resources */,
+				E39BD1AF17C0FD0A0012A867 /* PlayingCard-hd.plist in Resources */,
+				E39BD1B117C0FD0A0012A867 /* PlayingCard-hd.pvr.ccz in Resources */,
+				E39BD1B317C0FD0A0012A867 /* RestoreBlood-hd.plist in Resources */,
+				E39BD1B517C0FD0A0012A867 /* RestoreBlood-hd.pvr.ccz in Resources */,
+				E39BD1B717C0FD0A0012A867 /* SangeAndYasha-hd.plist in Resources */,
+				E39BD1B917C0FD0A0012A867 /* SangeAndYasha-hd.pvr.ccz in Resources */,
+				E39BD1BB17C0FD0A0012A867 /* SangeAndYasha-ipad.plist in Resources */,
+				E39BD1BD17C0FD0A0012A867 /* SangeAndYasha-ipad.pvr.ccz in Resources */,
+				E39BD1BF17C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist in Resources */,
+				E39BD1C117C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2585,385 +2506,6 @@
 				E395326017566E3100C1FA2C /* BGPlayingCard.m in Sources */,
 				E3FDE38F17663A4D00E39325 /* BGDensity.m in Sources */,
 				E3FDE3931766FAB500E39325 /* BGMoveComponent.m in Sources */,
-				E320D09C1768E71B00A1F32D /* bn_error.c in Sources */,
-				E320D09D1768E71B00A1F32D /* bn_fast_mp_invmod.c in Sources */,
-				E320D09E1768E71B00A1F32D /* bn_fast_mp_montgomery_reduce.c in Sources */,
-				E320D09F1768E71B00A1F32D /* bn_fast_s_mp_mul_digs.c in Sources */,
-				E320D0A01768E71B00A1F32D /* bn_fast_s_mp_mul_high_digs.c in Sources */,
-				E320D0A11768E71B00A1F32D /* bn_fast_s_mp_sqr.c in Sources */,
-				E320D0A21768E71B00A1F32D /* bn_mp_2expt.c in Sources */,
-				E320D0A31768E71B00A1F32D /* bn_mp_abs.c in Sources */,
-				E320D0A41768E71B00A1F32D /* bn_mp_add.c in Sources */,
-				E320D0A51768E71B00A1F32D /* bn_mp_add_d.c in Sources */,
-				E320D0A61768E71B00A1F32D /* bn_mp_addmod.c in Sources */,
-				E320D0A71768E71B00A1F32D /* bn_mp_and.c in Sources */,
-				E320D0A81768E71B00A1F32D /* bn_mp_clamp.c in Sources */,
-				E320D0A91768E71B00A1F32D /* bn_mp_clear.c in Sources */,
-				E320D0AA1768E71B00A1F32D /* bn_mp_clear_multi.c in Sources */,
-				E320D0AB1768E71B00A1F32D /* bn_mp_cmp.c in Sources */,
-				E320D0AC1768E71B00A1F32D /* bn_mp_cmp_d.c in Sources */,
-				E320D0AD1768E71B00A1F32D /* bn_mp_cmp_mag.c in Sources */,
-				E320D0AE1768E71B00A1F32D /* bn_mp_cnt_lsb.c in Sources */,
-				E320D0AF1768E71B00A1F32D /* bn_mp_copy.c in Sources */,
-				E320D0B01768E71B00A1F32D /* bn_mp_count_bits.c in Sources */,
-				E320D0B11768E71B00A1F32D /* bn_mp_div.c in Sources */,
-				E320D0B21768E71B00A1F32D /* bn_mp_div_2.c in Sources */,
-				E320D0B31768E71B00A1F32D /* bn_mp_div_2d.c in Sources */,
-				E320D0B41768E71B00A1F32D /* bn_mp_div_3.c in Sources */,
-				E320D0B51768E71B00A1F32D /* bn_mp_div_d.c in Sources */,
-				E320D0B61768E71B00A1F32D /* bn_mp_dr_is_modulus.c in Sources */,
-				E320D0B71768E71B00A1F32D /* bn_mp_dr_reduce.c in Sources */,
-				E320D0B81768E71B00A1F32D /* bn_mp_dr_setup.c in Sources */,
-				E320D0B91768E71B00A1F32D /* bn_mp_exch.c in Sources */,
-				E320D0BA1768E71B00A1F32D /* bn_mp_expt_d.c in Sources */,
-				E320D0BB1768E71B00A1F32D /* bn_mp_exptmod.c in Sources */,
-				E320D0BC1768E71B00A1F32D /* bn_mp_exptmod_fast.c in Sources */,
-				E320D0BD1768E71B00A1F32D /* bn_mp_exteuclid.c in Sources */,
-				E320D0BE1768E71B00A1F32D /* bn_mp_fread.c in Sources */,
-				E320D0BF1768E71B00A1F32D /* bn_mp_fwrite.c in Sources */,
-				E320D0C01768E71B00A1F32D /* bn_mp_gcd.c in Sources */,
-				E320D0C11768E71B00A1F32D /* bn_mp_get_int.c in Sources */,
-				E320D0C21768E71B00A1F32D /* bn_mp_grow.c in Sources */,
-				E320D0C31768E71B00A1F32D /* bn_mp_init.c in Sources */,
-				E320D0C41768E71B00A1F32D /* bn_mp_init_copy.c in Sources */,
-				E320D0C51768E71B00A1F32D /* bn_mp_init_multi.c in Sources */,
-				E320D0C61768E71B00A1F32D /* bn_mp_init_set.c in Sources */,
-				E320D0C71768E71B00A1F32D /* bn_mp_init_set_int.c in Sources */,
-				E320D0C81768E71B00A1F32D /* bn_mp_init_size.c in Sources */,
-				E320D0C91768E71B00A1F32D /* bn_mp_invmod.c in Sources */,
-				E320D0CA1768E71B00A1F32D /* bn_mp_invmod_slow.c in Sources */,
-				E320D0CB1768E71B00A1F32D /* bn_mp_is_square.c in Sources */,
-				E320D0CC1768E71B00A1F32D /* bn_mp_jacobi.c in Sources */,
-				E320D0CD1768E71B00A1F32D /* bn_mp_karatsuba_mul.c in Sources */,
-				E320D0CE1768E71B00A1F32D /* bn_mp_karatsuba_sqr.c in Sources */,
-				E320D0CF1768E71B00A1F32D /* bn_mp_lcm.c in Sources */,
-				E320D0D01768E71B00A1F32D /* bn_mp_lshd.c in Sources */,
-				E320D0D11768E71B00A1F32D /* bn_mp_mod.c in Sources */,
-				E320D0D21768E71B00A1F32D /* bn_mp_mod_2d.c in Sources */,
-				E320D0D31768E71B00A1F32D /* bn_mp_mod_d.c in Sources */,
-				E320D0D41768E71B00A1F32D /* bn_mp_montgomery_calc_normalization.c in Sources */,
-				E320D0D51768E71B00A1F32D /* bn_mp_montgomery_reduce.c in Sources */,
-				E320D0D61768E71B00A1F32D /* bn_mp_montgomery_setup.c in Sources */,
-				E320D0D71768E71B00A1F32D /* bn_mp_mul.c in Sources */,
-				E320D0D81768E71B00A1F32D /* bn_mp_mul_2.c in Sources */,
-				E320D0D91768E71B00A1F32D /* bn_mp_mul_2d.c in Sources */,
-				E320D0DA1768E71B00A1F32D /* bn_mp_mul_d.c in Sources */,
-				E320D0DB1768E71B00A1F32D /* bn_mp_mulmod.c in Sources */,
-				E320D0DC1768E71B00A1F32D /* bn_mp_n_root.c in Sources */,
-				E320D0DD1768E71B00A1F32D /* bn_mp_neg.c in Sources */,
-				E320D0DE1768E71B00A1F32D /* bn_mp_or.c in Sources */,
-				E320D0DF1768E71B00A1F32D /* bn_mp_prime_fermat.c in Sources */,
-				E320D0E01768E71B00A1F32D /* bn_mp_prime_is_divisible.c in Sources */,
-				E320D0E11768E71B00A1F32D /* bn_mp_prime_is_prime.c in Sources */,
-				E320D0E21768E71B00A1F32D /* bn_mp_prime_miller_rabin.c in Sources */,
-				E320D0E31768E71B00A1F32D /* bn_mp_prime_next_prime.c in Sources */,
-				E320D0E41768E71B00A1F32D /* bn_mp_prime_rabin_miller_trials.c in Sources */,
-				E320D0E51768E71B00A1F32D /* bn_mp_prime_random_ex.c in Sources */,
-				E320D0E61768E71B00A1F32D /* bn_mp_radix_size.c in Sources */,
-				E320D0E71768E71B00A1F32D /* bn_mp_radix_smap.c in Sources */,
-				E320D0E81768E71B00A1F32D /* bn_mp_rand.c in Sources */,
-				E320D0E91768E71B00A1F32D /* bn_mp_read_radix.c in Sources */,
-				E320D0EA1768E71B00A1F32D /* bn_mp_read_signed_bin.c in Sources */,
-				E320D0EB1768E71C00A1F32D /* bn_mp_read_unsigned_bin.c in Sources */,
-				E320D0EC1768E71C00A1F32D /* bn_mp_reduce.c in Sources */,
-				E320D0ED1768E71C00A1F32D /* bn_mp_reduce_2k.c in Sources */,
-				E320D0EE1768E71C00A1F32D /* bn_mp_reduce_2k_l.c in Sources */,
-				E320D0EF1768E71C00A1F32D /* bn_mp_reduce_2k_setup.c in Sources */,
-				E320D0F01768E71C00A1F32D /* bn_mp_reduce_2k_setup_l.c in Sources */,
-				E320D0F11768E71C00A1F32D /* bn_mp_reduce_is_2k.c in Sources */,
-				E320D0F21768E71C00A1F32D /* bn_mp_reduce_is_2k_l.c in Sources */,
-				E320D0F31768E71C00A1F32D /* bn_mp_reduce_setup.c in Sources */,
-				E320D0F41768E71C00A1F32D /* bn_mp_rshd.c in Sources */,
-				E320D0F51768E71C00A1F32D /* bn_mp_set.c in Sources */,
-				E320D0F61768E71C00A1F32D /* bn_mp_set_int.c in Sources */,
-				E320D0F71768E71C00A1F32D /* bn_mp_shrink.c in Sources */,
-				E320D0F81768E71C00A1F32D /* bn_mp_signed_bin_size.c in Sources */,
-				E320D0F91768E71C00A1F32D /* bn_mp_sqr.c in Sources */,
-				E320D0FA1768E71C00A1F32D /* bn_mp_sqrmod.c in Sources */,
-				E320D0FB1768E71C00A1F32D /* bn_mp_sqrt.c in Sources */,
-				E320D0FC1768E71C00A1F32D /* bn_mp_sub.c in Sources */,
-				E320D0FD1768E71C00A1F32D /* bn_mp_sub_d.c in Sources */,
-				E320D0FE1768E71C00A1F32D /* bn_mp_submod.c in Sources */,
-				E320D0FF1768E71C00A1F32D /* bn_mp_to_signed_bin.c in Sources */,
-				E320D1001768E71C00A1F32D /* bn_mp_to_signed_bin_n.c in Sources */,
-				E320D1011768E71C00A1F32D /* bn_mp_to_unsigned_bin.c in Sources */,
-				E320D1021768E71C00A1F32D /* bn_mp_to_unsigned_bin_n.c in Sources */,
-				E320D1031768E71C00A1F32D /* bn_mp_toom_mul.c in Sources */,
-				E320D1041768E71C00A1F32D /* bn_mp_toom_sqr.c in Sources */,
-				E320D1051768E71C00A1F32D /* bn_mp_toradix.c in Sources */,
-				E320D1061768E71C00A1F32D /* bn_mp_toradix_n.c in Sources */,
-				E320D1071768E71C00A1F32D /* bn_mp_unsigned_bin_size.c in Sources */,
-				E320D1081768E71C00A1F32D /* bn_mp_xor.c in Sources */,
-				E320D1091768E71C00A1F32D /* bn_mp_zero.c in Sources */,
-				E320D10A1768E71C00A1F32D /* bn_prime_tab.c in Sources */,
-				E320D10B1768E71C00A1F32D /* bn_reverse.c in Sources */,
-				E320D10C1768E71C00A1F32D /* bn_s_mp_add.c in Sources */,
-				E320D10D1768E71C00A1F32D /* bn_s_mp_exptmod.c in Sources */,
-				E320D10E1768E71C00A1F32D /* bn_s_mp_mul_digs.c in Sources */,
-				E320D10F1768E71C00A1F32D /* bn_s_mp_mul_high_digs.c in Sources */,
-				E320D1101768E71C00A1F32D /* bn_s_mp_sqr.c in Sources */,
-				E320D1111768E71C00A1F32D /* bn_s_mp_sub.c in Sources */,
-				E320D1121768E71C00A1F32D /* bncore.c in Sources */,
-				E320D1131768E71C00A1F32D /* ElectroServer.m in Sources */,
-				E320D1141768E71C00A1F32D /* EsAddBuddiesRequest.m in Sources */,
-				E320D1151768E71C00A1F32D /* EsAddBuddiesResponse.m in Sources */,
-				E320D1161768E71C00A1F32D /* EsAddRoomOperatorRequest.m in Sources */,
-				E320D1171768E71C00A1F32D /* EsAggregatePluginMessageEvent.m in Sources */,
-				E320D1181768E71C00A1F32D /* EsAggregatePluginRequest.m in Sources */,
-				E320D1191768E71C00A1F32D /* EsAvailableConnection.m in Sources */,
-				E320D11A1768E71C00A1F32D /* EsBuddyStatusUpdateAction.m in Sources */,
-				E320D11B1768E71C00A1F32D /* EsBuddyStatusUpdateEvent.m in Sources */,
-				E320D11C1768E71C00A1F32D /* EsConnection.m in Sources */,
-				E320D11D1768E71C00A1F32D /* EsConnectionAttemptResponse.m in Sources */,
-				E320D11E1768E71C00A1F32D /* EsConnectionClosedEvent.m in Sources */,
-				E320D11F1768E71C00A1F32D /* EsConnectionEvent.m in Sources */,
-				E320D1201768E71C00A1F32D /* EsConnectionResponse.m in Sources */,
-				E320D1211768E71C00A1F32D /* EsCreateOrJoinGameResponse.m in Sources */,
-				E320D1221768E71C00A1F32D /* EsCreateRoomRequest.m in Sources */,
-				E320D1231768E71C00A1F32D /* EsCreateRoomVariableRequest.m in Sources */,
-				E320D1241768E71C00A1F32D /* EsCrossDomainPolicyRequest.m in Sources */,
-				E320D1251768E71C00A1F32D /* EsCrossDomainPolicyResponse.m in Sources */,
-				E320D1261768E71C00A1F32D /* EsCryptoTools.m in Sources */,
-				E320D1271768E71C00A1F32D /* EsDataType.m in Sources */,
-				E320D1281768E71C00A1F32D /* EsDeleteRoomVariableRequest.m in Sources */,
-				E320D1291768E71C00A1F32D /* EsDeleteUserVariableRequest.m in Sources */,
-				E320D12A1768E71C00A1F32D /* EsDhAesEncryptionContext.m in Sources */,
-				E320D12B1768E71C00A1F32D /* EsDHInitiateKeyExchangeRequest.m in Sources */,
-				E320D12C1768E71C00A1F32D /* EsDHPublicNumbersResponse.m in Sources */,
-				E320D12D1768E71C00A1F32D /* EsDHSharedModulusRequest.m in Sources */,
-				E320D12E1768E71C00A1F32D /* EsDHSharedModulusResponse.m in Sources */,
-				E320D12F1768E71C00A1F32D /* EsEncryptionStateChangeEvent.m in Sources */,
-				E320D1301768E71C00A1F32D /* EsEngine.m in Sources */,
-				E320D1311768E71C00A1F32D /* EsEntity.m in Sources */,
-				E320D1321768E71C00A1F32D /* EsErrorType.m in Sources */,
-				E320D1331768E71C00A1F32D /* EsEsNumber.m in Sources */,
-				E320D1341768E71C00A1F32D /* EsEvent.m in Sources */,
-				E320D1351768E71C00A1F32D /* EsEventDispatcher.m in Sources */,
-				E320D1361768E71C00A1F32D /* EsEventDispatcherEvent.m in Sources */,
-				E320D1371768E71C00A1F32D /* EsEvictUserFromRoomRequest.m in Sources */,
-				E320D1381768E71C00A1F32D /* EsFindGamesRequest.m in Sources */,
-				E320D1391768E71C00A1F32D /* EsFindGamesResponse.m in Sources */,
-				E320D13A1768E71C00A1F32D /* EsFindZoneAndRoomByNameRequest.m in Sources */,
-				E320D13B1768E71C00A1F32D /* EsFindZoneAndRoomByNameResponse.m in Sources */,
-				E320D13C1768E71C00A1F32D /* EsFlattenedEsObject.m in Sources */,
-				E320D13D1768E71C00A1F32D /* EsFlattenedEsObjectRO.m in Sources */,
-				E320D13E1768E71C00A1F32D /* EsGatewayKickUserRequest.m in Sources */,
-				E320D13F1768E71C00A1F32D /* EsGatewayStatistics.m in Sources */,
-				E320D1401768E71C00A1F32D /* EsGenericErrorResponse.m in Sources */,
-				E320D1411768E71C00A1F32D /* EsGetGameTypesRequest.m in Sources */,
-				E320D1421768E71C00A1F32D /* EsGetGameTypesResponse.m in Sources */,
-				E320D1431768E71C00A1F32D /* EsGetRoomsInZoneRequest.m in Sources */,
-				E320D1441768E71C00A1F32D /* EsGetRoomsInZoneResponse.m in Sources */,
-				E320D1451768E71C00A1F32D /* EsGetServerLocalTimeRequest.m in Sources */,
-				E320D1461768E71C00A1F32D /* EsGetServerLocalTimeResponse.m in Sources */,
-				E320D1471768E71C00A1F32D /* EsGetUserCountRequest.m in Sources */,
-				E320D1481768E71C00A1F32D /* EsGetUserCountResponse.m in Sources */,
-				E320D1491768E71C00A1F32D /* EsGetUsersInRoomRequest.m in Sources */,
-				E320D14A1768E71C00A1F32D /* EsGetUsersInRoomResponse.m in Sources */,
-				E320D14B1768E71C00A1F32D /* EsGetUserVariablesRequest.m in Sources */,
-				E320D14C1768E71C00A1F32D /* EsGetUserVariablesResponse.m in Sources */,
-				E320D14D1768E71C00A1F32D /* EsGetZonesRequest.m in Sources */,
-				E320D14E1768E71C00A1F32D /* EsGetZonesResponse.m in Sources */,
-				E320D14F1768E71C00A1F32D /* EsIdleTimeoutWarningEvent.m in Sources */,
-				E320D1501768E71C00A1F32D /* EsJoinGameRequest.m in Sources */,
-				E320D1511768E71C00A1F32D /* EsJoinRoomEvent.m in Sources */,
-				E320D1521768E71C00A1F32D /* EsJoinRoomRequest.m in Sources */,
-				E320D1531768E71C00A1F32D /* EsJoinZoneEvent.m in Sources */,
-				E320D1541768E71C00A1F32D /* EsLeaveRoomEvent.m in Sources */,
-				E320D1551768E71C00A1F32D /* EsLeaveRoomRequest.m in Sources */,
-				E320D1561768E71C00A1F32D /* EsLeaveZoneEvent.m in Sources */,
-				E320D1571768E71C00A1F32D /* EsLoginRequest.m in Sources */,
-				E320D1581768E71C00A1F32D /* EsLoginResponse.m in Sources */,
-				E320D1591768E71C00A1F32D /* EsLogOutRequest.m in Sources */,
-				E320D15A1768E71C00A1F32D /* EsManagerHelper.m in Sources */,
-				E320D15B1768E71C00A1F32D /* EsMessage.m in Sources */,
-				E320D15C1768E71C00A1F32D /* EsMessageTranslator.m in Sources */,
-				E320D15D1768E71C00A1F32D /* EsMessageType.m in Sources */,
-				E320D15E1768E71C00A1F32D /* EsObject.m in Sources */,
-				E320D15F1768E71C00A1F32D /* EsObjectCodec.m in Sources */,
-				E320D1601768E71C00A1F32D /* EsPingRequest.m in Sources */,
-				E320D1611768E71C00A1F32D /* EsPingResponse.m in Sources */,
-				E320D1621768E71C00A1F32D /* EsPluginListEntry.m in Sources */,
-				E320D1631768E71C00A1F32D /* EsPluginMessageEvent.m in Sources */,
-				E320D1641768E71C00A1F32D /* EsPluginRequest.m in Sources */,
-				E320D1651768E71C00A1F32D /* EsPrivateMessageEvent.m in Sources */,
-				E320D1661768E71C00A1F32D /* EsPrivateMessageRequest.m in Sources */,
-				E320D1671768E71C00A1F32D /* EsProtocol.m in Sources */,
-				E320D1681768E71C00A1F32D /* EsProtocolConfiguration.m in Sources */,
-				E320D1691768E71C00A1F32D /* EsPublicMessageEvent.m in Sources */,
-				E320D16A1768E71C00A1F32D /* EsPublicMessageRequest.m in Sources */,
-				E320D16B1768E71C00A1F32D /* EsQueuedMessage.m in Sources */,
-				E320D16C1768E71C00A1F32D /* EsQuickJoinGameRequest.m in Sources */,
-				E320D16D1768E71C00A1F32D /* EsRegisterUDPConnectionRequest.m in Sources */,
-				E320D16E1768E71C00A1F32D /* EsRegisterUDPConnectionResponse.m in Sources */,
-				E320D16F1768E71C00A1F32D /* EsRegistryConnectToPreferredGatewayRequest.m in Sources */,
-				E320D1701768E71C00A1F32D /* EsRemoveBuddiesRequest.m in Sources */,
-				E320D1711768E71C00A1F32D /* EsRemoveBuddiesResponse.m in Sources */,
-				E320D1721768E71C00A1F32D /* EsRemoveRoomOperatorRequest.m in Sources */,
-				E320D1731768E71C00A1F32D /* EsRemoveUDPConnectionRequest.m in Sources */,
-				E320D1741768E71C00A1F32D /* EsRemoveUDPConnectionResponse.m in Sources */,
-				E320D1751768E71C00A1F32D /* EsRequest.m in Sources */,
-				E320D1761768E71C00A1F32D /* EsRequestDetails.m in Sources */,
-				E320D1771768E71C00A1F32D /* EsResponse.m in Sources */,
-				E320D1781768E71C00A1F32D /* EsRoom.m in Sources */,
-				E320D1791768E71C00A1F32D /* EsRoomListEntry.m in Sources */,
-				E320D17A1768E71C00A1F32D /* EsRoomVariable.m in Sources */,
-				E320D17B1768E71C00A1F32D /* EsRoomVariableUpdateAction.m in Sources */,
-				E320D17C1768E71C00A1F32D /* EsRoomVariableUpdateEvent.m in Sources */,
-				E320D17D1768E71C00A1F32D /* EsSearchCriteria.m in Sources */,
-				E320D17E1768E71C00A1F32D /* EsServer.m in Sources */,
-				E320D17F1768E71C00A1F32D /* EsServerGame.m in Sources */,
-				E320D1801768E71C00A1F32D /* EsServerKickUserEvent.m in Sources */,
-				E320D1811768E71C00A1F32D /* EsServerState.m in Sources */,
-				E320D1821768E71C00A1F32D /* EsSessionIdleEvent.m in Sources */,
-				E320D1831768E71C00A1F32D /* EsSettingsLoader.m in Sources */,
-				E320D1841768E71C00A1F32D /* EsSettingsXmlParser.m in Sources */,
-				E320D1851768E71C00A1F32D /* EsSocketConnection.m in Sources */,
-				E320D1861768E71C00A1F32D /* EsThriftUtil.m in Sources */,
-				E320D1871768E71C00A1F32D /* EsTransportType.m in Sources */,
-				E320D1881768E71C00A1F32D /* EsUpdateRoomDetailsEvent.m in Sources */,
-				E320D1891768E71C00A1F32D /* EsUpdateRoomDetailsRequest.m in Sources */,
-				E320D18A1768E71C00A1F32D /* EsUpdateRoomVariableRequest.m in Sources */,
-				E320D18B1768E71C00A1F32D /* EsUpdateUserVariableRequest.m in Sources */,
-				E320D18C1768E71C00A1F32D /* EsUser.m in Sources */,
-				E320D18D1768E71C00A1F32D /* EsUserEvictedFromRoomEvent.m in Sources */,
-				E320D18E1768E71C00A1F32D /* EsUserListEntry.m in Sources */,
-				E320D18F1768E71C00A1F32D /* EsUserManager.m in Sources */,
-				E320D1901768E71C00A1F32D /* EsUserServerVariable.m in Sources */,
-				E320D1911768E71C00A1F32D /* EsUserUpdateAction.m in Sources */,
-				E320D1921768E71C00A1F32D /* EsUserUpdateEvent.m in Sources */,
-				E320D1931768E71C00A1F32D /* EsUserVariable.m in Sources */,
-				E320D1941768E71C00A1F32D /* EsUserVariableUpdateAction.m in Sources */,
-				E320D1951768E71C00A1F32D /* EsUserVariableUpdateEvent.m in Sources */,
-				E320D1961768E71C00A1F32D /* EsUtility.m in Sources */,
-				E320D1971768E71C00A1F32D /* EsValidateAdditionalLoginRequest.m in Sources */,
-				E320D1981768E71C00A1F32D /* EsValidateAdditionalLoginResponse.m in Sources */,
-				E320D1991768E71C00A1F32D /* EsZone.m in Sources */,
-				E320D19A1768E71C00A1F32D /* EsZoneListEntry.m in Sources */,
-				E320D19B1768E71C00A1F32D /* EsZoneManager.m in Sources */,
-				E320D19C1768E71C00A1F32D /* EsZoneUpdateAction.m in Sources */,
-				E320D19D1768E71C00A1F32D /* EsZoneUpdateEvent.m in Sources */,
-				E320D19E1768E71C00A1F32D /* NSData+Base64.m in Sources */,
-				E320D19F1768E71C00A1F32D /* TApplicationException.m in Sources */,
-				E320D1A01768E71C00A1F32D /* TBinaryProtocol.m in Sources */,
-				E320D1A11768E71C00A1F32D /* TException.m in Sources */,
-				E320D1A21768E71C00A1F32D /* ThriftAddBuddiesRequest.m in Sources */,
-				E320D1A31768E71C00A1F32D /* ThriftAddBuddiesResponse.m in Sources */,
-				E320D1A41768E71C00A1F32D /* ThriftAddRoomOperatorRequest.m in Sources */,
-				E320D1A51768E71C00A1F32D /* ThriftAggregatePluginMessageEvent.m in Sources */,
-				E320D1A61768E71C00A1F32D /* ThriftAggregatePluginRequest.m in Sources */,
-				E320D1A71768E71C00A1F32D /* ThriftBuddyStatusUpdateAction.m in Sources */,
-				E320D1A81768E71C00A1F32D /* ThriftBuddyStatusUpdateEvent.m in Sources */,
-				E320D1A91768E71C00A1F32D /* ThriftConnectionAttemptResponse.m in Sources */,
-				E320D1AA1768E71C00A1F32D /* ThriftConnectionClosedEvent.m in Sources */,
-				E320D1AB1768E71C00A1F32D /* ThriftConnectionResponse.m in Sources */,
-				E320D1AC1768E71C00A1F32D /* ThriftCreateOrJoinGameResponse.m in Sources */,
-				E320D1AD1768E71C00A1F32D /* ThriftCreateRoomRequest.m in Sources */,
-				E320D1AE1768E71C00A1F32D /* ThriftCreateRoomVariableRequest.m in Sources */,
-				E320D1AF1768E71C00A1F32D /* ThriftCrossDomainPolicyRequest.m in Sources */,
-				E320D1B01768E71C00A1F32D /* ThriftCrossDomainPolicyResponse.m in Sources */,
-				E320D1B11768E71C00A1F32D /* ThriftDataType.m in Sources */,
-				E320D1B21768E71C00A1F32D /* ThriftDeleteRoomVariableRequest.m in Sources */,
-				E320D1B31768E71C00A1F32D /* ThriftDeleteUserVariableRequest.m in Sources */,
-				E320D1B41768E71C00A1F32D /* ThriftDHInitiateKeyExchangeRequest.m in Sources */,
-				E320D1B51768E71C00A1F32D /* ThriftDHPublicNumbersResponse.m in Sources */,
-				E320D1B61768E71C00A1F32D /* ThriftDHSharedModulusRequest.m in Sources */,
-				E320D1B71768E71C00A1F32D /* ThriftDHSharedModulusResponse.m in Sources */,
-				E320D1B81768E71C00A1F32D /* ThriftEncryptionStateChangeEvent.m in Sources */,
-				E320D1B91768E71C00A1F32D /* ThriftErrorType.m in Sources */,
-				E320D1BA1768E71C00A1F32D /* ThriftEsNumber.m in Sources */,
-				E320D1BB1768E71C00A1F32D /* ThriftEvictUserFromRoomRequest.m in Sources */,
-				E320D1BC1768E71C00A1F32D /* ThriftFindGamesRequest.m in Sources */,
-				E320D1BD1768E71C00A1F32D /* ThriftFindGamesResponse.m in Sources */,
-				E320D1BE1768E71C00A1F32D /* ThriftFindZoneAndRoomByNameRequest.m in Sources */,
-				E320D1BF1768E71C00A1F32D /* ThriftFindZoneAndRoomByNameResponse.m in Sources */,
-				E320D1C01768E71C00A1F32D /* ThriftFlattenedEsObject.m in Sources */,
-				E320D1C11768E71C00A1F32D /* ThriftFlattenedEsObjectRO.m in Sources */,
-				E320D1C21768E71C00A1F32D /* ThriftGatewayKickUserRequest.m in Sources */,
-				E320D1C31768E71C00A1F32D /* ThriftGatewayStatistics.m in Sources */,
-				E320D1C41768E71C00A1F32D /* ThriftGenericErrorResponse.m in Sources */,
-				E320D1C51768E71C00A1F32D /* ThriftGetGameTypesRequest.m in Sources */,
-				E320D1C61768E71C00A1F32D /* ThriftGetGameTypesResponse.m in Sources */,
-				E320D1C71768E71C00A1F32D /* ThriftGetRoomsInZoneRequest.m in Sources */,
-				E320D1C81768E71C00A1F32D /* ThriftGetRoomsInZoneResponse.m in Sources */,
-				E320D1C91768E71C00A1F32D /* ThriftGetServerLocalTimeRequest.m in Sources */,
-				E320D1CA1768E71C00A1F32D /* ThriftGetServerLocalTimeResponse.m in Sources */,
-				E320D1CB1768E71C00A1F32D /* ThriftGetUserCountRequest.m in Sources */,
-				E320D1CC1768E71C00A1F32D /* ThriftGetUserCountResponse.m in Sources */,
-				E320D1CD1768E71C00A1F32D /* ThriftGetUsersInRoomRequest.m in Sources */,
-				E320D1CE1768E71C00A1F32D /* ThriftGetUsersInRoomResponse.m in Sources */,
-				E320D1CF1768E71C00A1F32D /* ThriftGetUserVariablesRequest.m in Sources */,
-				E320D1D01768E71C00A1F32D /* ThriftGetUserVariablesResponse.m in Sources */,
-				E320D1D11768E71C00A1F32D /* ThriftGetZonesRequest.m in Sources */,
-				E320D1D21768E71C00A1F32D /* ThriftGetZonesResponse.m in Sources */,
-				E320D1D31768E71C00A1F32D /* ThriftIdleTimeoutWarningEvent.m in Sources */,
-				E320D1D41768E71C00A1F32D /* ThriftJoinGameRequest.m in Sources */,
-				E320D1D51768E71C00A1F32D /* ThriftJoinRoomEvent.m in Sources */,
-				E320D1D61768E71C00A1F32D /* ThriftJoinRoomRequest.m in Sources */,
-				E320D1D71768E71C00A1F32D /* ThriftJoinZoneEvent.m in Sources */,
-				E320D1D81768E71C00A1F32D /* ThriftLeaveRoomEvent.m in Sources */,
-				E320D1D91768E71C00A1F32D /* ThriftLeaveRoomRequest.m in Sources */,
-				E320D1DA1768E71C00A1F32D /* ThriftLeaveZoneEvent.m in Sources */,
-				E320D1DB1768E71C00A1F32D /* ThriftLoginRequest.m in Sources */,
-				E320D1DC1768E71C00A1F32D /* ThriftLoginResponse.m in Sources */,
-				E320D1DD1768E71C00A1F32D /* ThriftLogOutRequest.m in Sources */,
-				E320D1DE1768E71C00A1F32D /* ThriftMessageType.m in Sources */,
-				E320D1DF1768E71C00A1F32D /* ThriftPingRequest.m in Sources */,
-				E320D1E01768E71C00A1F32D /* ThriftPingResponse.m in Sources */,
-				E320D1E11768E71C00A1F32D /* ThriftPluginListEntry.m in Sources */,
-				E320D1E21768E71C00A1F32D /* ThriftPluginMessageEvent.m in Sources */,
-				E320D1E31768E71C00A1F32D /* ThriftPluginRequest.m in Sources */,
-				E320D1E41768E71C00A1F32D /* ThriftPrivateMessageEvent.m in Sources */,
-				E320D1E51768E71C00A1F32D /* ThriftPrivateMessageRequest.m in Sources */,
-				E320D1E61768E71C00A1F32D /* ThriftProtocol.m in Sources */,
-				E320D1E71768E71C00A1F32D /* ThriftProtocolConfiguration.m in Sources */,
-				E320D1E81768E71C00A1F32D /* ThriftPublicMessageEvent.m in Sources */,
-				E320D1E91768E71C00A1F32D /* ThriftPublicMessageRequest.m in Sources */,
-				E320D1EA1768E71C00A1F32D /* ThriftQuickJoinGameRequest.m in Sources */,
-				E320D1EB1768E71C00A1F32D /* ThriftRegisterUDPConnectionRequest.m in Sources */,
-				E320D1EC1768E71C00A1F32D /* ThriftRegisterUDPConnectionResponse.m in Sources */,
-				E320D1ED1768E71C00A1F32D /* ThriftRegistryConnectToPreferredGatewayRequest.m in Sources */,
-				E320D1EE1768E71C00A1F32D /* ThriftRemoveBuddiesRequest.m in Sources */,
-				E320D1EF1768E71C00A1F32D /* ThriftRemoveBuddiesResponse.m in Sources */,
-				E320D1F01768E71C00A1F32D /* ThriftRemoveRoomOperatorRequest.m in Sources */,
-				E320D1F11768E71C00A1F32D /* ThriftRemoveUDPConnectionRequest.m in Sources */,
-				E320D1F21768E71C00A1F32D /* ThriftRemoveUDPConnectionResponse.m in Sources */,
-				E320D1F31768E71C00A1F32D /* ThriftRequestDetails.m in Sources */,
-				E320D1F41768E71C00A1F32D /* ThriftRoomListEntry.m in Sources */,
-				E320D1F51768E71C00A1F32D /* ThriftRoomVariable.m in Sources */,
-				E320D1F61768E71C00A1F32D /* ThriftRoomVariableUpdateAction.m in Sources */,
-				E320D1F71768E71C00A1F32D /* ThriftRoomVariableUpdateEvent.m in Sources */,
-				E320D1F81768E71C00A1F32D /* ThriftSearchCriteria.m in Sources */,
-				E320D1F91768E71C00A1F32D /* ThriftServerGame.m in Sources */,
-				E320D1FA1768E71C00A1F32D /* ThriftServerKickUserEvent.m in Sources */,
-				E320D1FB1768E71C00A1F32D /* ThriftServerState.m in Sources */,
-				E320D1FC1768E71C00A1F32D /* ThriftSessionIdleEvent.m in Sources */,
-				E320D1FD1768E71C00A1F32D /* ThriftUpdateRoomDetailsEvent.m in Sources */,
-				E320D1FE1768E71C00A1F32D /* ThriftUpdateRoomDetailsRequest.m in Sources */,
-				E320D1FF1768E71C00A1F32D /* ThriftUpdateRoomVariableRequest.m in Sources */,
-				E320D2001768E71C00A1F32D /* ThriftUpdateUserVariableRequest.m in Sources */,
-				E320D2011768E71C00A1F32D /* ThriftUserEvictedFromRoomEvent.m in Sources */,
-				E320D2021768E71C00A1F32D /* ThriftUserListEntry.m in Sources */,
-				E320D2031768E71C00A1F32D /* ThriftUserServerVariable.m in Sources */,
-				E320D2041768E71C00A1F32D /* ThriftUserUpdateAction.m in Sources */,
-				E320D2051768E71C00A1F32D /* ThriftUserUpdateEvent.m in Sources */,
-				E320D2061768E71C00A1F32D /* ThriftUserVariable.m in Sources */,
-				E320D2071768E71C00A1F32D /* ThriftUserVariableUpdateAction.m in Sources */,
-				E320D2081768E71C00A1F32D /* ThriftUserVariableUpdateEvent.m in Sources */,
-				E320D2091768E71C00A1F32D /* ThriftValidateAdditionalLoginRequest.m in Sources */,
-				E320D20A1768E71C00A1F32D /* ThriftValidateAdditionalLoginResponse.m in Sources */,
-				E320D20B1768E71C00A1F32D /* ThriftZoneListEntry.m in Sources */,
-				E320D20C1768E71C00A1F32D /* ThriftZoneUpdateAction.m in Sources */,
-				E320D20D1768E71C00A1F32D /* ThriftZoneUpdateEvent.m in Sources */,
-				E320D20E1768E71C00A1F32D /* THTTPClient.m in Sources */,
-				E320D20F1768E71C00A1F32D /* TMemoryBuffer.m in Sources */,
-				E320D2101768E71C00A1F32D /* TNSFileHandleTransport.m in Sources */,
-				E320D2111768E71C00A1F32D /* TNSStreamTransport.m in Sources */,
-				E320D2121768E71C00A1F32D /* TProtocolException.m in Sources */,
-				E320D2131768E71C00A1F32D /* TProtocolUtil.m in Sources */,
-				E320D2141768E71C00A1F32D /* TSharedProcessorFactory.m in Sources */,
-				E320D2151768E71C00A1F32D /* TSocketClient.m in Sources */,
-				E320D2161768E71C00A1F32D /* TTransportException.m in Sources */,
 				E3F5C875176A3B2200E44169 /* BGComponent.m in Sources */,
 				E31075F0176B199100E01AA0 /* BGFaction.m in Sources */,
 				E31075F4176B1A9400E01AA0 /* BGRoomLayer.m in Sources */,

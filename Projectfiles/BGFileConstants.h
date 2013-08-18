@@ -9,12 +9,14 @@
 #ifndef DotAHero_BGFileConstants_h
 #define DotAHero_BGFileConstants_h
 
+#define kPlistBackground                @"Background.plist"
 #define kPlistGameArtwork               @"GameArtwork.plist"
 #define kPlistHeroCard                  @"HeroCard.plist"
 #define kPlistHeroAvatar                @"HeroAvatar.plist"
 #define kPlistPlayingCard               @"PlayingCard.plist"
 #define kPlistEquipmentAvatar           @"EquipmentAvatar.plist"
 
+#define kZlibBackground                 @"Background.pvr.ccz"
 #define kZlibGameArtwork                @"GameArtwork.pvr.ccz"
 #define kZlibHeroCard                   @"HeroCard.pvr.ccz"
 #define kZlibHeroAvatar                 @"HeroAvatar.pvr.ccz"
@@ -83,7 +85,7 @@
 #define kXmlSettings                    @"settings.xml"
 
 #define kAudioBackground                @"Background.mp3"
-#define kAudioDamaged                   @"Damaged.wav"
+#define kAudioDamage                    @"Damage.wav"
 #define kAudioEquipCard                 @"EquipCard.wav"
 #define kAudioRestoreBlood              @"RestoreBlood.wav"
 

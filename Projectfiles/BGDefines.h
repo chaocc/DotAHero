@@ -17,6 +17,8 @@ _Pragma("clang diagnostic pop")                                     \
 
 #define SCREEN_WIDTH                    [CCDirector sharedDirector].screenSize.width
 #define SCREEN_HEIGHT                   [CCDirector sharedDirector].screenSize.height
+
+#define TO_BE_SELECTED_HERO_POSITION    ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.6)
 #define PLAYING_MENU_POSITION           ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
 #define CARD_EFFECT_POSITION            ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
 #define DRAW_CARD_POSITION              ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.55)

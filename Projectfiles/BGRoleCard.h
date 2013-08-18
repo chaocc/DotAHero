@@ -9,7 +9,7 @@
 #import "BGCard.h"
 
 typedef NS_ENUM(NSInteger, BGRoleCardEnum) {
-    kRoleCardDefault = -1,
+    kRoleCardInvalid = -1,
     kRoleCardSentinel,      // 近卫
     kRoleCardScourge,       // 天灾
     kRoleCardNeutral,       // 中立
