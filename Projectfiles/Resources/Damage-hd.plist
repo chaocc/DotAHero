@@ -7,119 +7,119 @@
             <key>Damage0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{328,475},{103,105}}</string>
+                <string>{{372,568},{116,120}}</string>
                 <key>offset</key>
-                <string>{-4,6}</string>
+                <string>{-5,7}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{51,48},{103,105}}</string>
+                <string>{{57,53},{116,120}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{328,348},{159,125}}</string>
+                <string>{{188,568},{182,140}}</string>
                 <key>offset</key>
-                <string>{2,-12}</string>
+                <string>{1,-14}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{29,56},{159,125}}</string>
+                <string>{{30,64},{182,140}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,382},{213,157}}</string>
+                <string>{{2,372},{240,176}}</string>
                 <key>offset</key>
-                <string>{0,-25}</string>
+                <string>{0,-28}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,53},{213,157}}</string>
+                <string>{{0,60},{240,176}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,167},{213,161}}</string>
+                <string>{{244,2},{240,182}}</string>
                 <key>offset</key>
-                <string>{0,-23}</string>
+                <string>{0,-25}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,49},{213,161}}</string>
+                <string>{{0,54},{240,182}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{217,2},{213,163}}</string>
+                <string>{{2,2},{240,184}}</string>
                 <key>offset</key>
-                <string>{0,-23}</string>
+                <string>{0,-26}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,48},{213,163}}</string>
+                <string>{{0,54},{240,184}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{213,163}}</string>
+                <string>{{2,188},{240,182}}</string>
                 <key>offset</key>
-                <string>{0,-22}</string>
+                <string>{0,-25}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,47},{213,163}}</string>
+                <string>{{0,54},{240,182}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{328,167},{179,171}}</string>
+                <string>{{244,374},{202,192}}</string>
                 <key>offset</key>
-                <string>{2,-18}</string>
+                <string>{2,-20}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{19,39},{179,171}}</string>
+                <string>{{21,44},{202,192}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage7.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{161,382},{191,165}}</string>
+                <string>{{244,186},{214,186}}</string>
                 <key>offset</key>
-                <string>{-6,-23}</string>
+                <string>{-6,-26}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{5,47},{191,165}}</string>
+                <string>{{7,53},{214,186}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>Damage8.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{165,167},{163,161}}</string>
+                <string>{{2,550},{184,180}}</string>
                 <key>offset</key>
-                <string>{-4,-3}</string>
+                <string>{-5,-4}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{21,29},{163,161}}</string>
+                <string>{{23,34},{184,180}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -129,9 +129,9 @@
             <key>realTextureFileName</key>
             <string>Damage-hd.pvr.ccz</string>
             <key>size</key>
-            <string>{501,597}</string>
+            <string>{490,732}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:1c86386b2e47468e8d4a75fe514a33a3:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:f9cae8ccc1aef796f2ca8fb8cd69a9d0:1/1$</string>
             <key>textureFileName</key>
             <string>Damage-hd.pvr.ccz</string>
         </dict>

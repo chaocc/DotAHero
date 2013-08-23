@@ -7,10 +7,10 @@
 
 #import "KKAppDelegate.h"
 
-@interface BGAppDelegate : KKAppDelegate
+@interface AppDelegate : KKAppDelegate
 {
 }
 
 @end
 
-@compatibility_alias AppController BGAppDelegate;
+@compatibility_alias AppController AppDelegate;

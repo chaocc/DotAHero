@@ -14,13 +14,11 @@
 
 @interface BGEquipmentArea : CCNode <BGMenuFactoryDelegate>
 
-@property(nonatomic, strong) NSMutableArray *equipmentCards;    // [0] is Weapon, [1] is Armor
+@property (nonatomic, strong) NSMutableArray *equipmentCards;    // [0] is Weapon, [1] is Armor
 
 - (id)initWithPlayer:(BGPlayer *)player;
 + (id)equipmentAreaWithPlayer:(BGPlayer *)player;
 
-- (void)addEquipmentWithPlayingCard:(BGPlayingCard *)card;
-- (void)addEquipmentWithCardId:(NSInteger) cardId;
-- (void)lostEquipmentWithCard:(BGPlayingCard *)card;
+- (void)updateEquipmentWithCard:(BGPlayingCard *)card;
 
 @end

@@ -65,7 +65,7 @@
     
     for (NSUInteger i = 0; i < 3; i++) {
         CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageFactionFrame];
-        sprite.position = ccp(sprite.contentSize.width/2, SCREEN_HEIGHT - sprite.contentSize.height*(increment+0.7));
+        sprite.position = ccp(sprite.contentSize.width/2, SCREEN_HEIGHT - sprite.contentSize.height*(increment+0.65));
         [spriteBatch addChild:sprite];
         
         CCSprite *faction = nil;

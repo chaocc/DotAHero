@@ -82,6 +82,11 @@
 #define kImageMenuBlack                 @"MenuBlack.png"
 #define kImageMenuBlackSelected         @"MenuBlack_Selected.png"
 
+#define kImageProgressBar               @"ProgressBar.png"
+#define kImageProgressBarFrame          @"ProgressBarFrame.png"
+#define kImageProgressBarBig            @"ProgressBar_Big.png"
+#define kImageProgressBarFrameBig       @"ProgressBarFrame_Big.png"
+
 #define kXmlSettings                    @"settings.xml"
 
 #define kAudioBackground                @"Background.mp3"

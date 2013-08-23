@@ -14,6 +14,7 @@
 
 @interface BGEquipmentArea ()
 
+@property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
 @property (nonatomic, strong) CCMenu *equipmentMenu;
@@ -25,6 +26,7 @@
 - (id)initWithPlayer:(BGPlayer *)player
 {
     if (self = [super init]) {
+        _gameLayer = [BGGameLayer sharedGameLayer];
         _player = player;
         self.equipmentCards = [NSMutableArray arrayWithCapacity:2]; // 武器和防具
         _menuFactory = [BGMenuFactory menuFactory];
@@ -37,25 +39,50 @@
     return [[self alloc] initWithPlayer:player];
 }
 
+#pragma mark - Equipment updating
 /*
- * Add a equipment card with playing card while euqipping
+ * Update(Add/Remove) equipment card with hand card while euqipping
  */
-- (void)addEquipmentWithPlayingCard:(BGPlayingCard *)card
+- (void)updateEquipmentWithCard:(BGPlayingCard *)card
 {
-    [self renderEquipmentWithCard:card];
-    [self updateEquipmentBufferWithCard:card];
+//  If the card is contained in equipment cards, need remove it.
+    if ([_equipmentCards containsObject:card]) {
+        [self removeEquipmentWithCard:card isShowingOnDeck:NO];
+        [self removeEquipmentFromBufferWithCard:card];
+    } else {
+        [self renderEquipmentWithCard:card];
+        [self updateEquipmentBufferWithCard:card];
+    }
     
     [[BGAudioComponent sharedAudioComponent] playEquipCard];
 }
 
 /*
- * Add a equipment card with card id while euqipping
+ * Remove equipment card: Is extracted or disarmed/replaced
+ * Set card move target positon according to different Action
+ * (Move card to playing deck or other player)
  */
-- (void)addEquipmentWithCardId:(NSInteger)cardId
+- (void)removeEquipmentWithCard:(BGPlayingCard *)card isShowingOnDeck:(BOOL)isOnDeck
 {
-    BGPlayingCard *card = [BGPlayingCard cardWithCardId:cardId];
-    [self renderEquipmentWithCard:card];
-    [self updateEquipmentBufferWithCard:card];
+    CGPoint targetPos;
+    if (_player.action == kActionUpdatePlayerEquipment) {
+        targetPos = USED_CARD_POSITION;
+    } else {
+        BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];
+        targetPos = targetPlayer.position;
+    }
+    
+    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:targetPos
+                                                         ofNode:_equipmentMenu];
+    
+    [moveComp runActionEaseMoveScaleWithDuration:CARD_MOVE_DURATION
+                                           scale:0.5f
+                                           block:^{
+                                               [_equipmentMenu removeFromParentAndCleanup:YES];
+                                               if (isOnDeck) {
+                                                   [_gameLayer.playingDeck updatePlayingDeckWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
+                                               }
+                                           }];
 }
 
 /*
@@ -90,6 +117,7 @@
     [_equipmentCards removeObject:card];
 }
 
+#pragma mark - Equipment rendering
 /*
  * Render the equipment card after equipped
  * If exist same type equipment(Weapon/Armor), remove the existing one.
@@ -124,7 +152,7 @@
     
 //  If exist same type equipment(Weapon/Armor), remove the existing one.
     if (_equipmentMenu) {
-        [self removeExistingEquipmentWithCard:card];
+        [self removeEquipmentWithCard:card isShowingOnDeck:YES];
     }
     
     NSString *imageName = (_player.isCurrentPlayer) ? card.bigEquipImageName : card.equipImageName;
@@ -157,39 +185,7 @@
 //    [menuItem addChild:label];
 }
 
-- (void)removeExistingEquipmentWithCard:(BGPlayingCard *)card
-{   
-    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:USED_CARD_POSITION
-                                                         ofNode:_equipmentMenu];
-    
-    [moveComp runActionEaseMoveScaleWithDuration:CARD_MOVE_DURATION
-                                           scale:0.5f
-                                           block:^{
-                                               [_equipmentMenu removeFromParentAndCleanup:YES];
-                                               [[BGGameLayer sharedGameLayer].playingDeck showUsedHandCardsWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
-                                           }];
-}
-
-/*
- * Lost equipment - Was greeded or disarmed
- */
-- (void)lostEquipmentWithCard:(BGPlayingCard *)card
-{
-    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-    BGPlayer *targetPlayer = [[BGGameLayer sharedGameLayer] playerWithName:gamePlayer.targetPlayerNames.lastObject];
-    
-    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:targetPlayer.position
-                                                         ofNode:_equipmentMenu];
-    
-    [moveComp runActionEaseMoveScaleWithDuration:CARD_MOVE_DURATION
-                                           scale:0.5f
-                                           block:^{
-                                               [_equipmentMenu removeFromParentAndCleanup:YES];
-                                           }];
-    [self removeEquipmentFromBufferWithCard:card];
-}
-
-#pragma mark - Equipment card using
+#pragma mark - Equipment using
 /*
  * Menu delegate method is called while touching a equipment
  */

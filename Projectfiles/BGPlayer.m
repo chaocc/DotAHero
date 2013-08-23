@@ -20,6 +20,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 @interface BGPlayer ()
 
+@property (nonatomic, strong) CCSprite *progressBar;
 
 @end
 
@@ -32,10 +33,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     if (self = [super init]) {
         _playerName = name;
         _isCurrentPlayer = isCurrentPlayer;
+        
+        _distance = 1;
+        _attackRange = 1;
+        
         _selectedHeroId = kHeroCardInvalid;
         _selectedCardIds = [NSMutableArray array];
         _selectedCardIdxes = [NSMutableArray array];
-        _canDrawCardCount = 2;
         _selectedSkillId = kHeroSkillInvalid;
         
         [self renderPlayerArea];
@@ -54,6 +58,15 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [[BGGameLayer sharedGameLayer].targetPlayerNames removeAllObjects];
 }
 
+- (void)clearSelectedObjectBuffer
+{
+    _selectedCardIds = nil;
+    [_selectedCardIdxes removeAllObjects];
+    _selectedColor = kCardColorInvalid;
+    _selectedSuits = kCardSuitsInvalid;
+    _selectedSkillId = kHeroSkillInvalid;
+}
+
 #pragma mark - Player area
 /*
  * 1. Current player's position is (0,0) and its sprite positon is the "Center" of the player area
@@ -66,9 +79,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _playerAreaSize = sprite.contentSize;
     if (_isCurrentPlayer) {
         sprite.position = ccp(_playerAreaSize.width/2, _playerAreaSize.height/2);
+//        self.position = sprite.position;
         _playerAreaPosition = sprite.position;
     }
-    [self addChild:sprite];
+    [[BGGameLayer sharedGameLayer].gameArtworkBatch addChild:sprite];
     
 //  Add hero and equipment area for all players
     [self addHeroArea];
@@ -77,6 +91,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 //  Only add hand area for current player
     if (_isCurrentPlayer) {
         [self addHandArea];
+    } else {
+        self.handCardCount = INITIAL_HAND_CARD_COUND;   // 5 cards for each player, use 1 for cutting.
     }
 }
 
@@ -108,10 +124,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 #pragma mark - Hero area
-- (void)initHeroWithHeroId:(NSInteger)heroId
+/*
+ * Initialize hero avatar/blood/anger with selected hero card
+ */
+- (void)renderHeroWithHeroId:(NSInteger)heroId
 {
     _selectedHeroId = heroId;
-    [_heroArea initHeroWithHeroId:heroId];
+    [_heroArea renderHeroWithHeroId:heroId];
 }
 
 /*
@@ -123,11 +142,19 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [_heroArea updateAngerPointWithCount:angerPoint];
 }
 
-#pragma mark - Hand cards
-- (void)initHandCardWithCardIds:(NSArray *)cardIds
+#pragma mark - Hand area
+/*
+ * Initialize hand cards with dealing cards
+ */
+- (void)renderHandCardWithCardIds:(NSArray *)cardIds
 {
-    [_handArea updateHandCardWithCardIds:cardIds];
-    _handArea.selectableCardCount = 1;
+    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.2f];
+    CCCallBlock *block = [CCCallBlock actionWithBlock:^{
+        [_handArea updateHandCardWithCardIds:cardIds];
+        _handArea.selectableCardCount = 1;
+    }];
+    
+    [self runAction:[CCSequence actions:delay, block, nil]];
 }
 
 /*
@@ -137,17 +164,33 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     [_handArea updateHandCardWithCardIds:cardIds];
     _handArea.selectableCardCount = count;
+//    _handArea.removeOption = 1;
 }
 
-
-
-
-- (void)addHeroAreaWithHeroId:(NSInteger)heroId
+- (void)enableHandCardWithCardIds:(NSArray *)cardIds
 {
-    _handSizeLimit = _heroArea.heroCard.handSizeLimit;
-    
-//  5 hand cards for each player at the beginning, use 1 card for cutting.
-    self.handCardCount = INITIAL_HAND_CARD_COUND;
+    [_handArea enableHandCardWithCardIds:cardIds];
+}
+
+#pragma mark - Equipment area
+- (void)updateEquipmentWithCardIds:(NSArray *)cardIds
+{
+    NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
+    [_equipmentArea updateEquipmentWithCard:cards.lastObject];
+}
+
+#pragma mark - Hand card count
+- (void)setHandCardCount:(NSUInteger)handCardCount
+{
+    _handCardCount = handCardCount;
+    if (!_isCurrentPlayer) {
+        [self renderHandCardCount];
+    }
+}
+
+- (NSUInteger)handCardCount
+{
+    return (_isCurrentPlayer) ? _handArea.handCards.count : _handCardCount;
 }
 
 /*
@@ -162,28 +205,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                                                 fontSize:22.0f];
     countLabel.position = ccp(-_playerAreaSize.width*0.07, -_playerAreaSize.height*0.23);
     [self addChild:countLabel z:1 tag:kPlayerTagHandCardCount];
-}
-
-- (void)setHandCardCount:(NSUInteger)handCardCount
-{
-    _handCardCount = handCardCount;
-    if (!_isCurrentPlayer) {
-        [self renderHandCardCount];
-    }
-}
-
-- (NSUInteger)handCardCount
-{
-    return (_isCurrentPlayer) ? _handArea.handCards.count : _handCardCount;
-}
-
-- (void)clearSelectedObjectBuffer
-{
-    _selectedCardIds = nil;
-    [_selectedCardIdxes removeAllObjects];
-    _selectedColor = kCardColorInvalid;
-    _selectedSuits = kCardSuitsInvalid;
-    _selectedSkillId = kHeroSkillInvalid;
 }
 
 #pragma mark - Playing menu
@@ -202,6 +223,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             break;
             
         case kActionChooseCardToCompare:    // 确定拼点
+        case kActionChooseCardToGive:       // 交给其他玩家
         case kActionChooseCardToDiscard:    // 确定弃牌
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeOkay];
             break;
@@ -221,54 +243,35 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [self addChild:_playingMenu];
 }
 
-#pragma mark - Playing deck
-///*
-// * Determine the initial player by cutting card
-// */
-//- (void)showAllCuttingCardsWithCardIds:(NSArray *)cardIds
-//{
-//    [_playingDeck showAllCuttingCardsWithCardIds:cardIds];
-//}
-//
-///*
-// * 1. Face down all hand cards on the deck
-// * 2. Also add equipment cards of target player on the deck(使用贪婪的玩家)
-// */
-//- (void)faceDownAllHandCardsOnDeck
-//{
-//    BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-//    BGPlayer *targetPlayer = [gamePlayer playerWithName:gamePlayer.targetPlayerNames.lastObject];
-//    
-//    if (_playerState == kPlayerStateGreeding) {
-//        [_playingDeck facedDownAllHandCardsOfPlayer:targetPlayer];
-//        [_playingDeck addEquipmentCardsOfTargetPlayer:targetPlayer];
-//    } else {
-//        [_playingDeck facedDownAllHandCardsOfPlayer:gamePlayer.sourcePlayer];
-//    }
-//}
-//
-//- (void)gotExtractedCardsWithCardIds:(NSArray *)cardIds
-//{
-//    [_handArea gotExtractedCardsWithCardIds:cardIds];
-//}
-//
-///*
-// * If is greeding player, only lost hand cards.
-// * If is greeded player, can lost hand cards or equipment.
-// */
-//- (void)lostCardsWithCardIds:(NSArray *)cardIds
-//{
-//    if ([self isEqual:[BGGameLayer sharedGameLayer].sourcePlayer]) {
-//        [_handArea lostCardsWithCardIds:cardIds];
-//    }
-//    else {
-//        if ([BGGameLayer sharedGameLayer].sourcePlayer.selectedGreedType == kGreedTypeHandCard) {
-//            [_handArea lostCardsWithCardIds:cardIds];   // 手牌
-//        } else {
-//            NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
-//            [_equipmentArea lostEquipmentWithCard:cards.lastObject];    // 装备
-//        }
-//    }
-//}
+- (void)addPlayingMenuOfStrengthen
+{
+    _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeStrengthening];
+    [self addChild:_playingMenu];
+}
+
+#pragma mark - Progress bar
+- (void)addProgressBarWithPosition:(CGPoint)position block:(void (^)())block
+{
+    _progressBar = [CCSprite spriteWithSpriteFrameName:kImageProgressBarFrameBig];
+    _progressBar.position = position;
+    [self addChild:_progressBar];
+    
+    CCSprite *bar = [CCSprite spriteWithSpriteFrameName:kImageProgressBarBig];
+    CCProgressTimer *timer = [CCProgressTimer progressWithSprite:bar];
+    timer.type = kCCProgressTimerTypeBar;
+    timer.midpoint = ccp(0.0f, 0.0f);       // Setup for a bar starting from the left since the midpoint is 0 for the x
+    timer.barChangeRate = ccp(1.0f, 0.0f);  // Setup for a horizontal bar since the bar change rate is 0 for y meaning no vertical change
+    timer.anchorPoint = CGPointZero;
+    [_progressBar addChild:timer];
+    
+    CCProgressFromTo *progress = [CCProgressFromTo actionWithDuration:10.0f from:100.0f to:0.0f];
+    CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
+    [timer runAction:[CCSequence actions:progress, callBlock, nil]];
+}
+
+- (void)removeProgressBar
+{
+    [_progressBar removeFromParentAndCleanup:YES];
+}
 
 @end

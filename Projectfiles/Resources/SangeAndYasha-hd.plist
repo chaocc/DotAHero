@@ -7,236 +7,236 @@
             <key>SangeAndYasha0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{668,187},{99,99}}</string>
+                <string>{{862,498},{112,110}}</string>
                 <key>offset</key>
-                <string>{-55,42}</string>
+                <string>{-63,47}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{2,15},{99,99}}</string>
+                <string>{{1,18},{112,110}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{105,404},{101,101}}</string>
+                <string>{{714,322},{114,112}}</string>
                 <key>offset</key>
-                <string>{-56,42}</string>
+                <string>{-63,47}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,14},{101,101}}</string>
+                <string>{{0,17},{114,112}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha10.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{203,2},{191,191}}</string>
+                <string>{{226,222},{216,216}}</string>
                 <key>offset</key>
-                <string>{-1,-11}</string>
+                <string>{-2,-12}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,22},{191,191}}</string>
+                <string>{{10,24},{216,216}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha11.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{591,2},{185,183}}</string>
+                <string>{{444,216},{210,206}}</string>
                 <key>offset</key>
-                <string>{2,-8}</string>
+                <string>{1,-9}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{16,23},{185,183}}</string>
+                <string>{{16,26},{210,206}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha12.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{778,2},{189,173}}</string>
+                <string>{{440,2},{212,194}}</string>
                 <key>offset</key>
-                <string>{3,3}</string>
+                <string>{4,3}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{15,17},{189,173}}</string>
+                <string>{{18,20},{212,194}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha13.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{687,348},{141,123}}</string>
+                <string>{{184,454},{158,138}}</string>
                 <key>offset</key>
                 <string>{-4,-2}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{32,47},{141,123}}</string>
+                <string>{{37,53},{158,138}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha14.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{364,195},{151,131}}</string>
+                <string>{{830,2},{170,148}}</string>
                 <key>offset</key>
-                <string>{-4,-1}</string>
+                <string>{-5,-1}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{27,42},{151,131}}</string>
+                <string>{{30,47},{170,148}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha15.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{201,205},{161,141}}</string>
+                <string>{{2,454},{180,158}}</string>
                 <key>offset</key>
                 <string>{-4,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{22,36},{161,141}}</string>
+                <string>{{26,41},{180,158}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha16.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{497,193},{169,147}}</string>
+                <string>{{830,152},{190,166}}</string>
                 <key>offset</key>
-                <string>{-4,0}</string>
+                <string>{-5,1}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{18,33},{169,147}}</string>
+                <string>{{20,36},{190,166}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha17.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{379,348},{175,153}}</string>
+                <string>{{324,440},{196,172}}</string>
                 <key>offset</key>
                 <string>{-4,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{15,29},{175,153}}</string>
+                <string>{{18,33},{196,172}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,404},{101,101}}</string>
+                <string>{{714,206},{114,114}}</string>
                 <key>offset</key>
-                <string>{-34,20}</string>
+                <string>{-38,23}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{22,36},{101,101}}</string>
+                <string>{{25,40},{114,114}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{208,348},{169,157}}</string>
+                <string>{{522,428},{190,178}}</string>
                 <key>offset</key>
-                <string>{22,26}</string>
+                <string>{25,30}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{44,2},{169,157}}</string>
+                <string>{{50,1},{190,178}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{556,342},{147,129}}</string>
+                <string>{{714,436},{166,146}}</string>
                 <key>offset</key>
-                <string>{10,12}</string>
+                <string>{12,14}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{43,30},{147,129}}</string>
+                <string>{{49,33},{166,146}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{830,348},{127,135}}</string>
+                <string>{{862,344},{142,152}}</string>
                 <key>offset</key>
-                <string>{-5,-14}</string>
+                <string>{-5,-16}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{38,53},{127,135}}</string>
+                <string>{{44,60},{142,152}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{778,177},{169,181}}</string>
+                <string>{{636,2},{192,202}}</string>
                 <key>offset</key>
-                <string>{-6,-14}</string>
+                <string>{-7,-16}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{16,30},{169,181}}</string>
+                <string>{{17,35},{192,202}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha7.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,205},{197,197}}</string>
+                <string>{{2,230},{222,222}}</string>
                 <key>offset</key>
-                <string>{-7,-8}</string>
+                <string>{-8,-9}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{1,16},{197,197}}</string>
+                <string>{{1,18},{222,222}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha8.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{199,201}}</string>
+                <string>{{2,2},{222,226}}</string>
                 <key>offset</key>
-                <string>{-7,-6}</string>
+                <string>{-8,-7}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,12},{199,201}}</string>
+                <string>{{1,14},{222,226}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>SangeAndYasha9.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{396,2},{189,193}}</string>
+                <string>{{226,2},{212,218}}</string>
                 <key>offset</key>
-                <string>{-6,-10}</string>
+                <string>{-6,-11}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{6,20},{189,193}}</string>
+                <string>{{8,22},{212,218}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -246,9 +246,9 @@
             <key>realTextureFileName</key>
             <string>SangeAndYasha-hd.pvr.ccz</string>
             <key>size</key>
-            <string>{969,507}</string>
+            <string>{1009,614}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:f7c5dc9e7c68e7fe28689664e9e1ab2b:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:97d3f12e0efb56618bbb4c5b5b77ac7d:1/1$</string>
             <key>textureFileName</key>
             <string>SangeAndYasha-hd.pvr.ccz</string>
         </dict>

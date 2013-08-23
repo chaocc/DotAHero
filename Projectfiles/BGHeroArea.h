@@ -18,17 +18,11 @@
 
 @property (nonatomic) NSInteger bloodPoint;
 @property (nonatomic) NSUInteger angerPoint;
-@property (nonatomic) NSUInteger distance;
-@property (nonatomic) NSUInteger attackRange;
-@property (nonatomic) NSUInteger demange;
-@property (nonatomic) NSUInteger gotAnger;
-@property (nonatomic) BOOL canBeTarget;
-@property (nonatomic) BOOL isDead;
 
 - (id)initWithPlayer:(BGPlayer *)player;
 + (id)heroAreaWithPlayer:(BGPlayer *)player;
 
-- (void)initHeroWithHeroId:(NSInteger)heroId;
+- (void)renderHeroWithHeroId:(NSInteger)heroId;
 - (void)updateBloodPointWithCount:(NSInteger)count;
 - (void)updateAngerPointWithCount:(NSInteger)count;
 

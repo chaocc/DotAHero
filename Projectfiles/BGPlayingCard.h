@@ -140,7 +140,7 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, copy, readonly) NSString *checkSelector;
 
 @property (nonatomic) BOOL isVerticalSet;                   // 是否是竖置状态(闪避护符)
-@property (nonatomic) BOOL canBeUsed;
+//@property (nonatomic) BOOL canBeUsed;
 @property (nonatomic) BOOL isSelected;
 
 @end

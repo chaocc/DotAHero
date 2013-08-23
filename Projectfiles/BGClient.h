@@ -28,7 +28,7 @@
 - (void)sendUseHeroSkillRequest;
 - (void)sendCancelRequest;
 - (void)sendDiscardRequest;
-- (void)sendChooseCardIdRequest;
+- (void)sendChooseCardRequest;
 - (void)sendChooseColorRequest;
 - (void)sendChooseSuitsRequest;
 

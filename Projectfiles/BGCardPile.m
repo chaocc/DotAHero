@@ -23,7 +23,7 @@ typedef NS_ENUM(NSInteger, BGCardPileTag) {
         CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageCardPile];
         CGSize spriteSize = sprite.contentSize;
         sprite.position = ccp(SCREEN_WIDTH - spriteSize.width*0.6, SCREEN_HEIGHT - spriteSize.height*1.8);
-        [[BGGameLayer sharedGameLayer].gameArtworkBatch addChild:sprite z:1 tag:kCardPileTagFrame];
+        [[BGGameLayer sharedGameLayer].gameArtworkBatch addChild:sprite z:0 tag:kCardPileTagFrame];
         
         [BGGameLayer sharedGameLayer].delegate = self;
     }

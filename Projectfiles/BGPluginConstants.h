@@ -41,7 +41,9 @@
 #define kParamTargetPlayerList          @"target_player_list"   // 目标玩家列表
 #define kParamCardIdList                @"id_list"              // 卡牌列表(英雄牌/摸的牌/获得的牌/使用的牌/弃置的牌)
 #define kParamCardIndexList             @"index_list"           // 选中的哪几张牌
+#define kParamHandCardCount             @"hand_card_count"      // 玩家手牌数量
 #define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
+#define kParamExtractedCardCount        @"extracted_count"      // 可抽取目标的卡牌数量
 #define kParamSelectedHeroId            @"selected_hero_id"     // 选中的英雄
 #define kParamSelectedSkillId           @"selected_skill_id"    // 选中的英雄技能
 #define kParamSelectedColor             @"selected_color"       // 选中的颜色
@@ -60,36 +62,41 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionDiscard = 103,                           // 确定弃牌
     
     kActionChooseHeroId = 200,                      // 选择英雄
-    kActionChooseCardId = 201,                      // 选择卡牌
+    kActionChooseCard = 201,                        // 选择卡牌Id/Idx
     kActionChooseColor = 202,                       // 选择卡牌颜色
     kActionChooseSuits = 203,                       // 选择卡牌花色
     kActionArrangeCardId = 204,                     // 重新排列卡牌(如能量转移)
     
     kActionUpdateDeckHero = 1000,                   // 更新桌面: 待选英雄
-    kActionUpdateDeckCard = 1001,                   // 更新桌面: 手牌/用掉的牌
-    kActionInitPlayerHero = 1002,                   // 初始化: 选中的英雄
-    kActionInitPlayerHand = 1003,                   // 初始化: 手牌
-    kActionUpdatePlayerHero = 1004,                 // 更新玩家: 英雄的血量/怒气等信息
-    kActionUpdatePlayerHand = 1005,                 // 更新玩家: 手牌
+    kActionUpdateDeckUsedCard = 1001,               // 更新桌面: 用掉/弃掉的牌
+    kActionUpdateDeckHandCard = 1002,               // 更新桌面: 目标手牌/装备
+    kActionUpdateDeckPlayingCard = 1003,            // 更新桌面: 牌堆顶的牌
     
-    kActionPlayingCard = 2000,                      // 出牌阶段
-    kActionChooseCardToUse = 2001,                  // 选择卡牌: 使用
-    kActionChooseCardToCompare = 2002,              // 选择卡牌: 拼点
-    kActionChooseCardToDiscard = 2003,              // 选择卡牌: 弃置
-    kActionChoosingColor = 2204,                    // 选择颜色阶段
-    kActionChoosingSuits = 2205,                    // 选择花色阶段
-    kActionArrangingCardId = 2206,                  // 重新排列卡牌阶段(如能量转移)
+    kActionInitPlayerHero = 2000,                   // 初始化玩家: 选中的英雄
+    kActionInitPlayerCard = 2001,                   // 初始化玩家: 发初始手牌
+    kActionUpdatePlayerHero = 2002,                 // 更新玩家: 英雄的血量/怒气等信息
+    kActionUpdatePlayerHand = 2003,                 // 更新玩家: 手牌
+    kActionUpdatePlayerHandExtracted = 2004,        // 更新玩家: 手牌被抽取
+    kActionUpdatePlayerEquipment = 2005,            // 更新玩家: 装备区的牌
+    kActionUpdatePlayerEquipmentExtracted = 2006,   // 更新玩家: 装备去的牌被抽取
+    
+    kActionPlayingCard = 3000,                      // 出牌阶段
+    kActionChooseCardToUse = 3001,                  // 选择卡牌: 使用
+    kActionChooseCardToCompare = 3002,              // 选择卡牌: 拼点
+    kActionChooseCardToExtract = 3003,              // 选择目标卡牌: 抽取
+    kActionChooseCardToGive = 3004,                 // 选择卡牌: 交给其他玩家
+    kActionChooseCardToDiscard = 3005,              // 选择卡牌: 弃置
+    kActionChoosingColor = 3006,                    // 选择颜色阶段
+    kActionChoosingSuits = 3007,                    // 选择花色阶段
     
     
     
     kActionReadyStartGame = 1,                      // 准备开始游戏
-//    kActionStartGame = 2,                           // 开始游戏
     kActionDealHeroCard = 3,                        // 发英雄牌
     kActionSelectHeroCard = 4,                      // 选中一个英雄
     kActionSendAllHeroIds = 5,                      // 发送所有玩家选中的英雄
     kActionDealRoleCard = 6,                        // 发角色牌
     kActionDealPlayingCard = 7,                     // 发起始手牌
-    
     kActionStartTurn = 8,                           // 回合开始
     kActionStartPlay = 100,                         // 开始出牌
     kActionDrawPlayingCard = 9,                     // 开始摸牌
@@ -111,9 +118,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionPlayMultipleEvasions = 25,               // 打出多张闪(最多3张)
     kActionStartDiscard = 26,                       // 开始弃牌
     kActionOkToDiscard = 27,                        // 确定弃牌
-    kActionContinueDiscard = 28,                    // 继续弃牌
-//    kActionUseHeroSkill = 30,                       // 使用英雄技能
-    kActionMisGuessedCard = 99                      // 猜错了牌 - TEMP
+    kActionContinueDiscard = 28                     // 继续弃牌
 };
 
 #define kPlayerState    @"playerState"  // 标识玩家状态
@@ -136,7 +141,6 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
     kPlayerStateAttacked = 14,                      // 攻击造成1次伤害
     kPlayerStateIsDead = 15,                        // 已死亡
     kPlayerStateThrowingCard = 16,                  // 弃置牌(丢掉牌)
-//    kPlayerStateTargetOfHeroSkill = 17,             // 成为任意英雄技能的目标时
     kPlayerStateBloodRestored = 18,                 // 恢复1点血
     kPlayerStateGreeding = 19,                      // 贪婪－抽目标玩家牌
     kPlayerStateIsBeingGreeded = 20,                // 被贪婪－抽源玩家牌
@@ -148,33 +152,5 @@ typedef NS_ENUM(NSInteger, BGPlayerState) {
     kPlayerStateIsBeingLagunaBladed = 26,           // 被神灭斩
     kPlayerStateIsBeingViperRaided = 27             // 被蝮蛇突袭
 };
-
-// Parameters
-#define kParamSortedPlayerNames         @"sortedPlayerNames"    // 其他玩家ID
-#define kParamToBeSelectedHeroIds       @"toBeSelectedHeroIds"  // 待选的英雄们
-#define kParamHeroId                    @"heroId"               // 选中的英雄ID
-#define kParamAllHeroIds                @"allHeroIds"           // 所有英雄选中的英雄
-#define kParamRoleIds                   @"roleIds"              // 两个玩家的身份(自己的和下家的)
-#define kParamSourcePlayerName          @"playerName"           // 回合开始/伤害来源/出牌的玩家
-#define kParamAllCuttingCardIds         @"allCuttingCardIds"    // 所有玩家选择的用于拼点的牌
-#define kParamGotPlayingCardIds         @"gotPlayingCardIds"    // 得到的手牌(包括发牌、摸牌及其他方式获得的牌)
-#define kParamUsedPlayingCardIds        @"usedPlayingCardIds"   // 用掉/弃掉的手牌或换掉的装备牌
-#define kParamMisGuessedCardIds         @"misGuessedCardIds"    // 猜错的牌
-#define kParamExtractedCardIdxes        @"extractedCardIdxes"   // 抽取的哪几张牌
-#define kParamExtractedCardIds          @"targetCard"           // 抽取的装备
-#define kParamLostPlayingCardIds        @"greedLoseCardIds"     // 失去的牌(比如贪婪/缴械)
-#define kParamTransferedCardIds         @"transferedCardIds"    // 交给目标的牌
-#define kParamGotCardCount              @"gotCardCount"         // 得到的牌数
-//#define kParamRemainingCardCount        @"remainingCardCount"   // 牌堆剩余牌数
-#define kParamTargetPlayerNames         @"targetPlayerNames"    // 指定的目标玩家们
-#define kParamBloodPointChanged         @"hpChanged"            // 血量(+/-)
-#define kParamAngerPointChanged         @"spChanged"            // 怒气(+/-)
-#define kParamTargetCardColor           @"targetColor"          // 指定的颜色
-#define kParamTargetCardSuits           @"targetSuits"          // 指定的花色
-#define kParamGreedType                 @"greedType"            // 贪婪手牌/装备
-#define kParamUsedHeroSkillId           @"usedSkillId"          // 使用的英雄技能
-
-#define kParamHandCardIds               @"handCardIds"          // 手牌列表 - TEMP
-#define kParamHeroBlood                 @"heroHP"               // 英雄当前血量 - TEMP
 
 #endif

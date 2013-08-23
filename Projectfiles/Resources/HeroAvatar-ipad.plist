@@ -56,32 +56,6 @@
                 <key>sourceSize</key>
                 <string>{68,49}</string>
             </dict>
-            <key>Anger.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{245,698},{27,35}}</string>
-                <key>offset</key>
-                <string>{-2,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{2,0},{27,35}}</string>
-                <key>sourceSize</key>
-                <string>{35,35}</string>
-            </dict>
-            <key>Anger_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{175,800},{38,50}}</string>
-                <key>offset</key>
-                <string>{-2,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{4,0},{38,50}}</string>
-                <key>sourceSize</key>
-                <string>{50,50}</string>
-            </dict>
             <key>AntimageAvatar.png</key>
             <dict>
                 <key>frame</key>
@@ -107,110 +81,6 @@
                 <string>{{0,0},{171,142}}</string>
                 <key>sourceSize</key>
                 <string>{171,142}</string>
-            </dict>
-            <key>BloodEmpty.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{247,620},{17,20}}</string>
-                <key>offset</key>
-                <string>{0,1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{1,1},{17,20}}</string>
-                <key>sourceSize</key>
-                <string>{19,24}</string>
-            </dict>
-            <key>BloodEmpty_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{245,735},{26,30}}</string>
-                <key>offset</key>
-                <string>{-1,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{1,0},{26,30}}</string>
-                <key>sourceSize</key>
-                <string>{30,30}</string>
-            </dict>
-            <key>BloodGreen.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{245,767},{17,22}}</string>
-                <key>offset</key>
-                <string>{0,-1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{1,2},{17,22}}</string>
-                <key>sourceSize</key>
-                <string>{19,24}</string>
-            </dict>
-            <key>BloodGreen_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{215,832},{28,30}}</string>
-                <key>offset</key>
-                <string>{-1,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{28,30}}</string>
-                <key>sourceSize</key>
-                <string>{30,30}</string>
-            </dict>
-            <key>BloodRed.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{247,596},{19,22}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,1},{19,22}}</string>
-                <key>sourceSize</key>
-                <string>{19,24}</string>
-            </dict>
-            <key>BloodRed_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{246,647},{26,30}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{2,0},{26,30}}</string>
-                <key>sourceSize</key>
-                <string>{30,30}</string>
-            </dict>
-            <key>BloodYellow.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{246,679},{17,22}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{1,1},{17,22}}</string>
-                <key>sourceSize</key>
-                <string>{19,24}</string>
-            </dict>
-            <key>BloodYellow_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{215,800},{28,30}}</string>
-                <key>offset</key>
-                <string>{-1,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{28,30}}</string>
-                <key>sourceSize</key>
-                <string>{30,30}</string>
             </dict>
             <key>BristlebackAvatar.png</key>
             <dict>
@@ -404,7 +274,7 @@
             <key>size</key>
             <string>{274,968}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:536bfca8ef56e8a7b55023289e776b9f:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:0ca8a48b3a3ac3ebb3ea412d9d5fea83:1/1$</string>
             <key>textureFileName</key>
             <string>HeroAvatar-ipad.pvr.ccz</string>
         </dict>

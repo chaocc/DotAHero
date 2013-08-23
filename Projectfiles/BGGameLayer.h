@@ -34,7 +34,7 @@
 + (BGGameLayer *)sharedGameLayer;
 + (id)scene;
 
-- (void)initOtherPlayersHeroWithHeroIds:(NSArray *)heroIds;
+- (void)renderOtherPlayersHeroWithHeroIds:(NSArray *)heroIds;
 - (BGPlayer *)playerWithName:(NSString *)playerName;
 
 @end

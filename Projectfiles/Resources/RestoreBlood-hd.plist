@@ -7,262 +7,262 @@
             <key>RestoreBlood0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{453,469},{11,11}}</string>
+                <string>{{750,576},{12,12}}</string>
                 <key>offset</key>
-                <string>{-7,0}</string>
+                <string>{-8,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{94,101},{11,11}}</string>
+                <string>{{106,114},{12,12}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>RestoreBlood1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{520,368},{71,69}}</string>
+                <string>{{918,446},{78,78}}</string>
                 <key>offset</key>
                 <string>{-8,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{63,72},{71,69}}</string>
+                <string>{{73,81},{78,78}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>RestoreBlood10.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{181,191}}</string>
+                <string>{{2,2},{204,216}}</string>
                 <key>offset</key>
-                <string>{-7,5}</string>
+                <string>{-8,6}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{9,6},{181,191}}</string>
+                <string>{{10,6},{204,216}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>RestoreBlood11.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{185,185},{181,181}}</string>
-                <key>offset</key>
-                <string>{-7,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{9,16},{181,181}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood12.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{185,2},{181,181}}</string>
-                <key>offset</key>
-                <string>{-7,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{9,16},{181,181}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood13.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{368,187},{181,179}}</string>
-                <key>offset</key>
-                <string>{-7,1}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{9,16},{181,179}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood14.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{368,2},{179,183}}</string>
-                <key>offset</key>
-                <string>{-7,3}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{10,12},{179,183}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood15.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{730,175},{169,169}}</string>
-                <key>offset</key>
-                <string>{-2,16}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{20,6},{169,169}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood16.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,380},{139,163}}</string>
-                <key>offset</key>
-                <string>{0,25}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{37,0},{139,163}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood17.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{453,368},{65,99}}</string>
-                <key>offset</key>
-                <string>{-2,33}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{72,24},{65,99}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood18.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{520,441},{59,81}}</string>
-                <key>offset</key>
-                <string>{1,47}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{78,19},{59,81}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood19.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{185,368},{5,5}}</string>
-                <key>offset</key>
-                <string>{-13,95}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{91,9},{5,5}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood2.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{167,380},{135,135}}</string>
-                <key>offset</key>
-                <string>{-7,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{32,39},{135,135}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood3.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{304,368},{147,147}}</string>
-                <key>offset</key>
-                <string>{-7,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{26,33},{147,147}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood4.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{603,362},{157,157}}</string>
-                <key>offset</key>
-                <string>{-7,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{21,28},{157,157}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood5.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{762,346},{165,165}}</string>
-                <key>offset</key>
-                <string>{-7,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{17,24},{165,165}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood6.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{730,2},{171,175}}</string>
-                <key>offset</key>
-                <string>{-7,-1}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{14,20},{171,175}}</string>
-                <key>sourceSize</key>
-                <string>{213,213}</string>
-            </dict>
-            <key>RestoreBlood7.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{551,183},{177,177}}</string>
+                <string>{{208,208},{204,204}}</string>
                 <key>offset</key>
                 <string>{-8,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,18},{177,177}}</string>
+                <string>{{10,18},{204,204}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood12.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{208,2},{204,204}}</string>
+                <key>offset</key>
+                <string>{-8,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{10,18},{204,204}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood13.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{414,2},{204,202}}</string>
+                <key>offset</key>
+                <string>{-8,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{10,19},{204,202}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood14.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{620,2},{202,202}}</string>
+                <key>offset</key>
+                <string>{-8,4}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{11,15},{202,202}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood15.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,428},{194,192}}</string>
+                <key>offset</key>
+                <string>{-4,18}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{19,6},{194,192}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood16.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{592,410},{156,184}}</string>
+                <key>offset</key>
+                <string>{1,28}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{43,0},{156,184}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood17.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{918,334},{74,110}}</string>
+                <key>offset</key>
+                <string>{-2,39}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{81,26},{74,110}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood18.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{818,334},{68,90}}</string>
+                <key>offset</key>
+                <string>{1,52}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{87,23},{68,90}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood19.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{910,334},{6,6}}</string>
+                <key>offset</key>
+                <string>{-15,108}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{102,9},{6,6}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood2.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{824,180},{152,152}}</string>
+                <key>offset</key>
+                <string>{-8,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{36,44},{152,152}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood3.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{750,408},{166,166}}</string>
+                <key>offset</key>
+                <string>{-9,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{28,37},{166,166}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood4.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{824,2},{176,176}}</string>
+                <key>offset</key>
+                <string>{-8,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{24,32},{176,176}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood5.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{404,414},{186,186}}</string>
+                <key>offset</key>
+                <string>{-8,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{19,27},{186,186}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood6.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{208,414},{194,194}}</string>
+                <key>offset</key>
+                <string>{-9,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{14,23},{194,194}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
+            </dict>
+            <key>RestoreBlood7.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{618,206},{198,200}}</string>
+                <key>offset</key>
+                <string>{-8,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{13,20},{198,200}}</string>
+                <key>sourceSize</key>
+                <string>{240,240}</string>
             </dict>
             <key>RestoreBlood8.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{549,2},{179,179}}</string>
+                <string>{{414,206},{202,202}}</string>
                 <key>offset</key>
-                <string>{-7,-1}</string>
+                <string>{-8,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{10,18},{179,179}}</string>
+                <string>{{11,19},{202,202}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
             <key>RestoreBlood9.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,195},{181,183}}</string>
+                <string>{{2,220},{204,206}}</string>
                 <key>offset</key>
-                <string>{-7,1}</string>
+                <string>{-8,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{9,14},{181,183}}</string>
+                <string>{{10,16},{204,206}}</string>
                 <key>sourceSize</key>
-                <string>{213,213}</string>
+                <string>{240,240}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -272,9 +272,9 @@
             <key>realTextureFileName</key>
             <string>RestoreBlood-hd.pvr.ccz</string>
             <key>size</key>
-            <string>{929,521}</string>
+            <string>{1002,622}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:1a86024ebe43e2a0758b38f12a92d0b4:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:a074a3b267818b5e93e2c9085f796cf0:1/1$</string>
             <key>textureFileName</key>
             <string>RestoreBlood-hd.pvr.ccz</string>
         </dict>

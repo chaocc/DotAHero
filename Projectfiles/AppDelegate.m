@@ -5,10 +5,10 @@
  * Released under MIT License in Germany (LICENSE-Kobold2D.txt).
  */
 
-#import "BGAppDelegate.h"
+#import "AppDelegate.h"
 #import "BGAudioComponent.h"
 
-@implementation BGAppDelegate
+@implementation AppDelegate
 
 -(void) initializationComplete
 {
@@ -18,7 +18,7 @@
 	CCLOG(@"ARC is either not available or not enabled");
 #endif
     
-    [[BGAudioComponent sharedAudioComponent] playBackgroundAndLoop];
+//    [[BGAudioComponent sharedAudioComponent] playBackgroundAndLoop];
 }
 
 -(id) alternateView

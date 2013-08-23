@@ -7,184 +7,184 @@
             <key>Evasion0.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,930},{62,46}}</string>
+                <string>{{529,356},{69,51}}</string>
                 <key>offset</key>
-                <string>{9,-5}</string>
+                <string>{10,-6}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{78,101},{62,46}}</string>
+                <string>{{88,114},{69,51}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion1.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{160,786},{140,98}}</string>
+                <string>{{839,165},{159,109}}</string>
                 <key>offset</key>
-                <string>{8,-5}</string>
+                <string>{8,-6}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{38,75},{140,98}}</string>
+                <string>{{41,85},{159,109}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion10.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,776},{152,156}}</string>
+                <string>{{666,2},{171,175}}</string>
                 <key>offset</key>
-                <string>{-24,-17}</string>
+                <string>{-27,-19}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,58},{152,156}}</string>
+                <string>{{0,65},{171,175}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion11.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{182,320},{152,144}}</string>
+                <string>{{839,2},{171,161}}</string>
                 <key>offset</key>
-                <string>{-24,-11}</string>
+                <string>{-27,-13}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,58},{152,144}}</string>
+                <string>{{0,66},{171,161}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion12.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{194,192},{126,132}}</string>
+                <string>{{702,276},{143,149}}</string>
                 <key>offset</key>
-                <string>{-37,-6}</string>
+                <string>{-41,-6}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,59},{126,132}}</string>
+                <string>{{0,65},{143,149}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion13.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{160,886},{124,132}}</string>
+                <string>{{853,276},{139,149}}</string>
                 <key>offset</key>
-                <string>{-38,-6}</string>
+                <string>{-43,-6}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,59},{124,132}}</string>
+                <string>{{0,65},{139,149}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion2.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{194,2},{188,132}}</string>
+                <string>{{342,2},{211,149}}</string>
                 <key>offset</key>
-                <string>{6,-6}</string>
+                <string>{7,-6}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{12,59},{188,132}}</string>
+                <string>{{14,65},{211,149}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion3.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,160},{190,144}}</string>
+                <string>{{179,2},{213,161}}</string>
                 <key>offset</key>
-                <string>{5,-11}</string>
+                <string>{6,-13}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{10,58},{190,144}}</string>
+                <string>{{12,66},{213,161}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion4.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{190,156}}</string>
+                <string>{{2,2},{215,175}}</string>
                 <key>offset</key>
-                <string>{5,-17}</string>
+                <string>{5,-19}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{10,58},{190,156}}</string>
+                <string>{{10,65},{215,175}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion5.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,306},{178,156}}</string>
+                <string>{{179,217},{201,175}}</string>
                 <key>offset</key>
-                <string>{-6,-17}</string>
+                <string>{-7,-19}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{5,58},{178,156}}</string>
+                <string>{{5,65},{201,175}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion6.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,464},{168,156}}</string>
+                <string>{{2,219},{187,175}}</string>
                 <key>offset</key>
-                <string>{-16,-17}</string>
+                <string>{-18,-19}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,58},{168,156}}</string>
+                <string>{{1,65},{187,175}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion7.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{160,632},{152,156}}</string>
+                <string>{{529,179},{171,175}}</string>
                 <key>offset</key>
-                <string>{-24,-17}</string>
+                <string>{-27,-19}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,58},{152,156}}</string>
+                <string>{{0,65},{171,175}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion8.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,622},{152,156}}</string>
+                <string>{{493,2},{171,175}}</string>
                 <key>offset</key>
-                <string>{-24,-17}</string>
+                <string>{-27,-19}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,58},{152,156}}</string>
+                <string>{{0,65},{171,175}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
             <key>Evasion9.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{172,474},{152,156}}</string>
+                <string>{{356,215},{171,175}}</string>
                 <key>offset</key>
-                <string>{-24,-17}</string>
+                <string>{-27,-19}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,58},{152,156}}</string>
+                <string>{{0,65},{171,175}}</string>
                 <key>sourceSize</key>
-                <string>{200,238}</string>
+                <string>{225,267}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -194,9 +194,9 @@
             <key>realTextureFileName</key>
             <string>Evasion-hd.pvr.ccz</string>
             <key>size</key>
-            <string>{328,1012}</string>
+            <string>{1012,421}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c81f5a0cea3c20e2ffe341058acedd0f:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:2cbfddef5549139d0338f227a6c42155:1/1$</string>
             <key>textureFileName</key>
             <string>Evasion-hd.pvr.ccz</string>
         </dict>

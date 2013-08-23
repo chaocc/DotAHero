@@ -34,9 +34,6 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 {
     if (self = [super init]) {
         _player = player;
-        _distance = 1;
-        _attackRange = 1;
-        _canBeTarget = YES;
         
         _playerAreaWidth = _player.playerAreaSize.width;
         _playerAreaHeight = _player.playerAreaSize.height;
@@ -53,7 +50,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 }
 
 #pragma mark - Hero Initilization
-- (void)initHeroWithHeroId:(NSInteger)heroId
+- (void)renderHeroWithHeroId:(NSInteger)heroId
 {
     _heroCard = [BGHeroCard cardWithCardId:heroId];
     _bloodPoint = _heroCard.bloodPointLimit;
@@ -70,7 +67,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)renderSelectedHero
 {
     [_spriteBatch removeFromParentAndCleanup:YES];
-    _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibHeroAvatar];
+    _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
     [self addChild:_spriteBatch];
     
 //  Render hero avatar
@@ -81,6 +78,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     _heroMenu.position = (_player.isCurrentPlayer) ?
         ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
         ccp(-_playerAreaWidth*0.245, _playerAreaHeight*0.045);
+//    _heroMenu.position = CGPointZero;
+//    _heroMenu.position = ccp(0.5, 0.5);
     [_heroMenu.children.lastObject setTag:_heroCard.cardId];
     [self addChild:_heroMenu];
     

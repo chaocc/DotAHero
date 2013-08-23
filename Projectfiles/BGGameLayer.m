@@ -73,7 +73,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [spriteFrameCache addSpriteFramesWithFile:kPlistEquipmentAvatar];
         
         _gameArtworkBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
-        [self addChild:_gameArtworkBatch z:1];
+        [self addChild:_gameArtworkBatch];
         
         [self addDensity];
         [self addFaction];
@@ -81,6 +81,9 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [self addCardPile];
         [self addPlayers];
         [self addPlayingDeck];
+        
+//      TEMP
+        [_playingDeck updatePlayingDeckWithHeroIds:[NSArray arrayWithObjects:@(2), @(17), @(21), nil]];
 }
 
 	return self;
@@ -92,7 +95,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (void)addDensity
 {
 //    [CCTexture2D setDefaultAlphaPixelFormat:kCCTexture2DPixelFormat_RGB565];
-    [self addChild:[BGDensity densityWithDensityCardId:1]];
+    [self addChild:[BGDensity densityWithDensityCardId:1] z:-1];
 }
 
 /*
@@ -102,7 +105,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     NSArray *roleIds = [NSArray arrayWithObjects:@(0), @(1), @(2), @(3), @(4), @(5), @(6), @(7), nil];
     BGFaction *faction = [BGFaction factionWithRoleIds:roleIds];
-    [self addChild:faction z:1];
+    [self addChild:faction];
 }
 
 /*
@@ -110,7 +113,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)addMenu
 {
-    [self addChild:[BGGameMenu menu] z:1];
+    [self addChild:[BGGameMenu menu]];
 }
 
 /*
@@ -118,7 +121,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)addCardPile
 {
-    [self addChild:[BGCardPile cardPile] z:1];
+    [self addChild:[BGCardPile cardPile]];
     self.remainingCardCount = TOTAL_CARD_COUNT;
 }
 
@@ -148,7 +151,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     @try {
         BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] isCurrentPlayer:YES];
-        [self addChild:player z:2];
+        [self addChild:player];
         
         _currentPlayer = player;
         [_allPlayers addObject:player];
@@ -166,7 +169,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     @try {
         for (NSUInteger i = 1; i < _users.count; i++) {
             BGPlayer *player = [BGPlayer playerWithUserName:[_users[i] userName] isCurrentPlayer:NO];
-            [self addChild:player z:1];
+            [self addChild:player];
             [_allPlayers addObject:player];
         }
     }
@@ -191,14 +194,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
         case kPlayerCountFour:
             [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
             [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[3] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountFive:
             [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
             [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
             [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[4] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountSix:
@@ -206,26 +209,26 @@ static BGGameLayer *instanceOfGameLayer = nil;
             [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
             [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
             [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[5] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountSeven:
-            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.69)];
             [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
             [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.69)];
             break;
             
         case kPlayerCountEight:
-            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.69)];
             [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
             [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
             [_allPlayers[5] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.5)];
-            [_allPlayers[7] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.7)];
+            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[7] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.69)];
             break;
             
         default:
@@ -243,15 +246,15 @@ static BGGameLayer *instanceOfGameLayer = nil;
 }
 
 /*
- * Initialize the selected hero for other players
+ * Render the selected hero for other players
  */
-- (void)initOtherPlayersHeroWithHeroIds:(NSArray *)heroIds
+- (void)renderOtherPlayersHeroWithHeroIds:(NSArray *)heroIds
 {
     self.allHeroIds = heroIds;
     
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         @try {
-            [_allPlayers[i] initHeroWithHeroId:[_allHeroIds[i] integerValue]];
+            [_allPlayers[i] renderHeroWithHeroId:[_allHeroIds[i] integerValue]];
         }
         @catch (NSException *exception) {
             NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
@@ -264,19 +267,19 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (void)setAllHeroIds:(NSArray *)allHeroIds
 {
-    NSMutableArray *mutableHeroIds = [allHeroIds mutableCopy];
-    NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
-    
-    [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj integerValue] == [_currentPlayer selectedHeroId]) {
-            [mutableHeroIds removeObjectsAtIndexes:idxSet];
-            [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
-            _allHeroIds = mutableHeroIds;
-            return;
-        }
-        
-        [idxSet addIndex:idx];
-    }];
+//    NSMutableArray *mutableHeroIds = [allHeroIds mutableCopy];
+//    NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
+//    
+//    [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        if ([obj integerValue] == [_currentPlayer selectedHeroId]) {
+//            [mutableHeroIds removeObjectsAtIndexes:idxSet];
+//            [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
+//            _allHeroIds = mutableHeroIds;
+//            return;
+//        }
+//        
+//        [idxSet addIndex:idx];
+//    }];
 }
 
 - (BGPlayer *)sourcePlayer

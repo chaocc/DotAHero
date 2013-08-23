@@ -7,392 +7,340 @@
             <key>BladeMailAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{173,387},{75,45}}</string>
+                <string>{{399,289},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>BladeMailAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{183,233},{102,75}}</string>
+                <string>{{174,236},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>BladesOfAttackAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{173,310},{75,45}}</string>
+                <string>{{346,346},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>BladesOfAttackAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{79,233},{102,75}}</string>
+                <string>{{408,119},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>BootsOfSpeedAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{233,451},{75,45}}</string>
+                <string>{{260,333},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>BootsOfSpeedAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,337},{102,75}}</string>
+                <string>{{291,88},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
-            </dict>
-            <key>Clubs_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{40,488},{19,17}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{19,17}}</string>
-                <key>sourceSize</key>
-                <string>{19,17}</string>
+                <string>{115,84}</string>
             </dict>
             <key>DemonEdgeAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{233,404},{75,45}}</string>
+                <string>{{260,280},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>DemonEdgeAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,233},{102,75}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
-                <key>sourceSize</key>
-                <string>{102,75}</string>
-            </dict>
-            <key>Diamonds_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{59,488},{17,17}}</string>
+                <string>{{174,88},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{1,0},{17,17}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{19,17}</string>
+                <string>{115,84}</string>
             </dict>
             <key>DiffusalBladeAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{233,357},{75,45}}</string>
+                <string>{{346,260},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>DiffusalBladeAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{210,156},{102,75}}</string>
+                <string>{{408,2},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>EyeOfSkadiAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{233,310},{75,45}}</string>
+                <string>{{399,236},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>EyeOfSkadiAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{106,156},{102,75}}</string>
+                <string>{{291,2},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
-            </dict>
-            <key>Hearts_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{21,488},{19,17}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{19,17}}</string>
-                <key>sourceSize</key>
-                <string>{19,17}</string>
+                <string>{115,84}</string>
             </dict>
             <key>LotharsEdgeAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{156,464},{75,45}}</string>
+                <string>{{260,227},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>LotharsEdgeAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,156},{102,75}}</string>
+                <string>{{174,2},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>PhyllisRingAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{126,387},{75,45}}</string>
+                <string>{{346,174},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>PhyllisRingAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{210,79},{102,75}}</string>
+                <string>{{88,236},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>PlaneswalkersCloakAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{126,310},{75,45}}</string>
+                <string>{{260,174},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>PlaneswalkersCloakAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{106,79},{102,75}}</string>
+                <string>{{88,119},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>SacredRelicAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{79,464},{75,45}}</string>
+                <string>{{174,174},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>SacredRelicAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,79},{102,75}}</string>
+                <string>{{88,2},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>SangeAndYashaAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{79,387},{75,45}}</string>
+                <string>{{174,353},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>SangeAndYashaAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{210,2},{102,75}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
-                <key>sourceSize</key>
-                <string>{102,75}</string>
-            </dict>
-            <key>Spades_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,488},{19,17}}</string>
+                <string>{{2,236},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{19,17}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{19,17}</string>
+                <string>{115,84}</string>
             </dict>
             <key>StygianDesolatorAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{79,310},{75,45}}</string>
+                <string>{{88,353},{84,51}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{84,51}}</string>
+                <key>sourceSize</key>
+                <string>{84,51}</string>
+            </dict>
+            <key>StygianDesolatorAvatar_Big.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,119},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
-            </dict>
-            <key>StygianDesolatorAvatar_Big.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{106,2},{102,75}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
-                <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
             <key>TalismanOfEvasionAvatar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,441},{75,45}}</string>
+                <string>{{2,353},{84,51}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{75,45}}</string>
+                <string>{{0,0},{84,51}}</string>
                 <key>sourceSize</key>
-                <string>{75,45}</string>
+                <string>{84,51}</string>
             </dict>
             <key>TalismanOfEvasionAvatar_Big.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{102,75}}</string>
+                <string>{{2,2},{115,84}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{102,75}}</string>
+                <string>{{0,0},{115,84}}</string>
                 <key>sourceSize</key>
-                <string>{102,75}</string>
+                <string>{115,84}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -402,9 +350,9 @@
             <key>realTextureFileName</key>
             <string>EquipmentAvatar-hd.pvr.ccz</string>
             <key>size</key>
-            <string>{314,511}</string>
+            <string>{494,406}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e7d9980fe38a7c8f92c1ba4bc8b9737f:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:9740ac14f6e0f04834c81a403d4aa598:1/1$</string>
             <key>textureFileName</key>
             <string>EquipmentAvatar-hd.pvr.ccz</string>
         </dict>
