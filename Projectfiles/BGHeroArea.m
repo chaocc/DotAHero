@@ -35,8 +35,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     if (self = [super init]) {
         _player = player;
         
-        _playerAreaWidth = _player.playerAreaSize.width;
-        _playerAreaHeight = _player.playerAreaSize.height;
+        _playerAreaWidth = _player.areaSize.width;
+        _playerAreaHeight = _player.areaSize.height;
         
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;
@@ -66,10 +66,6 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)renderSelectedHero
 {
-    [_spriteBatch removeFromParentAndCleanup:YES];
-    _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
-    [self addChild:_spriteBatch];
-    
 //  Render hero avatar
     NSString *avatarName =( _player.isCurrentPlayer) ? _heroCard.bigAvatarName : _heroCard.avatarName;
     _heroMenu = [_menuFactory createMenuWithSpriteFrameName:avatarName
@@ -77,9 +73,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
                                           disabledFrameName:nil];
     _heroMenu.position = (_player.isCurrentPlayer) ?
         ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
-        ccp(-_playerAreaWidth*0.245, _playerAreaHeight*0.045);
-//    _heroMenu.position = CGPointZero;
-//    _heroMenu.position = ccp(0.5, 0.5);
+        ccp(_player.areaPosition.x-_playerAreaWidth*0.245, _player.areaPosition.y+_playerAreaHeight*0.045);
     [_heroMenu.children.lastObject setTag:_heroCard.cardId];
     [self addChild:_heroMenu];
     
@@ -130,7 +124,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         menuItem.tag = skill.skillId;
         
         CCLabelTTF *label = [CCLabelTTF labelWithString:skill.skillText
-                                               fontName:@"Arial"
+                                               fontName:@"Marker Felt"
                                                fontSize:14.0f];
         label.position = ccp(menuItem.contentSize.width/2, menuItem.contentSize.height/2);
         [menuItem addChild:label];
@@ -144,6 +138,10 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)renderBloodPoint
 {
+    [_spriteBatch removeFromParentAndCleanup:YES];
+    _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
+    [self addChild:_spriteBatch];
+    
     NSString *bloodImageName;
     CGPoint deltaPos;
     CGFloat width, height;
@@ -160,7 +158,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         }
         width = _playerAreaWidth*0.2 / (_heroCard.bloodPointLimit + 1);
         height = _playerAreaHeight*0.305;
-    } else {
+    }
+    else {
         if (_bloodPoint == 1) {
             bloodImageName = kImageBloodRed;
         } else if (_bloodPoint == 2) {
@@ -169,7 +168,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
             bloodImageName = kImageBloodGreen;
         }
 //      Move position to left corner of player area for other players
-        deltaPos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
+        deltaPos = ccp(_player.areaPosition.x-_playerAreaWidth/2, _player.areaPosition.y-_playerAreaHeight/2);
         width = _playerAreaWidth*0.5 / (_heroCard.bloodPointLimit + 1);
         height = _playerAreaHeight*0.135;
     }
@@ -202,10 +201,11 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         width = _playerAreaWidth*0.201;
         increment = _playerAreaHeight*0.83 / (_angerPoint + 1);
         height = increment + _playerAreaHeight*0.17;
-    } else {
+    }
+    else {
         angerImageName = kImageAnger;
 //      Move position to left corner of player area for other players
-        deltaPos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
+        deltaPos = ccp(_player.areaPosition.x-_playerAreaWidth/2, _player.areaPosition.y-_playerAreaHeight/2);
         width = _playerAreaWidth*0.515;
         height = _playerAreaHeight / (_angerPoint + 1);
         increment = height;
@@ -222,8 +222,12 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
     BGEffectType effectType = (count > _bloodPoint) ? kEffectTypeRestoreBlood : kEffectTypeDamaged;
-    BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:effectType];
-    effect.position = ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643);
+    float scale = (_player.isCurrentPlayer) ? 0.8f : 0.5f;
+    BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:effectType
+                                                                   andScale:scale];
+    effect.position = (_player.isCurrentPlayer) ?
+        ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
+        ccp(_player.areaPosition.x-_playerAreaWidth*0.25, _player.areaPosition.y);
     [self addChild:effect];
     
     _bloodPoint = count;
@@ -247,11 +251,11 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 //        [_player.handArea addHandCardsWithCardIds:cards];
 //        return; // Can not touch the hero of current player
 //    }
-    
+        
     if ([menuItem.parent isEqual:_heroMenu]) {
         BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
         CCMenuItem *okayMenu = [gamePlayer.currentPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
-        NSAssert(okayMenu, @"okayMenu Nil in %@", NSStringFromSelector(_cmd));
+        NSAssert(okayMenu, @"okMenu Nil in %@", NSStringFromSelector(_cmd));
         
         NSAssert(gamePlayer.targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
         if ([gamePlayer.targetPlayerNames containsObject:_player.playerName]) {

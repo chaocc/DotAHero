@@ -10,7 +10,7 @@
 
 @implementation AppDelegate
 
--(void) initializationComplete
+- (void)initializationComplete
 {
 #ifdef KK_ARC_ENABLED
 	CCLOG(@"ARC is enabled");
@@ -21,9 +21,14 @@
 //    [[BGAudioComponent sharedAudioComponent] playBackgroundAndLoop];
 }
 
--(id) alternateView
+- (id)alternateView
 {
 	return nil;
 }
+
+//- (void)applicationWillTerminate:(UIApplication *)application
+//{
+//    [super applicationWillTerminate:application];
+//}
 
 @end

@@ -191,10 +191,6 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
                                            block:^{
                                                [menuItem.parent removeFromParentAndCleanup:YES];
                                                [[BGClient sharedClient] sendChooseHeroIdRequest];
-                                               
-//                                             TEMP
-                                               [_player renderHeroWithHeroId:_player.selectedHeroId];
-                                               [_player renderHandCardWithCardIds:[NSArray arrayWithObjects:@(1), @(5), @(11), @(17), @(23), nil]];
                                            }];
 }
 

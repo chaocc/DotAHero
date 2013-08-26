@@ -17,8 +17,8 @@
 
 @property (nonatomic, copy, readonly) NSString *playerName;
 @property (nonatomic, readonly) BOOL isCurrentPlayer;
-@property (nonatomic, readonly) CGPoint playerAreaPosition;
-@property (nonatomic, readonly) CGSize playerAreaSize;
+@property (nonatomic) CGPoint areaPosition;
+@property (nonatomic, readonly) CGSize areaSize;
 //@property (nonatomic, readonly) NSUInteger handSizeLimit;
 
 @property (nonatomic) NSUInteger distance;
@@ -43,8 +43,8 @@
 @property (nonatomic) NSUInteger handCardCount;         // 手牌数
 @property (nonatomic) NSUInteger canExtractCardCount;   // 可以抽取的牌数
 
-- (id)initWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag;
-+ (id)playerWithUserName:(NSString *)name isCurrentPlayer:(BOOL)flag;
+- (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
++ (id)playerWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
 
 - (void)renderHeroWithHeroId:(NSInteger)heroId;
 - (void)updateHeroWithBloodPoint:(NSInteger)bloodPoint angerPoint:(NSUInteger)angerPoint;

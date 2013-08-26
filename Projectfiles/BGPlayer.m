@@ -14,12 +14,15 @@
 #import "BGMoveComponent.h"
 
 typedef NS_ENUM(NSInteger, BGPlayerTag) {
+    kPlayerTagPlayerArea = 100,
     kPlayerTagHandCardCount
 };
 
 
 @interface BGPlayer ()
 
+@property (nonatomic, weak) BGGameLayer *gameLayer;
+@property (nonatomic) NSUInteger seatIndex;
 @property (nonatomic, strong) CCSprite *progressBar;
 
 @end
@@ -28,11 +31,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 @synthesize handCardCount = _handCardCount;
 
-- (id)initWithUserName:(NSString *)name isCurrentPlayer:(BOOL)isCurrentPlayer
+- (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex
 {
     if (self = [super init]) {
+        _gameLayer = [BGGameLayer sharedGameLayer];
         _playerName = name;
-        _isCurrentPlayer = isCurrentPlayer;
+        _seatIndex = seatIndex;
+        _isCurrentPlayer = (seatIndex == 0);    // First index is current player
         
         _distance = 1;
         _attackRange = 1;
@@ -47,15 +52,23 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return self;
 }
 
-+ (id)playerWithUserName:(NSString *)name isCurrentPlayer:(BOOL)isCurrentPlayer
++ (id)playerWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex
 {
-    return [[self alloc] initWithUserName:name isCurrentPlayer:isCurrentPlayer];
+    return [[self alloc] initWithUserName:name seatIndex:seatIndex];
+}
+
+- (void)setAreaPosition:(CGPoint)areaPosition
+{
+    _areaPosition = areaPosition;
+    
+    CCNode *playerArea = [_gameLayer.gameArtworkBatch getChildByTag:(kPlayerTagPlayerArea+_seatIndex)];
+    playerArea.position = areaPosition;
 }
 
 - (void)clearBuffer
 {
     [self clearSelectedObjectBuffer];
-    [[BGGameLayer sharedGameLayer].targetPlayerNames removeAllObjects];
+    [_gameLayer.targetPlayerNames removeAllObjects];
 }
 
 - (void)clearSelectedObjectBuffer
@@ -69,20 +82,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 #pragma mark - Player area
 /*
- * 1. Current player's position is (0,0) and its sprite positon is the "Center" of the player area
- * 2. Other player's position is setted in class BGGameLayer and its sprite position is (0,0)
+ * 1. Current player's position is (0,0) and its sprite anchor point is alos (0,0)
+ * 2. Other player's position is setted in class BGGameLayer
  */
 - (void)renderPlayerArea
 {
     NSString *spriteFrameName = (_isCurrentPlayer) ? kImageCurrentPlayerArea : kImageOtherPlayerArea;
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:spriteFrameName];
-    _playerAreaSize = sprite.contentSize;
-    if (_isCurrentPlayer) {
-        sprite.position = ccp(_playerAreaSize.width/2, _playerAreaSize.height/2);
-//        self.position = sprite.position;
-        _playerAreaPosition = sprite.position;
-    }
-    [[BGGameLayer sharedGameLayer].gameArtworkBatch addChild:sprite];
+    _areaSize = sprite.contentSize;
+    sprite.anchorPoint = (_isCurrentPlayer) ? CGPointZero : sprite.anchorPoint;
+    [_gameLayer.gameArtworkBatch addChild:sprite z:0 tag:(kPlayerTagPlayerArea+_seatIndex)];
     
 //  Add hero and equipment area for all players
     [self addHeroArea];
@@ -91,8 +100,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 //  Only add hand area for current player
     if (_isCurrentPlayer) {
         [self addHandArea];
-    } else {
-        self.handCardCount = INITIAL_HAND_CARD_COUND;   // 5 cards for each player, use 1 for cutting.
     }
 }
 
@@ -131,6 +138,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     _selectedHeroId = heroId;
     [_heroArea renderHeroWithHeroId:heroId];
+    
+    if (!_isCurrentPlayer) {
+        self.handCardCount = INITIAL_HAND_CARD_COUND;   // 5 cards for each player, use 1 for cutting.
+    }
 }
 
 /*
@@ -148,13 +159,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)renderHandCardWithCardIds:(NSArray *)cardIds
 {
-    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.2f];
-    CCCallBlock *block = [CCCallBlock actionWithBlock:^{
-        [_handArea updateHandCardWithCardIds:cardIds];
-        _handArea.selectableCardCount = 1;
-    }];
-    
-    [self runAction:[CCSequence actions:delay, block, nil]];
+    [_handArea updateHandCardWithCardIds:cardIds];
+    _handArea.selectableCardCount = 1;
 }
 
 /*
@@ -164,7 +170,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     [_handArea updateHandCardWithCardIds:cardIds];
     _handArea.selectableCardCount = count;
-//    _handArea.removeOption = 1;
 }
 
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds
@@ -203,7 +208,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_handCardCount).stringValue
                                                 fontName:@"Arial"
                                                 fontSize:22.0f];
-    countLabel.position = ccp(-_playerAreaSize.width*0.07, -_playerAreaSize.height*0.23);
+    countLabel.position = ccp(_areaPosition.x-_areaSize.width*0.07, _areaPosition.y-_areaSize.height*0.23);
     [self addChild:countLabel z:1 tag:kPlayerTagHandCardCount];
 }
 
@@ -252,11 +257,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 #pragma mark - Progress bar
 - (void)addProgressBarWithPosition:(CGPoint)position block:(void (^)())block
 {
-    _progressBar = [CCSprite spriteWithSpriteFrameName:kImageProgressBarFrameBig];
+    NSString *frameImageName = (_isCurrentPlayer) ? kImageProgressBarFrameBig : kImageProgressBarFrame;
+    _progressBar = [CCSprite spriteWithSpriteFrameName:frameImageName];
     _progressBar.position = position;
     [self addChild:_progressBar];
     
-    CCSprite *bar = [CCSprite spriteWithSpriteFrameName:kImageProgressBarBig];
+    NSString *barImageName = (_isCurrentPlayer) ? kImageProgressBarBig : kImageProgressBar;
+    CCSprite *bar = [CCSprite spriteWithSpriteFrameName:barImageName];
     CCProgressTimer *timer = [CCProgressTimer progressWithSprite:bar];
     timer.type = kCCProgressTimerTypeBar;
     timer.midpoint = ccp(0.0f, 0.0f);       // Setup for a bar starting from the left since the midpoint is 0 for the x
@@ -265,7 +272,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [_progressBar addChild:timer];
     
     CCProgressFromTo *progress = [CCProgressFromTo actionWithDuration:10.0f from:100.0f to:0.0f];
-    CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
     [timer runAction:[CCSequence actions:progress, callBlock, nil]];
 }
 

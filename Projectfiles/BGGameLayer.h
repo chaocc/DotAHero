@@ -21,10 +21,11 @@
 
 @property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
 
-@property (nonatomic, strong, readonly) BGPlayingDeck *playingDeck;
 @property (nonatomic, strong, readonly) NSMutableArray *allPlayers; // Player instances
 @property (nonatomic, strong, readonly) BGPlayer *currentPlayer;    // Current player
 @property (nonatomic, strong, readonly) BGPlayer *sourcePlayer;     // 回合开始/伤害来源/出牌的玩家
+@property (nonatomic, strong, readonly) BGPlayingDeck *playingDeck;
+
 @property (nonatomic, copy) NSString *sourcePlayerName;             // 回合开始/伤害来源/出牌的玩家
 @property (nonatomic, strong) NSMutableArray *targetPlayerNames;    // 指定的目标玩家们
 

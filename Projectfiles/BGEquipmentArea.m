@@ -125,15 +125,15 @@
 - (void)renderEquipmentWithCard:(BGPlayingCard *)card
 {
     CGPoint menuPosition;
-    CGFloat playerAreaWidth = _player.playerAreaSize.width;
-    CGFloat playerAreaHeight = _player.playerAreaSize.height;
+    CGFloat playerAreaWidth = _player.areaSize.width;
+    CGFloat playerAreaHeight = _player.areaSize.height;
     
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeWeapon];
             menuPosition = (_player.isCurrentPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
-                ccp(playerAreaWidth*0.253, playerAreaHeight*0.177);
+                ccp(_player.areaPosition.x+playerAreaWidth*0.253, _player.areaPosition.y+playerAreaHeight*0.177);
             if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
                 [[self getChildByTag:kEquipmentTypeArmor] removeAllChildrenWithCleanup:YES];
             }
@@ -143,7 +143,7 @@
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeArmor];
             menuPosition = (_player.isCurrentPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
-                ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222);
+                ccp(_player.areaPosition.x+playerAreaWidth*0.253, _player.areaPosition.y-playerAreaHeight*0.222);
             break;
             
         default:

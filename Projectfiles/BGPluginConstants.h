@@ -10,8 +10,9 @@
 #define DotAHero_PluginConstants_h
 
 // Extension/Plugin name and handle
-#define kPluginRoom     @"ChatPlugin"
-#define kPluginGame     @"GamePlugin"
+#define kExtensionHeroServer    @"HeroServer"
+#define kPluginRoom             @"RoomPlugin"
+#define kPluginGame             @"GamePlugin"
 
 // Actions
 #define kAction                         @"action"               // 标识要做什么事情
@@ -37,14 +38,16 @@
 //#define kActionPlayingCard              @"playing_card"         // 出牌阶段
 //#define kActionUpdatePlayerInfo         @"update_player_info"   // 更新玩家信息
 
+#define kParamUserList                  @"player_list"          // 所有玩家列表
 #define kParamRemainingCardCount        @"remaining_count"      // 牌堆剩余牌数
+#define kParamSourcePlayerName          @"player_name"          // 回合开始/伤害来源/出牌的玩家
 #define kParamTargetPlayerList          @"target_player_list"   // 目标玩家列表
 #define kParamCardIdList                @"id_list"              // 卡牌列表(英雄牌/摸的牌/获得的牌/使用的牌/弃置的牌)
 #define kParamCardIndexList             @"index_list"           // 选中的哪几张牌
 #define kParamHandCardCount             @"hand_card_count"      // 玩家手牌数量
 #define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
 #define kParamExtractedCardCount        @"extracted_count"      // 可抽取目标的卡牌数量
-#define kParamSelectedHeroId            @"selected_hero_id"     // 选中的英雄
+#define kParamSelectedHeroId            @"id"                   // 选中的英雄
 #define kParamSelectedSkillId           @"selected_skill_id"    // 选中的英雄技能
 #define kParamSelectedColor             @"selected_color"       // 选中的颜色
 #define kParamSelectedSuits             @"selected_suits"       // 选中的花色
@@ -71,6 +74,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionUpdateDeckUsedCard = 1001,               // 更新桌面: 用掉/弃掉的牌
     kActionUpdateDeckHandCard = 1002,               // 更新桌面: 目标手牌/装备
     kActionUpdateDeckPlayingCard = 1003,            // 更新桌面: 牌堆顶的牌
+    kActionUpdateDeckSelectedHeros = 1004,          // 更新桌面: 所有玩家选中的英雄
     
     kActionInitPlayerHero = 2000,                   // 初始化玩家: 选中的英雄
     kActionInitPlayerCard = 2001,                   // 初始化玩家: 发初始手牌

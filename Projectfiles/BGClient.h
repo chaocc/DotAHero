@@ -18,7 +18,10 @@
 + (BGClient *)sharedClient;
 
 - (void)conntectServer;
-- (void)joinRoom;
+
+- (void)sendCreateRoomRequest;
+- (void)sendLeaveRoomRequest;
+
 - (void)sendReadyStartGameRequest;
 
 - (void)addGamePluginMessageEventListener;
@@ -31,18 +34,6 @@
 - (void)sendChooseCardRequest;
 - (void)sendChooseColorRequest;
 - (void)sendChooseSuitsRequest;
-
-//- (void)sendCutPlayingCardRequest;
-//- (void)sendUsePlayingCardRequest;
-//- (void)sendPlayMultipleEvasionsRequest;
-//- (void)sendGuessCardColorRequest;
-//- (void)sendDiscardPlayingCardRequest;
-//- (void)sendCancelPlayingCardRequest;
-//- (void)sendExtractCardRequest;
-//- (void)sendThrowCardRequest;
-//- (void)sendStartDiscardRequest;
-//- (void)sendOkToDiscardRequest;
-//- (void)sendUseHeroSkillRequest;
 
 - (void)addPublicMessageEventListener;
 

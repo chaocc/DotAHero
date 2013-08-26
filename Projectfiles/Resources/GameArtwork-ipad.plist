@@ -709,19 +709,6 @@
             <key>ProgressBar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{537,264},{228,26}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{7,2},{228,26}}</string>
-                <key>sourceSize</key>
-                <string>{242,30}</string>
-            </dict>
-            <key>ProgressBarFrame.png</key>
-            <dict>
-                <key>frame</key>
                 <string>{{2,451},{214,12}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
@@ -729,6 +716,19 @@
                 <false/>
                 <key>sourceColorRect</key>
                 <string>{{14,9},{214,12}}</string>
+                <key>sourceSize</key>
+                <string>{242,30}</string>
+            </dict>
+            <key>ProgressBarFrame.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{537,264},{228,26}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{7,2},{228,26}}</string>
                 <key>sourceSize</key>
                 <string>{242,30}</string>
             </dict>
@@ -989,7 +989,7 @@
             <key>size</key>
             <string>{1022,521}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:0952ef35be9f564e7ff256532b2b3906:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:862a6f802713e810ec7f454cfb5a94be:1/1$</string>
             <key>textureFileName</key>
             <string>GameArtwork-ipad.pvr.ccz</string>
         </dict>

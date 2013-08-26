@@ -39,7 +39,7 @@ static BGRoomListLayer *instanceOfRoomListLayer = nil;
 {
     if (self = [super init]) {
         instanceOfRoomListLayer = self;
-        [[BGClient sharedClient] joinRoom];
+        [[BGClient sharedClient] sendCreateRoomRequest];
     }
     return self;
 }

@@ -92,7 +92,7 @@ static BGRoomLayer *instanceOfRoomLayer = nil;
 {
     [self removeAllChildrenWithCleanup:YES];
     
-    CCScene *scene = [BGGameLayer node];
+    CCScene *scene = [BGGameLayer scene];
     CCTransitionSlideInR *transitionScene = [CCTransitionSlideInR transitionWithDuration:0.2f scene:scene];
     [[CCDirector sharedDirector] replaceScene:transitionScene];
 }

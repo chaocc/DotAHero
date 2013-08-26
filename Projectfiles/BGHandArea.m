@@ -35,7 +35,7 @@
     if (self = [super init]) {
         _gameLayer = [BGGameLayer sharedGameLayer];
         _player = player;
-        _targetPosition = ccpAdd(_player.playerAreaPosition, ccp(_player.playerAreaSize.width/4, 0.0f));
+        _targetPosition = ccpAdd(_player.areaPosition, ccp(_player.areaSize.width/4, 0.0f));
         
         _handCards = [NSMutableArray array];
         _selectedCards = [NSMutableArray array];
@@ -182,9 +182,9 @@
  */
 - (void)adjustPositionOfHandCards
 {
-    CGFloat cardStartX = _player.playerAreaSize.width * 0.27;
-    CGFloat cardPosY = _player.playerAreaSize.height * 0.34;
-    CGFloat maxHandAreaWidth = _player.playerAreaSize.width*0.806;
+    CGFloat cardStartX = _player.areaSize.width * 0.27;
+    CGFloat cardPosY = _player.areaSize.height * 0.34;
+    CGFloat maxHandAreaWidth = _player.areaSize.width*0.806;
     CGFloat cardPadding = 0.0f;
     NSMutableArray *actions = [NSMutableArray arrayWithCapacity:_cardMenu.children.count];
     
@@ -299,7 +299,7 @@
     NSAssert(_selectedCards, @"_selectedCards Nil in %@", NSStringFromSelector(_cmd));
     NSAssert(_selectedMenuItems, @"_selectedMenuItems Nil in %@", NSStringFromSelector(_cmd));
     
-    CGFloat moveHeight = _player.playerAreaSize.height*0.13;
+    CGFloat moveHeight = _player.areaSize.height*0.13;
     BGPlayingCard *card = nil;
     
     @try {
@@ -390,7 +390,8 @@
 - (void)useHandCardWithAnimation:(BOOL)isRun block:(void (^)())block
 {
     if (isRun) {
-        BGEffectComponent *effect = [BGEffectComponent effectCompWithPlayingCardEnum:[_selectedCards.lastObject cardEnum]];
+        BGEffectComponent *effect = [BGEffectComponent effectCompWithPlayingCardEnum:[_selectedCards.lastObject cardEnum]
+                                                                            andScale:0.5f];
         effect.position = CARD_EFFECT_POSITION;
         [self addChild:effect];
     }

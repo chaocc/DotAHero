@@ -9,36 +9,46 @@
 #import "BGEffectComponent.h"
 #import "BGAudioComponent.h"
 
+@interface BGEffectComponent ()
+
+@property (nonatomic) BGPlayingCardEnum playingCardEnum;
+@property (nonatomic) BGEffectType effectType;
+@property (nonatomic) float effectScale;
+
+@end
+
 @implementation BGEffectComponent
 
-- (id)initWithPlayingCardEnum:(BGPlayingCardEnum)cardEnum
+- (id)initWithPlayingCardEnum:(BGPlayingCardEnum)cardEnum andScale:(float)scale
 {
     if (self = [super init]) {
         _playingCardEnum = cardEnum;
+        _effectScale = scale;
         
         [self runEffectAnimationByCard];
     }
     return self;
 }
 
-+ (id)effectCompWithPlayingCardEnum:(BGPlayingCardEnum)cardEnum
++ (id)effectCompWithPlayingCardEnum:(BGPlayingCardEnum)cardEnum andScale:(float)scale
 {
-    return [[self alloc] initWithPlayingCardEnum:cardEnum];
+    return [[self alloc] initWithPlayingCardEnum:cardEnum andScale:scale];
 }
 
-- (id)initWithEffectType:(BGEffectType)effectType
+- (id)initWithEffectType:(BGEffectType)effectType andScale:(float)scale
 {
     if (self = [super init]) {
         _effectType = effectType;
+        _effectScale = scale;
         
         [self runEffectAnimationByEffectType];
     }
     return self;
 }
 
-+ (id)effectCompWithEffectType:(BGEffectType)effectType
++ (id)effectCompWithEffectType:(BGEffectType)effectType andScale:(float)scale
 {
-    return [[self alloc] initWithEffectType:effectType];
+    return [[self alloc] initWithEffectType:effectType andScale:scale];
 }
 
 - (void)runEffectAnimationByCard
@@ -100,7 +110,7 @@
     
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:frameName];
     
-    CCScaleTo *scale = [CCScaleTo actionWithDuration:0.1f scale:1.0f];
+    CCScaleTo *scale = [CCScaleTo actionWithDuration:0.1f scale:_effectScale];
     
     CCAnimation *animation = [CCAnimation animationWithFrames:frame frameCount:count delay:0.08f];
     CCAnimate *animate = [CCAnimate actionWithAnimation:animation];

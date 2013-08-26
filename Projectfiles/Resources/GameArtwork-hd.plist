@@ -709,19 +709,6 @@
             <key>ProgressBar.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,960},{215,24}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{6,2},{215,24}}</string>
-                <key>sourceSize</key>
-                <string>{227,28}</string>
-            </dict>
-            <key>ProgressBarFrame.png</key>
-            <dict>
-                <key>frame</key>
                 <string>{{247,503},{201,12}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
@@ -729,6 +716,19 @@
                 <true/>
                 <key>sourceColorRect</key>
                 <string>{{13,8},{201,12}}</string>
+                <key>sourceSize</key>
+                <string>{227,28}</string>
+            </dict>
+            <key>ProgressBarFrame.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,960},{215,24}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{6,2},{215,24}}</string>
                 <key>sourceSize</key>
                 <string>{227,28}</string>
             </dict>
@@ -989,7 +989,7 @@
             <key>size</key>
             <string>{461,1010}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:ee64f31a8dd09946365176ebaecd877b:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:9d15078d1062947a81365b22eb6a0486:1/1$</string>
             <key>textureFileName</key>
             <string>GameArtwork-hd.pvr.ccz</string>
         </dict>
