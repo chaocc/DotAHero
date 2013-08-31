@@ -112,7 +112,12 @@
     
     CCScaleTo *scale = [CCScaleTo actionWithDuration:0.1f scale:_effectScale];
     
-    CCAnimation *animation = [CCAnimation animationWithFrames:frame frameCount:count delay:0.08f];
+    NSString *cacheName = frame;
+    CCAnimation *animation = [[CCAnimationCache sharedAnimationCache] animationByName:cacheName];
+    if (!animation) {
+        animation = [CCAnimation animationWithFrames:frame frameCount:count delay:0.08f];
+        [[CCAnimationCache sharedAnimationCache] addAnimation:animation name:cacheName];
+    }
     CCAnimate *animate = [CCAnimate actionWithAnimation:animation];
     
     CCCallBlock *block = [CCCallBlock actionWithBlock:^{
@@ -125,6 +130,7 @@
 
 - (void)damage
 {
+    
     [self runActionWithPlist:@"Damage.plist"
                    frameName:@"Damage0.png"
                       frames:@"Damage"

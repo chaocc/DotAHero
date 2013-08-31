@@ -24,7 +24,7 @@
 {
     if (self = [super init]) {
         _menuType = menuType;
-        _player = [BGGameLayer sharedGameLayer].currentPlayer;
+        _player = [BGGameLayer sharedGameLayer].selfPlayer;
         
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;
@@ -110,10 +110,10 @@
     [_menu alignItemsHorizontallyWithPadding:40.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (idx == 0) {
+        if (0 == idx) {
             [obj setTag:kPlayingMenuItemTagOkay];
             [obj setIsEnabled:NO];  // Disable okay menu
-        } else if (idx == 1) {
+        } else if (1 == idx) {
             [obj setTag:kPlayingMenuItemTagDiscard];
         }
     }];
@@ -137,10 +137,10 @@
     [_menu alignItemsHorizontallyWithPadding:40.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (idx == 0) {
+        if (0 == idx) {
             [obj setTag:kPlayingMenuItemTagOkay];
             [obj setIsEnabled:NO];  // Disable okay menu
-        } else if (idx == 1) {
+        } else if (1 == idx) {
             [obj setTag:kPlayingMenuItemTagCancel];
         }
     }];
@@ -164,13 +164,13 @@
     [_menu alignItemsHorizontallyWithPadding:20.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (idx == 0) {
+        if (0 == idx) {
             [obj setTag:kPlayingMenuItemTagOkay];
             [obj setIsEnabled:NO];  // Disable okay menu
-        } else if (idx == 1) {
+        } else if (1 == idx) {
             [obj setTag:kPlayingMenuItemTagStrengthen];
             [obj setIsEnabled:NO];  // Disable strengthen menu
-        } else if (idx == 2) {
+        } else if (2 == idx) {
             [obj setTag:kPlayingMenuItemTagDiscard];
         }
     }];
@@ -194,12 +194,12 @@
     [_menu alignItemsHorizontallyWithPadding:20.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (idx == 0) {
+        if (0 == idx) {
             [obj setTag:kPlayingMenuItemTagOkay];
             [obj setIsEnabled:NO];  // Disable okay menu
-        } else if (idx == 1) {
+        } else if (1 == idx) {
             [obj setTag:kPlayingMenuItemTagStrengthen];
-        } else if (idx == 2) {
+        } else if (2 == idx) {
             [obj setTag:kPlayingMenuItemTagDiscard];
         }
     }];
@@ -222,9 +222,9 @@
     [_menu alignItemsHorizontallyWithPadding:40.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (idx == 0) {
+        if (0 == idx) {
             [obj setTag:kPlayingMenuItemTagRedColor];
-        } else if (idx == 1) {
+        } else if (1 == idx) {
             [obj setTag:kPlayingMenuItemTagBlackColor];
         }
     }];
@@ -247,13 +247,13 @@
     [_menu alignItemsHorizontallyWithPadding:0.0f];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if (idx == 0) {
+        if (0 == idx) {
             [obj setTag:kPlayingMenuItemTagHearts];
-        } else if (idx == 1) {
+        } else if (1 == idx) {
             [obj setTag:kPlayingMenuItemTagDiamonds];
-        } else if (idx == 2) {
+        } else if (2 == idx) {
             [obj setTag:kPlayingMenuItemTagSpades];
-        } else if (idx == 3) {
+        } else if (3 == idx) {
             [obj setTag:kPlayingMenuItemTagClubs];
         }
     }];
@@ -268,6 +268,7 @@
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     [self removeFromParentAndCleanup:YES];
+    [_player removeProgressBar];
     
     switch (menuItem.tag) {
         case kPlayingMenuItemTagOkay:
@@ -324,15 +325,27 @@
  */
 - (void)touchOkayMenuItem
 {
-    BOOL isRunAnimation = (_player.action = kActionPlayingCard || _player.action == kActionChooseCardToUse) ? YES : NO;
+    BOOL isRunAnimation = (kActionPlayingCard == _player.action || kActionChooseCardToUse == _player.action) ? YES : NO;
     
-    if (_player.selectedSkillId == kHeroSkillInvalid) {
+    if (kHeroSkillInvalid == _player.selectedSkillId) {
         [_player.handArea useHandCardWithAnimation:isRunAnimation block:^{
-            [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+            switch (_player.action) {
+                case kActionPlayingCard:
+                    [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+                    break;
+                    
+                case kActionChooseCardToCut:
+                    _player.cuttedCardId = [_player.selectedCardIds.lastObject integerValue];
+                    [[BGClient sharedClient] sendChooseCardRequest];
+                    break;
+                    
+                default:
+                    break;
+            }
         }];
     }
     else {
-        if (_player.selectedCardIds.count == 0) {
+        if (0 == _player.selectedCardIds.count) {
             [[BGClient sharedClient] sendUseHeroSkillRequest];
         } else {
             [_player.handArea useHandCardWithAnimation:NO block:^{

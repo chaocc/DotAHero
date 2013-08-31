@@ -65,7 +65,7 @@
 - (void)removeEquipmentWithCard:(BGPlayingCard *)card isShowingOnDeck:(BOOL)isOnDeck
 {
     CGPoint targetPos;
-    if (_player.action == kActionUpdatePlayerEquipment) {
+    if (kActionUpdatePlayerEquipment == _player.action) {
         targetPos = USED_CARD_POSITION;
     } else {
         BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];

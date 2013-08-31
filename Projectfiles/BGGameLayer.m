@@ -14,20 +14,10 @@
 #import "BGGameMenu.h"
 #import "BGCardPile.h"
 
-typedef NS_ENUM(NSUInteger, BGPlayerCount) {
-    kPlayerCountTwo = 2,
-    kPlayerCountThree,
-    kPlayerCountFour,
-    kPlayerCountFive,
-    kPlayerCountSix,
-    kPlayerCountSeven,
-    kPlayerCountEight
-};
-
 @interface BGGameLayer ()
 
-@property (nonatomic, strong, readonly) NSArray *users; // [0] is current user
-@property (nonatomic, strong) NSArray *allHeroIds;      // [0] is selected by current user
+@property (nonatomic, strong, readonly) NSArray *users; // [0] is self user
+@property (nonatomic, strong) NSArray *allHeroIds;      // [0] is selected by self user
 
 @end
 
@@ -86,6 +76,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 	return self;
 }
 
+#pragma mark - Density
 /*
  * Add density node, game background changes according to different density task.
  */
@@ -95,6 +86,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     [self addChild:[BGDensity densityWithDensityCardId:1] z:-1];
 }
 
+#pragma mark - Faction
 /*
  * Add faction node at left up corner
  */
@@ -105,6 +97,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     [self addChild:faction];
 }
 
+#pragma mark - System menu
 /*
  * Add game main menu node at right up corner
  */
@@ -113,6 +106,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     [self addChild:[BGGameMenu menu]];
 }
 
+#pragma mark - Card pile
 /*
  * Add card pile node below game main menu
  */
@@ -133,20 +127,21 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
 }
 
+#pragma mark - Players
 /*
  * Add all players area node
  */
 - (void)addPlayers
 {
     _allPlayers = [NSMutableArray arrayWithCapacity:_users.count];
-    [self addCurrentPlayer];
+    [self addSelfPlayer];
     [self addOtherPlayers];
 }
 
 /*
- * Add current player area node
+ * Add self player area node
  */
-- (void)addCurrentPlayer
+- (void)addSelfPlayer
 {
     @try {
 //      TEMP
@@ -155,7 +150,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         player.areaPosition = CGPointZero;
         [self addChild:player];
         
-        _currentPlayer = player;
+        _selfPlayer = player;
         [_allPlayers addObject:player];
     }
     @catch (NSException *exception) {
@@ -241,6 +236,11 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
     
 //  Add progress bar for other players
+    [self addProgressBarForOtherPlayers];
+}
+
+- (void)addProgressBarForOtherPlayers
+{
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         __weak BGPlayer *player = _allPlayers[i];
         [player addProgressBarWithPosition:ccp(player.areaPosition.x, player.areaPosition.y - player.areaSize.height/2)
@@ -250,6 +250,38 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
 }
 
+- (void)removeProgressBarForOtherPlayers
+{
+    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+        __weak BGPlayer *player = _allPlayers[i];
+        [player removeProgressBar];
+    }
+}
+
+- (void)addProgressBarForCurrentPlayer
+{
+    [self removeProgressBarForCurrentPlayer];
+    
+    __weak BGPlayer *player = self.currPlayer;
+    [player addProgressBarWithPosition:ccp(player.areaPosition.x, player.areaPosition.y - player.areaSize.height/2)
+                                 block:^{
+                                     [player removeProgressBar];
+                                 }];
+}
+
+- (void)removeProgressBarForCurrentPlayer
+{
+    [self.currPlayer removeProgressBar];
+}
+
+- (void)setHandCardCountForOtherPlayers
+{
+    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+        [_allPlayers[i] setHandCardCount:INITIAL_HAND_CARD_COUND - 1];
+    }
+}
+
+#pragma mark - Playing deck
 /*
  * Add playing deck for showing toBeSelectedHeros/used/cutting cards or others
  */
@@ -259,6 +291,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     [self addChild:_playingDeck];
 }
 
+#pragma mark - Selected heros
 /*
  * Render the selected hero for other players
  */
@@ -269,12 +302,13 @@ static BGGameLayer *instanceOfGameLayer = nil;
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         @try {
             [_allPlayers[i] renderHeroWithHeroId:[_allHeroIds[i] integerValue]];
-            [_allPlayers[i] removeProgressBar];
         }
         @catch (NSException *exception) {
             NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
         }
     }
+    
+    [self removeProgressBarForOtherPlayers];
 }
 
 /*
@@ -286,7 +320,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
     
     [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        if ([obj integerValue] == [_currentPlayer selectedHeroId]) {
+        if ([obj integerValue] == _selfPlayer.selectedHeroId) {
             [mutableHeroIds removeObjectsAtIndexes:idxSet];
             [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
             _allHeroIds = mutableHeroIds;
@@ -297,10 +331,11 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }];
 }
 
-- (BGPlayer *)sourcePlayer
+#pragma mark - Player and name
+- (BGPlayer *)currPlayer
 {
     for (BGPlayer *player in _allPlayers) {
-        if ([player.playerName isEqualToString:_sourcePlayerName]) {
+        if ([player.playerName isEqualToString:_currPlayerName]) {
             return player;
         }
     }

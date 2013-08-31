@@ -28,4 +28,9 @@
     return [_cardName stringByAppendingString:@".png"];
 }
 
+- (BOOL)isEqual:(id)object
+{
+    return (_cardId == [object cardId]);
+}
+
 @end

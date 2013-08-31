@@ -9,6 +9,7 @@
 #import "BGRoomLayer.h"
 #import "BGClient.h"
 #import "BGGameLayer.h"
+#import "BGDefines.h"
 
 @interface BGRoomLayer ()
 
@@ -63,17 +64,17 @@ static BGRoomLayer *instanceOfRoomLayer = nil;
 {
     [self removeAllChildrenWithCleanup:YES];
     
-    [[BGClient sharedClient] addPublicMessageEventListener];
     [[BGClient sharedClient] addGamePluginMessageEventListener];
     
 //  ...TEMP...
     if (_isRoomOwner)
     {
         CCMenuItemFont *item = [CCMenuItemFont itemWithString:@"Start Game" block:^(id sender) {
+            [[self getChildByTag:1000] removeFromParentAndCleanup:YES];
             [[BGClient sharedClient] sendStartGameRequest];
         }];
         CCMenu *menu = [CCMenu menuWithItems:item, nil];
-        [self addChild:menu];
+        [self addChild:menu z:0 tag:1000];
     }
     else
     {
@@ -93,7 +94,8 @@ static BGRoomLayer *instanceOfRoomLayer = nil;
     [self removeAllChildrenWithCleanup:YES];
     
     CCScene *scene = [BGGameLayer scene];
-    CCTransitionSlideInR *transitionScene = [CCTransitionSlideInR transitionWithDuration:0.2f scene:scene];
+    CCTransitionSlideInR *transitionScene = [CCTransitionSlideInR transitionWithDuration:GAME_TRANSITION_DURATION
+                                                                                   scene:scene];
     [[CCDirector sharedDirector] replaceScene:transitionScene];
 }
 

@@ -9,6 +9,8 @@
 #ifndef DotAHero_BGFileConstants_h
 #define DotAHero_BGFileConstants_h
 
+#define kXmlSettings                    @"settings.xml"
+
 #define kPlistBackground                @"Background.plist"
 #define kPlistGameArtwork               @"GameArtwork.plist"
 #define kPlistHeroCard                  @"HeroCard.plist"
@@ -87,7 +89,7 @@
 #define kImageProgressBarBig            @"ProgressBar_Big.png"
 #define kImageProgressBarFrameBig       @"ProgressBarFrame_Big.png"
 
-#define kXmlSettings                    @"settings.xml"
+#define kFontHeroSkillName              @"HeroSkillName.fnt"
 
 #define kAudioBackground                @"Background.mp3"
 #define kAudioDamage                    @"Damage.wav"

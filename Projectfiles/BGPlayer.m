@@ -166,15 +166,15 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 /*
  * Update(Draw/Got/Lost) hand card with card id list and update other properties
  */
-- (void)updateHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds
 {
     [_handArea updateHandCardWithCardIds:cardIds];
-    _handArea.selectableCardCount = count;
 }
 
-- (void)enableHandCardWithCardIds:(NSArray *)cardIds
+- (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count
 {
     [_handArea enableHandCardWithCardIds:cardIds];
+    _handArea.selectableCardCount = count;
 }
 
 #pragma mark - Equipment area
@@ -215,6 +215,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 #pragma mark - Playing menu
 /*
  * Add playing menu items according to different action
+ * Add progress bar
  */
 - (void)addPlayingMenu
 {
@@ -227,7 +228,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeChoosing];
             break;
             
-        case kActionChooseCardToCompare:    // 确定拼点
+        case kActionChooseCardToCut:        // 确定切牌
         case kActionChooseCardToGive:       // 交给其他玩家
         case kActionChooseCardToDiscard:    // 确定弃牌
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeOkay];
@@ -274,6 +275,22 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCProgressFromTo *progress = [CCProgressFromTo actionWithDuration:10.0f from:100.0f to:0.0f];
     CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
     [timer runAction:[CCSequence actions:progress, callBlock, nil]];
+}
+
+- (void)addProgressBar
+{
+    CGPoint barPosition = (_isCurrentPlayer) ? CURRENT_PROGRESS_BAR_POSITION : ccp(_areaPosition.x, _areaPosition.y - _areaSize.height/2);
+    
+    __weak BGPlayer *player = self;
+    [player addProgressBarWithPosition: barPosition
+                                 block:^{
+                                     [_playingMenu removeFromParentAndCleanup:YES];
+                                     [self removeProgressBar];
+                                     
+//                                     [_handArea useHandCardWithAnimation:NO block:^{
+//                                         [[BGClient sharedClient] sendChooseCardRequest];
+//                                     }];
+                                 }];
 }
 
 - (void)removeProgressBar

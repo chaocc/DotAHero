@@ -99,7 +99,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         BGHeroSkill *skill = [BGHeroSkill heroSkillWithSkillId:[obj integerValue]];
         
         NSString *frameName, *selFrameName;
-        if (skill.skillCategory == kHeroSkillCategoryActive) {
+        if (kHeroSkillCategoryActive == skill.skillCategory) {
             frameName = [NSString stringWithFormat:@"ActiveSkill%i.png", skillCount];
             selFrameName = [NSString stringWithFormat:@"ActiveSkill%i_Selected.png", skillCount];
         } else {
@@ -123,13 +123,16 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         BGHeroSkill *skill = [BGHeroSkill heroSkillWithSkillId:[_heroCard.heroSkills[idx] integerValue]];
         menuItem.tag = skill.skillId;
         
-        CCLabelTTF *label = [CCLabelTTF labelWithString:skill.skillText
-                                               fontName:@"Marker Felt"
-                                               fontSize:14.0f];
+        if ((3 == skillCount) && (skill.skillText.length >= 4)) {
+            skill.skillText = [[skill.skillText substringToIndex:2] stringByAppendingFormat:@"\n%@", [skill.skillText substringFromIndex:2]];
+        }
+        
+        CCLabelBMFont *label = [CCLabelBMFont labelWithString:skill.skillText
+                                                      fntFile:kFontHeroSkillName];
         label.position = ccp(menuItem.contentSize.width/2, menuItem.contentSize.height/2);
         [menuItem addChild:label];
         
-        menuItem.isEnabled = (skill.skillCategory == kHeroSkillCategoryActive);
+        menuItem.isEnabled = (kHeroSkillCategoryActive == skill.skillCategory);
     }];
 }
 
@@ -149,9 +152,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     [[_spriteBatch getChildByTag:kHeroTagBlood] removeFromParentAndCleanup:YES];
     
     if (_player.isCurrentPlayer) {
-        if (_bloodPoint == 1) {
+        if (1 == _bloodPoint) {
             bloodImageName = kImageBloodRedBig;
-        } else if (_bloodPoint == 2) {
+        } else if (2 == _bloodPoint) {
             bloodImageName = kImageBloodYellowBig;
         } else {
             bloodImageName = kImageBloodGreenBig;
@@ -160,9 +163,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         height = _playerAreaHeight*0.305;
     }
     else {
-        if (_bloodPoint == 1) {
+        if (1 == _bloodPoint) {
             bloodImageName = kImageBloodRed;
-        } else if (_bloodPoint == 2) {
+        } else if (2 == _bloodPoint) {
             bloodImageName = kImageBloodYellow;
         } else {
             bloodImageName = kImageBloodGreen;
@@ -227,7 +230,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
                                                                    andScale:scale];
     effect.position = (_player.isCurrentPlayer) ?
         ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
-        ccp(_player.areaPosition.x-_playerAreaWidth*0.25, _player.areaPosition.y);
+        ccp(_player.areaPosition.x-_playerAreaWidth*0.25, _player.areaPosition.y+_playerAreaHeight*0.1);
     [self addChild:effect];
     
     _bloodPoint = count;
@@ -251,10 +254,10 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 //        [_player.handArea addHandCardsWithCardIds:cards];
 //        return; // Can not touch the hero of current player
 //    }
-        
+    
     if ([menuItem.parent isEqual:_heroMenu]) {
         BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-        CCMenuItem *okayMenu = [gamePlayer.currentPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
+        CCMenuItem *okayMenu = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
         NSAssert(okayMenu, @"okMenu Nil in %@", NSStringFromSelector(_cmd));
         
         NSAssert(gamePlayer.targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));

@@ -9,6 +9,16 @@
 #import "BGPlayingDeck.h"
 #import "BGPlayer.h"
 
+typedef NS_ENUM(NSUInteger, BGPlayerCount) {
+    kPlayerCountTwo = 2,
+    kPlayerCountThree,
+    kPlayerCountFour,
+    kPlayerCountFive,
+    kPlayerCountSix,
+    kPlayerCountSeven,
+    kPlayerCountEight
+};
+
 @protocol BGGameLayerDelegate <NSObject>
 
 - (void)remainingCardCountUpdate:(NSUInteger)count;
@@ -22,11 +32,11 @@
 @property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
 
 @property (nonatomic, strong, readonly) NSMutableArray *allPlayers; // Player instances
-@property (nonatomic, strong, readonly) BGPlayer *currentPlayer;    // Current player
-@property (nonatomic, strong, readonly) BGPlayer *sourcePlayer;     // 回合开始/伤害来源/出牌的玩家
+@property (nonatomic, strong, readonly) BGPlayer *selfPlayer;       // Self player
+@property (nonatomic, strong, readonly) BGPlayer *currPlayer;       // 回合开始/伤害来源/出牌的玩家
 @property (nonatomic, strong, readonly) BGPlayingDeck *playingDeck;
 
-@property (nonatomic, copy) NSString *sourcePlayerName;             // 回合开始/伤害来源/出牌的玩家
+@property (nonatomic, copy) NSString *currPlayerName;               // 回合开始/伤害来源/出牌的玩家
 @property (nonatomic, strong) NSMutableArray *targetPlayerNames;    // 指定的目标玩家们
 
 @property (nonatomic) NSUInteger remainingCardCount;                // 牌堆剩余牌数
@@ -36,6 +46,12 @@
 + (id)scene;
 
 - (void)renderOtherPlayersHeroWithHeroIds:(NSArray *)heroIds;
+- (void)setHandCardCountForOtherPlayers;
+- (void)addProgressBarForOtherPlayers;
+- (void)removeProgressBarForOtherPlayers;
+- (void)addProgressBarForCurrentPlayer;
+- (void)removeProgressBarForCurrentPlayer;
+
 - (BGPlayer *)playerWithName:(NSString *)playerName;
 
 @end

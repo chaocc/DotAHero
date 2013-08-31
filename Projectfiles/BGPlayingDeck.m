@@ -16,8 +16,10 @@
 
 @interface BGPlayingDeck ()
 
+@property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic, weak) BGPlayer *targetPlayer;
+@property (nonatomic, strong) NSArray *cuttedCardIds;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
 @property (nonatomic, strong) CCMenu *heroMenu;     // 待选的英雄
 @property (nonatomic, strong) CCMenu *cardMenu;     // 使用/弃置的牌
@@ -42,7 +44,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 - (id)init
 {
     if (self = [super init]) {
-        _player = [BGGameLayer sharedGameLayer].currentPlayer;
+        _gameLayer = [BGGameLayer sharedGameLayer];
+        _player = _gameLayer.selfPlayer;
         
         _menuFactory = [BGMenuFactory menuFactory];
         _cardMenu = [CCMenu menuWithItems:nil];
@@ -71,7 +74,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)updatePlayingDeckWithHeroIds:(NSArray *)heroIds
 {
-    CCDelayTime *delay = [CCDelayTime actionWithDuration:0.21f];
+    CCDelayTime *delay = [CCDelayTime actionWithDuration:GAME_TRANSITION_DURATION+0.1f];
     CCCallBlock *block = [CCCallBlock actionWithBlock:^{
         NSArray *heroCards = [self.class heroCardsWithHeroIds:heroIds];
         
@@ -101,16 +104,86 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         _isNeedClearDeck = NO;  // Restore default value
     }
     
-    if (_player.action == kActionUpdateDeckUsedCard) {  // Show used card on deck
-        NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
-        [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
-        [_cardMenu alignItemsHorizontally];
-        _cardMenu.position = USED_CARD_POSITION;
-        [_player.handArea renderFigureAndSuitsOfCards:cards forMenu:_cardMenu];
+    switch (_player.action) {
+        case kActionUpdateDeckCuttedCard: {  // Show cutted card on deck
+            CCDelayTime *delay = [CCDelayTime actionWithDuration:CARD_MOVE_DURATION];
+            CCCallBlock *block = [CCCallBlock actionWithBlock:^{
+                [_gameLayer setHandCardCountForOtherPlayers];
+                [_gameLayer removeProgressBarForOtherPlayers];
+                [self showCuttedCardOnDeckWithCardIds:cardIds];
+            }];
+            [self runAction:[CCSequence actions:delay, block, nil]];
+            break;
+        }
+            
+        case kActionUpdateDeckUsedCard:     // Show used card on deck
+            [self showUsedCardOnDeckWithCardIds:cardIds];
+            break;
+            
+        case kActionUpdateDeckAssigning:    // Show X cards of top pile(牌堆顶) on deck
+//          更新桌面: 能量转移
+            break;
+            
+        default:
+            break;
     }
-    else {                                              // Show X cards of top pile(牌堆顶) on deck
-//      更新桌面: 能量转移
+}
+
+- (void)showUsedCardOnDeckWithCardIds:(NSArray *)cardIds
+{
+    NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
+    [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
+    [_cardMenu alignItemsHorizontallyWithPadding:_cardPadding];
+    _cardMenu.position = USED_CARD_POSITION;
+    _cardMenu.enabled = NO;
+    [_player.handArea renderFigureAndSuitsOfCards:cards forMenu:_cardMenu];
+}
+
+- (void)setCuttedCardIds:(NSArray *)cuttedCardIds
+{
+    NSMutableArray *mutableCardIds = [cuttedCardIds mutableCopy];
+    NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
+    
+    [cuttedCardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        if ([obj isEqual:@(_player.cuttedCardId)]) {
+            [mutableCardIds removeObjectsAtIndexes:idxSet];
+            [mutableCardIds addObjectsFromArray:[mutableCardIds objectsAtIndexes:idxSet]];
+            _cuttedCardIds = mutableCardIds;
+            return;
+        }
+        
+        [idxSet addIndex:idx];
+    }];
+}
+
+- (void)showCuttedCardOnDeckWithCardIds:(NSArray *)cardIds
+{
+    NSUInteger cardCount = cardIds.count;
+    self.cuttedCardIds = cardIds;
+    [self showUsedCardOnDeckWithCardIds:_cuttedCardIds];
+    _cuttedCardIds = nil;
+    
+    if (cardCount <= kPlayerCountFive) {
+        return;
     }
+    
+    CGFloat cardWidth = [[_cardMenu.children lastObject] contentSize].width;
+    CGFloat cardHeight = [[_cardMenu.children lastObject] contentSize].height;
+    CGFloat cardStartX = SCREEN_WIDTH * 0.28;
+    CGFloat cardStartY = SCREEN_HEIGHT * 0.65;
+    NSUInteger countOfEachRow = round(cardCount/2);
+    
+    cardStartX = (kPlayerCountSix == cardCount) ? cardStartX+cardWidth : cardStartX;
+    cardStartY = (_gameLayer.currPlayerName == _player.playerName) ? SCREEN_HEIGHT * 0.7 : cardStartY;
+    
+    _cardMenu.position = CGPointZero;
+    [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CCMenuItem *menuItem = obj;
+        CGFloat delta = (idx < countOfEachRow) ? (cardWidth+_cardPadding)*idx : (cardWidth+_cardPadding)*(idx-countOfEachRow);
+        CGFloat cardPosY = (idx < countOfEachRow) ? cardStartY : cardStartY-cardHeight-_cardPadding;
+        
+        menuItem.position = ccp(cardStartX + delta, cardPosY);
+    }];
 }
 
 /*
@@ -119,7 +192,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)updatePlayingDeckWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
 {
-    if (count != 0) {
+    if (0 != count) {
         CGFloat cardWidth = [[CCSprite spriteWithSpriteFrameName:kImagePlayingCardBack] contentSize].width;
         
 //      If card count is great than 6, need narrow the padding.
@@ -141,7 +214,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     }
     
 //  Add equipment cards of target player on the deck if equipped
-    if (cardIds.count != 0) {
+    if (0 != cardIds.count) {
         _equipMenu = [_menuFactory createMenuWithCards:_player.equipmentArea.equipmentCards];
         _equipMenu.position = EXTRACTED_EQUIPMENT_POSITION;
         [_equipMenu alignItemsHorizontally];
@@ -168,6 +241,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     else if ([menuItem.parent isEqual:_equipMenu]) {    // 目标装备
         _player.canExtractCardCount = 1;
         _player.selectedCardIds = [NSArray arrayWithObject:@(menuItem.tag)];
+    } else {
+        return;
     }
     [self extractCardByTouchMenuItem:menuItem];
 }

@@ -34,6 +34,7 @@
 @property (nonatomic, strong, readonly) BGPlayingMenu *playingMenu;
 
 @property (nonatomic) NSInteger selectedHeroId;
+@property (nonatomic) NSInteger cuttedCardId;
 @property (nonatomic, strong) NSArray *selectedCardIds;
 @property (nonatomic, strong) NSMutableArray *selectedCardIdxes;
 @property (nonatomic) NSInteger selectedSkillId;
@@ -50,8 +51,8 @@
 - (void)updateHeroWithBloodPoint:(NSInteger)bloodPoint angerPoint:(NSUInteger)angerPoint;
 
 - (void)renderHandCardWithCardIds:(NSArray *)cardIds;
-- (void)updateHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
-- (void)enableHandCardWithCardIds:(NSArray *)cardIds;
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds;
+- (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
 
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
 
@@ -61,6 +62,7 @@
 - (void)addPlayingMenuOfStrengthen;
 
 - (void)addProgressBarWithPosition:(CGPoint)position block:(void (^)())block;
+- (void)addProgressBar;
 - (void)removeProgressBar;
 
 @end

@@ -22,8 +22,6 @@
 - (void)sendCreateRoomRequest;
 - (void)sendLeaveRoomRequest;
 
-- (void)sendReadyStartGameRequest;
-
 - (void)addGamePluginMessageEventListener;
 - (void)sendStartGameRequest;
 - (void)sendChooseHeroIdRequest;
