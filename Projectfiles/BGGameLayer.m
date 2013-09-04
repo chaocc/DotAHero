@@ -113,7 +113,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (void)addCardPile
 {
     [self addChild:[BGCardPile cardPile]];
-    self.remainingCardCount = TOTAL_CARD_COUNT;
+    self.remainingCardCount = COUNT_TOTAL_CARD;
 }
 
 /*
@@ -258,26 +258,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
 }
 
-- (void)addProgressBarForCurrentPlayer
-{
-    [self removeProgressBarForCurrentPlayer];
-    
-    __weak BGPlayer *player = self.currPlayer;
-    [player addProgressBarWithPosition:ccp(player.areaPosition.x, player.areaPosition.y - player.areaSize.height/2)
-                                 block:^{
-                                     [player removeProgressBar];
-                                 }];
-}
-
-- (void)removeProgressBarForCurrentPlayer
-{
-    [self.currPlayer removeProgressBar];
-}
-
 - (void)setHandCardCountForOtherPlayers
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
-        [_allPlayers[i] setHandCardCount:INITIAL_HAND_CARD_COUND - 1];
+        [_allPlayers[i] setHandCardCount:COUNT_INITIAL_HAND_CARD - 1];
     }
 }
 
@@ -318,17 +302,17 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     NSMutableArray *mutableHeroIds = [allHeroIds mutableCopy];
     NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
+    NSUInteger idx = 0;
     
-    [allHeroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    for (id obj in allHeroIds) {
         if ([obj integerValue] == _selfPlayer.selectedHeroId) {
             [mutableHeroIds removeObjectsAtIndexes:idxSet];
             [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
             _allHeroIds = mutableHeroIds;
-            return;
+            break;
         }
-        
-        [idxSet addIndex:idx];
-    }];
+        [idxSet addIndex:idx]; idx++;
+    }
 }
 
 #pragma mark - Player and name

@@ -64,25 +64,23 @@
  */
 - (void)removeEquipmentWithCard:(BGPlayingCard *)card isShowingOnDeck:(BOOL)isOnDeck
 {
-    CGPoint targetPos;
-    if (kActionUpdatePlayerEquipment == _player.action) {
-        targetPos = USED_CARD_POSITION;
-    } else {
-        BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];
-        targetPos = targetPlayer.position;
-    }
-    
-    BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:targetPos
-                                                         ofNode:_equipmentMenu];
-    
-    [moveComp runActionEaseMoveScaleWithDuration:CARD_MOVE_DURATION
-                                           scale:0.5f
-                                           block:^{
-                                               [_equipmentMenu removeFromParentAndCleanup:YES];
-                                               if (isOnDeck) {
-                                                   [_gameLayer.playingDeck updatePlayingDeckWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
-                                               }
-                                           }];
+//    CGPoint targetPos;
+//    if (kActionUpdatePlayerEquipment == _player.action) {
+////        targetPos = USED_CARD_POSITION;
+//    } else {
+//        BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];
+//        targetPos = targetPlayer.position;
+//    }
+//    
+//    BGMoveComponent *moveComp = [BGMoveComponent moveWithNode:_equipmentMenu];
+//    [moveComp runActionEaseMoveWithTarget:targetPos
+//                                 duration:DURATION_USED_CARD_MOVE
+//                                    block:^{
+//                                        [_equipmentMenu removeFromParent];
+//                                        if (isOnDeck) {
+//                                            [_gameLayer.playingDeck updatePlayingDeckWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
+//                                        }
+//                                    }];
 }
 
 /*
@@ -131,19 +129,19 @@
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeWeapon];
-            menuPosition = (_player.isCurrentPlayer) ?
+            menuPosition = (_player.isSelfPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
-                ccp(_player.areaPosition.x+playerAreaWidth*0.253, _player.areaPosition.y+playerAreaHeight*0.177);
+                ccpAdd(_player.areaPosition, ccp(playerAreaWidth*0.253, playerAreaHeight*0.177));
             if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
-                [[self getChildByTag:kEquipmentTypeArmor] removeAllChildrenWithCleanup:YES];
+                [[self getChildByTag:kEquipmentTypeArmor] removeAllChildren];
             }
             break;
             
         case kEquipmentTypeArmor:
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeArmor];
-            menuPosition = (_player.isCurrentPlayer) ?
+            menuPosition = (_player.isSelfPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
-                ccp(_player.areaPosition.x+playerAreaWidth*0.253, _player.areaPosition.y-playerAreaHeight*0.222);
+                ccpAdd(_player.areaPosition, ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222));
             break;
             
         default:
@@ -155,7 +153,7 @@
         [self removeEquipmentWithCard:card isShowingOnDeck:YES];
     }
     
-    NSString *imageName = (_player.isCurrentPlayer) ? card.bigEquipImageName : card.equipImageName;
+    NSString *imageName = (_player.isSelfPlayer) ? card.bigEquipImageName : card.equipImageName;
     _equipmentMenu = [_menuFactory createMenuWithSpriteFrameName:imageName
                                               selectedFrameName:nil
                                               disabledFrameName:nil];

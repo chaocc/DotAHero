@@ -342,19 +342,6 @@
                 <key>sourceSize</key>
                 <string>{23,20}</string>
             </dict>
-            <key>CurrentPlayerArea.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,2},{1018,260}}</string>
-                <key>offset</key>
-                <string>{0,0}</string>
-                <key>rotated</key>
-                <false/>
-                <key>sourceColorRect</key>
-                <string>{{3,0},{1018,260}}</string>
-                <key>sourceSize</key>
-                <string>{1024,260}</string>
-            </dict>
             <key>Diamonds.png</key>
             <dict>
                 <key>frame</key>
@@ -901,6 +888,19 @@
                 <key>sourceSize</key>
                 <string>{30,30}</string>
             </dict>
+            <key>SelfPlayerArea.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,2},{1018,260}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{3,0},{1018,260}}</string>
+                <key>sourceSize</key>
+                <string>{1024,260}</string>
+            </dict>
             <key>Sentinel.png</key>
             <dict>
                 <key>frame</key>
@@ -989,7 +989,7 @@
             <key>size</key>
             <string>{1022,521}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:862a6f802713e810ec7f454cfb5a94be:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:70ba66e85ac398dfae2c277eaa366f58:1/1$</string>
             <key>textureFileName</key>
             <string>GameArtwork-ipad.pvr.ccz</string>
         </dict>

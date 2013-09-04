@@ -8,20 +8,14 @@
 
 #import "CCNode.h"
 
-//@protocol BGMoveComponentDelegate <NSObject>
-//
-//- (void)moveActionEnded:(CCNode *)node;
-//
-//@end
 
 @interface BGMoveComponent : CCNode
 
-//@property (nonatomic, weak) id<BGMoveComponentDelegate> delegate;
+- (id)initWithNode:(CCNode *)node;
++ (id)moveWithNode:(CCNode *)node;
 
-- (id)initWithTarget:(CGPoint)target ofNode:(CCNode *)node;
-+ (id)moveWithTarget:(CGPoint)target ofNode:(CCNode *)node;
-
-- (void)runActionEaseMoveWithDuration:(ccTime)t block:(void(^)())block;
-- (void)runActionEaseMoveScaleWithDuration:(ccTime)t scale:(float)s block:(void(^)())block;
+- (void)runActionEaseMoveWithTarget:(CGPoint)target duration:(ccTime)t block:(void(^)())block;
+- (void)runActionEaseMoveWithTarget:(CGPoint)target duration:(ccTime)t object:(id)obj blockO:(void(^)(id object))block;
+- (void)runActionEaseMoveScaleWithTarget:(CGPoint)target duration:(ccTime)t scale:(float)s block:(void(^)())block;
 
 @end

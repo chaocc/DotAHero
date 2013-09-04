@@ -14,6 +14,7 @@
 
 @interface BGPlayingMenu ()
 
+@property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic, weak) BGPlayer *player;
 
 @end
@@ -24,7 +25,8 @@
 {
     if (self = [super init]) {
         _menuType = menuType;
-        _player = [BGGameLayer sharedGameLayer].selfPlayer;
+        _gameLayer = [BGGameLayer sharedGameLayer];
+        _player = _gameLayer.selfPlayer;
         
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;
@@ -87,8 +89,7 @@
     _menu = [_menuFactory createMenuWithSpriteFrameName:kImageOkay
                                       selectedFrameName:kImageOkaySelected
                                       disabledFrameName:kImageOkayDisabled];
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:40.0f];
+    _menu.position = POSITION_PLAYING_MENU;
     [_menu.children.lastObject setIsEnabled:NO];
     
     [self addChild:_menu];
@@ -106,8 +107,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:40.0f];
+    _menu.position = POSITION_PLAYING_MENU;
+    [_menu alignItemsHorizontallyWithPadding:PADDING_TWO_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
@@ -133,8 +134,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:40.0f];
+    _menu.position = POSITION_PLAYING_MENU;
+    [_menu alignItemsHorizontallyWithPadding:PADDING_TWO_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
@@ -160,8 +161,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:20.0f];
+    _menu.position = POSITION_PLAYING_MENU;
+    [_menu alignItemsHorizontallyWithPadding:PADDING_THREE_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
@@ -190,8 +191,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:20.0f];
+    _menu.position = POSITION_PLAYING_MENU;
+    [_menu alignItemsHorizontallyWithPadding:PADDING_THREE_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
@@ -218,8 +219,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:nil];
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:40.0f];
+    _menu.position = POSITION_PLAYING_MENU;
+    [_menu alignItemsHorizontallyWithPadding:PADDING_TWO_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
@@ -243,8 +244,8 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:nil];
-    _menu.position = PLAYING_MENU_POSITION;
-    [_menu alignItemsHorizontallyWithPadding:0.0f];
+    _menu.position = POSITION_PLAYING_MENU;
+    [_menu alignItemsHorizontallyWithPadding:PADDING_SUITS_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
@@ -267,7 +268,7 @@
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
-    [self removeFromParentAndCleanup:YES];
+    [self removeFromParent];
     [_player removeProgressBar];
     
     switch (menuItem.tag) {
@@ -325,11 +326,11 @@
  */
 - (void)touchOkayMenuItem
 {
-    BOOL isRunAnimation = (kActionPlayingCard == _player.action || kActionChooseCardToUse == _player.action) ? YES : NO;
+    BOOL isRunAnimation = (kActionPlayingCard == _gameLayer.action || kActionChooseCardToUse == _gameLayer.action) ? YES : NO;
     
     if (kHeroSkillInvalid == _player.selectedSkillId) {
         [_player.handArea useHandCardWithAnimation:isRunAnimation block:^{
-            switch (_player.action) {
+            switch (_gameLayer.action) {
                 case kActionPlayingCard:
                     [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
                     break;

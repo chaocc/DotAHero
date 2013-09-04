@@ -35,7 +35,7 @@
 #define kImageScourge                   @"Scourge.png"
 #define kImageNeutral                   @"Neutral.png"
 
-#define kImageCurrentPlayerArea         @"CurrentPlayerArea.png"
+#define kImageSelfPlayerArea            @"SelfPlayerArea.png"
 #define kImageOtherPlayerArea           @"OtherPlayerArea.png"
 #define kImagePlayingCardBack           @"PlayingCardBack.png"
 

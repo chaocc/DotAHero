@@ -27,6 +27,8 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 
 @interface BGGameLayer : CCLayer
 
+@property (nonatomic) BGAction action;
+
 @property (nonatomic, weak) id<BGGameLayerDelegate> delegate;
 
 @property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
@@ -49,8 +51,6 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 - (void)setHandCardCountForOtherPlayers;
 - (void)addProgressBarForOtherPlayers;
 - (void)removeProgressBarForOtherPlayers;
-- (void)addProgressBarForCurrentPlayer;
-- (void)removeProgressBarForCurrentPlayer;
 
 - (BGPlayer *)playerWithName:(NSString *)playerName;
 

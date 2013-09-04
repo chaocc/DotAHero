@@ -10,45 +10,67 @@
 
 @interface BGMoveComponent ()
 
-@property (nonatomic, readonly) CGPoint target;
 @property (nonatomic, strong, readonly) CCNode *node;
 
 @end
 
 @implementation BGMoveComponent
 
-- (id)initWithTarget:(CGPoint)target ofNode:(CCNode *)node
+- (id)initWithNode:(CCNode *)node
 {
     if (self = [super init]) {
-        _target = target;
         _node = node;
     }
     return self;
 }
 
-+ (id)moveWithTarget:(CGPoint)target ofNode:(CCNode *)node
++ (id)moveWithNode:(CCNode *)node
 {
-    return [[self alloc] initWithTarget:target ofNode:node];
+    return [[self alloc] initWithNode:node];
 }
 
-- (void)runActionEaseMoveWithDuration:(ccTime)t block:(void (^)())block
+- (void)runActionEaseMoveWithTarget:(CGPoint)target duration:(ccTime)t block:(void (^)())block
 {
-    CCMoveTo *move = [CCMoveTo actionWithDuration:t position:_target];
+    CCMoveTo *move = [CCMoveTo actionWithDuration:t position:target];
     CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
-    CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
     
-    [_node runAction:[CCSequence actions: ease, callBlock, nil]];
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:ease];
+    if (block) {
+        [array addObject:[CCCallBlock actionWithBlock:block]];
+    }
+    
+    [_node runAction:[CCSequence actionWithArray:array]];
 }
 
-- (void)runActionEaseMoveScaleWithDuration:(ccTime)t scale:(float)s block:(void (^)())block
+- (void)runActionEaseMoveWithTarget:(CGPoint)target duration:(ccTime)t object:(id)obj blockO:(void (^)(id))block
 {
-    CCMoveTo *move = [CCMoveTo actionWithDuration:t position:_target];
+    CCMoveTo *move = [CCMoveTo actionWithDuration:t position:target];
+    CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
+    
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:ease];
+    if (block) {
+        [array addObject:[CCCallBlockO actionWithBlock:block object:obj]];
+    }
+    
+    [_node runAction:[CCSequence actionWithArray:array]];
+}
+
+- (void)runActionEaseMoveScaleWithTarget:(CGPoint)target duration:(ccTime)t scale:(float)s block:(void (^)())block
+{
+    CCMoveTo *move = [CCMoveTo actionWithDuration:t position:target];
     CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
     CCScaleTo *scale = [CCScaleTo actionWithDuration:t scale:s];
-    CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
     
-	[_node runAction:ease];
-    [_node runAction:[CCSequence actions: scale, callBlock, nil]];
+    NSMutableArray *array = [NSMutableArray array];
+    [array addObject:scale];
+    if (block) {
+        [array addObject:[CCCallBlock actionWithBlock:block]];
+    }
+    
+    [_node runAction:ease];
+    [_node runAction:[CCSequence actionWithArray:array]];
 }
 
 @end

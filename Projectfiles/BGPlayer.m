@@ -37,7 +37,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _gameLayer = [BGGameLayer sharedGameLayer];
         _playerName = name;
         _seatIndex = seatIndex;
-        _isCurrentPlayer = (seatIndex == 0);    // First index is current player
+        _isSelfPlayer = (seatIndex == 0);   // First index is self player
         
         _distance = 1;
         _attackRange = 1;
@@ -55,6 +55,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 + (id)playerWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex
 {
     return [[self alloc] initWithUserName:name seatIndex:seatIndex];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    return [_playerName isEqual:[object playerName]];
 }
 
 - (void)setAreaPosition:(CGPoint)areaPosition
@@ -82,50 +87,21 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 #pragma mark - Player area
 /*
- * 1. Current player's position is (0,0) and its sprite anchor point is alos (0,0)
+ * 1. Self player's position is (0,0) and its sprite anchor point is also (0,0)
  * 2. Other player's position is setted in class BGGameLayer
  */
 - (void)renderPlayerArea
 {
-    NSString *spriteFrameName = (_isCurrentPlayer) ? kImageCurrentPlayerArea : kImageOtherPlayerArea;
+    NSString *spriteFrameName = (_isSelfPlayer) ? kImageSelfPlayerArea : kImageOtherPlayerArea;
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:spriteFrameName];
     _areaSize = sprite.contentSize;
-    sprite.anchorPoint = (_isCurrentPlayer) ? CGPointZero : sprite.anchorPoint;
+    sprite.anchorPoint = (_isSelfPlayer) ? CGPointZero : sprite.anchorPoint;
     [_gameLayer.gameArtworkBatch addChild:sprite z:0 tag:(kPlayerTagPlayerArea+_seatIndex)];
     
 //  Add hero and equipment area for all players
-    [self addHeroArea];
-    [self addEquipmentArea];
-    
-//  Only add hand area for current player
-    if (_isCurrentPlayer) {
-        [self addHandArea];
-    }
-}
-
-/*
- * Add hero(avatar) area node
- */
-- (void)addHeroArea
-{
     _heroArea = [BGHeroArea heroAreaWithPlayer:self];
-    [self addChild: _heroArea];
-}
-
-/*
- * Add hand area node
- */
-- (void)addHandArea
-{
-    _handArea = [BGHandArea handAreaWithPlayer:self];
-    [self addChild:_handArea];
-}
-
-/*
- * Add equipment area for showing equipment cards
- */
-- (void)addEquipmentArea
-{
+    [self addChild:_heroArea];
+    
     _equipmentArea = [BGEquipmentArea equipmentAreaWithPlayer:self];
     [self addChild:_equipmentArea];
 }
@@ -139,8 +115,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _selectedHeroId = heroId;
     [_heroArea renderHeroWithHeroId:heroId];
     
-    if (!_isCurrentPlayer) {
-        self.handCardCount = INITIAL_HAND_CARD_COUND;   // 5 cards for each player, use 1 for cutting.
+    if (!_isSelfPlayer) {
+        self.handCardCount = COUNT_INITIAL_HAND_CARD;   // 5 cards for each player, use 1 for cutting.
     }
 }
 
@@ -157,10 +133,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 /*
  * Initialize hand cards with dealing cards
  */
-- (void)renderHandCardWithCardIds:(NSArray *)cardIds
+- (void)addHandAreaWithCardIds:(NSArray *)cardIds
 {
-    [_handArea updateHandCardWithCardIds:cardIds];
-    _handArea.selectableCardCount = 1;
+    if (cardIds) {
+        _handArea = [BGHandArea handAreaWithPlayer:self andCardIs:cardIds];
+        _handArea.selectableCardCount = 2;
+        [self addChild:_handArea];
+    }
 }
 
 /*
@@ -188,14 +167,14 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)setHandCardCount:(NSUInteger)handCardCount
 {
     _handCardCount = handCardCount;
-    if (!_isCurrentPlayer) {
+    if (!_isSelfPlayer) {
         [self renderHandCardCount];
     }
 }
 
 - (NSUInteger)handCardCount
 {
-    return (_isCurrentPlayer) ? _handArea.handCards.count : _handCardCount;
+    return (_isSelfPlayer) ? _handArea.handCards.count : _handCardCount;
 }
 
 /*
@@ -203,13 +182,106 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)renderHandCardCount
 {
-    [[self getChildByTag:kPlayerTagHandCardCount] removeFromParentAndCleanup:YES];
+    [[self getChildByTag:kPlayerTagHandCardCount] removeFromParent];
     
     CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_handCardCount).stringValue
                                                 fontName:@"Arial"
                                                 fontSize:22.0f];
     countLabel.position = ccp(_areaPosition.x-_areaSize.width*0.07, _areaPosition.y-_areaSize.height*0.23);
     [self addChild:countLabel z:1 tag:kPlayerTagHandCardCount];
+}
+
+#pragma mark - Card movement
+/*
+ * Move the selected cards to playing deck or other player's hand
+ */
+- (void)moveSelectedCardWithMenuItems:(NSArray *)menuItems block:(void (^)())block
+{
+//  Check if need clear playing deck
+    NSUInteger deckCardCount = _gameLayer.playingDeck.cardCount;
+    NSUInteger selectedCount = menuItems.count;
+    if (_gameLayer.playingDeck.isNeedClearDeck || deckCardCount+selectedCount > COUNT_MAX_DECK_CARD_NO_OVERLAP) {
+//        [_gameLayer.playingDeck clearUsedCardOnDeck];
+        _gameLayer.playingDeck.isNeedClearDeck = NO;
+//        deckCardCount = 0;
+    }
+    
+//  Determine movement target position and check if need narrow the card padding
+    __block CGPoint targetPos = [self cardMoveTargetPosition];
+    NSUInteger count = (0 != deckCardCount) ? selectedCount : selectedCount-1;
+    CGFloat cardPadding = [_handArea cardPaddingWithCardCount:selectedCount maxCount:COUNT_MAX_DECK_CARD_NO_OVERLAP];
+    targetPos = ccpSub(targetPos, ccp((deckCardCount+count)*_handArea.cardWidth/2, 0.0f));
+    
+//  Card movement
+    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGMoveComponent *moveComp = [BGMoveComponent moveWithNode:obj];
+        [moveComp runActionEaseMoveWithTarget:targetPos
+                                     duration:DURATION_USED_CARD_MOVE
+                                       object:[NSValue valueWithCGPoint:targetPos]
+                                       blockO:^(id object) {
+                                           [obj removeFromParent];
+                                           [obj setPosition:[object CGPointValue]];
+                                       }];
+        
+        targetPos = ccpAdd(targetPos, ccp((_handArea.cardWidth+cardPadding)*(idx+1), 0.0f));
+    }];
+    
+//  Run after card movement is finished
+    if ([self isNeedUpdateDeck]) {
+        [self runActionDelayWithBlock:^{
+            [_gameLayer.playingDeck updatePlayingDeckWithCardMenuItems:menuItems];
+        }];
+    }
+    [self runActionDelayWithBlock:block];
+}
+
+/*
+ * Determine target position of selected card movement
+ */
+- (CGPoint)cardMoveTargetPosition
+{
+    CGPoint targetPos;
+    
+    switch (_gameLayer.action) {
+        case kActionChooseCardToCut:
+        case kActionUpdateDeckCuttedCard: {
+            CGFloat cardPadding = PADDING_CUTTED_CARD;
+            NSUInteger rowCount = ceil((double)_gameLayer.allPlayers.count/COUNT_MAX_DECK_CARD_NO_OVERLAP);
+            NSUInteger colCount = ceil((double)_gameLayer.allPlayers.count/rowCount);
+            
+            CGFloat cardPosY = (1 == rowCount) ? POSITION_DECK_AREA_CENTER.y : POSITION_DECK_AREA_TOP.y;
+            break;
+        }
+            
+        case kActionUpdatePlayerHandExtracted:
+        case kActionUpdatePlayerEquipmentExtracted: {
+            BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];
+            BGPlayer *player = ([self isEqual:_gameLayer.currPlayer]) ? targetPlayer : _gameLayer.currPlayer;
+            targetPos = player.areaPosition;
+            break;
+        }
+            
+        default:
+            targetPos = POSITION_DECK_AREA_CENTER;
+            break;
+    }
+    
+    return targetPos;
+}
+
+- (BOOL)isNeedUpdateDeck
+{
+    return (kActionUpdatePlayerHandExtracted != _gameLayer.action &&
+            kActionUpdatePlayerEquipmentExtracted != _gameLayer.action);
+}
+
+- (void)runActionDelayWithBlock:(void (^)())block
+{
+    if (block) {
+        CCDelayTime *delay = [CCDelayTime actionWithDuration:DURATION_USED_CARD_MOVE];
+        CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
+        [self runAction:[CCSequence actions:delay, callBlock, nil]];
+    }
 }
 
 #pragma mark - Playing menu
@@ -219,7 +291,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)addPlayingMenu
 {
-    switch (_action) {
+    switch (_gameLayer.action) {
         case kActionPlayingCard:            // 主动使用
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypePlaying];
             break;
@@ -258,12 +330,12 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 #pragma mark - Progress bar
 - (void)addProgressBarWithPosition:(CGPoint)position block:(void (^)())block
 {
-    NSString *frameImageName = (_isCurrentPlayer) ? kImageProgressBarFrameBig : kImageProgressBarFrame;
+    NSString *frameImageName = (_isSelfPlayer) ? kImageProgressBarFrameBig : kImageProgressBarFrame;
     _progressBar = [CCSprite spriteWithSpriteFrameName:frameImageName];
     _progressBar.position = position;
     [self addChild:_progressBar];
     
-    NSString *barImageName = (_isCurrentPlayer) ? kImageProgressBarBig : kImageProgressBar;
+    NSString *barImageName = (_isSelfPlayer) ? kImageProgressBarBig : kImageProgressBar;
     CCSprite *bar = [CCSprite spriteWithSpriteFrameName:barImageName];
     CCProgressTimer *timer = [CCProgressTimer progressWithSprite:bar];
     timer.type = kCCProgressTimerTypeBar;
@@ -279,23 +351,19 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 - (void)addProgressBar
 {
-    CGPoint barPosition = (_isCurrentPlayer) ? CURRENT_PROGRESS_BAR_POSITION : ccp(_areaPosition.x, _areaPosition.y - _areaSize.height/2);
+    CGPoint barPosition = (_isSelfPlayer) ? POSITION_PLYAING_PROGRESS_BAR : ccp(_areaPosition.x, _areaPosition.y - _areaSize.height/2);
     
     __weak BGPlayer *player = self;
-    [player addProgressBarWithPosition: barPosition
+    [player addProgressBarWithPosition:barPosition
                                  block:^{
-                                     [_playingMenu removeFromParentAndCleanup:YES];
+                                     [_playingMenu removeFromParent];
                                      [self removeProgressBar];
-                                     
-//                                     [_handArea useHandCardWithAnimation:NO block:^{
-//                                         [[BGClient sharedClient] sendChooseCardRequest];
-//                                     }];
                                  }];
 }
 
 - (void)removeProgressBar
 {
-    [_progressBar removeFromParentAndCleanup:YES];
+    [_progressBar removeFromParent];
 }
 
 @end

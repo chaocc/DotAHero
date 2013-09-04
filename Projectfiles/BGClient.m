@@ -422,7 +422,7 @@ static BGClient *instanceOfClient = nil;
     EsObject *obj = e.parameters;
     NSInteger action = [obj intWithKey:kAction];
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
-    _gameLayer.selfPlayer.action = action;
+    _gameLayer.action = action;
     
 //  Remaining card count
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
@@ -471,7 +471,7 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionInitPlayerCard:
-            [_player renderHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_player addHandAreaWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionUpdatePlayerHero:
@@ -525,19 +525,19 @@ static BGClient *instanceOfClient = nil;
 {
     NSMutableArray *mutableUsers = [users mutableCopy];
     NSMutableIndexSet *idxSet = [NSMutableIndexSet indexSet];
+    NSUInteger idx = 0;
     
-    [users enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    for (id obj in users) {
 //      TEMP
         if ([obj isEqual:_es.managerHelper.userManager.me.userName]) {
 //        if ([obj isEqual:_es.managerHelper.userManager.me]) {
             [mutableUsers removeObjectsAtIndexes:idxSet];
             [mutableUsers addObjectsFromArray:[users objectsAtIndexes:idxSet]];
             _users = mutableUsers;
-            return;
+            break;
         }
-        
-        [idxSet addIndex:idx];
-    }];
+        [idxSet addIndex:idx]; idx++;
+    }
 }
 
 #pragma mark - Public message

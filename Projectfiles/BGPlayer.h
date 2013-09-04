@@ -16,7 +16,7 @@
 @interface BGPlayer : CCNode
 
 @property (nonatomic, copy, readonly) NSString *playerName;
-@property (nonatomic, readonly) BOOL isCurrentPlayer;
+@property (nonatomic, readonly) BOOL isSelfPlayer;
 @property (nonatomic) CGPoint areaPosition;
 @property (nonatomic, readonly) CGSize areaSize;
 //@property (nonatomic, readonly) NSUInteger handSizeLimit;
@@ -25,8 +25,6 @@
 @property (nonatomic) NSUInteger attackRange;
 //@property (nonatomic) BOOL canBeTarget;
 //@property (nonatomic) BOOL isDead;
-
-@property (nonatomic) BGAction action;
 
 @property (nonatomic, strong, readonly) BGHeroArea *heroArea;
 @property (nonatomic, strong, readonly) BGHandArea *handArea;   // Only current player have
@@ -50,11 +48,13 @@
 - (void)renderHeroWithHeroId:(NSInteger)heroId;
 - (void)updateHeroWithBloodPoint:(NSInteger)bloodPoint angerPoint:(NSUInteger)angerPoint;
 
-- (void)renderHandCardWithCardIds:(NSArray *)cardIds;
+- (void)addHandAreaWithCardIds:(NSArray *)cardIds;
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds;
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
 
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
+
+- (void)moveSelectedCardWithMenuItems:(NSArray *)menuItems block:(void (^)())block;
 
 - (void)clearBuffer;
 

@@ -11,6 +11,7 @@
 #import "BGHeroSkill.h"
 #import "BGFileConstants.h"
 #import "BGEffectComponent.h"
+#import "BGDefines.h"
 
 typedef NS_ENUM(NSInteger, BGHeroTag) {
     kHeroTagBlood,
@@ -60,34 +61,34 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 }
 
 /*
- * 1. Current player's position is (0,0) at left-bottom corner, hero area's position also (0,0).
+ * 1. Self player's position is (0,0) at left-bottom corner, hero area's position also (0,0).
  * 2. Other player's position is setted(not 0) in class BGGameLayer, its position should be the center of player area. 
  *    But as for its hero area, it is also (0,0) at the center. Becasue hero area is child node of player.
  */
 - (void)renderSelectedHero
 {
 //  Render hero avatar
-    NSString *avatarName =( _player.isCurrentPlayer) ? _heroCard.bigAvatarName : _heroCard.avatarName;
+    NSString *avatarName =( _player.isSelfPlayer) ? _heroCard.bigAvatarName : _heroCard.avatarName;
     _heroMenu = [_menuFactory createMenuWithSpriteFrameName:avatarName
                                           selectedFrameName:nil
                                           disabledFrameName:nil];
-    _heroMenu.position = (_player.isCurrentPlayer) ?
+    _heroMenu.position = (_player.isSelfPlayer) ?
         ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
-        ccp(_player.areaPosition.x-_playerAreaWidth*0.245, _player.areaPosition.y+_playerAreaHeight*0.045);
+        ccpSub(_player.areaPosition, ccp(_playerAreaWidth*0.245, -_playerAreaHeight*0.045));
     [_heroMenu.children.lastObject setTag:_heroCard.cardId];
     [self addChild:_heroMenu];
     
 //  Render hero blood point
     [self renderBloodPoint];
     
-//  Render hero skills if current player
-    if (_player.isCurrentPlayer) {
+//  Render hero skills if self player
+    if (_player.isSelfPlayer) {
         [self renderHeroSkills];
     }
 }
 
 /*
- * Render hero skills of current player
+ * Render hero skills of self player
  */
 - (void)renderHeroSkills
 {
@@ -114,7 +115,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
                                            selectedFrameNames:selFrameNames
                                            disabledFrameNames:nil];
     _skillMenu.position = ccp(_playerAreaWidth*0.114, _playerAreaHeight*0.143);
-    [_skillMenu alignItemsHorizontallyWithPadding:0.0f];
+    [_skillMenu alignItemsHorizontallyWithPadding:PADDING_SKILL_BUTTONS];
     [self addChild:_skillMenu];
     
 //  Add label text to menu and disable passive skill menu
@@ -141,7 +142,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)renderBloodPoint
 {
-    [_spriteBatch removeFromParentAndCleanup:YES];
+    [_spriteBatch removeFromParent];
     _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
     [self addChild:_spriteBatch];
     
@@ -149,9 +150,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     CGPoint deltaPos;
     CGFloat width, height;
     
-    [[_spriteBatch getChildByTag:kHeroTagBlood] removeFromParentAndCleanup:YES];
+    [[_spriteBatch getChildByTag:kHeroTagBlood] removeFromParent];
     
-    if (_player.isCurrentPlayer) {
+    if (_player.isSelfPlayer) {
         if (1 == _bloodPoint) {
             bloodImageName = kImageBloodRedBig;
         } else if (2 == _bloodPoint) {
@@ -171,15 +172,15 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
             bloodImageName = kImageBloodGreen;
         }
 //      Move position to left corner of player area for other players
-        deltaPos = ccp(_player.areaPosition.x-_playerAreaWidth/2, _player.areaPosition.y-_playerAreaHeight/2);
+        deltaPos = ccpSub(_player.areaPosition, ccp(_playerAreaWidth/2, _playerAreaHeight/2));
         width = _playerAreaWidth*0.5 / (_heroCard.bloodPointLimit + 1);
         height = _playerAreaHeight*0.135;
     }
     
-    [_spriteBatch removeAllChildrenWithCleanup:YES];
+    [_spriteBatch removeAllChildren];
     for (NSUInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
         if ((NSInteger)i >= _bloodPoint) {
-            bloodImageName = (_player.isCurrentPlayer) ? kImageBloodEmptyBig : kImageBloodEmpty;
+            bloodImageName = (_player.isSelfPlayer) ? kImageBloodEmptyBig : kImageBloodEmpty;
         }
         
         CCSprite *bloodSprite = [CCSprite spriteWithSpriteFrameName:bloodImageName];
@@ -197,9 +198,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     CGPoint deltaPos;
     CGFloat width, height, increment;
     
-    [[_spriteBatch getChildByTag:kHeroTagAnger] removeFromParentAndCleanup:YES];
+    [[_spriteBatch getChildByTag:kHeroTagAnger] removeFromParent];
     
-    if (_player.isCurrentPlayer) {
+    if (_player.isSelfPlayer) {
         angerImageName = kImageAngerBig;
         width = _playerAreaWidth*0.201;
         increment = _playerAreaHeight*0.83 / (_angerPoint + 1);
@@ -208,7 +209,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     else {
         angerImageName = kImageAnger;
 //      Move position to left corner of player area for other players
-        deltaPos = ccp(_player.areaPosition.x-_playerAreaWidth/2, _player.areaPosition.y-_playerAreaHeight/2);
+        deltaPos = ccpSub(_player.areaPosition, ccp(_playerAreaWidth/2, _playerAreaHeight/2));
         width = _playerAreaWidth*0.515;
         height = _playerAreaHeight / (_angerPoint + 1);
         increment = height;
@@ -225,14 +226,15 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
     BGEffectType effectType = (count > _bloodPoint) ? kEffectTypeRestoreBlood : kEffectTypeDamaged;
-    float scale = (_player.isCurrentPlayer) ? 0.8f : 0.5f;
+    float scale = (_player.isSelfPlayer) ? SCALE_SELF_PLAYER_EFFECT : SCALE_OTHER_PLAYER_EFFECT;
     BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:effectType
                                                                    andScale:scale];
-    effect.position = (_player.isCurrentPlayer) ?
+    effect.position = (_player.isSelfPlayer) ?
         ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
-        ccp(_player.areaPosition.x-_playerAreaWidth*0.25, _player.areaPosition.y+_playerAreaHeight*0.1);
+        ccpSub(_player.areaPosition, ccp(_playerAreaWidth*0.25, -_playerAreaHeight*0.1));
     [self addChild:effect];
     
+//  Re-render blood point
     _bloodPoint = count;
     [self renderBloodPoint];
 }
@@ -252,7 +254,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 //    if (_player.selectedHeroId != kHeroCardDefault) {
 //        NSArray *cards = [NSArray arrayWithObjects:@(1), @(2), @(3), nil];
 //        [_player.handArea addHandCardsWithCardIds:cards];
-//        return; // Can not touch the hero of current player
+//        return; // Can not touch the hero of self player
 //    }
     
     if ([menuItem.parent isEqual:_heroMenu]) {
