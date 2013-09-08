@@ -16,9 +16,75 @@
 	return [[self alloc] init];
 }
 
-- (id)createMenuWithSpriteFrameName:(NSString *)frameName
-                  selectedFrameName:(NSString *)selFrameName
-                  disabledFrameName:(NSString *)disFrameName
+#pragma mark - Create menu
+- (CCMenu *)createMenuWithSpriteFrameName:(NSString *)frameName
+{
+    return [CCMenu menuWithItems:[self createMenuItemWithSpriteFrameName:frameName], nil];
+}
+
+- (CCMenu *)createMenuWithSpriteFrameNames:(NSArray *)frameNames
+{
+    NSMutableArray *menuItems = [NSMutableArray array];
+    [frameNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CCMenuItem *menuItem = [self createMenuItemWithSpriteFrameName:obj];
+        menuItem.tag = idx;
+        [menuItems addObject:menuItem];
+    }];
+    
+    return [CCMenu menuWithArray:menuItems];
+}
+
+- (CCMenu *)createMenuWithSpriteFrameName:(NSString *)frameName
+                        selectedFrameName:(NSString *)selFrameName
+                        disabledFrameName:(NSString *)disFrameName
+{
+    CCMenuItem *menuItem = [self createMenuItemWithSpriteFrameName:frameName
+                                                 selectedFrameName:selFrameName
+                                                 disabledFrameName:disFrameName];
+    return [CCMenu menuWithItems:menuItem, nil];
+}
+
+- (CCMenu *)createMenuWithSpriteFrameNames:(NSArray *)frameNames
+                        selectedFrameNames:(NSArray *)selFrameNames
+                        disabledFrameNames:(NSArray *)disFrameNames
+{
+    NSMutableArray *menuItems = [NSMutableArray array];
+    [frameNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CCMenuItem *menuItem = [self createMenuItemWithSpriteFrameName:obj
+                                                     selectedFrameName:selFrameNames[idx]
+                                                     disabledFrameName:disFrameNames[idx]];
+        menuItem.tag = idx;
+        [menuItems addObject:menuItem];
+    }];
+    
+    return [CCMenu menuWithArray:menuItems];
+}
+
+- (CCMenu *)createMenuWithCards:(NSArray *)cards
+{
+    NSMutableArray *menuItems = [NSMutableArray array];
+    [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
+        [menuItems addObject:[self createMenuItemWithCard:obj]];
+    }];
+    
+    return [CCMenu menuWithArray:menuItems];
+}
+
+#pragma mark - Create menu item
+- (CCMenuItem *)createMenuItemWithSpriteFrameName:(NSString *)frameName
+{
+    CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:frameName];
+    CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:frameName];
+    selectedSprite.color = ccGRAY;
+    
+    return [CCMenuItemSprite itemWithNormalSprite:normalSprite
+                                   selectedSprite:selectedSprite];
+}
+
+- (CCMenuItem *)createMenuItemWithSpriteFrameName:(NSString *)frameName
+                                selectedFrameName:(NSString *)selFrameName
+                                disabledFrameName:(NSString *)disFrameName
 {
     CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:frameName];
     CCSprite *selectedSprite = nil;
@@ -30,102 +96,71 @@
         disabledSprite = [CCSprite spriteWithSpriteFrameName:disFrameName];
     }
     
+    return [CCMenuItemSprite itemWithNormalSprite:normalSprite
+                                   selectedSprite:selectedSprite
+                                   disabledSprite:disabledSprite
+                                            block:^(id sender) {
+                                                [_delegate menuItemTouched:sender];
+                                            }];
+}
+
+- (CCMenuItem *)createMenuItemWithCard:(BGCard *)card
+{
+    CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:card.cardImageName];
+    CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:card.cardImageName];
+    selectedSprite.color = ccGRAY;
+    
     CCMenuItem *menuItem = [CCMenuItemSprite itemWithNormalSprite:normalSprite
                                                    selectedSprite:selectedSprite
-                                                   disabledSprite:disabledSprite
+                                                   disabledSprite:nil
                                                             block:^(id sender) {
                                                                 [_delegate menuItemTouched:sender];
                                                             }];
-    menuItem.tag = 0;
-    return [CCMenu menuWithItems:menuItem, nil];
-}
-
-- (id)createMenuWithSpriteFrameNames:(NSArray *)frameNames
-                  selectedFrameNames:(NSArray *)selFrameNames
-                  disabledFrameNames:(NSArray *)disFrameNames
-{
-    NSMutableArray *menuArray = [NSMutableArray array];
-    [frameNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:obj];
-        CCSprite *selectedSprite = nil;
-        CCSprite *disabledSprite = nil;
-        
-        @try {
-            if (selFrameNames) {
-                selectedSprite = [CCSprite spriteWithSpriteFrameName:selFrameNames[idx]];
-            } else {
-                selectedSprite.color = ccGRAY;
-            }
-            if (disFrameNames) {
-                disabledSprite = [CCSprite spriteWithSpriteFrameName:disFrameNames[idx]];
-            }
-        }
-        @catch (NSException *exception) {
-            NSLog(@"Exception: %@ in selector %@", exception.description, NSStringFromSelector(_cmd));
-        }
-        
-        CCMenuItem *menuItem = [CCMenuItemSprite itemWithNormalSprite:normalSprite
-                                                       selectedSprite:selectedSprite
-                                                       disabledSprite:disabledSprite
-                                                                block:^(id sender) {
-                                                                    [_delegate menuItemTouched:sender];
-                                                                }];
-        menuItem.tag = idx;
-        [menuArray addObject:menuItem];
-    }];
+    menuItem.tag = card.cardId;
     
-    return [CCMenu menuWithArray:menuArray];
+    return menuItem;
 }
 
-- (id)createMenuWithCards:(NSArray *)cards
+- (NSArray *)createMenuItemsWithCards:(NSArray *)cards
 {
-    NSMutableArray *menuArray = [NSMutableArray array];
+    NSMutableArray *menuItems = [NSMutableArray array];
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
-        
-        CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
-        CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
-        selectedSprite.color = ccGRAY;
-        
-        CCMenuItem *menuItem = [CCMenuItemSprite itemWithNormalSprite:normalSprite
-                                                       selectedSprite:selectedSprite
-                                                       disabledSprite:nil
-                                                                block:^(id sender) {
-                                                                    [_delegate menuItemTouched:sender];
-                                                                }];
-        menuItem.tag = [obj cardId];
-        [menuArray addObject:menuItem];
+        [menuItems addObject:[self createMenuItemWithCard:obj]];
     }];
     
-    return [CCMenu menuWithArray:menuArray];
+    return menuItems;
 }
 
+- (NSArray *)createMenuitemsWithSpriteFrameNames:(NSArray *)frameNames
+{
+    NSMutableArray *menuItems = [NSMutableArray array];
+    [frameNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [menuItems addObject:[self createMenuItemWithSpriteFrameName:obj]];
+    }];
+    
+    return menuItems;
+}
+
+#pragma mark - Add menu items
 - (void)addMenuItemsWithCards:(NSArray *)cards toMenu:(CCMenu *)menu
 {
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
-        CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
-        CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:[obj cardImageName]];
-        selectedSprite.color = ccGRAY;
-        
-        CCMenuItem *menuItem = [CCMenuItemSprite itemWithNormalSprite:normalSprite
-                                                       selectedSprite:selectedSprite
-                                                       disabledSprite:nil
-                                                                block:^(id sender) {
-                                                                    [_delegate menuItemTouched:sender];
-                                                                }];
-        menuItem.tag = [obj cardId];
-        [menu addChild:menuItem z:menu.children.count];
+        [menu addChild:[self createMenuItemWithCard:obj] z:menu.children.count];
     }];
 }
 
-- (void)addMenuItemWithCardBackFrameName:(NSString *)frameName toMenu:(CCMenu *)menu
+- (void)addMenuItemsWithSpriteFrameNames:(NSArray *)frameNames toMenu:(CCMenu *)menu
 {
-    CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:frameName];
-    CCMenuItem *menuItem = [CCMenuItemSprite itemWithNormalSprite:normalSprite
-                                                   selectedSprite:nil
-                                                   disabledSprite:nil
-                                                            block:NULL];
+    [frameNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [menu addChild:[self createMenuItemWithSpriteFrameName:obj] z:menu.children.count];
+    }];
+}
+
+- (void)addDisabledMenuItemWithSpriteFrameName:(NSString *)frameName toMenu:(CCMenu *)menu
+{
+    CCMenuItem *menuItem = [self createMenuItemWithSpriteFrameName:frameName];
     menuItem.isEnabled = NO;
     [menu addChild:menuItem z:menu.children.count];
 }

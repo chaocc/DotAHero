@@ -19,7 +19,7 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"DensityCardArray" ofType:@"plist"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistDensityCardText ofType:kFileTypePlist];
         self.densityArray = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kDensityCardInvalid) &&
                  (aCardId < (NSInteger)_densityArray.count), @"Invalid density card id in %@", NSStringFromSelector(_cmd));
@@ -40,7 +40,7 @@
 
 - (NSString *)cardImageName
 {
-    return [_cardName stringByAppendingString:@".jpg"];
+    return [_cardName stringByAppendingPathExtension:kFileTypeJpg];
 }
 
 @end

@@ -22,7 +22,7 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"PlayingCardArray" ofType:@"plist"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistPlayingCardText ofType:kFileTypePlist];
         self.playingCardArray = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kPlayingCardInvalid) &&
                  (aCardId < (NSInteger)_playingCardArray.count), @"Invalid playing card id in %@", NSStringFromSelector(_cmd));
@@ -67,7 +67,9 @@
 
 - (NSString *)figureImageName
 {
-    return (_cardColor == kCardColorRed) ? [NSString stringWithFormat:@"Red%i.png", _cardFigure] : [NSString stringWithFormat:@"Black%i.png", _cardFigure];
+    return (_cardColor == kCardColorRed) ?
+        [NSString stringWithFormat:@"Red%i.png", _cardFigure] :
+        [NSString stringWithFormat:@"Black%i.png", _cardFigure];
 }
 
 - (NSString *)suitsImageName

@@ -8,7 +8,7 @@
 
 #import "BGEquipmentArea.h"
 #import "BGGameLayer.h"
-#import "BGMoveComponent.h"
+#import "BGActionComponent.h"
 #import "BGDefines.h"
 #import "BGAudioComponent.h"
 
@@ -123,15 +123,15 @@
 - (void)renderEquipmentWithCard:(BGPlayingCard *)card
 {
     CGPoint menuPosition;
-    CGFloat playerAreaWidth = _player.areaSize.width;
-    CGFloat playerAreaHeight = _player.areaSize.height;
+    CGFloat playerAreaWidth = _player.contentSize.width;
+    CGFloat playerAreaHeight = _player.contentSize.height;
     
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeWeapon];
             menuPosition = (_player.isSelfPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
-                ccpAdd(_player.areaPosition, ccp(playerAreaWidth*0.253, playerAreaHeight*0.177));
+                ccp(playerAreaWidth*0.253, playerAreaHeight*0.177);
             if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
                 [[self getChildByTag:kEquipmentTypeArmor] removeAllChildren];
             }
@@ -141,7 +141,7 @@
             _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeArmor];
             menuPosition = (_player.isSelfPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
-                ccpAdd(_player.areaPosition, ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222));
+                ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222);
             break;
             
         default:

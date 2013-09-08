@@ -61,6 +61,7 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)onConnectionResponse:(EsConnectionResponse *)e
 {
+    NSLog(@"Connnection Failed: %@", e.description);
     NSAssert(e.successful, @"Connnection Failed in %@", NSStringFromSelector(_cmd));
     
     BGLoginLayer *login = [BGLoginLayer sharedLoginLayer];
@@ -446,7 +447,7 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionUpdateDeckHero:
-            [_playingDeck updatePlayingDeckWithHeroIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck updateWithHeroIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionUpdateDeckSelectedHeros:
@@ -454,16 +455,20 @@ static BGClient *instanceOfClient = nil;
             break;
         
         case kActionUpdateDeckCuttedCard:
-            _playingDeck.isNeedClearDeck = YES;
         case kActionUpdateDeckUsedCard:
         case kActionUpdateDeckAssigning:
-            [_playingDeck updatePlayingDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            _playingDeck.maxCardId = [obj intWithKey:kParamMaxFigureCardId];
             _player.handCardCount = [obj intWithKey:kParamHandCardCount];
             break;
             
         case kActionUpdateDeckHandCard:
-            [_playingDeck updatePlayingDeckWithCardCount:[obj intWithKey:kParamHandCardCount]
+            [_playingDeck updateWithCardCount:[obj intWithKey:kParamHandCardCount]
                                             equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
+            break;
+            
+        case kActionClearPlayingDeck:
+            [_playingDeck clearUsedCards];
             break;
             
         case kActionInitPlayerHero:
@@ -494,7 +499,6 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionPlayingCard:
-            _playingDeck.isNeedClearDeck = YES; // 每张卡牌结算完后需要清除桌面
         case kActionChooseCardToUse:
         case kActionChooseCardToDiscard:
         case kActionChoosingColor:
@@ -519,7 +523,7 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
- * Adjust the user's index, put the current user as first one.
+ * Adjust the user's index, put the self user as first one.
  */
 - (void)setUsers:(NSArray *)users
 {

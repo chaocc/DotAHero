@@ -90,6 +90,7 @@
                                       selectedFrameName:kImageOkaySelected
                                       disabledFrameName:kImageOkayDisabled];
     _menu.position = POSITION_PLAYING_MENU;
+    [_menu.children.lastObject setTag:kPlayingMenuItemTagOkay];
     [_menu.children.lastObject setIsEnabled:NO];
     
     [self addChild:_menu];
@@ -336,7 +337,7 @@
                     break;
                     
                 case kActionChooseCardToCut:
-                    _player.cuttedCardId = [_player.selectedCardIds.lastObject integerValue];
+                    _player.comparedCardId = [_player.selectedCardIds.lastObject integerValue];
                     [[BGClient sharedClient] sendChooseCardRequest];
                     break;
                     

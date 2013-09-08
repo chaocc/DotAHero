@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "BGFileConstants.h"
 
 #define kCardEnum               @"cardEnum"
 #define kCardName               @"cardName"

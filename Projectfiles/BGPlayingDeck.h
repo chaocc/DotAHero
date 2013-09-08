@@ -13,16 +13,16 @@
 
 @interface BGPlayingDeck : CCNode <BGMenuFactoryDelegate>
 
-@property (nonatomic) BOOL isNeedClearDeck; // 更新桌面之前是否要清除已有的卡牌
-@property (nonatomic, readonly) NSUInteger cardCount;
+//@property (nonatomic) BOOL isNeedClear; // 更新桌面之前是否要清除已有的卡牌
+@property (nonatomic) NSInteger maxCardId;  // 最大点数的卡牌
 
 + (id)sharedPlayingDeck;
 
-- (void)updatePlayingDeckWithHeroIds:(NSArray *)heroIds;
-- (void)updatePlayingDeckWithCardIds:(NSArray *)cardIds;
-- (void)updatePlayingDeckWithCardMenuItems:(NSArray *)menuItems;
-- (void)updatePlayingDeckWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
+- (void)updateWithHeroIds:(NSArray *)heroIds;
+- (void)updateWithCardIds:(NSArray *)cardIds;
+- (void)updateWithCardMenuItems:(NSArray *)menuItems;
+- (void)updateWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
 
-- (void)clearUsedCardOnDeck;
+- (void)clearUsedCards;
 
 @end

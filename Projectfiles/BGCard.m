@@ -25,7 +25,7 @@
 
 - (NSString *)cardImageName
 {
-    return [_cardName stringByAppendingString:@".png"];
+    return [_cardName stringByAppendingPathExtension:kFileTypePng];
 }
 
 - (BOOL)isEqual:(id)object

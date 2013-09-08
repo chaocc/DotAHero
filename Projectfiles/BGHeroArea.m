@@ -10,7 +10,7 @@
 #import "BGGameLayer.h"
 #import "BGHeroSkill.h"
 #import "BGFileConstants.h"
-#import "BGEffectComponent.h"
+#import "BGAnimationComponent.h"
 #import "BGDefines.h"
 
 typedef NS_ENUM(NSInteger, BGHeroTag) {
@@ -36,8 +36,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     if (self = [super init]) {
         _player = player;
         
-        _playerAreaWidth = _player.areaSize.width;
-        _playerAreaHeight = _player.areaSize.height;
+        _playerAreaWidth = _player.contentSize.width;
+        _playerAreaHeight = _player.contentSize.height;
         
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;
@@ -74,7 +74,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
                                           disabledFrameName:nil];
     _heroMenu.position = (_player.isSelfPlayer) ?
         ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
-        ccpSub(_player.areaPosition, ccp(_playerAreaWidth*0.245, -_playerAreaHeight*0.045));
+        ccp(-_playerAreaWidth*0.245, _playerAreaHeight*0.045);
     [_heroMenu.children.lastObject setTag:_heroCard.cardId];
     [self addChild:_heroMenu];
     
@@ -172,7 +172,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
             bloodImageName = kImageBloodGreen;
         }
 //      Move position to left corner of player area for other players
-        deltaPos = ccpSub(_player.areaPosition, ccp(_playerAreaWidth/2, _playerAreaHeight/2));
+        deltaPos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
         width = _playerAreaWidth*0.5 / (_heroCard.bloodPointLimit + 1);
         height = _playerAreaHeight*0.135;
     }
@@ -209,7 +209,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     else {
         angerImageName = kImageAnger;
 //      Move position to left corner of player area for other players
-        deltaPos = ccpSub(_player.areaPosition, ccp(_playerAreaWidth/2, _playerAreaHeight/2));
+        deltaPos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
         width = _playerAreaWidth*0.515;
         height = _playerAreaHeight / (_angerPoint + 1);
         increment = height;
@@ -222,17 +222,15 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     }
 }
 
-#pragma mark - Hero Initilization
+#pragma mark - Hero updating
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
-    BGEffectType effectType = (count > _bloodPoint) ? kEffectTypeRestoreBlood : kEffectTypeDamaged;
-    float scale = (_player.isSelfPlayer) ? SCALE_SELF_PLAYER_EFFECT : SCALE_OTHER_PLAYER_EFFECT;
-    BGEffectComponent *effect = [BGEffectComponent effectCompWithEffectType:effectType
-                                                                   andScale:scale];
-    effect.position = (_player.isSelfPlayer) ?
+    BGAnimationType type = (count < _bloodPoint) ? kAnimationTypeDamaged : kAnimationTypeRestoreBlood;
+    CGPoint position = (_player.isSelfPlayer) ?
         ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
-        ccpSub(_player.areaPosition, ccp(_playerAreaWidth*0.25, -_playerAreaHeight*0.1));
-    [self addChild:effect];
+        ccp(-_playerAreaWidth*0.25, _playerAreaHeight*0.1);
+    BGAnimationComponent *aniComp = [BGAnimationComponent animationComponentWithNode:self];
+    [aniComp runWithAnimationType:type atPosition:position];
     
 //  Re-render blood point
     _bloodPoint = count;

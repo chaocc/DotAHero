@@ -7,6 +7,7 @@
 //
 
 #import "BGHeroSkill.h"
+#import "BGFileConstants.h"
 
 @interface BGHeroSkill ()
 
@@ -19,7 +20,7 @@
 - (id)initWithSkillId:(NSInteger)aSkillId
 {
     if (self = [super init]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"HeroSkillArray" ofType:@"plist"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistHeroSkillText ofType:kFileTypePlist];
         self.skillArray = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aSkillId > kHeroSkillInvalid) &&
                  (aSkillId < (NSInteger)_skillArray.count), @"Invalid hero skill id in %@", NSStringFromSelector(_cmd));

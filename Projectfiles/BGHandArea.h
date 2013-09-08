@@ -33,7 +33,6 @@
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds;
 - (void)enableAllHandCards;
 - (void)disableAllHandCards;
-- (void)adjustPositionOfHandCards;
 
 - (void)renderFigureAndSuitsOfCards:(NSArray *)cards forMenu:(CCMenu *)menu;
 - (CGFloat)cardPaddingWithCardCount:(NSUInteger)cardCount maxCount:(NSUInteger)maxCount;
@@ -42,6 +41,6 @@
 - (void)addOneExtractedCardAndFaceDown;
 - (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block;
 
-- (void)removeHandCardsFromSelectedCards;
+- (void)updateHandCardBuffer;
 
 @end

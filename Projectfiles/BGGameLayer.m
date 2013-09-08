@@ -147,7 +147,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
 //      TEMP
         BGPlayer *player = [BGPlayer playerWithUserName:_users[0] seatIndex:0];
 //        BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] seatIndex:0];
-        player.areaPosition = CGPointZero;
         [self addChild:player];
         
         _selfPlayer = player;
@@ -183,52 +182,52 @@ static BGGameLayer *instanceOfGameLayer = nil;
     
     switch (_users.count) {
         case kPlayerCountTwo:
-            [_allPlayers[1] setAreaPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT-spriteHeight/2)];
             break;
             
         case kPlayerCountThree:
-            [_allPlayers[1] setAreaPosition:ccp(SCREEN_WIDTH*2/3, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[2] setAreaPosition:ccp(SCREEN_WIDTH*1/3, SCREEN_HEIGHT - spriteHeight/2)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH*2/3, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*1/3, SCREEN_HEIGHT-spriteHeight/2)];
             break;
             
         case kPlayerCountFour:
-            [_allPlayers[1] setAreaPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
-            [_allPlayers[2] setAreaPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[3] setAreaPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH/2, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[3] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountFive:
-            [_allPlayers[1] setAreaPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
-            [_allPlayers[2] setAreaPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[3] setAreaPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[4] setAreaPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountSix:
-            [_allPlayers[1] setAreaPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.6)];
-            [_allPlayers[2] setAreaPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[3] setAreaPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[4] setAreaPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[5] setAreaPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.6)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
             break;
             
         case kPlayerCountSeven:
-            [_allPlayers[1] setAreaPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.49)];
-            [_allPlayers[2] setAreaPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.69)];
-            [_allPlayers[3] setAreaPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[4] setAreaPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[5] setAreaPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.49)];
-            [_allPlayers[6] setAreaPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.69)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.69)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[5] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.69)];
             break;
             
         case kPlayerCountEight:
-            [_allPlayers[1] setAreaPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.49)];
-            [_allPlayers[2] setAreaPosition:ccp(SCREEN_WIDTH - spriteWidth/2, SCREEN_HEIGHT*0.69)];
-            [_allPlayers[3] setAreaPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[4] setAreaPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[5] setAreaPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT - spriteHeight/2)];
-            [_allPlayers[6] setAreaPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.49)];
-            [_allPlayers[7] setAreaPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.69)];
+            [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.69)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*3/4, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[4] setPosition:ccp(SCREEN_WIDTH*1/2, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[5] setPosition:ccp(SCREEN_WIDTH*1/4, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[6] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.49)];
+            [_allPlayers[7] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.69)];
             break;
             
         default:
@@ -243,7 +242,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         __weak BGPlayer *player = _allPlayers[i];
-        [player addProgressBarWithPosition:ccp(player.areaPosition.x, player.areaPosition.y - player.areaSize.height/2)
+        [player addProgressBarWithPosition:ccp(0.0f, -player.contentSize.height/2)
                                      block:^{
                                          [player removeProgressBar];
                                      }];
@@ -296,7 +295,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 }
 
 /*
- * Adjust the hero id's index, put the hero id of current player selected as first one.
+ * Adjust the hero id's index, put the hero id of self player selected as first one.
  */
 - (void)setAllHeroIds:(NSArray *)allHeroIds
 {

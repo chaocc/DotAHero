@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionUpdateDeckAssigning = 1003,              // 更新桌面: 牌堆顶的牌(如能量转移)
     kActionUpdateDeckSelectedHeros = 1004,          // 更新桌面: 所有玩家选中的英雄
     kActionUpdateDeckCuttedCard = 1005,             // 更新桌面: 所有玩家用于切牌拼点的牌
+    kActionClearPlayingDeck = 1006,                 // 清空桌面
     
     kActionInitPlayerHero = 2000,                   // 初始化玩家: 选中的英雄
     kActionInitPlayerCard = 2001,                   // 初始化玩家: 发初始手牌
@@ -66,6 +67,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
 #define kParamCardIdList                @"id_list"              // 卡牌列表(英雄牌/摸的牌/获得的牌/使用的牌/弃置的牌)
 #define kParamAvailableIdList           @"available_id_list"    // 可以选择使用的卡牌
 #define kParamCardIndexList             @"index_list"           // 选中的哪几张牌
+#define kParamMaxFigureCardId           @"biggest_card_id"      // 最大点数的卡牌
 #define kParamHandCardCount             @"hand_card_count"      // 玩家手牌数量
 #define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
 #define kParamExtractedCardCount        @"extracted_count"      // 可抽取目标的卡牌数量

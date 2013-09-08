@@ -34,11 +34,17 @@ typedef NS_ENUM(NSInteger, BGMenuTag) {
 
 + (id)menuFactory;
 
-- (id)createMenuWithSpriteFrameName:(NSString *)frameName selectedFrameName:(NSString *)selFrameName disabledFrameName:(NSString *)disFrameName;
-- (id)createMenuWithSpriteFrameNames:(NSArray *)frameNames selectedFrameNames:(NSArray *)selFrameNames disabledFrameNames:(NSArray *)disFrameNames;
-- (id)createMenuWithCards:(NSArray *)cards;
+- (CCMenu *)createMenuWithSpriteFrameName:(NSString *)frameName;
+- (CCMenu *)createMenuWithSpriteFrameNames:(NSArray *)frameNames;
+- (CCMenu *)createMenuWithSpriteFrameName:(NSString *)frameName selectedFrameName:(NSString *)selFrameName disabledFrameName:(NSString *)disFrameName;
+- (CCMenu *)createMenuWithSpriteFrameNames:(NSArray *)frameNames selectedFrameNames:(NSArray *)selFrameNames disabledFrameNames:(NSArray *)disFrameNames;
+- (CCMenu *)createMenuWithCards:(NSArray *)cards;
+
+- (NSArray *)createMenuItemsWithCards:(NSArray *)cards;
+//- (NSArray *)createMenuitemsWithSpriteFrameNames:(NSArray *)frameNames;
 
 - (void)addMenuItemsWithCards:(NSArray *)cards toMenu:(CCMenu *)menu;
-- (void)addMenuItemWithCardBackFrameName:(NSString *)frameName toMenu:(CCMenu *)menu;
+- (void)addMenuItemsWithSpriteFrameNames:(NSArray *)frameNames toMenu:(CCMenu *)menu;
+- (void)addDisabledMenuItemWithSpriteFrameName:(NSString *)frameName toMenu:(CCMenu *)menu;
 
 @end

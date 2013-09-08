@@ -11,6 +11,16 @@
 
 #define kXmlSettings                    @"settings.xml"
 
+#define kFileTypePlist                  @"plist"
+#define kFileTypePng                    @"png"
+#define kFileTypeJpg                    @"jpg"
+
+#define kPlistPlayingCardText           @"PlayingCardText"
+#define kPlistHeroSkillText             @"HeroSkillText"
+#define kPlistHeroCardText              @"HeroCardText"
+#define kPlistDensityCardText           @"DensityCardText"
+#define kPlistRoleCardText              @"RoleCardText"
+
 #define kPlistBackground                @"Background.plist"
 #define kPlistGameArtwork               @"GameArtwork.plist"
 #define kPlistHeroCard                  @"HeroCard.plist"

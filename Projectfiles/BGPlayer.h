@@ -17,8 +17,6 @@
 
 @property (nonatomic, copy, readonly) NSString *playerName;
 @property (nonatomic, readonly) BOOL isSelfPlayer;
-@property (nonatomic) CGPoint areaPosition;
-@property (nonatomic, readonly) CGSize areaSize;
 //@property (nonatomic, readonly) NSUInteger handSizeLimit;
 
 @property (nonatomic) NSUInteger distance;
@@ -32,7 +30,7 @@
 @property (nonatomic, strong, readonly) BGPlayingMenu *playingMenu;
 
 @property (nonatomic) NSInteger selectedHeroId;
-@property (nonatomic) NSInteger cuttedCardId;
+@property (nonatomic) NSInteger comparedCardId;
 @property (nonatomic, strong) NSArray *selectedCardIds;
 @property (nonatomic, strong) NSMutableArray *selectedCardIdxes;
 @property (nonatomic) NSInteger selectedSkillId;
@@ -53,8 +51,6 @@
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
 
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
-
-- (void)moveSelectedCardWithMenuItems:(NSArray *)menuItems block:(void (^)())block;
 
 - (void)clearBuffer;
 

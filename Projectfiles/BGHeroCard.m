@@ -19,7 +19,7 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"HeroCardArray" ofType:@"plist"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistHeroCardText ofType:kFileTypePlist];
         self.heroArray = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kHeroCardInvalid) &&
                  (aCardId < (NSInteger)_heroArray.count), @"Invalid hero card id in %@", NSStringFromSelector(_cmd));

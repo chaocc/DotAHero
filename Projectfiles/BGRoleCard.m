@@ -19,7 +19,7 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"RoleCardArray" ofType:@"plist"];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistRoleCardText ofType:kFileTypePlist];
         self.roleArray = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kRoleCardInvalid) &&
                  (aCardId < (NSInteger)_roleArray.count), @"Invalid Role card id in %@", NSStringFromSelector(_cmd));

@@ -11,7 +11,7 @@
 #import "BGGameLayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
-#import "BGMoveComponent.h"
+#import "BGActionComponent.h"
 
 typedef NS_ENUM(NSInteger, BGPlayerTag) {
     kPlayerTagPlayerArea = 100,
@@ -62,14 +62,15 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return [_playerName isEqual:[object playerName]];
 }
 
-- (void)setAreaPosition:(CGPoint)areaPosition
+- (void)setPosition:(CGPoint)position
 {
-    _areaPosition = areaPosition;
+    _position = position;
     
     CCNode *playerArea = [_gameLayer.gameArtworkBatch getChildByTag:(kPlayerTagPlayerArea+_seatIndex)];
-    playerArea.position = areaPosition;
+    playerArea.position = position;
 }
 
+#pragma mark - Buffer handling
 - (void)clearBuffer
 {
     [self clearSelectedObjectBuffer];
@@ -94,7 +95,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     NSString *spriteFrameName = (_isSelfPlayer) ? kImageSelfPlayerArea : kImageOtherPlayerArea;
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:spriteFrameName];
-    _areaSize = sprite.contentSize;
+    self.contentSize = sprite.contentSize;
     sprite.anchorPoint = (_isSelfPlayer) ? CGPointZero : sprite.anchorPoint;
     [_gameLayer.gameArtworkBatch addChild:sprite z:0 tag:(kPlayerTagPlayerArea+_seatIndex)];
     
@@ -187,101 +188,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_handCardCount).stringValue
                                                 fontName:@"Arial"
                                                 fontSize:22.0f];
-    countLabel.position = ccp(_areaPosition.x-_areaSize.width*0.07, _areaPosition.y-_areaSize.height*0.23);
+    countLabel.position = ccp(_position.x-self.size.width*0.07, _position.y-self.size.height*0.23);
     [self addChild:countLabel z:1 tag:kPlayerTagHandCardCount];
-}
-
-#pragma mark - Card movement
-/*
- * Move the selected cards to playing deck or other player's hand
- */
-- (void)moveSelectedCardWithMenuItems:(NSArray *)menuItems block:(void (^)())block
-{
-//  Check if need clear playing deck
-    NSUInteger deckCardCount = _gameLayer.playingDeck.cardCount;
-    NSUInteger selectedCount = menuItems.count;
-    if (_gameLayer.playingDeck.isNeedClearDeck || deckCardCount+selectedCount > COUNT_MAX_DECK_CARD_NO_OVERLAP) {
-//        [_gameLayer.playingDeck clearUsedCardOnDeck];
-        _gameLayer.playingDeck.isNeedClearDeck = NO;
-//        deckCardCount = 0;
-    }
-    
-//  Determine movement target position and check if need narrow the card padding
-    __block CGPoint targetPos = [self cardMoveTargetPosition];
-    NSUInteger count = (0 != deckCardCount) ? selectedCount : selectedCount-1;
-    CGFloat cardPadding = [_handArea cardPaddingWithCardCount:selectedCount maxCount:COUNT_MAX_DECK_CARD_NO_OVERLAP];
-    targetPos = ccpSub(targetPos, ccp((deckCardCount+count)*_handArea.cardWidth/2, 0.0f));
-    
-//  Card movement
-    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGMoveComponent *moveComp = [BGMoveComponent moveWithNode:obj];
-        [moveComp runActionEaseMoveWithTarget:targetPos
-                                     duration:DURATION_USED_CARD_MOVE
-                                       object:[NSValue valueWithCGPoint:targetPos]
-                                       blockO:^(id object) {
-                                           [obj removeFromParent];
-                                           [obj setPosition:[object CGPointValue]];
-                                       }];
-        
-        targetPos = ccpAdd(targetPos, ccp((_handArea.cardWidth+cardPadding)*(idx+1), 0.0f));
-    }];
-    
-//  Run after card movement is finished
-    if ([self isNeedUpdateDeck]) {
-        [self runActionDelayWithBlock:^{
-            [_gameLayer.playingDeck updatePlayingDeckWithCardMenuItems:menuItems];
-        }];
-    }
-    [self runActionDelayWithBlock:block];
-}
-
-/*
- * Determine target position of selected card movement
- */
-- (CGPoint)cardMoveTargetPosition
-{
-    CGPoint targetPos;
-    
-    switch (_gameLayer.action) {
-        case kActionChooseCardToCut:
-        case kActionUpdateDeckCuttedCard: {
-            CGFloat cardPadding = PADDING_CUTTED_CARD;
-            NSUInteger rowCount = ceil((double)_gameLayer.allPlayers.count/COUNT_MAX_DECK_CARD_NO_OVERLAP);
-            NSUInteger colCount = ceil((double)_gameLayer.allPlayers.count/rowCount);
-            
-            CGFloat cardPosY = (1 == rowCount) ? POSITION_DECK_AREA_CENTER.y : POSITION_DECK_AREA_TOP.y;
-            break;
-        }
-            
-        case kActionUpdatePlayerHandExtracted:
-        case kActionUpdatePlayerEquipmentExtracted: {
-            BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];
-            BGPlayer *player = ([self isEqual:_gameLayer.currPlayer]) ? targetPlayer : _gameLayer.currPlayer;
-            targetPos = player.areaPosition;
-            break;
-        }
-            
-        default:
-            targetPos = POSITION_DECK_AREA_CENTER;
-            break;
-    }
-    
-    return targetPos;
-}
-
-- (BOOL)isNeedUpdateDeck
-{
-    return (kActionUpdatePlayerHandExtracted != _gameLayer.action &&
-            kActionUpdatePlayerEquipmentExtracted != _gameLayer.action);
-}
-
-- (void)runActionDelayWithBlock:(void (^)())block
-{
-    if (block) {
-        CCDelayTime *delay = [CCDelayTime actionWithDuration:DURATION_USED_CARD_MOVE];
-        CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
-        [self runAction:[CCSequence actions:delay, callBlock, nil]];
-    }
 }
 
 #pragma mark - Playing menu
@@ -351,7 +259,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 - (void)addProgressBar
 {
-    CGPoint barPosition = (_isSelfPlayer) ? POSITION_PLYAING_PROGRESS_BAR : ccp(_areaPosition.x, _areaPosition.y - _areaSize.height/2);
+    CGPoint barPosition = (_isSelfPlayer) ? POSITION_PLYAING_PROGRESS_BAR : ccp(0.0f, -_contentSize.height/2);
     
     __weak BGPlayer *player = self;
     [player addProgressBarWithPosition:barPosition

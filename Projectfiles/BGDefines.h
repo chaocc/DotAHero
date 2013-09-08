@@ -22,7 +22,7 @@ _Pragma("clang diagnostic pop")                                     \
 #define POSITION_HERO_SEL_PROGRESS_BAR  ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4)
 #define POSITION_PLYAING_PROGRESS_BAR   ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.27)
 #define POSITION_PLAYING_MENU           ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
-#define POSITION_CARD_EFFECT            ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
+#define POSITION_CARD_ANIMATION         ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
 #define POSITION_EXTRACTED_HAND_CARD    ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.65)
 #define POSITION_EXTRACTED_EQUIPMENT    ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.45)
 #define POSITION_DECK_AREA_CENTER       ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.60)
@@ -46,12 +46,19 @@ _Pragma("clang diagnostic pop")                                     \
 #define DURATION_SELECTED_HERO_MOVE     0.5f
 #define DURATION_HAND_CARD_MOVE         0.2f
 #define DURATION_SELECTED_CARD_MOVE     0.1f
-#define DURATION_USED_CARD_MOVE         0.5f
+#define DURATION_USED_CARD_MOVE         0.8f
 #define DURATION_USED_CARD_FADE_OUT     0.3f
+#define DURATION_CARD_FLIP              0.2f
+#define DURATION_CARD_FLIP_INTERVAL     0.05f
+#define DURATION_CARD_ANIMATION_SCALE   0.1f
+#define DURATION_CARD_SCALE             0.3f
+#define DURATION_CARD_SCALE_DELAY       0.2f
 
 #define SCALE_SELECTED_HERO             0.5f
-#define SCALE_SELF_PLAYER_EFFECT        0.8f
-#define SCALE_OTHER_PLAYER_EFFECT       0.5f
+#define SCALE_SELF_PLAYER_ANIMATION     0.8f
+#define SCALE_OTHER_PLAYER_ANIMATION    0.5f
+#define SCALE_CARD_ORGINAL              1.0f
+#define SCALE_CARD_UP                   1.4f
 
 #define PADDING_CUTTED_CARD             1.0f
 #define PADDING_SKILL_BUTTONS           0.0f
