@@ -41,29 +41,30 @@ _Pragma("clang diagnostic pop")                                     \
 #define COUNT_MAX_DECK_CARD_NO_OVERLAP  5
 
 #define DURATION_GAMELAYER_TRANSITION   0.2f
-#define DURATION_HERO_SEL_SHOW_DELAY    DURATION_GAMELAYER_TRANSITION + 0.1f
-#define DURATION_HERO_SEL_FADE_IN       0.1f
+#define DURATION_HERO_SEL_FADE_IN       0.3f
 #define DURATION_SELECTED_HERO_MOVE     0.5f
-#define DURATION_HAND_CARD_MOVE         0.2f
+#define DURATION_HAND_CARD_MOVE         0.5f
 #define DURATION_SELECTED_CARD_MOVE     0.1f
 #define DURATION_USED_CARD_MOVE         0.8f
-#define DURATION_USED_CARD_FADE_OUT     0.3f
+#define DURATION_USED_CARD_FADE_OUT     0.8f
+#define DURATION_DREW_CARD_MOVE         0.8f
 #define DURATION_CARD_FLIP              0.2f
 #define DURATION_CARD_FLIP_INTERVAL     0.05f
 #define DURATION_CARD_ANIMATION_SCALE   0.1f
 #define DURATION_CARD_SCALE             0.3f
-#define DURATION_CARD_SCALE_DELAY       0.2f
+#define DURATION_CARD_SCALE_DELAY       0.3f
+#define DURATION_ANIMATION_DELAY        0.08f
 
 #define SCALE_SELECTED_HERO             0.5f
 #define SCALE_SELF_PLAYER_ANIMATION     0.8f
 #define SCALE_OTHER_PLAYER_ANIMATION    0.5f
-#define SCALE_CARD_ORGINAL              1.0f
+#define SCALE_CARD_INITIAL              1.0f
 #define SCALE_CARD_UP                   1.4f
 
 #define PADDING_CUTTED_CARD             1.0f
-#define PADDING_SKILL_BUTTONS           0.0f
+#define PADDING_SKILL_BUTTON            0.0f
 #define PADDING_TWO_BUTTONS             40.0f
 #define PADDING_THREE_BUTTONS           20.0f
-#define PADDING_SUITS_BUTTONS           0.0f
+#define PADDING_SUITS_BUTTON            0.0f
 
 #endif

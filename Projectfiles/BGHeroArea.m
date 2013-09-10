@@ -115,7 +115,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
                                            selectedFrameNames:selFrameNames
                                            disabledFrameNames:nil];
     _skillMenu.position = ccp(_playerAreaWidth*0.114, _playerAreaHeight*0.143);
-    [_skillMenu alignItemsHorizontallyWithPadding:PADDING_SKILL_BUTTONS];
+    [_skillMenu alignItemsHorizontallyWithPadding:PADDING_SKILL_BUTTON];
     [self addChild:_skillMenu];
     
 //  Add label text to menu and disable passive skill menu
@@ -147,7 +147,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     [self addChild:_spriteBatch];
     
     NSString *bloodImageName;
-    CGPoint deltaPos;
+    CGPoint deltaPos = CGPointZero;
     CGFloat width, height;
     
     [[_spriteBatch getChildByTag:kHeroTagBlood] removeFromParent];
@@ -178,7 +178,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     }
     
     [_spriteBatch removeAllChildren];
-    for (NSUInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
+    for (NSInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
         if ((NSInteger)i >= _bloodPoint) {
             bloodImageName = (_player.isSelfPlayer) ? kImageBloodEmptyBig : kImageBloodEmpty;
         }
@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)renderAngerPoint
 {
     NSString *angerImageName;
-    CGPoint deltaPos;
+    CGPoint deltaPos = CGPointZero;
     CGFloat width, height, increment;
     
     [[_spriteBatch getChildByTag:kHeroTagAnger] removeFromParent];
@@ -225,10 +225,13 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 #pragma mark - Hero updating
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
+    NSAssert(count <= _heroCard.bloodPointLimit, @"Blood exceed limit in %@", NSStringFromSelector(_cmd));
+    if (count == _bloodPoint) return;
+    
     BGAnimationType type = (count < _bloodPoint) ? kAnimationTypeDamaged : kAnimationTypeRestoreBlood;
     CGPoint position = (_player.isSelfPlayer) ?
         ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
-        ccp(-_playerAreaWidth*0.25, _playerAreaHeight*0.1);
+        ccp(-_playerAreaWidth*0.2, _playerAreaHeight*0.1);
     BGAnimationComponent *aniComp = [BGAnimationComponent animationComponentWithNode:self];
     [aniComp runWithAnimationType:type atPosition:position];
     
@@ -237,8 +240,11 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     [self renderBloodPoint];
 }
 
-- (void)updateAngerPointWithCount:(NSInteger)count
+- (void)updateAngerPointWithCount:(NSUInteger)count
 {
+    NSAssert(count <= _heroCard.angerPointLimit, @"Anger exceed limit in %@", NSStringFromSelector(_cmd));
+    if (count == _angerPoint) return;
+    
     _angerPoint = count;
     [self renderAngerPoint];
 }
@@ -254,7 +260,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 //        [_player.handArea addHandCardsWithCardIds:cards];
 //        return; // Can not touch the hero of self player
 //    }
-    
+        
     if ([menuItem.parent isEqual:_heroMenu]) {
         BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
         CCMenuItem *okayMenu = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];

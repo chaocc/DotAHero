@@ -1,5 +1,61 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
-<dict/>
+<dict>
+	<key>1</key>
+	<dict>
+		<key>fileName</key>
+		<string>Damage.plist</string>
+		<key>frameName</key>
+		<string>Damage0.png</string>
+		<key>frames</key>
+		<string>Damage</string>
+		<key>frameCount</key>
+		<integer>9</integer>
+	</dict>
+	<key>2</key>
+	<dict>
+		<key>fileName</key>
+		<string>RestoreBlood.plist</string>
+		<key>frameName</key>
+		<string>RestoreBlood0.png</string>
+		<key>frames</key>
+		<string>RestoreBlood</string>
+		<key>frameCount</key>
+		<integer>20</integer>
+	</dict>
+	<key>NormalAttack</key>
+	<dict>
+		<key>fileName</key>
+		<string>NormalAttack.plist</string>
+		<key>frameName</key>
+		<string>NormalAttack0.png</string>
+		<key>frames</key>
+		<string>NormalAttack</string>
+		<key>frameCount</key>
+		<integer>29</integer>
+	</dict>
+	<key>Evasion</key>
+	<dict>
+		<key>fileName</key>
+		<string>Evasion.plist</string>
+		<key>frameName</key>
+		<string>Evasion0.png</string>
+		<key>frames</key>
+		<string>Evasion</string>
+		<key>frameCount</key>
+		<integer>14</integer>
+	</dict>
+	<key>SangeAndYasha</key>
+	<dict>
+		<key>fileName</key>
+		<string>SangeAndYasha.plist</string>
+		<key>frameName</key>
+		<string>SangeAndYasha0.png</string>
+		<key>frames</key>
+		<string>SangeAndYasha</string>
+		<key>frameCount</key>
+		<integer>18</integer>
+	</dict>
+</dict>
 </plist>

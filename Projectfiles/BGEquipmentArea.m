@@ -17,7 +17,7 @@
 @property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
-@property (nonatomic, strong) CCMenu *equipmentMenu;
+@property (nonatomic, strong) CCMenu *equipMenu;
 
 @end
 
@@ -28,8 +28,14 @@
     if (self = [super init]) {
         _gameLayer = [BGGameLayer sharedGameLayer];
         _player = player;
+        
         self.equipmentCards = [NSMutableArray arrayWithCapacity:2]; // 武器和防具
+        
         _menuFactory = [BGMenuFactory menuFactory];
+        _equipMenu = [CCMenu menuWithArray:nil];
+        _equipMenu.position = CGPointZero;
+        [self addChild:_equipMenu];
+        _menuFactory.delegate = self;
     }
     return self;
 }
@@ -42,45 +48,76 @@
 #pragma mark - Equipment updating
 /*
  * Update(Add/Remove) equipment card with hand card while euqipping
+ * If the card is contained in equipment cards, need remove it.
  */
 - (void)updateEquipmentWithCard:(BGPlayingCard *)card
 {
-//  If the card is contained in equipment cards, need remove it.
     if ([_equipmentCards containsObject:card]) {
-        [self removeEquipmentWithCard:card isShowingOnDeck:NO];
-        [self removeEquipmentFromBufferWithCard:card];
+        [self removeEquipmentWithCard:card];
     } else {
-        [self renderEquipmentWithCard:card];
-        [self updateEquipmentBufferWithCard:card];
+        [self addEquipmentWithCard:card];
     }
     
     [[BGAudioComponent sharedAudioComponent] playEquipCard];
 }
 
 /*
+ * If exist same type equipment(Weapon/Armor), remove the existing one(Replaced).
+ * Show the replaced equipment card on the deck
+ */
+- (void)addEquipmentWithCard:(BGPlayingCard *)card
+{
+    [self updateEquipmentBufferWithCard:card];
+    
+    NSArray *menuItems = nil;
+    if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
+        [_equipMenu removeAllChildren];
+        menuItems = [_menuFactory createMenuItemsWithCards:_equipmentCards];
+    } else {
+        for (CCMenuItem *menuItem in _equipMenu.children) {
+            BGPlayingCard *existingCard = [BGPlayingCard cardWithCardId:menuItem.tag];
+            if (existingCard.equipmentType == card.equipmentType) {
+                [menuItem removeFromParent];
+                menuItems = [_menuFactory createMenuItemsWithCards:[NSArray arrayWithObject:existingCard]];
+                break;
+            }
+        }
+    }
+    
+//  Remove existing weapon/armor, show it on on the deck.
+    if (menuItems) {
+        [self removeEquipmentWithCardMenuItems:menuItems];
+    }
+    
+    [self renderEquipmentWithCard:card];
+}
+
+/*
+ * Remove the equipment(Is extracted or disarmed by other player)
+ */
+- (void)removeEquipmentWithCard:(BGPlayingCard *)card
+{
+    [self removeEquipmentFromBufferWithCard:card];
+    
+    for (CCMenuItem *menuItem in _equipMenu.children) {
+        if (menuItem.tag == card.cardId) {
+            [menuItem removeFromParent];
+            break;
+        }
+    }
+    
+//  ...TEMP...
+    NSArray *menuItems = [_menuFactory createMenuItemsWithCards:[NSArray arrayWithObject:card]];
+    [self removeEquipmentWithCardMenuItems:menuItems];
+}
+
+/*
  * Remove equipment card: Is extracted or disarmed/replaced
- * Set card move target positon according to different Action
  * (Move card to playing deck or other player)
  */
-- (void)removeEquipmentWithCard:(BGPlayingCard *)card isShowingOnDeck:(BOOL)isOnDeck
+- (void)removeEquipmentWithCardMenuItems:(NSArray *)menuItems
 {
-//    CGPoint targetPos;
-//    if (kActionUpdatePlayerEquipment == _player.action) {
-////        targetPos = USED_CARD_POSITION;
-//    } else {
-//        BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];
-//        targetPos = targetPlayer.position;
-//    }
-//    
-//    BGMoveComponent *moveComp = [BGMoveComponent moveWithNode:_equipmentMenu];
-//    [moveComp runActionEaseMoveWithTarget:targetPos
-//                                 duration:DURATION_USED_CARD_MOVE
-//                                    block:^{
-//                                        [_equipmentMenu removeFromParent];
-//                                        if (isOnDeck) {
-//                                            [_gameLayer.playingDeck updatePlayingDeckWithCardIds:[NSArray arrayWithObject:@(card.cardId)]];
-//                                        }
-//                                    }];
+    [_gameLayer.playingDeck updateWithCardMenuItems:menuItems];
 }
 
 /*
@@ -118,52 +155,33 @@
 #pragma mark - Equipment rendering
 /*
  * Render the equipment card after equipped
- * If exist same type equipment(Weapon/Armor), remove the existing one.
  */
 - (void)renderEquipmentWithCard:(BGPlayingCard *)card
 {
-    CGPoint menuPosition;
     CGFloat playerAreaWidth = _player.contentSize.width;
     CGFloat playerAreaHeight = _player.contentSize.height;
     
+    NSString *imageName = (_player.isSelfPlayer) ? card.bigEquipImageName : card.equipImageName;
+    [_menuFactory addMenuItemWithSpriteFrameName:imageName
+                                       isEnabled:card.canBeUsedActive
+                                          toMenu:_equipMenu];
+    CCMenuItem *menuItem = _equipMenu.children.lastObject;
+    menuItem.tag = card.cardId;
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
-            _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeWeapon];
-            menuPosition = (_player.isSelfPlayer) ?
+            menuItem.position = (_player.isSelfPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
                 ccp(playerAreaWidth*0.253, playerAreaHeight*0.177);
-            if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
-                [[self getChildByTag:kEquipmentTypeArmor] removeAllChildren];
-            }
             break;
             
         case kEquipmentTypeArmor:
-            _equipmentMenu = (CCMenu *)[self getChildByTag:kEquipmentTypeArmor];
-            menuPosition = (_player.isSelfPlayer) ?
+            menuItem.position = (_player.isSelfPlayer) ?
                 ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
                 ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222);
             break;
-            
-        default:
-            break;
     }
-    
-//  If exist same type equipment(Weapon/Armor), remove the existing one.
-    if (_equipmentMenu) {
-        [self removeEquipmentWithCard:card isShowingOnDeck:YES];
-    }
-    
-    NSString *imageName = (_player.isSelfPlayer) ? card.bigEquipImageName : card.equipImageName;
-    _equipmentMenu = [_menuFactory createMenuWithSpriteFrameName:imageName
-                                              selectedFrameName:nil
-                                              disabledFrameName:nil];
-    _equipmentMenu.position = menuPosition;
-    [_equipmentMenu.children.lastObject setTag:card.cardId];
-    _equipmentMenu.enabled = card.canBeUsedActive;
-    [self addChild:_equipmentMenu z:card.equipmentType];
     
 //  Render card suits
-    CCMenuItem *menuItem = _equipmentMenu.children.lastObject;
     CGFloat width = menuItem.contentSize.width;
     CGFloat height = menuItem.contentSize.height;
     

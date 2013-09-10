@@ -41,6 +41,4 @@
 - (void)addOneExtractedCardAndFaceDown;
 - (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block;
 
-- (void)updateHandCardBuffer;
-
 @end

@@ -132,29 +132,55 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 #pragma mark - Hand area
 /*
- * Initialize hand cards with dealing cards
+ * Initialize hand cards with dealing cards for self player
  */
 - (void)addHandAreaWithCardIds:(NSArray *)cardIds
 {
     if (cardIds) {
         _handArea = [BGHandArea handAreaWithPlayer:self andCardIs:cardIds];
-        _handArea.selectableCardCount = 2;
+        _handArea.selectableCardCount = 1;
         [self addChild:_handArea];
     }
 }
 
 /*
- * Update(Draw/Got/Lost) hand card with card id list and update other properties
+ * Update(Draw/Got/Lost) hand card for self player or hand card count for other player
  */
-- (void)updateHandCardWithCardIds:(NSArray *)cardIds
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
 {
-    [_handArea updateHandCardWithCardIds:cardIds];
+    if (_isSelfPlayer) {
+        [_handArea updateHandCardWithCardIds:cardIds];
+    } else {
+        [self updateHandCardWithCardCount:count];
+    }
 }
 
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count
 {
     [_handArea enableHandCardWithCardIds:cardIds];
     _handArea.selectableCardCount = count;
+}
+
+- (void)updateHandCardWithCardCount:(NSUInteger)count
+{
+    NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:count-_handCardCount];
+    for (NSUInteger i = 0; i < count-_handCardCount; i++) {
+        [frameNames addObject:kImagePlayingCardBack];
+    }
+    BGMenuFactory *mf = [BGMenuFactory menuFactory];
+    CCMenu *menu = [mf createMenuWithSpriteFrameNames:frameNames];
+    menu.enabled = NO;
+    menu.position = POSITION_DECK_AREA_CENTER;
+    [menu alignItemsHorizontallyWithPadding:[menu.children.lastObject contentSize].width/2];
+    [self addChild:menu];
+    
+    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menu];
+    [ac runEaseMoveWithTarget:_gameLayer.currPlayer.position
+                     duration:DURATION_DREW_CARD_MOVE
+                        block:^{
+                            [menu removeFromParent];
+                            self.handCardCount = count;
+                        }];
 }
 
 #pragma mark - Equipment area
@@ -225,7 +251,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         default:
             break;
     }
-    
+
     [self addChild:_playingMenu];
 }
 
@@ -252,9 +278,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     timer.anchorPoint = CGPointZero;
     [_progressBar addChild:timer];
     
-    CCProgressFromTo *progress = [CCProgressFromTo actionWithDuration:10.0f from:100.0f to:0.0f];
-    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
-    [timer runAction:[CCSequence actions:progress, callBlock, nil]];
+    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:timer];
+    [ac runProgressBarWithDuration:10.0f block:block];
 }
 
 - (void)addProgressBar

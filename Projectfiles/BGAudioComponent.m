@@ -43,6 +43,7 @@ static BGAudioComponent *instanceOfClient = nil;
     return self;
 }
 
+#pragma mark - Audio playing
 - (void)playBackgroundAndLoop
 {
     [_audioEngine playBackgroundMusic:kAudioBackground loop:YES];

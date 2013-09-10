@@ -24,6 +24,7 @@
 
 - (void)addGamePluginMessageEventListener;
 - (void)sendStartGameRequest;
+- (void)sendStartRoundRequest;
 - (void)sendChooseHeroIdRequest;
 - (void)sendUseHandCardRequestWithIsStrengthened:(BOOL)isStrengthened;
 - (void)sendUseHeroSkillRequest;

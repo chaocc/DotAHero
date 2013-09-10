@@ -30,45 +30,51 @@
     return [[self alloc] initWithNode:node];
 }
 
+#pragma mark - Action running
 - (void)runEaseMoveWithTarget:(CGPoint)target duration:(ccTime)t block:(void (^)())block
 {
     CCMoveTo *move = [CCMoveTo actionWithDuration:t position:target];
     CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
     
-    NSMutableArray *array = [NSMutableArray arrayWithObject:ease];
-    if (block) {
-        [array addObject:[CCCallBlock actionWithBlock:block]];
-    }
-    
-    [_node runAction:[CCSequence actionWithArray:array]];
+    [_node runAction:[CCSequence actions:ease, callBlock, nil]];
 }
 
 - (void)runEaseMoveWithTarget:(CGPoint)target duration:(ccTime)t object:(id)obj block:(void (^)(id))block
 {
     CCMoveTo *move = [CCMoveTo actionWithDuration:t position:target];
-    CCActionEase *ease = [CCEaseExponentialInOut actionWithAction:move];
+    CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
+    CCCallBlockO *callBlock = (block) ? [CCCallBlockO actionWithBlock:block object:obj] : nil;
     
-    NSMutableArray *array = [NSMutableArray arrayWithObject:ease];
-    if (block) {
-        [array addObject:[CCCallBlockO actionWithBlock:block object:obj]];
-    }
-    
-    [_node runAction:[CCSequence actionWithArray:array]];
+    [_node runAction:[CCSequence actions:ease, callBlock, nil]];
 }
 
 - (void)runEaseMoveScaleWithTarget:(CGPoint)target duration:(ccTime)t scale:(float)s block:(void (^)())block
 {
     CCMoveTo *move = [CCMoveTo actionWithDuration:t position:target];
     CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
-    CCScaleTo *scale = [CCScaleTo actionWithDuration:t scale:s];
     
-    NSMutableArray *array = [NSMutableArray arrayWithObject:scale];
-    if (block) {
-        [array addObject:[CCCallBlock actionWithBlock:block]];
-    }
+    CCScaleTo *scale = [CCScaleTo actionWithDuration:t scale:s];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
     
     [_node runAction:ease];
-    [_node runAction:[CCSequence actionWithArray:array]];
+    [_node runAction:[CCSequence actions:scale, callBlock, nil]];
+}
+
+- (void)runFadeInWithDuration:(ccTime)t block:(void (^)())block
+{
+    CCFadeIn *fade = [CCFadeIn actionWithDuration:t];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+    
+    [_node runAction:[CCSequence actions:fade, callBlock, nil]];
+}
+
+- (void)runFadeOutWithDuration:(ccTime)t block:(void (^)())block
+{
+    CCFadeOut *fade = [CCFadeOut actionWithDuration:t];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+
+    [_node runAction:[CCSequence actions:fade, callBlock, nil]];
 }
 
 - (void)runFlipFromLeftWithDuration:(ccTime)t toNode:(CCNode *)tarNode
@@ -99,22 +105,31 @@
     [_node runAction:[CCSequence actionWithArray:array]];
 }
 
-- (void)runScaleUpAndReverse
+- (void)runScaleUpAndReverseWithDuration:(ccTime)t scale:(float)s block:(void (^)())block
 {
-    CCScaleTo *scale = [CCScaleTo actionWithDuration:DURATION_CARD_SCALE scale:SCALE_CARD_UP];
+    CCScaleTo *scale = [CCScaleTo actionWithDuration:t scale:s];
     CCActionEase *ease = [CCEaseExponentialOut actionWithAction:scale];
     CCDelayTime *delay = [CCDelayTime actionWithDuration:DURATION_CARD_SCALE_DELAY];
-    CCScaleTo *reverse = [CCScaleTo actionWithDuration:DURATION_CARD_SCALE scale:SCALE_CARD_ORGINAL];
-    [_node runAction:[CCSequence actions:ease, delay, reverse, nil]];
+    CCScaleTo *reverse = [CCScaleTo actionWithDuration:t scale:SCALE_CARD_INITIAL];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+    
+    [_node runAction:[CCSequence actions:ease, delay, reverse, callBlock, nil]];
 }
 
 - (void)runDelayWithDuration:(ccTime)time WithBlock:(void (^)())block
 {
-    if (block) {
-        CCDelayTime *delay = [CCDelayTime actionWithDuration:time];
-        CCCallBlock *callBlock = [CCCallBlock actionWithBlock:block];
-        [_node runAction:[CCSequence actions:delay, callBlock, nil]];
-    }
+    CCDelayTime *delay = [CCDelayTime actionWithDuration:time];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+    
+    [_node runAction:[CCSequence actions:delay, callBlock, nil]];
+}
+
+- (void)runProgressBarWithDuration:(ccTime)t block:(void (^)())block
+{
+    CCProgressFromTo *progress = [CCProgressFromTo actionWithDuration:t from:100.0f to:0.0f];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+    
+    [_node runAction:[CCSequence actions:progress, callBlock, nil]];
 }
 
 @end

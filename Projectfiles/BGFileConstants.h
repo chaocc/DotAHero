@@ -20,6 +20,7 @@
 #define kPlistHeroCardText              @"HeroCardText"
 #define kPlistDensityCardText           @"DensityCardText"
 #define kPlistRoleCardText              @"RoleCardText"
+#define kPlistCardAnimation             @"CardAnimation"
 
 #define kPlistBackground                @"Background.plist"
 #define kPlistGameArtwork               @"GameArtwork.plist"

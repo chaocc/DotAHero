@@ -24,6 +24,6 @@
 
 - (void)renderHeroWithHeroId:(NSInteger)heroId;
 - (void)updateBloodPointWithCount:(NSInteger)count;
-- (void)updateAngerPointWithCount:(NSInteger)count;
+- (void)updateAngerPointWithCount:(NSUInteger)count;
 
 @end

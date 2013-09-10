@@ -21,6 +21,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionInvalid = 0,
     kActionReadyStartGame = 1,                      // 准备开始游戏
     kActionStartGame = 2,                           // 开始游戏
+    kActionStartRound = 3,                          // 开始牌局
     
     kActionUseHandCard = 100,                       // 使用卡牌
     kActionUseHeroSkill = 101,                      // 使用英雄技能
@@ -35,11 +36,13 @@ typedef NS_ENUM(NSInteger, BGAction) {
     
     kActionUpdateDeckHero = 1000,                   // 更新桌面: 待选英雄
     kActionUpdateDeckUsedCard = 1001,               // 更新桌面: 用掉/弃掉的牌
-    kActionUpdateDeckHandCard = 1002,               // 更新桌面: 目标手牌/装备
+    kActionUpdateDeckPlayerCard = 1002,             // 更新桌面: 目标手牌和装备
     kActionUpdateDeckAssigning = 1003,              // 更新桌面: 牌堆顶的牌(如能量转移)
     kActionUpdateDeckSelectedHeros = 1004,          // 更新桌面: 所有玩家选中的英雄
     kActionUpdateDeckCuttedCard = 1005,             // 更新桌面: 所有玩家用于切牌拼点的牌
-    kActionClearPlayingDeck = 1006,                 // 清空桌面
+    kActionUpdateDeckHandCard = 1006,               // 更新桌面: 目标手牌
+    kActionUpdateDeckEquipment = 1007,              // 更新桌面: 目标装备
+    kActionClearPlayingDeck = 1100,                 // 清空桌面
     
     kActionInitPlayerHero = 2000,                   // 初始化玩家: 选中的英雄
     kActionInitPlayerCard = 2001,                   // 初始化玩家: 发初始手牌

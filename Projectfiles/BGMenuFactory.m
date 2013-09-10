@@ -158,10 +158,10 @@
     }];
 }
 
-- (void)addDisabledMenuItemWithSpriteFrameName:(NSString *)frameName toMenu:(CCMenu *)menu
+- (void)addMenuItemWithSpriteFrameName:(NSString *)frameName isEnabled:(BOOL)isEnabled toMenu:(CCMenu *)menu
 {
     CCMenuItem *menuItem = [self createMenuItemWithSpriteFrameName:frameName];
-    menuItem.isEnabled = NO;
+    menuItem.isEnabled = isEnabled;
     [menu addChild:menuItem z:menu.children.count];
 }
 

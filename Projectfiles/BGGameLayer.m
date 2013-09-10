@@ -13,6 +13,7 @@
 #import "BGFaction.h"
 #import "BGGameMenu.h"
 #import "BGCardPile.h"
+#import "BGActionComponent.h"
 
 @interface BGGameLayer ()
 
@@ -22,6 +23,8 @@
 @end
 
 @implementation BGGameLayer
+
+@synthesize state = _state;
 
 static BGGameLayer *instanceOfGameLayer = nil;
 
@@ -74,6 +77,34 @@ static BGGameLayer *instanceOfGameLayer = nil;
 }
 
 	return self;
+}
+
+- (BGGameState)state
+{
+    if (kGameStateInvalid != _state) {
+        return _state;
+    }
+    
+    switch (_action) {
+        case kActionChooseCardToCut:
+        case kActionUpdateDeckCuttedCard:
+            _state = kGameStateCutting;
+            break;
+            
+        case kActionPlayingCard:
+        case kActionChooseCardToUse:
+            _state = kGameStatePlaying;
+            break;
+            
+        case kActionChooseCardToDiscard:
+            _state = kGameStateDiscarding;
+            break;
+            
+        default:
+            break;
+    }
+    
+    return _state;
 }
 
 #pragma mark - Density
@@ -198,8 +229,8 @@ static BGGameLayer *instanceOfGameLayer = nil;
             
         case kPlayerCountFive:
             [_allPlayers[1] setPosition:ccp(SCREEN_WIDTH-spriteWidth/2, SCREEN_HEIGHT*0.6)];
-            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*0.63, SCREEN_HEIGHT-spriteHeight/2)];
-            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.37, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[2] setPosition:ccp(SCREEN_WIDTH*0.67, SCREEN_HEIGHT-spriteHeight/2)];
+            [_allPlayers[3] setPosition:ccp(SCREEN_WIDTH*0.33, SCREEN_HEIGHT-spriteHeight/2)];
             [_allPlayers[4] setPosition:ccp(spriteWidth/2, SCREEN_HEIGHT*0.6)];
             break;
             
@@ -333,6 +364,78 @@ static BGGameLayer *instanceOfGameLayer = nil;
         }
     }
     return nil;
+}
+
+#pragma mark - Card movement
+/*
+ * Move the selected cards on playing deck or other player's hand
+ */
+- (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
+{
+    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CGPoint targetPos = [self cardMoveTargetPositionWithIndex:idx];
+        
+        BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
+        [ac runEaseMoveWithTarget:targetPos
+                         duration:DURATION_USED_CARD_MOVE
+                           object:obj
+                            block:block];
+    }];
+}
+
+/*
+ * Determine target position of selected card movement
+ * Set card move target positon according to different game state
+ * (Move card to playing deck or other player)
+ */
+- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx
+{
+    CGPoint targetPos;
+    CGFloat cardWidth = _selfPlayer.handArea.cardWidth;
+    CGFloat cardHeight = _selfPlayer.handArea.cardHeight;
+    
+    switch (self.state) {
+        case kGameStateCutting: {
+            self.state = kGameStateInvalid; // Set by default
+            
+            NSUInteger rowCount = ceil((double)_allPlayers.count/COUNT_MAX_DECK_CARD_NO_OVERLAP);
+            NSUInteger colCount = ceil((double)_allPlayers.count/rowCount);
+            CGFloat padding = PADDING_CUTTED_CARD;
+            
+            CGFloat startPosX = POSITION_DECK_AREA_CENTER.x - (colCount-1)*cardWidth/2;
+            CGFloat delta = (idx < colCount) ? idx*(cardWidth+padding) : (idx-colCount)*(cardWidth+padding);
+            CGFloat cardPosX = startPosX + delta;
+            
+            CGFloat startPosY = (1 == rowCount) ? POSITION_DECK_AREA_CENTER.y : POSITION_DECK_AREA_TOP.y;
+            CGFloat cardPosY = (idx < colCount) ? startPosY : (POSITION_DECK_AREA_TOP.y-cardHeight-padding);
+            
+            targetPos = ccp(cardPosX, cardPosY);
+            break;
+        }
+            
+        case kGameStatePlaying:
+        case kGameStateDiscarding: {
+            NSUInteger addedCardCount = _playingDeck.allCardCount - _playingDeck.existingCardCount;
+            NSUInteger factor = (0 != _playingDeck.existingCardCount) ? addedCardCount : addedCardCount-1;
+            factor += _playingDeck.existingCardCount;
+            CGFloat padding = [_selfPlayer.handArea cardPaddingWithCardCount:addedCardCount
+                                                                    maxCount:COUNT_MAX_DECK_CARD_NO_OVERLAP];
+            
+            CGPoint basePos = ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth/2, 0.0f));
+            
+            targetPos = ccpAdd(basePos, ccp((cardWidth+padding)*idx, 0.0f));
+            break;
+        }
+            
+        default: {
+            BGPlayer *targetPlayer = [self playerWithName:_targetPlayerNames.lastObject];
+            BGPlayer *player = (self.currPlayer.isSelfPlayer) ? targetPlayer : self.currPlayer;
+            targetPos = player.position;
+            break;
+        }
+    }
+    
+    return targetPos;
 }
 
 - (void)transferRoleCardToNextPlayer

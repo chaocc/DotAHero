@@ -47,7 +47,7 @@
 - (void)updateHeroWithBloodPoint:(NSInteger)bloodPoint angerPoint:(NSUInteger)angerPoint;
 
 - (void)addHandAreaWithCardIds:(NSArray *)cardIds;
-- (void)updateHandCardWithCardIds:(NSArray *)cardIds;
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
 
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;

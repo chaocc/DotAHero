@@ -20,6 +20,8 @@
 @property (nonatomic, weak) BGPlayingDeck *playingDeck;
 @property (nonatomic, weak) BGPlayer *player;
 
+@property (nonatomic, strong) EsObject *esObj;
+
 @end
 
 @implementation BGClient
@@ -38,6 +40,7 @@ static BGClient *instanceOfClient = nil;
 {
     if (self = [super init]) {
         _es = [[ElectroServer alloc] init];
+        _esObj = [[EsObject alloc] init];
     }
     return self;
 }
@@ -225,11 +228,10 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendReadyStartGameRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionReadyStartGame forKey:kAction];
-    [self sendRoomPluginRequestWithObject:obj];
+    [_esObj setInt:kActionReadyStartGame forKey:kAction];
+    [self sendRoomPluginRequestWithObject:_esObj];
     
-    NSLog(@"Send room plugin request with EsObject: %@", obj);
+    NSLog(@"Send room plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -283,16 +285,26 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
- * Send game plugin request with action-startGame. Called in game layer.
+ * Send game plugin request with kActionStartGame. Called in game layer.
  */
 - (void)sendStartGameRequest
 {
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionStartGame forKey:kAction];
-    [obj setInt:kPlayerCountSix forKey:kParamPlayerCount];
-    [self sendGamePluginRequestWithObject:obj];
+    [_esObj setInt:kActionStartGame forKey:kAction];
+    [_esObj setInt:kPlayerCountSix forKey:kParamPlayerCount];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+}
+
+/*
+ * Send game plugin request with kActionStartRound. Called in playing deck layer.
+ */
+- (void)sendStartRoundRequest
+{
+    [_esObj setInt:kActionStartRound forKey:kAction];
+    [self sendGamePluginRequestWithObject:_esObj];
+    
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -300,13 +312,12 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseHeroIdRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionChooseHero forKey:kAction];
+    [_esObj setInt:kActionChooseHero forKey:kAction];
     NSArray *heroIds = [NSArray arrayWithObject:@(_player.selectedHeroId)];
-    [obj setIntArray:heroIds forKey:kParamCardIdList];
-    [self sendGamePluginRequestWithObject:obj];
+    [_esObj setIntArray:heroIds forKey:kParamCardIdList];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -314,16 +325,15 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendUseHandCardRequestWithIsStrengthened:(BOOL)isStrengthened
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionUseHandCard forKey:kAction];    
-    [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
-    [obj setBool:isStrengthened forKey:kParamIsStrengthened];
+    [_esObj setInt:kActionUseHandCard forKey:kAction];    
+    [_esObj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    [_esObj setBool:isStrengthened forKey:kParamIsStrengthened];
     if (0 != _gameLayer.targetPlayerNames.count) {
-        [obj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
+        [_esObj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
     }
-    [self sendGamePluginRequestWithObject:obj];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -331,18 +341,17 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendUseHeroSkillRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionUseHeroSkill forKey:kAction];
-    [obj setInt:_player.selectedSkillId forKey:kParamSelectedSkillId];
+    [_esObj setInt:kActionUseHeroSkill forKey:kAction];
+    [_esObj setInt:_player.selectedSkillId forKey:kParamSelectedSkillId];
     if (0 != _player.selectedCardIds.count) {
-        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+        [_esObj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
     }
     if (0 != _gameLayer.targetPlayerNames.count) {
-        [obj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
+        [_esObj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
     }
-    [self sendGamePluginRequestWithObject:obj];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -350,11 +359,10 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendCancelRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionCancel forKey:kAction];
-    [self sendGamePluginRequestWithObject:obj];
+    [_esObj setInt:kActionCancel forKey:kAction];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -362,11 +370,10 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendDiscardRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionDiscard forKey:kAction];
-    [self sendGamePluginRequestWithObject:obj];
+    [_esObj setInt:kActionDiscard forKey:kAction];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -374,17 +381,16 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseCardRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionChooseCard forKey:kAction];
+    [_esObj setInt:kActionChooseCard forKey:kAction];
     if (0 != _player.selectedCardIdxes.count) {
-        [obj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
+        [_esObj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
     }
     if (0 != _player.selectedCardIds.count) {
-        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+        [_esObj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
     }
-    [self sendGamePluginRequestWithObject:obj];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -392,12 +398,11 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseColorRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionChooseColor forKey:kAction];
-    [obj setInt:_player.selectedColor forKey:kParamSelectedColor];
-    [self sendGamePluginRequestWithObject:obj];
+    [_esObj setInt:kActionChooseColor forKey:kAction];
+    [_esObj setInt:_player.selectedColor forKey:kParamSelectedColor];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -405,12 +410,11 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseSuitsRequest
 {    
-    EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionChooseSuits forKey:kAction];
-    [obj setInt:_player.selectedSuits forKey:kParamSelectedSuits];
-    [self sendGamePluginRequestWithObject:obj];
+    [_esObj setInt:kActionChooseSuits forKey:kAction];
+    [_esObj setInt:_player.selectedSuits forKey:kParamSelectedSuits];
+    [self sendGamePluginRequestWithObject:_esObj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", obj);
+    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
 
 /*
@@ -462,13 +466,23 @@ static BGClient *instanceOfClient = nil;
             _player.handCardCount = [obj intWithKey:kParamHandCardCount];
             break;
             
+        case kActionUpdateDeckPlayerCard:
+            [_playingDeck updateWithCardCount:[obj intWithKey:kParamHandCardCount]
+                                 equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
+            break;
+        
         case kActionUpdateDeckHandCard:
             [_playingDeck updateWithCardCount:[obj intWithKey:kParamHandCardCount]
-                                            equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
+                                 equipmentIds:nil];
+            break;
+            
+        case kActionUpdateDeckEquipment:
+            [_playingDeck updateWithCardCount:0
+                                 equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionClearPlayingDeck:
-            [_playingDeck clearUsedCards];
+            [_playingDeck clearExistingUsedCards];
             break;
             
         case kActionInitPlayerHero:
@@ -485,14 +499,18 @@ static BGClient *instanceOfClient = nil;
             break;
         
         case kActionUpdatePlayerHand:
-            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+        case kActionUpdatePlayerHandExtracted:
+            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                     cardCount:[obj intWithKey:kParamHandCardCount]];
             break;
             
         case kActionUpdatePlayerEquipment:
+        case kActionUpdatePlayerEquipmentExtracted:
             [_player updateEquipmentWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionChooseCardToCut:
+            _gameLayer.state = kGameStateCutting;
             [_player addPlayingMenu];
             [_player addProgressBar];
             [_gameLayer addProgressBarForOtherPlayers];

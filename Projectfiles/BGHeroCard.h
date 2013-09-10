@@ -68,7 +68,7 @@ typedef NS_ENUM(NSInteger, BGHeroAttribute) {
 @property (nonatomic, copy, readonly) NSString *bigAvatarName;
 
 @property (nonatomic, readonly) BGHeroAttribute heroAttibute;
-@property (nonatomic, readonly) NSUInteger bloodPointLimit;
+@property (nonatomic, readonly) NSInteger bloodPointLimit;
 @property (nonatomic, readonly) NSUInteger angerPointLimit;
 @property (nonatomic, readonly) NSUInteger handSizeLimit;   // 手牌上限
 @property (nonatomic, readonly) NSArray *heroSkills;

@@ -19,6 +19,14 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
     kPlayerCountEight
 };
 
+typedef NS_ENUM(NSUInteger, BGGameState) {
+    kGameStateInvalid = 0,
+    kGameStateCutting = 1,      // 切牌阶段
+    kGameStateDrawing,          // 摸排阶段
+    kGameStatePlaying,          // 出牌阶段
+    kGameStateDiscarding        // 弃牌阶段
+};
+
 @protocol BGGameLayerDelegate <NSObject>
 
 - (void)remainingCardCountUpdate:(NSUInteger)count;
@@ -28,6 +36,7 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 @interface BGGameLayer : CCLayer
 
 @property (nonatomic) BGAction action;
+@property (nonatomic) BGGameState state;
 
 @property (nonatomic, weak) id<BGGameLayerDelegate> delegate;
 
@@ -47,11 +56,13 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 + (BGGameLayer *)sharedGameLayer;
 + (id)scene;
 
+- (BGPlayer *)playerWithName:(NSString *)playerName;
+
 - (void)renderOtherPlayersHeroWithHeroIds:(NSArray *)heroIds;
 - (void)setHandCardCountForOtherPlayers;
 - (void)addProgressBarForOtherPlayers;
 - (void)removeProgressBarForOtherPlayers;
 
-- (BGPlayer *)playerWithName:(NSString *)playerName;
+- (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block;
 
 @end

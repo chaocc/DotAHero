@@ -154,8 +154,6 @@
 
 /*
  * Remove hand card: Is extracted/discarded or used by server(time out)
- * Set card move target positon according to different Action
- * (Move card to playing deck or other player)
  */
 - (void)removeHandCardWithCards:(NSArray *)cards
 {
@@ -173,7 +171,7 @@
         }
     }];
     
-    [self updateHandCardBuffer];
+    [self updateHandCardBuffer];    
     [self removeSelectedCardAndUpdateDeck];
 }
 
@@ -225,12 +223,12 @@
         cardPosition = (cardPosition.x < POSITION_HAND_AREA_RIGHT.x) ? cardPosition : POSITION_HAND_AREA_RIGHT;
         
         [actions addObject:[CCCallBlock actionWithBlock:^{
-            BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:menuItem];
-            [actionComp runEaseMoveWithTarget:cardPosition
-                                     duration:DURATION_HAND_CARD_MOVE
-                                        block:^{
-                                            menuItem.position = cardPosition;
-                                        }];
+            BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
+            [ac runEaseMoveWithTarget:cardPosition
+                             duration:DURATION_HAND_CARD_MOVE
+                                block:^{
+                                    menuItem.position = cardPosition;
+                                }];
         }]];
     }];
 
@@ -337,10 +335,8 @@
     }
     
 //  Move card while selecting one. Call below block after movement
+//  If selected cards count great than maximum, deselect and remove the first selected card.
     void (^block)() = ^{
-        menuItem.position = targetPos;
-        
-//      If selected cards count great than maximum, deselect and remove the first selected card.
         if (_selectedCards.count > _selectableCardCount) {
             @try {
                 for (CCMenuItem *item in _cardMenu.children) {
@@ -361,10 +357,10 @@
         [self checkPlayingMenuAvailabilityWithSelectedCard:card];
     };
     
-    BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:menuItem];
-    [actionComp runEaseMoveWithTarget:targetPos
-                             duration:DURATION_SELECTED_CARD_MOVE
-                                block:block];
+    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
+    [ac runEaseMoveWithTarget:targetPos
+                     duration:DURATION_SELECTED_CARD_MOVE
+                        block:block];
     
 }
 
@@ -387,8 +383,7 @@
     }
 
 //  Card is selected
-    if (kActionChooseCardToCut == _gameLayer.action ||
-        kActionChooseCardToDiscard == _gameLayer.action) {
+    if (kGameStateCutting == _gameLayer.state || kGameStateDiscarding == _gameLayer.state) {
         okayMenu.isEnabled = YES;
         return;
     }
@@ -407,7 +402,7 @@
 
 #pragma mark - Hand card using
 /*
- * 1. Use hand card/equip equipment with effect animation(Yes/No) and run move action
+ * 1. Use hand card/equip equipment with effect animation(Yes/No)
  * 2. Set selected hand card ids by self player
  */
 - (void)useHandCardWithAnimation:(BOOL)isRun block:(void (^)())block
@@ -420,14 +415,15 @@
     }
     
     _player.selectedCardIds = [self.class playingCardIdsWithCards:_selectedCards];
-    [self updateHandCardBuffer];
     
-    if (kActionPlayingCard == _gameLayer.action && 1 == _selectableCardCount &&
+    if (kGameStatePlaying == _gameLayer.state && 1 == _selectableCardCount &&
         kCardTypeEquipment == [_selectedCards.lastObject cardType]) {   // 装备牌
         [self equipEquipmentCard];
     } else {
         [self removeSelectedCardAndUpdateDeck];
     }
+    
+    [self updateHandCardBuffer];
     
     [_actionComp runDelayWithDuration:DURATION_USED_CARD_MOVE WithBlock:block];
 }
@@ -439,7 +435,7 @@
     }];
     
     [_gameLayer.playingDeck updateWithCardMenuItems:_selectedMenuItems];
-    
+
     [self makeHandCardLeftAlignment];
     [_selectedMenuItems removeAllObjects];
 }
@@ -459,7 +455,7 @@
  */
 - (void)addOneExtractedCardAndFaceDown
 {
-    [_menuFactory addDisabledMenuItemWithSpriteFrameName:kImagePlayingCardBack toMenu:_cardMenu];
+    [_menuFactory addMenuItemWithSpriteFrameName:kImagePlayingCardBack isEnabled:NO toMenu:_cardMenu];
     [self makeHandCardLeftAlignment];
     _facedDownCardCount += 1;
 }

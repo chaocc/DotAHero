@@ -246,7 +246,7 @@
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:nil];
     _menu.position = POSITION_PLAYING_MENU;
-    [_menu alignItemsHorizontallyWithPadding:PADDING_SUITS_BUTTONS];
+    [_menu alignItemsHorizontallyWithPadding:PADDING_SUITS_BUTTON];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
@@ -327,18 +327,18 @@
  */
 - (void)touchOkayMenuItem
 {
-    BOOL isRunAnimation = (kActionPlayingCard == _gameLayer.action || kActionChooseCardToUse == _gameLayer.action) ? YES : NO;
+    BOOL isRunAnimation = (kGameStatePlaying == _gameLayer.state);
     
     if (kHeroSkillInvalid == _player.selectedSkillId) {
         [_player.handArea useHandCardWithAnimation:isRunAnimation block:^{
-            switch (_gameLayer.action) {
-                case kActionPlayingCard:
-                    [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
-                    break;
-                    
-                case kActionChooseCardToCut:
+            switch (_gameLayer.state) {
+                case kGameStateCutting:
                     _player.comparedCardId = [_player.selectedCardIds.lastObject integerValue];
                     [[BGClient sharedClient] sendChooseCardRequest];
+                    break;
+                    
+                case kGameStatePlaying:
+                    [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
                     break;
                     
                 default:
