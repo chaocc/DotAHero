@@ -292,6 +292,7 @@ static BGClient *instanceOfClient = nil;
     [_esObj setInt:kActionStartGame forKey:kAction];
     [_esObj setInt:kPlayerCountSix forKey:kParamPlayerCount];
     [self sendGamePluginRequestWithObject:_esObj];
+    [self sendPublicMessageRequestWithObject:_esObj];
     
     NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
@@ -312,7 +313,7 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseHeroIdRequest
 {    
-    [_esObj setInt:kActionChooseHero forKey:kAction];
+    [_esObj setInt:kActionChoseHero forKey:kAction];
     NSArray *heroIds = [NSArray arrayWithObject:@(_player.selectedHeroId)];
     [_esObj setIntArray:heroIds forKey:kParamCardIdList];
     [self sendGamePluginRequestWithObject:_esObj];
@@ -369,7 +370,7 @@ static BGClient *instanceOfClient = nil;
  * Send game plugin request with kActionDiscard.
  */
 - (void)sendDiscardRequest
-{    
+{   
     [_esObj setInt:kActionDiscard forKey:kAction];
     [self sendGamePluginRequestWithObject:_esObj];
     
@@ -381,7 +382,7 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseCardRequest
 {    
-    [_esObj setInt:kActionChooseCard forKey:kAction];
+    [_esObj setInt:kActionChoseCardToUse forKey:kAction];
     if (0 != _player.selectedCardIdxes.count) {
         [_esObj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
     }
@@ -398,7 +399,7 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseColorRequest
 {    
-    [_esObj setInt:kActionChooseColor forKey:kAction];
+    [_esObj setInt:kActionChoseColor forKey:kAction];
     [_esObj setInt:_player.selectedColor forKey:kParamSelectedColor];
     [self sendGamePluginRequestWithObject:_esObj];
     
@@ -410,11 +411,22 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendChooseSuitsRequest
 {    
-    [_esObj setInt:kActionChooseSuits forKey:kAction];
+    [_esObj setInt:kActionChoseSuits forKey:kAction];
     [_esObj setInt:_player.selectedSuits forKey:kParamSelectedSuits];
     [self sendGamePluginRequestWithObject:_esObj];
     
     NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+}
+
+/*
+ * Remove some games nodes(Sprite/Menu) of previous current player on the screen
+ * (Since some nodes can't be removed if make game running in the background)
+ */
+- (void)removeGameNodes
+{
+    [_playingDeck removeResidualNodes];
+    [_player removePlayingMenu];
+    [_player removeProgressBar];
 }
 
 /*
@@ -428,6 +440,9 @@ static BGClient *instanceOfClient = nil;
     NSInteger action = [obj intWithKey:kAction];
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
     _gameLayer.action = action;
+    
+//  Remove some games nodes(Sprite/Menu) on the screen before handle action
+    [self removeGameNodes];
     
 //  Remaining card count
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
@@ -468,16 +483,6 @@ static BGClient *instanceOfClient = nil;
             
         case kActionUpdateDeckPlayerCard:
             [_playingDeck updateWithCardCount:[obj intWithKey:kParamHandCardCount]
-                                 equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
-            break;
-        
-        case kActionUpdateDeckHandCard:
-            [_playingDeck updateWithCardCount:[obj intWithKey:kParamHandCardCount]
-                                 equipmentIds:nil];
-            break;
-            
-        case kActionUpdateDeckEquipment:
-            [_playingDeck updateWithCardCount:0
                                  equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
@@ -522,7 +527,7 @@ static BGClient *instanceOfClient = nil;
         case kActionChoosingColor:
         case kActionChoosingSuits:
             [_player addProgressBar];
-            if (_player.playerName == _gameLayer.selfPlayer.playerName) {
+            if (_player.isSelfPlayer) {
                 [_player addPlayingMenu];
                 [_player enableHandCardWithCardIds:[obj intArrayWithKey:kParamAvailableIdList]
                                selectableCardCount:[obj intWithKey:kParamSelectableCardCount]];
@@ -530,7 +535,7 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionChooseCardToExtract:
-            _player.canExtractCardCount = [obj intWithKey:kParamExtractedCardCount];
+            _player.extractableCardCount = [obj intWithKey:kParamExtractableCardCount];
             break;
             
         default:
@@ -590,6 +595,10 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)onPublicMessageEvent:(EsPublicMessageEvent *)e
 {
+    if ([_player.playerName isEqualToString:e.userName]) {
+        return;
+    }
+    
 //    NSLog(@"Receive public message with EsObject: %@", e.esObject);
 //    
 //    NSInteger action = [e.esObject intWithKey:kAction];

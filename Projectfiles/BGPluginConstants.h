@@ -28,11 +28,15 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionCancel = 102,                            // 取消
     kActionDiscard = 103,                           // 确定弃牌
     
-    kActionChooseHero = 200,                        // 选择英雄
-    kActionChooseCard = 201,                        // 选择卡牌Id/Idx
-    kActionChooseColor = 202,                       // 选择卡牌颜色
-    kActionChooseSuits = 203,                       // 选择卡牌花色
-    kActionAssignCard = 204,                        // 分配卡牌(如能量转移)
+    kActionChoseHero = 200,                         // 选择了英雄
+    kActionChoseCardToUse = 201,                    // 选择了卡牌Id/Idx: 使用
+    kActionChoseCardToCut = 202,                    // 选择了卡牌: 切牌
+    kActionChoseCardToExtract = 203,                // 选择了目标卡牌: 抽取
+    kActionChoseCardToGive = 204,                   // 选择了卡牌: 交给其他玩家
+    kActionChoseCardToDiscard = 205,                // 选择了卡牌: 弃置
+    kActionChoseColor = 206,                        // 选择了卡牌颜色
+    kActionChoseSuits = 207,                        // 选择了卡牌花色
+    kActionAssignCard = 208,                        // 分配了卡牌(如能量转移)
     
     kActionUpdateDeckHero = 1000,                   // 更新桌面: 待选英雄
     kActionUpdateDeckUsedCard = 1001,               // 更新桌面: 用掉/弃掉的牌
@@ -40,8 +44,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionUpdateDeckAssigning = 1003,              // 更新桌面: 牌堆顶的牌(如能量转移)
     kActionUpdateDeckSelectedHeros = 1004,          // 更新桌面: 所有玩家选中的英雄
     kActionUpdateDeckCuttedCard = 1005,             // 更新桌面: 所有玩家用于切牌拼点的牌
-    kActionUpdateDeckHandCard = 1006,               // 更新桌面: 目标手牌
-    kActionUpdateDeckEquipment = 1007,              // 更新桌面: 目标装备
+//    kActionUpdateDeckHandCard = 1006,               // 更新桌面: 目标手牌
+//    kActionUpdateDeckEquipment = 1007,              // 更新桌面: 目标装备
     kActionClearPlayingDeck = 1100,                 // 清空桌面
     
     kActionInitPlayerHero = 2000,                   // 初始化玩家: 选中的英雄
@@ -52,8 +56,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionUpdatePlayerEquipment = 2005,            // 更新玩家: 装备区的牌
     kActionUpdatePlayerEquipmentExtracted = 2006,   // 更新玩家: 装备去的牌被抽取
     
-    kActionPlayingCard = 3000,                      // 出牌阶段
-    kActionChooseCardToUse = 3001,                  // 选择卡牌: 使用
+    kActionPlayingCard = 3000,                      // 出牌阶段(主动)
+    kActionChooseCardToUse = 3001,                  // 选择卡牌: 使用(被动)
     kActionChooseCardToCut = 3002,                  // 选择卡牌: 切牌
     kActionChooseCardToExtract = 3003,              // 选择目标卡牌: 抽取
     kActionChooseCardToGive = 3004,                 // 选择卡牌: 交给其他玩家
@@ -73,7 +77,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
 #define kParamMaxFigureCardId           @"biggest_card_id"      // 最大点数的卡牌
 #define kParamHandCardCount             @"hand_card_count"      // 玩家手牌数量
 #define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
-#define kParamExtractedCardCount        @"extracted_count"      // 可抽取目标的卡牌数量
+#define kParamExtractableCardCount      @"extractable_count"    // 可抽取目标的卡牌数量
 #define kParamSelectedHeroId            @"id"                   // 选中的英雄
 #define kParamSelectedSkillId           @"selected_skill_id"    // 选中的英雄技能
 #define kParamSelectedColor             @"selected_color"       // 选中的颜色

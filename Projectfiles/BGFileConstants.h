@@ -28,6 +28,7 @@
 #define kPlistHeroAvatar                @"HeroAvatar.plist"
 #define kPlistPlayingCard               @"PlayingCard.plist"
 #define kPlistEquipmentAvatar           @"EquipmentAvatar.plist"
+#define kPlistCardPopup                 @"CardPopup.plist"
 
 #define kZlibBackground                 @"Background.pvr.ccz"
 #define kZlibGameArtwork                @"GameArtwork.pvr.ccz"
@@ -35,6 +36,7 @@
 #define kZlibHeroAvatar                 @"HeroAvatar.pvr.ccz"
 #define kZlibPlayingCard                @"PlayingCard.pvr.ccz"
 #define kZlibEquipmentAvatar            @"EquipmentAvatar.pvr.ccz"
+#define kZlibCardPopup                  @"CardPopup.pvr.ccz"
 
 #define kImageBackground                @"Background.jpg"
 #define kImageGameMenu                  @"GameMenu.png"
@@ -99,6 +101,10 @@
 #define kImageProgressBarFrame          @"ProgressBarFrame.png"
 #define kImageProgressBarBig            @"ProgressBar_Big.png"
 #define kImageProgressBarFrameBig       @"ProgressBarFrame_Big.png"
+
+#define kImagePopupAllCards             @"PopupAllCards.png"
+#define kImagePopupHandCard             @"PopupHandCard.png"
+#define kImagePopupEquipment            @"PopupEquipment.png"
 
 #define kFontHeroSkillName              @"HeroSkillName.fnt"
 

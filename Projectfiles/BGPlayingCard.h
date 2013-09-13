@@ -125,7 +125,7 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 // Magic
 @property (nonatomic, readonly) BOOL canBeStrengthened;
 
-// Magic / Super Skill
+// Magic|Super Skill
 @property (nonatomic, readonly) NSUInteger requiredAnger;   // 强化需要怒气
 
 // Equipment
@@ -142,5 +142,8 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic) BOOL isVerticalSet;                   // 是否是竖置状态(闪避护符)
 //@property (nonatomic) BOOL canBeUsed;
 @property (nonatomic) BOOL isSelected;
+
++ (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds;
++ (NSArray *)playingCardIdsWithCards:(NSArray *)cards;
 
 @end

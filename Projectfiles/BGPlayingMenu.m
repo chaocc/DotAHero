@@ -269,9 +269,6 @@
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
-    [self removeFromParent];
-    [_player removeProgressBar];
-    
     switch (menuItem.tag) {
         case kPlayingMenuItemTagOkay:
             [self touchOkayMenuItem];
@@ -318,6 +315,10 @@
         default:
             break;
     }
+    
+    [_player removePlayingMenu];
+    [_player removeProgressBar];
+    [_gameLayer disablePlayerAreaForOtherPlayers];
 }
 
 /*

@@ -7,6 +7,7 @@
 //
 
 #import "BGCard.h"
+#import "BGPlayingCard.h"
 
 @implementation BGCard
 
@@ -31,6 +32,11 @@
 - (BOOL)isEqual:(id)object
 {
     return (_cardId == [object cardId]);
+}
+
+- (BOOL)isPlayingCard
+{
+    return [self isMemberOfClass:[BGPlayingCard class]];
 }
 
 @end

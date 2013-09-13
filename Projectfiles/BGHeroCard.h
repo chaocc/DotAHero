@@ -73,4 +73,6 @@ typedef NS_ENUM(NSInteger, BGHeroAttribute) {
 @property (nonatomic, readonly) NSUInteger handSizeLimit;   // 手牌上限
 @property (nonatomic, readonly) NSArray *heroSkills;
 
++ (NSArray *)heroCardsWithHeroIds:(NSArray *)heroIds;
+
 @end

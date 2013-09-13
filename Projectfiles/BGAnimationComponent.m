@@ -41,6 +41,7 @@
 - (void)runWithCard:(BGCard *)card atPosition:(CGPoint)position
 {
     NSDictionary *dict = _aniDict[card.cardName];
+    if (!dict) return;
     
     [self runActionWithPlist:dict[kFileName]
                    frameName:dict[kFrameName]

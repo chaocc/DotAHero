@@ -14,15 +14,16 @@
 #import "BGDefines.h"
 
 typedef NS_ENUM(NSInteger, BGHeroTag) {
-    kHeroTagBlood,
-    kHeroTagAnger
+    kHeroTagBlood = 200,
+    kHeroTagAnger = 210
 };
 
 @interface BGHeroArea ()
 
+@property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic) CGFloat playerAreaWidth, playerAreaHeight;
-@property (nonatomic, strong) CCSpriteBatchNode *spriteBatch;
+@property (nonatomic, strong) CCSpriteBatchNode *hpSpBatch;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
 @property (nonatomic, strong) CCMenu *heroMenu;
 @property (nonatomic, strong) CCMenu *skillMenu;
@@ -34,6 +35,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (id)initWithPlayer:(BGPlayer *)player
 {
     if (self = [super init]) {
+        _gameLayer = [BGGameLayer sharedGameLayer];
         _player = player;
         
         _playerAreaWidth = _player.contentSize.width;
@@ -41,6 +43,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;
+        
+        _hpSpBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
+        [self addChild:_hpSpBatch];
     }
     return self;
 }
@@ -50,7 +55,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     return [[self alloc] initWithPlayer:player];
 }
 
-#pragma mark - Hero Initilization
+#pragma mark - Hero rendering
 - (void)renderHeroWithHeroId:(NSInteger)heroId
 {
     _heroCard = [BGHeroCard cardWithCardId:heroId];
@@ -72,9 +77,10 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     _heroMenu = [_menuFactory createMenuWithSpriteFrameName:avatarName
                                           selectedFrameName:nil
                                           disabledFrameName:nil];
+    _heroMenu.enabled = NO;
     _heroMenu.position = (_player.isSelfPlayer) ?
-        ccp(_playerAreaWidth*0.099, _playerAreaHeight*0.643) :
-        ccp(-_playerAreaWidth*0.245, _playerAreaHeight*0.045);
+        ccp(_playerAreaWidth*0.09, _playerAreaHeight*0.65) :
+        ccp(-_playerAreaWidth*0.26, _playerAreaHeight*0.03);
     [_heroMenu.children.lastObject setTag:_heroCard.cardId];
     [self addChild:_heroMenu];
     
@@ -114,7 +120,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     _skillMenu = [_menuFactory createMenuWithSpriteFrameNames:frameNames
                                            selectedFrameNames:selFrameNames
                                            disabledFrameNames:nil];
-    _skillMenu.position = ccp(_playerAreaWidth*0.114, _playerAreaHeight*0.143);
+    _skillMenu.enabled = NO;
+    _skillMenu.position = ccp(_playerAreaWidth*0.107, _playerAreaHeight*0.14);
     [_skillMenu alignItemsHorizontallyWithPadding:PADDING_SKILL_BUTTON];
     [self addChild:_skillMenu];
     
@@ -142,16 +149,16 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)renderBloodPoint
 {
-    [_spriteBatch removeFromParent];
-    _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
-    [self addChild:_spriteBatch];
-    
     NSString *bloodImageName;
-    CGPoint deltaPos = CGPointZero;
+    CGPoint basePos = CGPointZero;
     CGFloat width, height;
     
-    [[_spriteBatch getChildByTag:kHeroTagBlood] removeFromParent];
+//  Remove previous blood sprites
+    for (NSInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
+        [[_hpSpBatch getChildByTag:kHeroTagBlood+i] removeFromParent];
+    }
     
+//  Render
     if (_player.isSelfPlayer) {
         if (1 == _bloodPoint) {
             bloodImageName = kImageBloodRedBig;
@@ -160,8 +167,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         } else {
             bloodImageName = kImageBloodGreenBig;
         }
-        width = _playerAreaWidth*0.2 / (_heroCard.bloodPointLimit + 1);
-        height = _playerAreaHeight*0.305;
+        width = _playerAreaWidth*0.18 / (_heroCard.bloodPointLimit + 1);
+        height = _playerAreaHeight*0.304;
     }
     else {
         if (1 == _bloodPoint) {
@@ -172,20 +179,19 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
             bloodImageName = kImageBloodGreen;
         }
 //      Move position to left corner of player area for other players
-        deltaPos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
-        width = _playerAreaWidth*0.5 / (_heroCard.bloodPointLimit + 1);
-        height = _playerAreaHeight*0.135;
+        basePos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
+        width = _playerAreaWidth*0.47 / (_heroCard.bloodPointLimit + 1);
+        height = _playerAreaHeight*0.094;
     }
     
-    [_spriteBatch removeAllChildren];
     for (NSInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
         if ((NSInteger)i >= _bloodPoint) {
             bloodImageName = (_player.isSelfPlayer) ? kImageBloodEmptyBig : kImageBloodEmpty;
         }
         
         CCSprite *bloodSprite = [CCSprite spriteWithSpriteFrameName:bloodImageName];
-        bloodSprite.position = ccpAdd(deltaPos, ccp(width*(i+1), height));
-        [_spriteBatch addChild:bloodSprite z:0 tag:kHeroTagBlood];
+        bloodSprite.position = ccpAdd(basePos, ccp(width*(i+1), height));
+        [_hpSpBatch addChild:bloodSprite z:0 tag:kHeroTagBlood+i];
     }
 }
 
@@ -195,30 +201,65 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)renderAngerPoint
 {
     NSString *angerImageName;
-    CGPoint deltaPos = CGPointZero;
+    CGPoint basePos = CGPointZero;
     CGFloat width, height, increment;
     
-    [[_spriteBatch getChildByTag:kHeroTagAnger] removeFromParent];
+//  Remove previous anger sprites
+    for (NSUInteger i = 0; i < _angerPoint; i++) {
+        [[_hpSpBatch getChildByTag:kHeroTagAnger+i] removeFromParent];
+    }
     
+//  Render
     if (_player.isSelfPlayer) {
         angerImageName = kImageAngerBig;
-        width = _playerAreaWidth*0.201;
+        width = _playerAreaWidth*0.195;
         increment = _playerAreaHeight*0.83 / (_angerPoint + 1);
         height = increment + _playerAreaHeight*0.17;
     }
     else {
         angerImageName = kImageAnger;
 //      Move position to left corner of player area for other players
-        deltaPos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
+        basePos = ccp(-_playerAreaWidth/2, -_playerAreaHeight/2);
         width = _playerAreaWidth*0.515;
-        height = _playerAreaHeight / (_angerPoint + 1);
-        increment = height;
+        increment = _playerAreaHeight*0.95 / (_angerPoint + 1);
+        height = increment;
     }
     
     for (NSUInteger i = 0; i < _angerPoint; i++) {
         CCSprite *angerSprite = [CCSprite spriteWithSpriteFrameName:angerImageName];
-        angerSprite.position = ccpAdd(deltaPos, ccp(width, height+increment*i));
-        [_spriteBatch addChild:angerSprite z:0 tag:kHeroTagAnger];
+        angerSprite.position = ccpAdd(basePos, ccp(width, height+increment*i));
+        [_hpSpBatch addChild:angerSprite z:0 tag:kHeroTagAnger+i];
+    }
+}
+
+#pragma mark - Enablement and color
+- (void)enableHero
+{
+    _heroMenu.enabled = YES;
+    _skillMenu.enabled = YES;
+}
+
+- (void)disableHero
+{
+    _heroMenu.enabled = NO;
+    _skillMenu.enabled = NO;
+}
+
+- (void)setDisabledColor
+{
+    _heroMenu.color = COLOR_DISABLED;
+    
+    for (CCSprite *sprite in _hpSpBatch.children) {
+        sprite.color = COLOR_DISABLED;
+    }
+}
+
+- (void)restoreColor
+{
+    _heroMenu.color = ccWHITE;
+    
+    for (CCSprite *sprite in _hpSpBatch.children) {
+        sprite.color = ccWHITE;
     }
 }
 
@@ -251,32 +292,42 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 
 #pragma mark - Hero avatar/skills touching
 /*
- * Menu delegate method is called while touching a skill
+ * Menu delegate method is called while touching target player's hero or self hero's skill
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
-//    if (_player.selectedHeroId != kHeroCardDefault) {
-//        NSArray *cards = [NSArray arrayWithObjects:@(1), @(2), @(3), nil];
-//        [_player.handArea addHandCardsWithCardIds:cards];
-//        return; // Can not touch the hero of self player
-//    }
-        
     if ([menuItem.parent isEqual:_heroMenu]) {
-        BGGameLayer *gamePlayer = [BGGameLayer sharedGameLayer];
-        CCMenuItem *okayMenu = [gamePlayer.selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
-        NSAssert(okayMenu, @"okMenu Nil in %@", NSStringFromSelector(_cmd));
-        
-        NSAssert(gamePlayer.targetPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
-        if ([gamePlayer.targetPlayerNames containsObject:_player.playerName]) {
-            [gamePlayer.targetPlayerNames removeObject:_player.playerName];
-            okayMenu.isEnabled = NO;
-        } else {
-            [gamePlayer.targetPlayerNames addObject:_player.playerName];
-            okayMenu.isEnabled = YES;
-        }
+        [self selectTargetPlayerByTouchingMenuItem:menuItem];
+    }
+    else if ([menuItem.parent isEqual:_skillMenu]) {
+        _player.selectedSkillId = menuItem.tag;
+    }
+}
+
+/*
+ * Select other player as target player
+ * First touching is selected, second is removed.
+ */
+- (void)selectTargetPlayerByTouchingMenuItem:(CCMenuItem *)menuItem
+{
+    BGPlayer *selfPlayer = _gameLayer.selfPlayer;
+    CCMenuItem *okayMenu = [selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
+    NSAssert(okayMenu, @"okMenu Nil in %@", NSStringFromSelector(_cmd));
+    
+    NSMutableArray *tarPlayerNames = _gameLayer.targetPlayerNames;
+    NSAssert(tarPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
+    
+    if ([tarPlayerNames containsObject:_player.playerName]) {
+        [tarPlayerNames removeObject:_player.playerName];
+        okayMenu.isEnabled = NO;
     }
     else {
-        _player.selectedSkillId = menuItem.tag;
+        [tarPlayerNames addObject:_player.playerName];
+//      If great than selectable target count, need remove the first selected target player.
+        if (tarPlayerNames.count > selfPlayer.selectableTargetCount) {
+            [tarPlayerNames removeObjectAtIndex:0];
+        }
+        okayMenu.isEnabled = (tarPlayerNames.count == selfPlayer.selectableTargetCount);
     }
 }
 

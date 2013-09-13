@@ -15,7 +15,7 @@
 
 typedef NS_ENUM(NSInteger, BGPlayerTag) {
     kPlayerTagPlayerArea = 100,
-    kPlayerTagHandCardCount
+    kPlayerTagHandCardCount = 110
 };
 
 
@@ -39,7 +39,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _seatIndex = seatIndex;
         _isSelfPlayer = (seatIndex == 0);   // First index is self player
         
-        _distance = 1;
+        _positiveDistance = 1;
+        _negativeDistance = -1;
         _attackRange = 1;
         
         _selectedHeroId = kHeroCardInvalid;
@@ -68,6 +69,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     CCNode *playerArea = [_gameLayer.gameArtworkBatch getChildByTag:(kPlayerTagPlayerArea+_seatIndex)];
     playerArea.position = position;
+}
+
+- (NSUInteger)attackRange
+{
+    return (_attackRange - _negativeDistance - 1);
 }
 
 #pragma mark - Buffer handling
@@ -105,6 +111,38 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     _equipmentArea = [BGEquipmentArea equipmentAreaWithPlayer:self];
     [self addChild:_equipmentArea];
+}
+
+- (void)enablePlayerArea
+{
+    [_heroArea enableHero];
+}
+
+- (void)disablePlayerArea
+{
+    [_heroArea disableHero];
+}
+
+- (void)setDisabledColor
+{
+    if (!_isSelfPlayer) {
+        CCSprite *sprite = (CCSprite *)[_gameLayer.gameArtworkBatch getChildByTag:kPlayerTagPlayerArea+_seatIndex];
+        sprite.color = COLOR_DISABLED;
+        
+        [_heroArea setDisabledColor];
+        [_equipmentArea setDisabledColor];
+    }
+}
+
+- (void)restoreColor
+{
+    if (!_isSelfPlayer) {
+        CCSprite *sprite = (CCSprite *)[_gameLayer.gameArtworkBatch getChildByTag:kPlayerTagPlayerArea+_seatIndex];
+        sprite.color = ccWHITE;
+        
+        [_heroArea restoreColor];
+        [_equipmentArea restoreColor];
+    }
 }
 
 #pragma mark - Hero area
@@ -176,7 +214,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menu];
     [ac runEaseMoveWithTarget:_gameLayer.currPlayer.position
-                     duration:DURATION_DREW_CARD_MOVE
+                     duration:DURATION_CARD_MOVE
                         block:^{
                             [menu removeFromParent];
                             self.handCardCount = count;
@@ -186,8 +224,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 #pragma mark - Equipment area
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds
 {
-    NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
-    [_equipmentArea updateEquipmentWithCard:cards.lastObject];
+    [_equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
 }
 
 #pragma mark - Hand card count
@@ -225,6 +262,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)addPlayingMenu
 {
+    [self removePlayingMenu];
+    
     switch (_gameLayer.action) {
         case kActionPlayingCard:            // 主动使用
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypePlaying];
@@ -261,9 +300,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [self addChild:_playingMenu];
 }
 
-#pragma mark - Progress bar
-- (void)addProgressBarWithPosition:(CGPoint)position block:(void (^)())block
+- (void)removePlayingMenu
 {
+    [_playingMenu removeFromParent];
+}
+
+#pragma mark - Progress bar
+- (void)addProgressBarWithPosition:(CGPoint)position
+{
+    [self removeProgressBar];
+    
     NSString *frameImageName = (_isSelfPlayer) ? kImageProgressBarFrameBig : kImageProgressBarFrame;
     _progressBar = [CCSprite spriteWithSpriteFrameName:frameImageName];
     _progressBar.position = position;
@@ -279,19 +325,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [_progressBar addChild:timer];
     
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:timer];
-    [ac runProgressBarWithDuration:10.0f block:block];
+    [ac runProgressBarWithDuration:10.0f
+                             block:^{
+                                 [self removeProgressBar];
+                             }];
 }
 
 - (void)addProgressBar
 {
     CGPoint barPosition = (_isSelfPlayer) ? POSITION_PLYAING_PROGRESS_BAR : ccp(0.0f, -_contentSize.height/2);
-    
-    __weak BGPlayer *player = self;
-    [player addProgressBarWithPosition:barPosition
-                                 block:^{
-                                     [_playingMenu removeFromParent];
-                                     [self removeProgressBar];
-                                 }];
+    [self addProgressBarWithPosition:barPosition];
 }
 
 - (void)removeProgressBar

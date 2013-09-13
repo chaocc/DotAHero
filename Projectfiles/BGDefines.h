@@ -15,39 +15,43 @@ _Pragma("clang diagnostic ignored \"-Warc-performSelector-leaks\"") \
 code;                                                               \
 _Pragma("clang diagnostic pop")                                     \
 
-#define SCREEN_WIDTH                    [CCDirector sharedDirector].screenSize.width
-#define SCREEN_HEIGHT                   [CCDirector sharedDirector].screenSize.height
+#define SCREEN_SIZE                     [CCDirector sharedDirector].screenSize
+#define SCREEN_WIDTH                    SCREEN_SIZE.width
+#define SCREEN_HEIGHT                   SCREEN_SIZE.height
+
+#define PLAYING_CARD_SIZE               [[CCSprite spriteWithSpriteFrameName:kImagePlayingCardBack] contentSize]
+#define PLAYING_CARD_WIDTH              PLAYING_CARD_SIZE.width
+#define PLAYING_CARD_HEIGHT             PLAYING_CARD_SIZE.height
 
 #define POSITION_TO_BE_SELECTED_HERO    ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.6)
-#define POSITION_HERO_SEL_PROGRESS_BAR  ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4)
-#define POSITION_PLYAING_PROGRESS_BAR   ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.27)
-#define POSITION_PLAYING_MENU           ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
+//#define POSITION_HERO_SEL_PROGRESS_BAR  ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4)
+#define POSITION_PLYAING_PROGRESS_BAR   ccp(SCREEN_WIDTH * 0.54, SCREEN_HEIGHT * 0.26)
+#define POSITION_PLAYING_MENU           ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.34)
 #define POSITION_CARD_ANIMATION         ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
-#define POSITION_EXTRACTED_HAND_CARD    ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.65)
-#define POSITION_EXTRACTED_EQUIPMENT    ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.45)
 #define POSITION_DECK_AREA_CENTER       ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.60)
 #define POSITION_DECK_AREA_TOP          ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.65)
 #define POSITION_DECK_AREA_BOTTOM       ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.45)
 #define POSITION_DECK_AREA_LEFT         ccp(SCREEN_WIDTH * 0.28, SCREEN_HEIGHT * 0.65)
 #define POSITION_DECK_AREA_RIGHT        ccp(SCREEN_WIDTH * 0.80, SCREEN_HEIGHT * 0.65)
-#define POSITION_HAND_AREA_LEFT         ccp(SCREEN_WIDTH * 0.27, SCREEN_HEIGHT * 0.115)
-#define POSITION_HAND_AREA_RIGHT        ccp(SCREEN_WIDTH * 0.806, SCREEN_HEIGHT * 0.115)
+#define POSITION_HAND_AREA_LEFT         ccp(SCREEN_WIDTH * 0.263, SCREEN_HEIGHT * 0.115)
+#define POSITION_HAND_AREA_RIGHT        ccp(SCREEN_WIDTH * 0.813, SCREEN_HEIGHT * 0.115)
 
+#define COLOR_DISABLED                  ccc3(120, 120, 120)
 #define COLOR_DISABLED_CARD             ccc3(120, 120, 120)
 
 #define COUNT_TOTAL_CARD                80
 #define COUNT_INITIAL_HAND_CARD         5
-#define COUNT_MAX_HAND_CARD_NO_OVERLAP  6
-#define COUNT_MAX_DECK_CARD_NO_OVERLAP  5
+#define COUNT_MAX_HAND_CARD             6
+#define COUNT_MAX_DECK_CARD             5
+#define COUNT_MAX_EXTRACTED_CARD        5
 
 #define DURATION_GAMELAYER_TRANSITION   0.2f
 #define DURATION_HERO_SEL_FADE_IN       0.3f
 #define DURATION_SELECTED_HERO_MOVE     0.5f
 #define DURATION_HAND_CARD_MOVE         0.5f
 #define DURATION_SELECTED_CARD_MOVE     0.1f
-#define DURATION_USED_CARD_MOVE         0.8f
+#define DURATION_CARD_MOVE              0.8f
 #define DURATION_USED_CARD_FADE_OUT     0.8f
-#define DURATION_DREW_CARD_MOVE         0.8f
 #define DURATION_CARD_FLIP              0.2f
 #define DURATION_CARD_FLIP_INTERVAL     0.05f
 #define DURATION_CARD_ANIMATION_SCALE   0.1f
@@ -62,9 +66,11 @@ _Pragma("clang diagnostic pop")                                     \
 #define SCALE_CARD_UP                   1.4f
 
 #define PADDING_CUTTED_CARD             1.0f
+#define PADDING_EXTRACTED_CARD          0.0f
 #define PADDING_SKILL_BUTTON            0.0f
 #define PADDING_TWO_BUTTONS             40.0f
 #define PADDING_THREE_BUTTONS           20.0f
 #define PADDING_SUITS_BUTTON            0.0f
+#define PLAYING_CARD_PADDING(x, max)    (x > max) ? -(PLAYING_CARD_WIDTH*(x-max) / (x-1)) : 0.0f
 
 #endif

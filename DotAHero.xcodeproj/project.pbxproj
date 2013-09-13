@@ -298,6 +298,18 @@
 		E3B951E117AEC2C50004BECC /* NormalAttack-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D917AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz */; };
 		E3C15A77177084E600869966 /* settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = E3C15A76177084E600869966 /* settings.xml */; };
 		E3C15A78177084E600869966 /* settings.xml in Resources */ = {isa = PBXBuildFile; fileRef = E3C15A76177084E600869966 /* settings.xml */; };
+		E3C53CE817E03BAE00F684E4 /* CardPopup-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE217E03BAE00F684E4 /* CardPopup-hd.plist */; };
+		E3C53CE917E03BAE00F684E4 /* CardPopup-hd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE217E03BAE00F684E4 /* CardPopup-hd.plist */; };
+		E3C53CEA17E03BAE00F684E4 /* CardPopup-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE317E03BAE00F684E4 /* CardPopup-hd.pvr.ccz */; };
+		E3C53CEB17E03BAE00F684E4 /* CardPopup-hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE317E03BAE00F684E4 /* CardPopup-hd.pvr.ccz */; };
+		E3C53CEC17E03BAE00F684E4 /* CardPopup-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE417E03BAE00F684E4 /* CardPopup-ipad.plist */; };
+		E3C53CED17E03BAE00F684E4 /* CardPopup-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE417E03BAE00F684E4 /* CardPopup-ipad.plist */; };
+		E3C53CEE17E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE517E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz */; };
+		E3C53CEF17E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE517E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz */; };
+		E3C53CF017E03BAE00F684E4 /* CardPopup-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE617E03BAE00F684E4 /* CardPopup-ipadhd.plist */; };
+		E3C53CF117E03BAE00F684E4 /* CardPopup-ipadhd.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE617E03BAE00F684E4 /* CardPopup-ipadhd.plist */; };
+		E3C53CF217E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE717E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz */; };
+		E3C53CF317E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E3C53CE717E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz */; };
 		E3C60E21177FEE6700CA88F8 /* BGCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C60E20177FEE6700CA88F8 /* BGCard.m */; };
 		E3C60E22177FEE6700CA88F8 /* BGCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E3C60E20177FEE6700CA88F8 /* BGCard.m */; };
 		E3D066B217C2796200B3ADEF /* bn_error.c in Sources */ = {isa = PBXBuildFile; fileRef = E3D0642017C2795F00B3ADEF /* bn_error.c */; };
@@ -1269,6 +1281,12 @@
 		E3B951D817AEC2BE0004BECC /* NormalAttack-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NormalAttack-ipadhd.plist"; sourceTree = "<group>"; };
 		E3B951D917AEC2BE0004BECC /* NormalAttack-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "NormalAttack-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
 		E3C15A76177084E600869966 /* settings.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = settings.xml; sourceTree = "<group>"; };
+		E3C53CE217E03BAE00F684E4 /* CardPopup-hd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardPopup-hd.plist"; sourceTree = "<group>"; };
+		E3C53CE317E03BAE00F684E4 /* CardPopup-hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CardPopup-hd.pvr.ccz"; sourceTree = "<group>"; };
+		E3C53CE417E03BAE00F684E4 /* CardPopup-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardPopup-ipad.plist"; sourceTree = "<group>"; };
+		E3C53CE517E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CardPopup-ipad.pvr.ccz"; sourceTree = "<group>"; };
+		E3C53CE617E03BAE00F684E4 /* CardPopup-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CardPopup-ipadhd.plist"; sourceTree = "<group>"; };
+		E3C53CE717E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CardPopup-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
 		E3C60E1F177FEE6700CA88F8 /* BGCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCard.h; sourceTree = "<group>"; };
 		E3C60E20177FEE6700CA88F8 /* BGCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCard.m; sourceTree = "<group>"; };
 		E3D0642017C2795F00B3ADEF /* bn_error.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = bn_error.c; sourceTree = "<group>"; };
@@ -2067,7 +2085,6 @@
 				E395325A17566D4C00C1FA2C /* Room */,
 				DCC1A38D13A94F1A005BD75D /* AppDelegate.h */,
 				DCC1A38E13A94F1A005BD75D /* AppDelegate.m */,
-				E37A999C17D100BD00FF13B9 /* BGActionDelegate.h */,
 				E387E6E7178E73D7003F0DAD /* BGClient.h */,
 				E387E6E8178E73D7003F0DAD /* BGClient.m */,
 				E301E1291770DE9900E8C9D0 /* BGLoginLayer.h */,
@@ -2157,6 +2174,7 @@
 			children = (
 				E3FDE3911766FAB300E39325 /* BGActionComponent.h */,
 				E3FDE3921766FAB400E39325 /* BGActionComponent.m */,
+				E37A999C17D100BD00FF13B9 /* BGActionDelegate.h */,
 				E3F6D315178D23F5001A2372 /* BGAnimationComponent.h */,
 				E3F6D316178D23F5001A2372 /* BGAnimationComponent.m */,
 				E3113F1117A54D0E0011F8DC /* BGAudioComponent.h */,
@@ -2270,6 +2288,12 @@
 		E3B29B4C177F1F3400C18728 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				E3C53CE217E03BAE00F684E4 /* CardPopup-hd.plist */,
+				E3C53CE317E03BAE00F684E4 /* CardPopup-hd.pvr.ccz */,
+				E3C53CE417E03BAE00F684E4 /* CardPopup-ipad.plist */,
+				E3C53CE517E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz */,
+				E3C53CE617E03BAE00F684E4 /* CardPopup-ipadhd.plist */,
+				E3C53CE717E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz */,
 				E34206581793750B00990145 /* Animations */,
 				E39BD16817C0FD090012A867 /* Background-hd.plist */,
 				E39BD16917C0FD090012A867 /* Background-hd.pvr.ccz */,
@@ -3211,6 +3235,12 @@
 				E3196D8C17CD273100EA6A33 /* HeroSkillName.fnt in Resources */,
 				E3196D8E17CD273100EA6A33 /* HeroSkillName.png in Resources */,
 				E301B6D917D9A99D00D6CDC0 /* CardAnimation.plist in Resources */,
+				E3C53CE817E03BAE00F684E4 /* CardPopup-hd.plist in Resources */,
+				E3C53CEA17E03BAE00F684E4 /* CardPopup-hd.pvr.ccz in Resources */,
+				E3C53CEC17E03BAE00F684E4 /* CardPopup-ipad.plist in Resources */,
+				E3C53CEE17E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz in Resources */,
+				E3C53CF017E03BAE00F684E4 /* CardPopup-ipadhd.plist in Resources */,
+				E3C53CF217E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3327,6 +3357,12 @@
 				E3196D8D17CD273100EA6A33 /* HeroSkillName.fnt in Resources */,
 				E3196D8F17CD273100EA6A33 /* HeroSkillName.png in Resources */,
 				E301B6DA17D9A99D00D6CDC0 /* CardAnimation.plist in Resources */,
+				E3C53CE917E03BAE00F684E4 /* CardPopup-hd.plist in Resources */,
+				E3C53CEB17E03BAE00F684E4 /* CardPopup-hd.pvr.ccz in Resources */,
+				E3C53CED17E03BAE00F684E4 /* CardPopup-ipad.plist in Resources */,
+				E3C53CEF17E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz in Resources */,
+				E3C53CF117E03BAE00F684E4 /* CardPopup-ipadhd.plist in Resources */,
+				E3C53CF317E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

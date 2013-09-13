@@ -30,4 +30,6 @@
 - (id)initWithCardId:(NSInteger)aCardId;
 + (id)cardWithCardId:(NSInteger)aCardId;
 
+- (BOOL)isPlayingCard;
+
 @end

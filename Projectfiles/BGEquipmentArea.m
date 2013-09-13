@@ -33,6 +33,7 @@
         
         _menuFactory = [BGMenuFactory menuFactory];
         _equipMenu = [CCMenu menuWithArray:nil];
+        _equipMenu.enabled = NO;
         _equipMenu.position = CGPointZero;
         [self addChild:_equipMenu];
         _menuFactory.delegate = self;
@@ -59,6 +60,11 @@
     }
     
     [[BGAudioComponent sharedAudioComponent] playEquipCard];
+}
+
+- (void)updateEquipmentWithCardId:(NSInteger)cardId
+{
+    [self updateEquipmentWithCard:[BGPlayingCard cardWithCardId:cardId]];
 }
 
 /*
@@ -170,14 +176,14 @@
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
             menuItem.position = (_player.isSelfPlayer) ?
-                ccp(playerAreaWidth*0.925, playerAreaHeight*0.575) :
-                ccp(playerAreaWidth*0.253, playerAreaHeight*0.177);
+                ccp(playerAreaWidth*0.93, playerAreaHeight*0.57) :
+                ccp(playerAreaWidth*0.25, playerAreaHeight*0.177);
             break;
             
         case kEquipmentTypeArmor:
             menuItem.position = (_player.isSelfPlayer) ?
-                ccp(playerAreaWidth*0.925, playerAreaHeight*0.215) :
-                ccp(playerAreaWidth*0.253, -playerAreaHeight*0.222);
+                ccp(playerAreaWidth*0.93, playerAreaHeight*0.21) :
+                ccp(playerAreaWidth*0.25, -playerAreaHeight*0.222);
             break;
     }
     
@@ -199,6 +205,16 @@
 //                                           fontSize:14.0f];
 //    label.position = ccp(width*0.90, height/2);
 //    [menuItem addChild:label];
+}
+
+- (void)setDisabledColor
+{
+    _equipMenu.color = COLOR_DISABLED;
+}
+
+- (void)restoreColor
+{
+    _equipMenu.color = ccWHITE;
 }
 
 #pragma mark - Equipment using

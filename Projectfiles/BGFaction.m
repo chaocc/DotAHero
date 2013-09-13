@@ -14,8 +14,6 @@
 
 @interface BGFaction ()
 
-
-
 @end
 
 @implementation BGFaction

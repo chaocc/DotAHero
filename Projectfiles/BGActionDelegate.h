@@ -10,6 +10,6 @@
 
 @protocol BGActionDelegate <NSObject>
 
-- (void)actionFinished;
+- (void)progressTimeIsUp;
 
 @end

@@ -9,8 +9,6 @@
 #import "CCNode.h"
 #import "BGMenuFactory.h"
 
-@class BGPlayer;
-
 @interface BGPlayingDeck : CCNode <BGMenuFactoryDelegate>
 
 @property (nonatomic) NSInteger maxCardId;  // 最大点数的卡牌
@@ -24,6 +22,7 @@
 - (void)updateWithCardMenuItems:(NSArray *)menuItems;
 - (void)updateWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
 
+- (void)removeResidualNodes;
 - (void)clearExistingUsedCards;
 
 @end

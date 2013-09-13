@@ -55,6 +55,25 @@
     return [[self alloc]initWithCardId:aCardId];
 }
 
++ (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds
+{
+    NSMutableArray *cards = [NSMutableArray arrayWithCapacity:cardIds.count];
+    [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
+        [cards addObject:card];
+    }];
+    return cards;
+}
+
++ (NSArray *)playingCardIdsWithCards:(NSArray *)cards
+{
+    NSMutableArray *cardIds = [NSMutableArray arrayWithCapacity:cards.count];
+    [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [cardIds addObject:@([obj cardId])];
+    }];
+    return cardIds;
+}
+
 - (BGCardColor)cardColor
 {
     if (_cardSuits == kCardSuitsHearts || _cardSuits == kCardSuitsDiamonds) {

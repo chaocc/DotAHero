@@ -19,7 +19,8 @@
 @property (nonatomic, readonly) BOOL isSelfPlayer;
 //@property (nonatomic, readonly) NSUInteger handSizeLimit;
 
-@property (nonatomic) NSUInteger distance;
+@property (nonatomic) NSUInteger positiveDistance;  // +1: 其他玩家计算与自己的距离
+@property (nonatomic) NSInteger negativeDistance;   // -1: 自己计算与其他玩家的距离
 @property (nonatomic) NSUInteger attackRange;
 //@property (nonatomic) BOOL canBeTarget;
 //@property (nonatomic) BOOL isDead;
@@ -38,7 +39,8 @@
 @property (nonatomic) BGCardSuits selectedSuits;
 
 @property (nonatomic) NSUInteger handCardCount;         // 手牌数
-@property (nonatomic) NSUInteger canExtractCardCount;   // 可以抽取的牌数
+@property (nonatomic) NSUInteger selectableTargetCount; // 可以指定的目标玩家数
+@property (nonatomic) NSUInteger extractableCardCount;  // 可以抽取的牌数
 
 - (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
 + (id)playerWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
@@ -52,12 +54,17 @@
 
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
 
+- (void)enablePlayerArea;
+- (void)disablePlayerArea;
+- (void)setDisabledColor;
+- (void)restoreColor;
 - (void)clearBuffer;
 
 - (void)addPlayingMenu;
 - (void)addPlayingMenuOfStrengthen;
+- (void)removePlayingMenu;
 
-- (void)addProgressBarWithPosition:(CGPoint)position block:(void (^)())block;
+//- (void)addProgressBarWithPosition:(CGPoint)position;
 - (void)addProgressBar;
 - (void)removeProgressBar;
 

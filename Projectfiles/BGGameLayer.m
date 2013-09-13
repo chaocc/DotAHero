@@ -64,6 +64,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [spriteFrameCache addSpriteFramesWithFile:kPlistHeroAvatar];
         [spriteFrameCache addSpriteFramesWithFile:kPlistPlayingCard];
         [spriteFrameCache addSpriteFramesWithFile:kPlistEquipmentAvatar];
+        [spriteFrameCache addSpriteFramesWithFile:kPlistCardPopup];
         
         _gameArtworkBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
         [self addChild:_gameArtworkBatch];
@@ -91,9 +92,9 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateCutting;
             break;
             
-        case kActionPlayingCard:
-        case kActionChooseCardToUse:
-            _state = kGameStatePlaying;
+        case kActionUpdatePlayerHandExtracted:
+        case kActionUpdatePlayerEquipmentExtracted:
+            _state = kGameStateExtracting;
             break;
             
         case kActionChooseCardToDiscard:
@@ -101,6 +102,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         default:
+            _state = kGameStatePlaying;
             break;
     }
     
@@ -178,7 +180,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 //      TEMP
         BGPlayer *player = [BGPlayer playerWithUserName:_users[0] seatIndex:0];
 //        BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] seatIndex:0];
-        [self addChild:player];
+        [self addChild:player z:1];
         
         _selfPlayer = player;
         [_allPlayers addObject:player];
@@ -272,19 +274,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (void)addProgressBarForOtherPlayers
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
-        __weak BGPlayer *player = _allPlayers[i];
-        [player addProgressBarWithPosition:ccp(0.0f, -player.contentSize.height/2)
-                                     block:^{
-                                         [player removeProgressBar];
-                                     }];
+        [_allPlayers[i] addProgressBar];
     }
 }
 
 - (void)removeProgressBarForOtherPlayers
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
-        __weak BGPlayer *player = _allPlayers[i];
-        [player removeProgressBar];
+        [_allPlayers[i] removeProgressBar];
     }
 }
 
@@ -292,6 +289,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         [_allPlayers[i] setHandCardCount:COUNT_INITIAL_HAND_CARD - 1];
+    }
+}
+
+- (void)disablePlayerAreaForOtherPlayers
+{
+    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+        [_allPlayers[i] disablePlayerArea];
+        [_allPlayers[i] restoreColor];
     }
 }
 
@@ -366,6 +371,16 @@ static BGGameLayer *instanceOfGameLayer = nil;
     return nil;
 }
 
+- (NSArray *)targetPlayers
+{
+    NSMutableArray *players = [NSMutableArray arrayWithCapacity:_targetPlayerNames.count];
+    [_targetPlayerNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [players addObject:[self playerWithName:obj]];
+    }];
+    
+    return players;
+}
+
 #pragma mark - Card movement
 /*
  * Move the selected cards on playing deck or other player's hand
@@ -377,7 +392,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         
         BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
         [ac runEaseMoveWithTarget:targetPos
-                         duration:DURATION_USED_CARD_MOVE
+                         duration:DURATION_CARD_MOVE
                            object:obj
                             block:block];
     }];
@@ -391,14 +406,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx
 {
     CGPoint targetPos;
-    CGFloat cardWidth = _selfPlayer.handArea.cardWidth;
-    CGFloat cardHeight = _selfPlayer.handArea.cardHeight;
+    CGFloat cardWidth = PLAYING_CARD_WIDTH;
+    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
     switch (self.state) {
         case kGameStateCutting: {
             self.state = kGameStateInvalid; // Set by default
             
-            NSUInteger rowCount = ceil((double)_allPlayers.count/COUNT_MAX_DECK_CARD_NO_OVERLAP);
+            NSUInteger rowCount = ceil((double)_allPlayers.count/COUNT_MAX_DECK_CARD);
             NSUInteger colCount = ceil((double)_allPlayers.count/rowCount);
             CGFloat padding = PADDING_CUTTED_CARD;
             
@@ -416,11 +431,9 @@ static BGGameLayer *instanceOfGameLayer = nil;
         case kGameStatePlaying:
         case kGameStateDiscarding: {
             NSUInteger addedCardCount = _playingDeck.allCardCount - _playingDeck.existingCardCount;
-            NSUInteger factor = (0 != _playingDeck.existingCardCount) ? addedCardCount : addedCardCount-1;
+            NSUInteger factor = (_playingDeck.existingCardCount > 0) ? addedCardCount : addedCardCount-1;
             factor += _playingDeck.existingCardCount;
-            CGFloat padding = [_selfPlayer.handArea cardPaddingWithCardCount:addedCardCount
-                                                                    maxCount:COUNT_MAX_DECK_CARD_NO_OVERLAP];
-            
+            CGFloat padding = PLAYING_CARD_PADDING(addedCardCount, COUNT_MAX_DECK_CARD);
             CGPoint basePos = ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth/2, 0.0f));
             
             targetPos = ccpAdd(basePos, ccp((cardWidth+padding)*idx, 0.0f));
@@ -428,9 +441,8 @@ static BGGameLayer *instanceOfGameLayer = nil;
         }
             
         default: {
-            BGPlayer *targetPlayer = [self playerWithName:_targetPlayerNames.lastObject];
-            BGPlayer *player = (self.currPlayer.isSelfPlayer) ? targetPlayer : self.currPlayer;
-            targetPos = player.position;
+            BGPlayer *player = (self.currPlayer.isSelfPlayer) ? self.targetPlayers.lastObject : self.currPlayer;
+            targetPos = (player.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : player.position;
             break;
         }
     }

@@ -9,7 +9,6 @@
 #import "BGPlayingDeck.h"
 #import "BGClient.h"
 #import "BGGameLayer.h"
-#import "BGHandArea.h"
 #import "BGDefines.h"
 #import "BGFileConstants.h"
 #import "BGActionComponent.h"
@@ -22,7 +21,7 @@
 
 @property (nonatomic, strong) BGActionComponent *actionComp;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
-@property (nonatomic, strong) CCMenu *cardMenu;     // 使用/弃置的牌
+@property (nonatomic, strong) CCMenu *cardMenu;     // 使用|弃置的牌
 @property (nonatomic, strong) CCMenu *heroMenu;     // 待选的英雄
 @property (nonatomic, strong) CCMenu *handMenu;     // 目标手牌
 @property (nonatomic, strong) CCMenu *equipMenu;    // 目标装备
@@ -58,17 +57,6 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     return self;
 }
 
-+ (NSArray *)heroCardsWithHeroIds:(NSArray *)heroIds
-{
-    NSMutableArray *heroCards = [NSMutableArray arrayWithCapacity:heroIds.count];
-    [heroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGCard *heroCard = [BGHeroCard cardWithCardId:[obj integerValue]];
-        [heroCards addObject:heroCard];
-    }];
-    
-    return heroCards;
-}
-
 - (NSUInteger)allCardCount
 {
     return _cardMenu.children.count;
@@ -76,7 +64,17 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 
 - (BOOL)isNeedClearByAddingCardCount:(NSUInteger)count
 {
-    return (kGameStatePlaying == _gameLayer.state || (count+_existingCardCount) > COUNT_MAX_DECK_CARD_NO_OVERLAP);
+    return (kGameStatePlaying == _gameLayer.state || (count+_existingCardCount) > COUNT_MAX_DECK_CARD);
+}
+
+/*
+ * Since some nodes can't be removed if make game running in the background
+ */
+- (void)removeResidualNodes
+{
+    [_heroMenu removeFromParent];
+    [_handMenu.parent removeFromParent];
+    [_equipMenu.parent removeFromParent];
 }
 
 /*
@@ -89,12 +87,13 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     void(^block)() = ^{
         for (NSUInteger i = 0; i < allCount; i++) {
             if (i < existingCount) {
-                [_cardMenu removeChild:[_cardMenu.children objectAtIndex:0]];   // Clear existing used card
+                // Clear existing used card
+                [_cardMenu removeChild:[_cardMenu.children objectAtIndex:0]];
             }
         }
     };
     
-    if (0 != _existingCardCount) {
+    if (_existingCardCount > 0) {
         BGActionComponent *ac = [BGActionComponent actionComponentWithNode:_cardMenu];
         [ac runFadeOutWithDuration:DURATION_USED_CARD_FADE_OUT
                              block:block];
@@ -107,8 +106,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  * Update deck with to be selected hero cards
  */
 - (void)updateWithHeroIds:(NSArray *)heroIds
-{
-    _heroMenu = [_menuFactory createMenuWithCards:[self.class heroCardsWithHeroIds:heroIds]];
+{    
+    _heroMenu = [_menuFactory createMenuWithCards:[BGHeroCard heroCardsWithHeroIds:heroIds]];
     _heroMenu.visible = NO;
     _heroMenu.position = POSITION_TO_BE_SELECTED_HERO;
     [_heroMenu alignItemsHorizontally];
@@ -116,12 +115,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     
     void(^block)() = ^ {
         _heroMenu.visible = YES;
-        
-        [_player addProgressBarWithPosition:POSITION_HERO_SEL_PROGRESS_BAR
-                                      block:^{
-                                          [_heroMenu removeFromParent];
-                                          [_player removeProgressBar];
-                                      }];
+        [_player addProgressBar];
     };
     
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:_cardMenu];
@@ -185,13 +179,12 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)showUsedCardOnDeckWithCardIds:(NSArray *)cardIds
 {
-    NSArray *cards = [BGHandArea playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj setPosition:_gameLayer.currPlayer.position];
         [_cardMenu addChild:obj z:_cardMenu.children.count];
     }];
-    [_player.handArea renderFigureAndSuitsOfCards:cards forMenu:_cardMenu];
     
     [_gameLayer moveCardWithCardMenuItems:menuItems
                                     block:^(id object) {
@@ -221,14 +214,13 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     }];
     
     NSArray *arrangedCardIds = [self arrangedCuttedCardIdsWithIds:cardIds];
-    NSArray *cards = [BGHandArea playingCardsWithCardIds:arrangedCardIds];
+    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:arrangedCardIds];
     void (^block)(id object) = ^(id object){
         NSUInteger idx = [_cardMenu.children indexOfObject:object];
         if (0 == idx) return;
         
         NSArray *array = [NSArray arrayWithObject:cards[idx]];
         [_menuFactory addMenuItemsWithCards:array toMenu:_cardMenu];
-        [_player.handArea renderFigureAndSuitsOfCards:array forMenu:_cardMenu];
         CCMenuItem *menuItem = _cardMenu.children.lastObject;
         menuItem.visible = NO;
         menuItem.position = [object position];
@@ -240,7 +232,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         if (++idx != cardIds.count) return;
         
 //      If it is the last cutted card, scale up it.
-        [_actionComp runDelayWithDuration:duration+DURATION_USED_CARD_MOVE WithBlock:^{
+        [_actionComp runDelayWithDuration:duration+DURATION_CARD_MOVE WithBlock:^{
             CCMenuItem *menuItem = [_cardMenu.children objectAtIndex:[arrangedCardIds indexOfObject:@(_maxCardId)]];
             menuItem.zOrder += 2*cardIds.count; // Scale up at the foremost screen
             
@@ -292,26 +284,56 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)updateWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
 {
-    if (0 != count) {
-//      If card count is great than 5, need narrow the padding.
-//        CGFloat cardPadding = [_player.handArea cardPaddingWithCardCount:count maxCount:COUNT_MAX_DECK_CARD_NO_OVERLAP];
-        
+    NSString *frameName = nil;
+    if (count > 0 && cardIds.count > 0) {
+        frameName = kImagePopupAllCards;
+    } else if (count > 0) {
+        frameName = kImagePopupHandCard;
+    } else {
+        frameName = kImagePopupEquipment;
+    }
+    CCSprite *popup = [CCSprite spriteWithSpriteFrameName:frameName];
+    CGFloat popupWidth = popup.contentSize.width;
+    CGFloat popupHeight = popup.contentSize.height;
+    popup.anchorPoint = CGPointZero;
+    popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight/2));
+    [self addChild:popup];
+    
+//  Set menu position
+    CGPoint handMenuPos, equipMenuPos;
+    if (count > 0 && cardIds.count > 0) {
+        handMenuPos = ccp(popupWidth/2, popupHeight/2+PLAYING_CARD_HEIGHT*0.4);
+        equipMenuPos = ccp(popupWidth/2, popupHeight/2-PLAYING_CARD_HEIGHT*0.6);
+    } else {
+        handMenuPos = ccp(popupWidth/2, popupHeight/2);
+        equipMenuPos = ccp(popupWidth/2, popupHeight/2);
+    }
+    
+//  Add hand cards of target player on the deck
+    if (count > 0) {
         NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:count];
-        for (NSUInteger i = 0 ; i < count; i++) {
+        for (NSUInteger i = 0; i < count; i++) {
             [frameNames addObject:kImagePlayingCardBack];
         }
-        
         _handMenu = [_menuFactory createMenuWithSpriteFrameNames:frameNames];
-        _handMenu.position = POSITION_EXTRACTED_HAND_CARD;
-        [self addChild:_handMenu];
+//      If card count is great than 5, need narrow the padding.
+        [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(count, COUNT_MAX_EXTRACTED_CARD)];
+        _handMenu.position = handMenuPos;
+        [popup addChild:_handMenu];
     }
     
 //  Add equipment cards of target player on the deck if equipped
-    if (0 != cardIds.count) {
-        _equipMenu = [_menuFactory createMenuWithCards:_player.equipmentArea.equipmentCards];
-        _equipMenu.position = POSITION_EXTRACTED_EQUIPMENT;
-        [self addChild:_equipMenu];
+    if (cardIds.count > 0) {
+        NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+        _equipMenu = [_menuFactory createMenuWithCards:cards];
+        [_equipMenu alignItemsHorizontallyWithPadding:PADDING_EXTRACTED_CARD];
+        _equipMenu.position = equipMenuPos;
+        [popup addChild:_equipMenu];
     }
+    
+    [_player addProgressBar];
+    
+    _targetPlayer = _gameLayer.targetPlayers.lastObject;
 }
 
 //#pragma mark - Card movement
@@ -339,8 +361,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 //- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx
 //{
 //    CGPoint targetPos;
-//    CGFloat cardWidth = _player.handArea.cardWidth;
-//    CGFloat cardHeight = _player.handArea.cardHeight;
+//    CGFloat cardWidth = PLAYING_CARD_WIDTH;
+//    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
 //    
 //    switch (_gameLayer.state) {
 //        case kGameStateCutting: {
@@ -364,10 +386,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 //        case kGameStatePlaying:
 //        case kGameStateDiscarding: {
 //            NSUInteger addedCardCount = _cardMenu.children.count - _existingCardCount;
-//            NSUInteger factor = (0 != _existingCardCount) ? addedCardCount : addedCardCount-1;
+//            NSUInteger factor = (_existingCardCount > 0) ? addedCardCount : addedCardCount-1;
 //            factor += _existingCardCount;
-//            CGFloat padding = [_player.handArea cardPaddingWithCardCount:addedCardCount
-//                                                                maxCount:COUNT_MAX_DECK_CARD_NO_OVERLAP];
+//            CGFloat padding = PLAYING_CARD_PADDING(addedCardCount, COUNT_MAX_DECK_CARD_NO_OVERLAP);
 //            
 //            CGPoint basePos = ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth/2, 0.0f));
 //            
@@ -376,8 +397,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 //        }
 //            
 //        default: {
-//            BGPlayer *targetPlayer = [_gameLayer playerWithName:_gameLayer.targetPlayerNames.lastObject];
-//            BGPlayer *player = (_gameLayer.currPlayer.isSelfPlayer) ? targetPlayer : _gameLayer.currPlayer;
+//            BGPlayer *player = (_gameLayer.currPlayer.isSelfPlayer) ? _gameLayer.targetPlayers.lastObject : _gameLayer.currPlayer;
 //            targetPos = player.position;
 //            break;
 //        }
@@ -392,11 +412,11 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 - (void)alignCenterUsedCardWithMenuItem:(CCMenuItem *)menuItem
 {
     NSUInteger addedCardCount = _cardMenu.children.count - _existingCardCount;
-    CGPoint deltaPos = (0 != _existingCardCount) ? ccp(addedCardCount*_player.handArea.cardWidth/2, 0.0f) : CGPointZero;
+    CGPoint deltaPos = (_existingCardCount > 0) ? ccp(addedCardCount*PLAYING_CARD_WIDTH/2, 0.0f) : CGPointZero;
     
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
     [ac runEaseMoveWithTarget:ccpAdd(menuItem.position, deltaPos)
-                     duration:DURATION_USED_CARD_MOVE
+                     duration:DURATION_CARD_MOVE
                         block:nil];
 }
 
@@ -407,22 +427,14 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     if ([menuItem.parent isEqual:_heroMenu]) {          // 待选的英雄
-        _player.selectedHeroId = menuItem.tag;
         [self selectHeroByTouchingMenuItem:menuItem];
-        return;
     }
-    
-    if ([menuItem.parent isEqual:_handMenu]) {          // 目标手牌
-        NSUInteger idx = _targetPlayer.handCardCount - menuItem.tag - 1;
-        [_player.selectedCardIdxes addObject:@(idx)];
+    else if ([menuItem.parent isEqual:_handMenu]) {     // 目标手牌
+        [self extractHandCardByTouchingMenuItem:menuItem];
     }
     else if ([menuItem.parent isEqual:_equipMenu]) {    // 目标装备
-        _player.canExtractCardCount = 1;
-        _player.selectedCardIds = [NSArray arrayWithObject:@(menuItem.tag)];
-    } else {
-        return;
+        [self extractEquipmentByTouchingMenuItem:menuItem];
     }
-    [self extractCardByTouchMenuItem:menuItem];
 }
 
 /*
@@ -430,6 +442,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)selectHeroByTouchingMenuItem:(CCMenuItem *)menuItem
 {
+    _player.selectedHeroId = menuItem.tag;
+    
     for (CCMenuItem *item in menuItem.parent.children) {
         if (![item isEqual:menuItem]) {
             item.visible = NO;
@@ -445,33 +459,72 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
                                  [menuItem.parent removeFromParent];
                                  [[BGClient sharedClient] sendChooseHeroIdRequest];
                              }];
+    
+    [self updateWithCardCount:5 equipmentIds:[NSArray arrayWithObjects:@(1), @(20), nil]];
+}
+
+/*
+ * Extract hand card of target player
+ */
+- (void)extractHandCardByTouchingMenuItem:(CCMenuItem *)menuItem
+{
+    _equipMenu.enabled = NO;
+    _equipMenu.color = COLOR_DISABLED_CARD;
+    
+    NSUInteger idx = _targetPlayer.handCardCount - menuItem.tag - 1;
+    [_player.selectedCardIdxes addObject:@(idx)];
+    [self extractCardByTouchingMenuItem:menuItem];
+}
+
+/*
+ * Extract equipment of target player
+ */
+- (void)extractEquipmentByTouchingMenuItem:(CCMenuItem *)menuItem
+{
+    [_targetPlayer.equipmentArea updateEquipmentWithCardId:menuItem.tag];
+    
+    _player.extractableCardCount = 1;
+    _player.selectedCardIds = [NSArray arrayWithObject:@(menuItem.tag)];
+    [self extractCardByTouchingMenuItem:menuItem];
 }
 
 /*
  * Extract(抽取) a hand card of target player by touching card menu item
  * If only have one hand card, end directly after extracted.
  */
-- (void)extractCardByTouchMenuItem:(CCMenuItem *)menuItem
-{
-//    CGPoint targetPos = ccp(_player.playerAreaSize.width*0.31, -_player.playerAreaSize.height*0.88);
-    CGPoint targetPos = _player.handArea.targetPosition;
+- (void)extractCardByTouchingMenuItem:(CCMenuItem *)menuItem
+{    
+    [menuItem removeFromParent];
+    [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_EXTRACTED_CARD)];
+    [_player.handArea addAndFaceDownOneExtractedCardWith:menuItem];
+    
+//  The extracted card count can't great than all hand card count
+    void(^block)() = ^{
+        [_player.handArea makeHandCardLeftAlignment];
+        
+        if ([self isExtractingFinished]) {
+            [[BGClient sharedClient] sendChooseCardRequest];    // Send plugin reqeust
+        }
+    };
+    
+    menuItem.position = [_gameLayer.allPlayers[3] position];
+//    menuItem.position = [_targetPlayer position];
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
-    [ac runEaseMoveWithTarget:targetPos
-                     duration:DURATION_USED_CARD_MOVE
-                        block:^{
-                            [menuItem removeFromParent];
-                            
-                            [_player.handArea addOneExtractedCardAndFaceDown];
-                            
-                            // Extracted card count can't great than all hand card count
-                            if ((_player.selectedCardIdxes.count == _targetPlayer.handCardCount) ||
-                                (_player.selectedCardIdxes.count == _player.canExtractCardCount))
-                            {
-                                [_handMenu removeFromParent];
-                                [_equipMenu removeFromParent];
-                                [[BGClient sharedClient] sendChooseCardRequest];  // Send plugin reqeust
-                            }
-                        }];
+    [ac runEaseMoveWithTarget:POSITION_HAND_AREA_RIGHT
+                     duration:DURATION_CARD_MOVE
+                        block:block];
+    
+    if ([self isExtractingFinished]) {
+        [_player removeProgressBar];
+        [_handMenu.parent removeFromParent];
+        [_equipMenu.parent removeFromParent];
+    }
+}
+
+- (BOOL)isExtractingFinished
+{
+    return ((_player.selectedCardIdxes.count == _targetPlayer.handCardCount) ||
+            (_player.selectedCardIdxes.count == _player.extractableCardCount));
 }
 
 @end

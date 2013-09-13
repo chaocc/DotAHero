@@ -65,6 +65,7 @@ static BGRoomLayer *instanceOfRoomLayer = nil;
     [self removeAllChildrenWithCleanup:YES];
     
     [[BGClient sharedClient] addGamePluginMessageEventListener];
+    [[BGClient sharedClient] addPublicMessageEventListener];
     
 //  ...TEMP...
     if (_isRoomOwner)

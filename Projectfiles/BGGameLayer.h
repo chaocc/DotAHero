@@ -24,6 +24,8 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
     kGameStateCutting = 1,      // 切牌阶段
     kGameStateDrawing,          // 摸排阶段
     kGameStatePlaying,          // 出牌阶段
+    kGameStateExtracting,       // 抽牌阶段
+    kGameStateGiving,           // 分牌阶段
     kGameStateDiscarding        // 弃牌阶段
 };
 
@@ -44,7 +46,8 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 
 @property (nonatomic, strong, readonly) NSMutableArray *allPlayers; // Player instances
 @property (nonatomic, strong, readonly) BGPlayer *selfPlayer;       // Self player
-@property (nonatomic, strong, readonly) BGPlayer *currPlayer;       // 回合开始/伤害来源/出牌的玩家
+@property (nonatomic, strong, readonly) BGPlayer *currPlayer;
+@property (nonatomic, strong, readonly) NSArray *targetPlayers;
 @property (nonatomic, strong, readonly) BGPlayingDeck *playingDeck;
 
 @property (nonatomic, copy) NSString *currPlayerName;               // 回合开始/伤害来源/出牌的玩家
@@ -62,6 +65,7 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 - (void)setHandCardCountForOtherPlayers;
 - (void)addProgressBarForOtherPlayers;
 - (void)removeProgressBarForOtherPlayers;
+- (void)disablePlayerAreaForOtherPlayers;
 
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block;
 

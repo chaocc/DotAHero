@@ -44,6 +44,17 @@
     return [[self alloc]initWithCardId:aCardId];
 }
 
++ (NSArray *)heroCardsWithHeroIds:(NSArray *)heroIds
+{
+    NSMutableArray *heroCards = [NSMutableArray arrayWithCapacity:heroIds.count];
+    [heroIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        BGCard *heroCard = [BGHeroCard cardWithCardId:[obj integerValue]];
+        [heroCards addObject:heroCard];
+    }];
+    
+    return heroCards;
+}
+
 - (NSString *)avatarName
 {
     return [_cardName stringByAppendingString:@"Avatar.png"];

@@ -7,7 +7,8 @@
 //
 
 #import "BGMenuFactory.h"
-#import "BGCard.h"
+#import "BGPlayingCard.h"
+#import "BGDefines.h"
 
 @implementation BGMenuFactory
 
@@ -65,7 +66,7 @@
     NSMutableArray *menuItems = [NSMutableArray array];
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
-        [menuItems addObject:[self createMenuItemWithCard:obj]];
+        [menuItems addObject:[self createMenuItemWithPlayingCard:obj]];
     }];
     
     return [CCMenu menuWithArray:menuItems];
@@ -79,7 +80,10 @@
     selectedSprite.color = ccGRAY;
     
     return [CCMenuItemSprite itemWithNormalSprite:normalSprite
-                                   selectedSprite:selectedSprite];
+                                   selectedSprite:selectedSprite
+                                            block:^(id sender) {
+                                                [_delegate menuItemTouched:sender];
+                                            }];
 }
 
 - (CCMenuItem *)createMenuItemWithSpriteFrameName:(NSString *)frameName
@@ -104,11 +108,10 @@
                                             }];
 }
 
-- (CCMenuItem *)createMenuItemWithCard:(BGCard *)card
+- (CCMenuItem *)createMenuItemWithPlayingCard:(id)card
 {
-    CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:card.cardImageName];
-    CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:card.cardImageName];
-    selectedSprite.color = ccGRAY;
+    CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:[card cardImageName]];
+    CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:[card cardImageName]];
     
     CCMenuItem *menuItem = [CCMenuItemSprite itemWithNormalSprite:normalSprite
                                                    selectedSprite:selectedSprite
@@ -116,7 +119,18 @@
                                                             block:^(id sender) {
                                                                 [_delegate menuItemTouched:sender];
                                                             }];
-    menuItem.tag = card.cardId;
+    menuItem.tag =[card cardId];
+    
+//  Render playing card figure and suits
+    if ([card isPlayingCard]) {
+        CCSprite *figure = [CCSprite spriteWithSpriteFrameName:[card figureImageName]];
+        figure.position = ccp(PLAYING_CARD_WIDTH*0.11, PLAYING_CARD_HEIGHT*0.92);
+        [menuItem addChild:figure];
+        
+        CCSprite *suits = [CCSprite spriteWithSpriteFrameName:[card suitsImageName]];
+        suits.position = ccp(PLAYING_CARD_WIDTH*0.11, PLAYING_CARD_HEIGHT*0.84);
+        [menuItem addChild:suits];
+    }
     
     return menuItem;
 }
@@ -126,7 +140,7 @@
     NSMutableArray *menuItems = [NSMutableArray array];
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
-        [menuItems addObject:[self createMenuItemWithCard:obj]];
+        [menuItems addObject:[self createMenuItemWithPlayingCard:obj]];
     }];
     
     return menuItems;
@@ -147,7 +161,7 @@
 {
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
-        [menu addChild:[self createMenuItemWithCard:obj] z:menu.children.count];
+        [menu addChild:[self createMenuItemWithPlayingCard:obj] z:menu.children.count];
     }];
 }
 

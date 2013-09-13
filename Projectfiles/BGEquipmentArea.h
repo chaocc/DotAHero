@@ -20,5 +20,9 @@
 + (id)equipmentAreaWithPlayer:(BGPlayer *)player;
 
 - (void)updateEquipmentWithCard:(BGPlayingCard *)card;
+- (void)updateEquipmentWithCardId:(NSInteger)cardId;
+
+- (void)setDisabledColor;
+- (void)restoreColor;
 
 @end

@@ -26,4 +26,9 @@
 - (void)updateBloodPointWithCount:(NSInteger)count;
 - (void)updateAngerPointWithCount:(NSUInteger)count;
 
+- (void)enableHero;
+- (void)disableHero;
+- (void)setDisabledColor;
+- (void)restoreColor;
+
 @end
