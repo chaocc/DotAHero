@@ -75,6 +75,13 @@ static BGGameLayer *instanceOfGameLayer = nil;
         [self addCardPile];
         [self addPlayers];
         [self addPlayingDeck];
+        
+//      Initialize KKInput
+        KKInput *input = [KKInput sharedInput];
+        input.multipleTouchEnabled = YES;
+        input.gestureDoubleTapEnabled = input.gesturesAvailable;
+        input.gestureLongPressEnabled = input.gesturesAvailable;
+        input.gesturePanEnabled = input.gesturesAvailable;
 }
 
 	return self;
@@ -92,9 +99,12 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateCutting;
             break;
             
-        case kActionUpdatePlayerHandExtracted:
-        case kActionUpdatePlayerEquipmentExtracted:
+        case kActionChoseCardToExtract:
             _state = kGameStateExtracting;
+            break;
+            
+        case kActionChoseCardToGive:
+            _state = kGameStateGiving;
             break;
             
         case kActionChooseCardToDiscard:
@@ -300,6 +310,18 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
 }
 
+- (void)setColorWith:(ccColor3B)color ofNode:(CCNode *)node
+{
+    for (CCNode *subNode in node.children) {
+        if ([subNode respondsToSelector:@selector(setColor:)]) {
+            [(CCNodeRGBA *)subNode setColor:color];
+        }
+        if (subNode.children.count > 0) {
+            [self setColorWith:color ofNode:subNode];
+        }
+    }
+}
+
 #pragma mark - Playing deck
 /*
  * Add playing deck for showing toBeSelectedHeros/used/cutting cards or others
@@ -439,6 +461,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
             targetPos = ccpAdd(basePos, ccp((cardWidth+padding)*idx, 0.0f));
             break;
         }
+        
+        case kGameStateExtracting:
+            targetPos = (self.currPlayer.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : self.currPlayer.position;
+            break;
             
         default: {
             BGPlayer *player = (self.currPlayer.isSelfPlayer) ? self.targetPlayers.lastObject : self.currPlayer;

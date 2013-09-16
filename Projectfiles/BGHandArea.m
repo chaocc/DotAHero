@@ -328,7 +328,6 @@
     [ac runEaseMoveWithTarget:targetPos
                      duration:DURATION_SELECTED_CARD_MOVE
                         block:block];
-    
 }
 
 /*
@@ -389,6 +388,7 @@
             break;
             
         default:
+            [_gameLayer disablePlayerAreaForOtherPlayers];
             break;
     }
 }

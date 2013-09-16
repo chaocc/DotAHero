@@ -4,44 +4,44 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>PopupAllCards.png</key>
+            <key>PopupExtractedAllCards.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,2},{548,342}}</string>
+                <string>{{2,2},{548,356}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{548,342}}</string>
+                <string>{{0,0},{548,356}}</string>
                 <key>sourceSize</key>
-                <string>{548,342}</string>
+                <string>{548,356}</string>
             </dict>
-            <key>PopupEquipment.png</key>
+            <key>PopupExtractedEquipment.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{552,2},{234,192}}</string>
+                <string>{{2,573},{244,211}}</string>
                 <key>offset</key>
-                <string>{0,6}</string>
-                <key>rotated</key>
-                <true/>
-                <key>sourceColorRect</key>
-                <string>{{0,0},{234,192}}</string>
-                <key>sourceSize</key>
-                <string>{234,204}</string>
-            </dict>
-            <key>PopupHandCard.png</key>
-            <dict>
-                <key>frame</key>
-                <string>{{2,346},{546,192}}</string>
-                <key>offset</key>
-                <string>{-1,6}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{0,0},{546,192}}</string>
+                <string>{{0,0},{244,211}}</string>
                 <key>sourceSize</key>
-                <string>{548,204}</string>
+                <string>{244,211}</string>
+            </dict>
+            <key>PopupExtractedHandCard.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{2,360},{548,211}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{548,211}}</string>
+                <key>sourceSize</key>
+                <string>{548,211}</string>
             </dict>
         </dict>
         <key>metadata</key>
@@ -51,9 +51,9 @@
             <key>realTextureFileName</key>
             <string>CardPopup-hd.pvr.ccz</string>
             <key>size</key>
-            <string>{746,540}</string>
+            <string>{552,786}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:99df3def51800fde017d3d81f64c5c31:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:0654ca5002892e95f867160c0a6a6c7e:1/1$</string>
             <key>textureFileName</key>
             <string>CardPopup-hd.pvr.ccz</string>
         </dict>

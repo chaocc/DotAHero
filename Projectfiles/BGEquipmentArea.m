@@ -207,16 +207,6 @@
 //    [menuItem addChild:label];
 }
 
-- (void)setDisabledColor
-{
-    _equipMenu.color = COLOR_DISABLED;
-}
-
-- (void)restoreColor
-{
-    _equipMenu.color = ccWHITE;
-}
-
 #pragma mark - Equipment using
 /*
  * Menu delegate method is called while touching a equipment

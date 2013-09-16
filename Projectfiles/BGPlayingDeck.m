@@ -25,6 +25,7 @@
 @property (nonatomic, strong) CCMenu *heroMenu;     // 待选的英雄
 @property (nonatomic, strong) CCMenu *handMenu;     // 目标手牌
 @property (nonatomic, strong) CCMenu *equipMenu;    // 目标装备
+@property (nonatomic, strong) CCMenu *pileMenu;     // 牌堆牌
 
 @end
 
@@ -53,6 +54,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         _cardMenu.enabled = NO;
         [self addChild:_cardMenu];
         _menuFactory.delegate = self;
+        
+        [self scheduleUpdate];
     }
     return self;
 }
@@ -106,7 +109,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  * Update deck with to be selected hero cards
  */
 - (void)updateWithHeroIds:(NSArray *)heroIds
-{    
+{
+    [_gameLayer setColorWith:COLOR_DISABLED ofNode:_gameLayer];
+    
     _heroMenu = [_menuFactory createMenuWithCards:[BGHeroCard heroCardsWithHeroIds:heroIds]];
     _heroMenu.visible = NO;
     _heroMenu.position = POSITION_TO_BE_SELECTED_HERO;
@@ -137,15 +142,15 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         case kActionUpdateDeckCuttedCard:   // Show cutted card on deck
             [_gameLayer setHandCardCountForOtherPlayers];
             [_gameLayer removeProgressBarForOtherPlayers];
-            [self showCuttedCardOnDeckWithCardIds:cardIds];
+            [self showCuttedCardWithCardIds:cardIds];
             break;
         
         case kActionUpdateDeckUsedCard:     // Show used card on deck
-//            [self showUsedCardOnDeckWithCardIds:cardIds];
+            [self showUsedCardWithCardIds:cardIds];
             break;
             
         case kActionUpdateDeckAssigning:    // Show X cards of top pile(牌堆顶) on deck
-//          更新桌面: 能量转移
+            [self showXCardsOfTopPileWithCardIds:cardIds];
             break;
             
         default:
@@ -177,7 +182,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 /*
  * Show the used card of other player on the deck
  */
-- (void)showUsedCardOnDeckWithCardIds:(NSArray *)cardIds
+- (void)showUsedCardWithCardIds:(NSArray *)cardIds
 {
     NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
@@ -197,7 +202,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  *    (The cutted card of self player already showed on deck after used it)
  * 2. Send kStartRound request after action runing finished
  */
-- (void)showCuttedCardOnDeckWithCardIds:(NSArray *)cardIds
+- (void)showCuttedCardWithCardIds:(NSArray *)cardIds
 {
 //  Face down the cutted card other player first
     NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:cardIds.count-1];
@@ -248,7 +253,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
                                            block:^{
                                                _existingCardCount = self.allCardCount;
                                                [self clearExistingUsedCards];
-                                               [[BGClient sharedClient] sendStartRoundRequest];
+                                               [[BGClient sharedClient] sendStartRoundRequest]; // 牌局开始
                                            }];
         }];
     };
@@ -268,7 +273,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     for (id obj in cardIds) {
         if ([obj integerValue] == _player.comparedCardId) {
             [mutableCardIds removeObjectsAtIndexes:idxSet];
-            [mutableCardIds addObjectsFromArray:[mutableCardIds objectsAtIndexes:idxSet]];
+            [mutableCardIds addObjectsFromArray:[cardIds objectsAtIndexes:idxSet]];
             cardIds = mutableCardIds;
             break;
         }
@@ -279,19 +284,12 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 }
 
 /*
- * Update deck with hand card count and equipment card
- * Faced down(暗置) all hand cards on the deck for being extracted(比如贪婪)
+ * Show X cards of top pile(牌堆顶) on the deck
  */
-- (void)updateWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
+- (void)showXCardsOfTopPileWithCardIds:(NSArray *)cardIds
 {
-    NSString *frameName = nil;
-    if (count > 0 && cardIds.count > 0) {
-        frameName = kImagePopupAllCards;
-    } else if (count > 0) {
-        frameName = kImagePopupHandCard;
-    } else {
-        frameName = kImagePopupEquipment;
-    }
+    NSString *image = [NSString stringWithFormat:@"%@%i", kImagePopupEnergyTransport,_gameLayer.allPlayers.count];
+    NSString *frameName = [image stringByAppendingPathExtension:kFileTypePng];
     CCSprite *popup = [CCSprite spriteWithSpriteFrameName:frameName];
     CGFloat popupWidth = popup.contentSize.width;
     CGFloat popupHeight = popup.contentSize.height;
@@ -299,14 +297,42 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight/2));
     [self addChild:popup];
     
+    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    _pileMenu = [_menuFactory createMenuWithCards:cards];
+    [_pileMenu alignItemsHorizontallyWithPadding:PADDING_ASSIGNED_CARD];
+    
+}
+
+/*
+ * Update deck with hand card count and equipment card
+ * Faced down(暗置) all hand cards on the deck for being extracted(比如贪婪)
+ */
+- (void)updateWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
+{
+    NSString *frameName = nil;
+    if (count > 0 && cardIds.count > 0) {
+        frameName = kImagePopupExtractedAllCards;
+    } else if (count > 0) {
+        frameName = kImagePopupExtractedHandCard;
+    } else {
+        frameName = kImagePopupExtractedEquipment;
+    }
+    CCSprite *popup = [CCSprite spriteWithSpriteFrameName:frameName];
+    CGFloat popupWidth = popup.contentSize.width;
+    CGFloat popupHeight = popup.contentSize.height;
+    popup.anchorPoint = CGPointZero;
+    [self addChild:popup];
+    
 //  Set menu position
     CGPoint handMenuPos, equipMenuPos;
     if (count > 0 && cardIds.count > 0) {
-        handMenuPos = ccp(popupWidth/2, popupHeight/2+PLAYING_CARD_HEIGHT*0.4);
-        equipMenuPos = ccp(popupWidth/2, popupHeight/2-PLAYING_CARD_HEIGHT*0.6);
+        popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight*0.57));
+        handMenuPos = ccp(popupWidth/2, popupHeight/2+PLAYING_CARD_HEIGHT*0.38);
+        equipMenuPos = ccp(popupWidth/2, popupHeight/2-PLAYING_CARD_HEIGHT*0.62);
     } else {
-        handMenuPos = ccp(popupWidth/2, popupHeight/2);
-        equipMenuPos = ccp(popupWidth/2, popupHeight/2);
+        popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight/2));
+        handMenuPos = ccp(popupWidth/2, popupHeight*0.42);
+        equipMenuPos = ccp(popupWidth/2, popupHeight*0.42);
     }
     
 //  Add hand cards of target player on the deck
@@ -459,8 +485,6 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
                                  [menuItem.parent removeFromParent];
                                  [[BGClient sharedClient] sendChooseHeroIdRequest];
                              }];
-    
-    [self updateWithCardCount:5 equipmentIds:[NSArray arrayWithObjects:@(1), @(20), nil]];
 }
 
 /*
@@ -507,8 +531,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         }
     };
     
-    menuItem.position = [_gameLayer.allPlayers[3] position];
-//    menuItem.position = [_targetPlayer position];
+    menuItem.position = [_targetPlayer position];
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
     [ac runEaseMoveWithTarget:POSITION_HAND_AREA_RIGHT
                      duration:DURATION_CARD_MOVE
@@ -525,6 +548,35 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     return ((_player.selectedCardIdxes.count == _targetPlayer.handCardCount) ||
             (_player.selectedCardIdxes.count == _player.extractableCardCount));
+}
+
+#pragma mark - Gestures
+- (void)update:(ccTime)delta
+{
+    if ([CCDirector sharedDirector].currentPlatformIsIOS) {
+        [self gestureRecognition];
+    }
+    else if ([CCDirector sharedDirector].currentPlatformIsMac) {
+        
+    }
+}
+
+- (void)gestureRecognition
+{
+    KKInput *input = [KKInput sharedInput];
+    
+    if (![input isAnyTouchOnNode:_heroMenu.children.lastObject touchPhase:KKTouchPhaseAny]) {
+        return;
+    }
+    
+    if (input.gestureDoubleTapRecognizedThisFrame || input.gestureLongPressBegan) {
+        CCSprite *popup = [CCSprite spriteWithSpriteFrameName:kImagePopupExtractedAllCards];
+        CGFloat popupWidth = popup.contentSize.width;
+        CGFloat popupHeight = popup.contentSize.height;
+        popup.anchorPoint = CGPointZero;
+        popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight/2));
+        [self addChild:popup];
+    }
 }
 
 @end

@@ -54,6 +54,9 @@
 
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
 
+- (void)moveSelectedCardWithCardIds:(NSArray *)cardIds;
+- (void)moveSelectedCardWithCardCount:(NSUInteger)count;
+
 - (void)enablePlayerArea;
 - (void)disablePlayerArea;
 - (void)setDisabledColor;

@@ -67,6 +67,7 @@ _Pragma("clang diagnostic pop")                                     \
 
 #define PADDING_CUTTED_CARD             1.0f
 #define PADDING_EXTRACTED_CARD          0.0f
+#define PADDING_ASSIGNED_CARD           1.0f
 #define PADDING_SKILL_BUTTON            0.0f
 #define PADDING_TWO_BUTTONS             40.0f
 #define PADDING_THREE_BUTTONS           20.0f

@@ -111,10 +111,9 @@
 - (CCMenuItem *)createMenuItemWithPlayingCard:(id)card
 {
     CCSprite *normalSprite = [CCSprite spriteWithSpriteFrameName:[card cardImageName]];
-    CCSprite *selectedSprite = [CCSprite spriteWithSpriteFrameName:[card cardImageName]];
     
     CCMenuItem *menuItem = [CCMenuItemSprite itemWithNormalSprite:normalSprite
-                                                   selectedSprite:selectedSprite
+                                                   selectedSprite:nil
                                                    disabledSprite:nil
                                                             block:^(id sender) {
                                                                 [_delegate menuItemTouched:sender];

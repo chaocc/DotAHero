@@ -129,8 +129,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         CCSprite *sprite = (CCSprite *)[_gameLayer.gameArtworkBatch getChildByTag:kPlayerTagPlayerArea+_seatIndex];
         sprite.color = COLOR_DISABLED;
         
-        [_heroArea setDisabledColor];
-        [_equipmentArea setDisabledColor];
+        [_gameLayer setColorWith:COLOR_DISABLED ofNode:_heroArea];
+        [_gameLayer setColorWith:COLOR_DISABLED ofNode:_equipmentArea];
     }
 }
 
@@ -140,8 +140,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         CCSprite *sprite = (CCSprite *)[_gameLayer.gameArtworkBatch getChildByTag:kPlayerTagPlayerArea+_seatIndex];
         sprite.color = ccWHITE;
         
-        [_heroArea restoreColor];
-        [_equipmentArea restoreColor];
+        [_gameLayer setColorWith:ccWHITE ofNode:_heroArea];
+        [_gameLayer setColorWith:ccWHITE ofNode:_equipmentArea];
     }
 }
 
@@ -151,6 +151,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)renderHeroWithHeroId:(NSInteger)heroId
 {
+    [_gameLayer setColorWith:ccWHITE ofNode:_gameLayer];
+    
     _selectedHeroId = heroId;
     [_heroArea renderHeroWithHeroId:heroId];
     
@@ -253,6 +255,17 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                                                 fontSize:22.0f];
     countLabel.position = ccp(_position.x-self.size.width*0.07, _position.y-self.size.height*0.23);
     [self addChild:countLabel z:1 tag:kPlayerTagHandCardCount];
+}
+
+#pragma mark - Card movement
+- (void)moveSelectedCardWithCardIds:(NSArray *)cardIds
+{
+    
+}
+
+- (void)moveSelectedCardWithCardCount:(NSUInteger)count
+{
+    
 }
 
 #pragma mark - Playing menu

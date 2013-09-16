@@ -102,9 +102,10 @@
 #define kImageProgressBarBig            @"ProgressBar_Big.png"
 #define kImageProgressBarFrameBig       @"ProgressBarFrame_Big.png"
 
-#define kImagePopupAllCards             @"PopupAllCards.png"
-#define kImagePopupHandCard             @"PopupHandCard.png"
-#define kImagePopupEquipment            @"PopupEquipment.png"
+#define kImagePopupExtractedAllCards    @"PopupExtractedAllCards.png"
+#define kImagePopupExtractedHandCard    @"PopupExtractedHandCard.png"
+#define kImagePopupExtractedEquipment   @"PopupExtractedEquipment.png"
+#define kImagePopupEnergyTransport      @"PopupEnergyTransport"
 
 #define kFontHeroSkillName              @"HeroSkillName.fnt"
 

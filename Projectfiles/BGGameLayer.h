@@ -66,6 +66,7 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 - (void)addProgressBarForOtherPlayers;
 - (void)removeProgressBarForOtherPlayers;
 - (void)disablePlayerAreaForOtherPlayers;
+- (void)setColorWith:(ccColor3B)color ofNode:(CCNode *)node;
 
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block;
 

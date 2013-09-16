@@ -46,6 +46,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         
         _hpSpBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
         [self addChild:_hpSpBatch];
+        
+        [self scheduleUpdate];
     }
     return self;
 }
@@ -245,24 +247,6 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     _skillMenu.enabled = NO;
 }
 
-- (void)setDisabledColor
-{
-    _heroMenu.color = COLOR_DISABLED;
-    
-    for (CCSprite *sprite in _hpSpBatch.children) {
-        sprite.color = COLOR_DISABLED;
-    }
-}
-
-- (void)restoreColor
-{
-    _heroMenu.color = ccWHITE;
-    
-    for (CCSprite *sprite in _hpSpBatch.children) {
-        sprite.color = ccWHITE;
-    }
-}
-
 #pragma mark - Hero updating
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
@@ -328,6 +312,30 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
             [tarPlayerNames removeObjectAtIndex:0];
         }
         okayMenu.isEnabled = (tarPlayerNames.count == selfPlayer.selectableTargetCount);
+    }
+}
+
+#pragma mark - Gestures
+- (void)update:(ccTime)delta
+{
+    if ([CCDirector sharedDirector].currentPlatformIsIOS) {
+        [self gestureRecognition];
+    }
+    else if ([CCDirector sharedDirector].currentPlatformIsMac) {
+        
+    }
+}
+
+- (void)gestureRecognition
+{
+    KKInput *input = [KKInput sharedInput];
+    
+    if (![input isAnyTouchOnNode:_heroMenu.children.lastObject touchPhase:KKTouchPhaseAny]) {
+        return;
+    }
+    
+    if (input.gestureDoubleTapRecognizedThisFrame || input.gestureLongPressBegan) {
+        
     }
 }
 

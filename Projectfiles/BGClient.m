@@ -292,7 +292,6 @@ static BGClient *instanceOfClient = nil;
     [_esObj setInt:kActionStartGame forKey:kAction];
     [_esObj setInt:kPlayerCountSix forKey:kParamPlayerCount];
     [self sendGamePluginRequestWithObject:_esObj];
-    [self sendPublicMessageRequestWithObject:_esObj];
     
     NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
@@ -333,6 +332,7 @@ static BGClient *instanceOfClient = nil;
         [_esObj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
     }
     [self sendGamePluginRequestWithObject:_esObj];
+    [self sendPublicMessageRequestWithObject:_esObj];
     
     NSLog(@"Send game plugin request with EsObject: %@", _esObj);
 }
@@ -447,7 +447,7 @@ static BGClient *instanceOfClient = nil;
 //  Remaining card count
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
     
-//  Receive public message with specified player name
+//  Receive the player name that is current player(出牌的玩家)
     NSString *playerName = [obj stringWithKey:kParamPlayerName];
     _gameLayer.currPlayerName = playerName;
     _player = (_gameLayer && playerName) ? [_gameLayer playerWithName:playerName] : _gameLayer.selfPlayer;
@@ -478,7 +478,6 @@ static BGClient *instanceOfClient = nil;
         case kActionUpdateDeckAssigning:
             [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             _playingDeck.maxCardId = [obj intWithKey:kParamMaxFigureCardId];
-            _player.handCardCount = [obj intWithKey:kParamHandCardCount];
             break;
             
         case kActionUpdateDeckPlayerCard:
@@ -599,24 +598,33 @@ static BGClient *instanceOfClient = nil;
         return;
     }
     
-//    NSLog(@"Receive public message with EsObject: %@", e.esObject);
-//    
-//    NSInteger action = [e.esObject intWithKey:kAction];
-//    NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
-//    
-//    switch (action) {
-//        case kActionStartGame:
-//            self.users = _es.managerHelper.userManager.users;
-//            [[BGRoomLayer sharedRoomLayer] showGameLayer];
-//            NSLog(@"All login users: %@", self.users);
-//            
-//            _gameLayer = [BGGameLayer sharedGameLayer];
-//            _playingDeck = _gameLayer.playingDeck;
-//            break;
-//            
-//        default:
-//            break;
-//    }
+//  Receive the player who send the public message
+    _gameLayer.currPlayerName = e.userName;
+    _player = (_gameLayer) ? [_gameLayer playerWithName:e.userName] : nil;
+    
+    NSLog(@"Receive public message with EsObject: %@", e.esObject);
+    
+    NSInteger action = [e.esObject intWithKey:kAction];
+    NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
+    
+//  Action handling
+    switch (action) {
+        case kActionPlayingCard:
+        case kActionChooseCardToUse:
+//            [_player addProgressBar];
+            break;
+        
+        case kActionChoseCardToUse:
+            [_playingDeck updateWithCardIds:[_esObj intArrayWithKey:kParamCardIdList]];
+            break;
+            
+        case kActionChoseCardToExtract:
+            
+            break;
+            
+        default:
+            break;
+    }
 }
 
 @end

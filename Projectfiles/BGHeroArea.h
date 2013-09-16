@@ -28,7 +28,5 @@
 
 - (void)enableHero;
 - (void)disableHero;
-- (void)setDisabledColor;
-- (void)restoreColor;
 
 @end

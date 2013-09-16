@@ -53,7 +53,7 @@
             break;
             
         case kPlayingMenuTypePlaying:
-            [self createPlayingMenuForUsing];
+            [self createPlayingMenuForPlaying];
             break;
             
         case kPlayingMenuTypeChoosing:
@@ -99,7 +99,7 @@
 /*
  * Create menu items with Okay/Discard
  */
-- (void)createPlayingMenuForUsing
+- (void)createPlayingMenuForPlaying
 {
     NSArray *spriteFrameNames = [NSArray arrayWithObjects:kImageOkay, kImageDiscard, nil];
     NSArray *selFrameNames = [NSArray arrayWithObjects:kImageOkaySelected, kImageDiscardSelected, nil];
