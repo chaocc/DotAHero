@@ -332,20 +332,35 @@
     
     if (kHeroSkillInvalid == _player.selectedSkillId) {
         [_player.handArea useHandCardWithAnimation:isRunAnimation block:^{
-            switch (_gameLayer.state) {
-                case kGameStateCutting:
-                    _player.comparedCardId = [_player.selectedCardIds.lastObject integerValue];
-                    [[BGClient sharedClient] sendChooseCardRequest];
-                    break;
-                    
-                case kGameStatePlaying:
-                    [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
-                    break;
-                    
-                default:
-                    break;
-            }
+            
         }];
+        
+        switch (_gameLayer.state) {
+            case kGameStateCutting:
+                _player.comparedCardId = [_player.selectedCardIds.lastObject integerValue];
+                [[BGClient sharedClient] sendChoseCardToCutRequest];
+                break;
+                
+            case kGameStateChoosing:
+                [[BGClient sharedClient] sendChoseCardToUseRequest];
+                break;
+                
+            case kGameStatePlaying:
+                [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+                break;
+                
+            case kGameStateGiving:
+                [[BGClient sharedClient] sendChoseCardToGiveRequest];
+                break;
+                
+            case kGameStateDiscarding:
+                [[BGClient sharedClient] sendDiscardRequest];
+                break;
+                
+            default:
+                [[BGClient sharedClient] sendChoseCardToUseRequest];
+                break;
+        }
     }
     else {
         if (0 == _player.selectedCardIds.count) {
@@ -364,7 +379,7 @@
 - (void)touchCardColorMenuItemWithColor:(BGCardColor)color
 {
     _player.selectedColor = color;
-    [[BGClient sharedClient] sendChooseColorRequest];
+    [[BGClient sharedClient] sendChoseColorRequest];
 }
 
 /*
@@ -373,7 +388,7 @@
 - (void)touchCardSuitsMenuItemWithSuits:(BGCardSuits)suits
 {
     _player.selectedSuits = suits;
-    [[BGClient sharedClient] sendChooseSuitsRequest];
+    [[BGClient sharedClient] sendChoseSuitsRequest];
 }
 
 @end

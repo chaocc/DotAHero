@@ -146,7 +146,7 @@
 }
 
 /*
- * Remove hand card: Is extracted/discarded or used by server(time out)
+ * Remove hand card: Is drew/discarded or used by server(time up)
  */
 - (void)removeHandCardWithCards:(NSArray *)cards
 {
@@ -164,12 +164,10 @@
         }
     }];
     
-    [self updateHandCardBuffer];
-    
-    if (kGameStatePlaying == _gameLayer.state || kGameStateCutting == _gameLayer.state) {
-        [self moveSelectedCardToPlayingDeck];
+    if (kGameStateGetting == _gameLayer.state) {
+        [self moveSelectedCardToOtherPlayer];
     } else {
-        [self moveSelectedCardToTargetPlayer];
+        [self moveSelectedCardToPlayingDeck];
     }
 }
 
@@ -429,13 +427,28 @@
     if (kGameStatePlaying == _gameLayer.state && 1 == _selectableCardCount &&
         kCardTypeEquipment == [_selectedCards.lastObject cardType]) {   // 装备牌
         [self equipEquipmentCard];
-    } else {
-        [self moveSelectedCardToPlayingDeck];
+    }
+    else {
+        if (kGameStateGiving == _gameLayer.state) {
+            [self moveSelectedCardToOtherPlayer];
+        } else {
+            [self moveSelectedCardToPlayingDeck];
+        }
     }
     
-    [self updateHandCardBuffer];
-    
     [_actionComp runDelayWithDuration:DURATION_CARD_MOVE WithBlock:block];
+}
+
+- (void)useHandCardAfterTimeIsUp
+{
+    [self clearSelectedCardBuffer];
+    
+    for (NSUInteger i = 0; i < _selectableCardCount; i++) {
+        [_selectedMenuItems addObject:[_cardMenu.children objectAtIndex:i]];
+        [_selectedCards addObject:_handCards[i]];
+    }
+    
+    [self useHandCardWithAnimation:NO block:nil];
 }
 
 - (void)moveSelectedCardToPlayingDeck
@@ -445,23 +458,28 @@
     }];
     
     [_gameLayer.playingDeck updateWithCardMenuItems:_selectedMenuItems];
-
+    
+    [self updateHandCardBuffer];
     [self makeHandCardLeftAlignment];
     [_selectedMenuItems removeAllObjects];
 }
 
-- (void)moveSelectedCardToTargetPlayer
+- (void)moveSelectedCardToOtherPlayer
 {
+    [_selectedMenuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromParent];
+    }];
+    
     CCMenu *menu = [CCMenu menuWithArray:_selectedMenuItems];
     menu.enabled = NO;
     menu.position = CGPointZero;
-    [menu alignItemsHorizontallyWithPadding:_cardWidth/2];
     [self addChild:menu];
     
-    [_gameLayer moveCardWithCardMenuItems:_selectedMenuItems
-                                    block:^(id object) {
-                                        [menu removeFromParent];
-                                    }];
+    [_gameLayer moveCardWithCardMenuItems:_selectedCards block:nil];
+    
+    [self updateHandCardBuffer];
+    [self makeHandCardLeftAlignment];
+    [_selectedMenuItems removeAllObjects];
 }
 
 /*
@@ -475,25 +493,13 @@
 }
 
 /*
- * Add an extracted(抽到的) hand card or equipment into hand and face down it
+ * Add an drew(抽到的) hand card or equipment into hand and face down it
  */
-- (void)addAndFaceDownOneExtractedCardWith:(CCMenuItem *)menuItem
+- (void)addAndFaceDownOneDrewCardWith:(CCMenuItem *)menuItem
 {
     menuItem.isEnabled = NO;
     [_cardMenu addChild:menuItem z:_cardMenu.children.count];
     _facedDownCardCount += 1;
-}
-
-/*
- * Selected cards and give them to target player
- */
-- (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block
-{
-    _player.selectedCardIds = [BGPlayingCard playingCardIdsWithCards:_selectedCards];
-    [self updateHandCardBuffer];
-    [self moveSelectedCardToTargetPlayer];
-    
-    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE WithBlock:block];
 }
 
 @end

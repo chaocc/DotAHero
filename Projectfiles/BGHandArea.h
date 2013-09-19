@@ -27,8 +27,8 @@
 - (void)disableAllHandCards;
 - (void)makeHandCardLeftAlignment;
 
-- (void)useHandCardWithAnimation:(BOOL)isRun block:(void (^)())block; // 主动|被动使用手牌
-- (void)addAndFaceDownOneExtractedCardWith:(CCMenuItem *)menuItem;
-- (void)giveSelectedCardsToTargetPlayerWithBlock:(void (^)())block;
+- (void)useHandCardWithAnimation:(BOOL)isRun block:(void (^)())block;   // 主动|被动使用手牌
+- (void)useHandCardAfterTimeIsUp;   // Use card after progress time is up
+- (void)addAndFaceDownOneDrewCardWith:(CCMenuItem *)menuItem;
 
 @end

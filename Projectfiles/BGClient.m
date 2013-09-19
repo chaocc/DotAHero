@@ -20,8 +20,6 @@
 @property (nonatomic, weak) BGPlayingDeck *playingDeck;
 @property (nonatomic, weak) BGPlayer *player;
 
-@property (nonatomic, strong) EsObject *esObj;
-
 @end
 
 @implementation BGClient
@@ -40,7 +38,6 @@ static BGClient *instanceOfClient = nil;
 {
     if (self = [super init]) {
         _es = [[ElectroServer alloc] init];
-        _esObj = [[EsObject alloc] init];
     }
     return self;
 }
@@ -227,11 +224,12 @@ static BGClient *instanceOfClient = nil;
  * Send room plugin request with kActionReadyStartGame. Called in room layer.
  */
 - (void)sendReadyStartGameRequest
-{    
-    [_esObj setInt:kActionReadyStartGame forKey:kAction];
-    [self sendRoomPluginRequestWithObject:_esObj];
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionReadyStartGame forKey:kAction];
+    [self sendRoomPluginRequestWithObject:obj];
     
-    NSLog(@"Send room plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send room plugin request with EsObject: %@", obj);
 }
 
 /*
@@ -289,11 +287,12 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendStartGameRequest
 {
-    [_esObj setInt:kActionStartGame forKey:kAction];
-    [_esObj setInt:kPlayerCountSix forKey:kParamPlayerCount];
-    [self sendGamePluginRequestWithObject:_esObj];
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionStartGame forKey:kAction];
+    [obj setInt:kPlayerCountTwo forKey:kParamPlayerCount];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
 }
 
 /*
@@ -301,121 +300,205 @@ static BGClient *instanceOfClient = nil;
  */
 - (void)sendStartRoundRequest
 {
-    [_esObj setInt:kActionStartRound forKey:kAction];
-    [self sendGamePluginRequestWithObject:_esObj];
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionStartRound forKey:kAction];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
 }
 
 /*
  * Send game plugin request with kActionChooseHero and kParamCardIdList.
  */
-- (void)sendChooseHeroIdRequest
-{    
-    [_esObj setInt:kActionChoseHero forKey:kAction];
+- (void)sendChoseHeroIdRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseHero forKey:kAction];
     NSArray *heroIds = [NSArray arrayWithObject:@(_player.selectedHeroId)];
-    [_esObj setIntArray:heroIds forKey:kParamCardIdList];
-    [self sendGamePluginRequestWithObject:_esObj];
+    [obj setIntArray:heroIds forKey:kParamCardIdList];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
 }
 
 /*
  * Send game plugin request with kActionUseHandCard, kParamCardIdList and kParamTargetPlayerList.
  */
 - (void)sendUseHandCardRequestWithIsStrengthened:(BOOL)isStrengthened
-{    
-    [_esObj setInt:kActionUseHandCard forKey:kAction];    
-    [_esObj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
-    [_esObj setBool:isStrengthened forKey:kParamIsStrengthened];
-    if (0 != _gameLayer.targetPlayerNames.count) {
-        [_esObj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionUseHandCard forKey:kAction];
+    [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    [obj setBool:isStrengthened forKey:kParamIsStrengthened];
+    if (_gameLayer.targetPlayerNames.count > 0) {
+        [obj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
     }
-    [self sendGamePluginRequestWithObject:_esObj];
-    [self sendPublicMessageRequestWithObject:_esObj];
+    [self sendPublicMessageRequestWithObject:obj];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send public and game plugin request with EsObject: %@", obj);
 }
 
 /*
  * Send game plugin request with kActionUseHeroSkill, kParamSelectedSkillId, kParamCardIdList and kParamTargetPlayerList.
  */
 - (void)sendUseHeroSkillRequest
-{    
-    [_esObj setInt:kActionUseHeroSkill forKey:kAction];
-    [_esObj setInt:_player.selectedSkillId forKey:kParamSelectedSkillId];
-    if (0 != _player.selectedCardIds.count) {
-        [_esObj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionUseHeroSkill forKey:kAction];
+    [obj setInt:_player.selectedSkillId forKey:kParamSelectedSkillId];
+    if (_player.selectedCardIds.count > 0) {
+        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
     }
-    if (0 != _gameLayer.targetPlayerNames.count) {
-        [_esObj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
+    if (_gameLayer.targetPlayerNames.count > 0) {
+        [obj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
     }
-    [self sendGamePluginRequestWithObject:_esObj];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
 }
 
 /*
  * Send game plugin request with kActionCancel.
  */
 - (void)sendCancelRequest
-{    
-    [_esObj setInt:kActionCancel forKey:kAction];
-    [self sendGamePluginRequestWithObject:_esObj];
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionCancel forKey:kAction];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
 }
 
 /*
  * Send game plugin request with kActionDiscard.
  */
 - (void)sendDiscardRequest
-{   
-    [_esObj setInt:kActionDiscard forKey:kAction];
-    [self sendGamePluginRequestWithObject:_esObj];
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionDiscard forKey:kAction];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
 }
 
 /*
- * Send game plugin request with kActionChooseCard.
+ * Send game plugin request with kActionChoseCardToCut.
  */
-- (void)sendChooseCardRequest
-{    
-    [_esObj setInt:kActionChoseCardToUse forKey:kAction];
-    if (0 != _player.selectedCardIdxes.count) {
-        [_esObj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
+- (void)sendChoseCardToCutRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseCardToCut forKey:kAction];
+    [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
+}
+
+/*
+ * Send game plugin request with kActionChoseCardToUse.
+ */
+- (void)sendChoseCardToUseRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseCardToUse forKey:kAction];
+    if (_player.selectedCardIdxes.count > 0) {
+        [obj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
     }
-    if (0 != _player.selectedCardIds.count) {
-        [_esObj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    if (_player.selectedCardIds.count > 0) {
+        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
     }
-    [self sendGamePluginRequestWithObject:_esObj];
+//    [self sendPublicMessageRequestWithObject:obj];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send public and game plugin request with EsObject: %@", obj);
 }
 
 /*
- * Send game plugin request with kActionChooseColor.
+ * Send game plugin request with kActionChoseCardToGet.
+ * For hand card, only broadcast the card count.
  */
-- (void)sendChooseColorRequest
-{    
-    [_esObj setInt:kActionChoseColor forKey:kAction];
-    [_esObj setInt:_player.selectedColor forKey:kParamSelectedColor];
-    [self sendGamePluginRequestWithObject:_esObj];
+- (void)sendChoseCardToGetRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseCardToGet forKey:kAction];
+    if (_player.selectedCardIdxes.count > 0) {
+        [obj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
+    }
+    if (_player.selectedCardIds.count > 0) {
+        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    }
+    [self sendPublicMessageRequestWithObject:obj];
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send public and game plugin request with EsObject: %@", obj);
 }
 
 /*
- * Send game plugin request with kActionChooseSuits.
+ * Send game plugin request with kActionChoseCardToDrop.
  */
-- (void)sendChooseSuitsRequest
-{    
-    [_esObj setInt:kActionChoseSuits forKey:kAction];
-    [_esObj setInt:_player.selectedSuits forKey:kParamSelectedSuits];
-    [self sendGamePluginRequestWithObject:_esObj];
+- (void)sendChoseCardToDropRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseCardToDrop forKey:kAction];
+    if (_player.selectedCardIdxes.count > 0) {
+        [obj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
+    }
+    if (_player.selectedCardIds.count > 0) {
+        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    }
+    [self sendGamePluginRequestWithObject:obj];
     
-    NSLog(@"Send game plugin request with EsObject: %@", _esObj);
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
+}
+
+/*
+ * Send game plugin request with kActionChoseCardToGive.
+ * Check need broadcast gave card ids or card count
+ */
+- (void)sendChoseCardToGiveRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseCardToGive forKey:kAction];
+    if (_player.selectedCardIsFacedUp) {
+        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    } else {
+        [obj setInt:_player.selectedCardIds.count forKey:kParamCardCount];
+    }
+    [self sendPublicMessageRequestWithObject:obj];
+    
+    if (_player.selectedCardIds.count > 0) {
+        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+    }
+    [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send public and game plugin request with EsObject: %@", obj);
+}
+
+/*
+ * Send game plugin request with kActionChoseColor.
+ */
+- (void)sendChoseColorRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseColor forKey:kAction];
+    [obj setInt:_player.selectedColor forKey:kParamSelectedColor];
+    [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
+}
+
+/*
+ * Send game plugin request with kActionChoseSuits.
+ */
+- (void)sendChoseSuitsRequest
+{
+    EsObject *obj = [[EsObject alloc] init];
+    [obj setInt:kActionChoseSuits forKey:kAction];
+    [obj setInt:_player.selectedSuits forKey:kParamSelectedSuits];
+    [self sendGamePluginRequestWithObject:obj];
+    
+    NSLog(@"Send game plugin request with EsObject: %@", obj);
 }
 
 /*
@@ -448,9 +531,10 @@ static BGClient *instanceOfClient = nil;
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
     
 //  Receive the player name that is current player(出牌的玩家)
-    NSString *playerName = [obj stringWithKey:kParamPlayerName];
-    _gameLayer.currPlayerName = playerName;
-    _player = (_gameLayer && playerName) ? [_gameLayer playerWithName:playerName] : _gameLayer.selfPlayer;
+//    NSString *playerName = [obj stringWithKey:kParamPlayerName];
+//    _gameLayer.currPlayerName = playerName;
+//    _player = (_gameLayer && playerName) ? [_gameLayer playerWithName:playerName] : _gameLayer.selfPlayer;
+    _player = _gameLayer.selfPlayer;
     
 //  Action handling
     switch (action) {
@@ -465,56 +549,52 @@ static BGClient *instanceOfClient = nil;
             _playingDeck = _gameLayer.playingDeck;
             break;
             
-        case kActionUpdateDeckHero:
+        case kActionDeckDealHeros:
             [_playingDeck updateWithHeroIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
-        case kActionUpdateDeckSelectedHeros:
+        case kActionDeckShowAllSelectedHeros:
             [_gameLayer renderOtherPlayersHeroWithHeroIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
         
-        case kActionUpdateDeckCuttedCard:
-        case kActionUpdateDeckUsedCard:
-        case kActionUpdateDeckAssigning:
-            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+        case kActionDeckShowAllCuttedCards:
             _playingDeck.maxCardId = [obj intWithKey:kParamMaxFigureCardId];
+            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
-        case kActionUpdateDeckPlayerCard:
+        case kActionDeckShowDroppedCard:
+            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            _player.selectedCardIds = [obj intArrayWithKey:kParamCardIdList];
+//            [self sendChoseCardToDropPublicMessage];    // Send public message
+            break;
+            
+        case kActionDeckShowTopPileCard:
+            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            break;
+            
+        case kActionDeckShowPlayerCard:
             [_playingDeck updateWithCardCount:[obj intWithKey:kParamHandCardCount]
                                  equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
-        case kActionClearPlayingDeck:
-            [_playingDeck clearExistingUsedCards];
-            break;
-            
-        case kActionInitPlayerHero:
+        case kActionPlayerSelectedHero:
             [_player renderHeroWithHeroId:[obj intWithKey:kParamSelectedHeroId]];
             break;
             
-        case kActionInitPlayerCard:
+        case kActionPlayerDealCard:
             [_player addHandAreaWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
-            
-        case kActionUpdatePlayerHero:
-            [_player updateHeroWithBloodPoint:[obj intWithKey:kParamHeroBloodPoint]
-                                   angerPoint:[obj intWithKey:kParamHeroAngerPoint]];
-            break;
         
-        case kActionUpdatePlayerHand:
-        case kActionUpdatePlayerHandExtracted:
-            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]
-                                     cardCount:[obj intWithKey:kParamHandCardCount]];
+        case kActionPlayerUpdateHand:
+//        case kActionPlayerUpdateHandGetting:
+            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
-        case kActionUpdatePlayerEquipment:
-        case kActionUpdatePlayerEquipmentExtracted:
+        case kActionPlayerUpdateEquipment:
             [_player updateEquipmentWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionChooseCardToCut:
-            _gameLayer.state = kGameStateCutting;
             [_player addPlayingMenu];
             [_player addProgressBar];
             [_gameLayer addProgressBarForOtherPlayers];
@@ -525,16 +605,13 @@ static BGClient *instanceOfClient = nil;
         case kActionChooseCardToDiscard:
         case kActionChoosingColor:
         case kActionChoosingSuits:
-            [_player addProgressBar];
-            if (_player.isSelfPlayer) {
-                [_player addPlayingMenu];
-                [_player enableHandCardWithCardIds:[obj intArrayWithKey:kParamAvailableIdList]
-                               selectableCardCount:[obj intWithKey:kParamSelectableCardCount]];
-            }
+            [_player addPlayingMenu];
+            [_player enableHandCardWithCardIds:[obj intArrayWithKey:kParamAvailableIdList]
+                           selectableCardCount:[obj intWithKey:kParamSelectableCardCount]];
             break;
             
-        case kActionChooseCardToExtract:
-            _player.extractableCardCount = [obj intWithKey:kParamExtractableCardCount];
+        case kActionChooseCardToGet:
+            _player.drawableCardCount = [obj intWithKey:kParamExtractableCardCount];
             break;
             
         default:
@@ -589,42 +666,92 @@ static BGClient *instanceOfClient = nil;
     [_es.engine sendMessage:pmr];
 }
 
+///*
+// * Send public message with kActionChoseCardToDrop.
+// */
+//- (void)sendChoseCardToDropPublicMessage
+//{
+//    EsObject *obj = [[EsObject alloc] init];
+//    [obj setInt:kActionChoseCardToDrop forKey:kAction];
+//    if (_player.selectedCardIds.count > 0) {
+//        [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
+//    }
+//    [self sendPublicMessageRequestWithObject:obj];
+//    
+//    NSLog(@"Send publice message with EsObject: %@", obj);
+//}
+
 /*
  * Receive all public message events. Broadcast to all players in the same room.
  */
 - (void)onPublicMessageEvent:(EsPublicMessageEvent *)e
 {
-    if ([_player.playerName isEqualToString:e.userName]) {
-        return;
-    }
+//  Handle received public message
+    NSLog(@"Receive public message with EsObject: %@", e.esObject);
+    
+    EsObject *obj = e.esObject;
+    NSInteger action = [e.esObject intWithKey:kAction];
+    NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
+    _gameLayer.action = action;
     
 //  Receive the player who send the public message
     _gameLayer.currPlayerName = e.userName;
     _player = (_gameLayer) ? [_gameLayer playerWithName:e.userName] : nil;
     
-    NSLog(@"Receive public message with EsObject: %@", e.esObject);
+    if ([self isNeedSkipSelfPlayer]) {
+        return;
+    }
     
-    NSInteger action = [e.esObject intWithKey:kAction];
-    NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
-    
-//  Action handling
+//  Action handling    
     switch (action) {
         case kActionPlayingCard:
         case kActionChooseCardToUse:
-//            [_player addProgressBar];
+        case kActionChooseCardToDiscard:
+        case kActionChoosingColor:
+        case kActionChoosingSuits:
+            [_player addProgressBar];
             break;
         
+        case kActionUseHandCard:
+            [_playingDeck clearExistingUsedCards];
         case kActionChoseCardToUse:
-            [_playingDeck updateWithCardIds:[_esObj intArrayWithKey:kParamCardIdList]];
+        case kActionChoseCardToDrop:
+            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
-        case kActionChoseCardToExtract:
+        case kActionChoseCardToGet:
+            [_player updateHandCardWithEquipments:[obj intArrayWithKey:kParamCardIdList]
+                                        cardIdxes:[obj intArrayWithKey:kParamCardIndexList]];
+            break;
             
+        case kActionChoseCardToGive:
+            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                     cardCount:[obj intWithKey:kParamCardCount]];
+            break;
+            
+        case kActionPlayerUpdateHand:
+            [_player updateHandCardWithCardCount:[obj intWithKey:kParamCardCount]];
+            break;
+            
+        case kActionPlayerUpdateHero:
+            [_player updateHeroWithBloodPoint:[obj intWithKey:kParamHeroBloodPointChanged]
+                                   angerPoint:[obj intWithKey:kParamHeroAngerPointChanged]];
             break;
             
         default:
             break;
     }
+}
+
+- (BOOL)isNeedSkipSelfPlayer
+{
+    return (_player.isSelfPlayer &&
+            (kActionUseHandCard == _gameLayer.action ||
+             kActionChoseCardToUse == _gameLayer.action ||
+             kActionChoseCardToGet == _gameLayer.action ||
+             kActionChoseCardToDrop == _gameLayer.action ||
+             kActionChoseCardToGive == _gameLayer.action ||
+             kActionPlayerUpdateHand == _gameLayer.action));
 }
 
 @end

@@ -37,25 +37,25 @@
 @property (nonatomic) NSInteger selectedSkillId;
 @property (nonatomic) BGCardColor selectedColor;
 @property (nonatomic) BGCardSuits selectedSuits;
+@property (nonatomic) BOOL selectedCardIsFacedUp;       // 选中给其他玩家的卡牌是否是明置的
 
 @property (nonatomic) NSUInteger handCardCount;         // 手牌数
 @property (nonatomic) NSUInteger selectableTargetCount; // 可以指定的目标玩家数
-@property (nonatomic) NSUInteger extractableCardCount;  // 可以抽取的牌数
+@property (nonatomic) NSUInteger drawableCardCount;     // 可以抽取的牌数
 
 - (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
 + (id)playerWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
 
 - (void)renderHeroWithHeroId:(NSInteger)heroId;
-- (void)updateHeroWithBloodPoint:(NSInteger)bloodPoint angerPoint:(NSUInteger)angerPoint;
+- (void)updateHeroWithBloodPoint:(NSInteger)bloodPoint angerPoint:(NSInteger)angerPoint;
 
 - (void)addHandAreaWithCardIds:(NSArray *)cardIds;
+- (void)updateHandCardWithCardIds:(NSArray *)cardIds;
+- (void)updateHandCardWithCardCount:(NSInteger)count;
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
+- (void)updateHandCardWithEquipments:(NSArray *)cardIds cardIdxes:(NSArray *)cardIdxes;
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
-
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
-
-- (void)moveSelectedCardWithCardIds:(NSArray *)cardIds;
-- (void)moveSelectedCardWithCardCount:(NSUInteger)count;
 
 - (void)enablePlayerArea;
 - (void)disablePlayerArea;

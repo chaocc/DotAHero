@@ -25,14 +25,20 @@
 - (void)addGamePluginMessageEventListener;
 - (void)sendStartGameRequest;
 - (void)sendStartRoundRequest;
-- (void)sendChooseHeroIdRequest;
+
 - (void)sendUseHandCardRequestWithIsStrengthened:(BOOL)isStrengthened;
 - (void)sendUseHeroSkillRequest;
 - (void)sendCancelRequest;
 - (void)sendDiscardRequest;
-- (void)sendChooseCardRequest;
-- (void)sendChooseColorRequest;
-- (void)sendChooseSuitsRequest;
+
+- (void)sendChoseHeroIdRequest;
+- (void)sendChoseCardToCutRequest;
+- (void)sendChoseCardToUseRequest;
+- (void)sendChoseCardToGetRequest;
+- (void)sendChoseCardToDropRequest;
+- (void)sendChoseCardToGiveRequest;
+- (void)sendChoseColorRequest;
+- (void)sendChoseSuitsRequest;
 
 - (void)addPublicMessageEventListener;
 

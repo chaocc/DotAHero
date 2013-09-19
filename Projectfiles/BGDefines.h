@@ -35,6 +35,7 @@ _Pragma("clang diagnostic pop")                                     \
 #define POSITION_DECK_AREA_RIGHT        ccp(SCREEN_WIDTH * 0.80, SCREEN_HEIGHT * 0.65)
 #define POSITION_HAND_AREA_LEFT         ccp(SCREEN_WIDTH * 0.263, SCREEN_HEIGHT * 0.115)
 #define POSITION_HAND_AREA_RIGHT        ccp(SCREEN_WIDTH * 0.813, SCREEN_HEIGHT * 0.115)
+#define POSITION_EQUIPMENT_AREA         ccp(SCREEN_WIDTH * 0.9, SCREEN_HEIGHT * 0.2)
 
 #define COLOR_DISABLED                  ccc3(120, 120, 120)
 #define COLOR_DISABLED_CARD             ccc3(120, 120, 120)
@@ -43,7 +44,7 @@ _Pragma("clang diagnostic pop")                                     \
 #define COUNT_INITIAL_HAND_CARD         5
 #define COUNT_MAX_HAND_CARD             6
 #define COUNT_MAX_DECK_CARD             5
-#define COUNT_MAX_EXTRACTED_CARD        5
+#define COUNT_MAX_DREW_CARD             5
 
 #define DURATION_GAMELAYER_TRANSITION   0.2f
 #define DURATION_HERO_SEL_FADE_IN       0.3f
@@ -51,7 +52,7 @@ _Pragma("clang diagnostic pop")                                     \
 #define DURATION_HAND_CARD_MOVE         0.5f
 #define DURATION_SELECTED_CARD_MOVE     0.1f
 #define DURATION_CARD_MOVE              0.8f
-#define DURATION_USED_CARD_FADE_OUT     0.8f
+#define DURATION_USED_CARD_FADE_OUT     0.5f
 #define DURATION_CARD_FLIP              0.2f
 #define DURATION_CARD_FLIP_INTERVAL     0.05f
 #define DURATION_CARD_ANIMATION_SCALE   0.1f
@@ -66,7 +67,7 @@ _Pragma("clang diagnostic pop")                                     \
 #define SCALE_CARD_UP                   1.4f
 
 #define PADDING_CUTTED_CARD             1.0f
-#define PADDING_EXTRACTED_CARD          0.0f
+#define PADDING_DREW_CARD               0.0f
 #define PADDING_ASSIGNED_CARD           1.0f
 #define PADDING_SKILL_BUTTON            0.0f
 #define PADDING_TWO_BUTTONS             40.0f

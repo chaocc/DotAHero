@@ -99,7 +99,7 @@
 }
 
 /*
- * Remove the equipment(Is extracted or disarmed by other player)
+ * Remove the equipment(Is drew or disarmed by other player)
  */
 - (void)removeEquipmentWithCard:(BGPlayingCard *)card
 {
@@ -118,7 +118,7 @@
 }
 
 /*
- * Remove equipment card: Is extracted or disarmed/replaced
+ * Remove equipment card: Is drew or disarmed/replaced
  * (Move card to playing deck or other player)
  */
 - (void)removeEquipmentWithCardMenuItems:(NSArray *)menuItems

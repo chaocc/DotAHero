@@ -250,10 +250,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 #pragma mark - Hero updating
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
-    NSAssert(count <= _heroCard.bloodPointLimit, @"Blood exceed limit in %@", NSStringFromSelector(_cmd));
-    if (count == _bloodPoint) return;
+    if (count == 0) return;
     
-    BGAnimationType type = (count < _bloodPoint) ? kAnimationTypeDamaged : kAnimationTypeRestoreBlood;
+    BGAnimationType type = (count < 0) ? kAnimationTypeDamaged : kAnimationTypeRestoreBlood;
     CGPoint position = (_player.isSelfPlayer) ?
         ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
         ccp(-_playerAreaWidth*0.2, _playerAreaHeight*0.1);
@@ -261,17 +260,20 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     [aniComp runWithAnimationType:type atPosition:position];
     
 //  Re-render blood point
-    _bloodPoint = count;
+    _bloodPoint += count;
     [self renderBloodPoint];
+    
+    NSAssert(_bloodPoint <= _heroCard.bloodPointLimit, @"Blood exceed limit in %@", NSStringFromSelector(_cmd));
 }
 
-- (void)updateAngerPointWithCount:(NSUInteger)count
+- (void)updateAngerPointWithCount:(NSInteger)count
 {
-    NSAssert(count <= _heroCard.angerPointLimit, @"Anger exceed limit in %@", NSStringFromSelector(_cmd));
-    if (count == _angerPoint) return;
+    if (count == 0) return;
     
-    _angerPoint = count;
+    _angerPoint += count;
     [self renderAngerPoint];
+    
+    NSAssert(_angerPoint <= _heroCard.angerPointLimit, @"Anger exceed limit in %@", NSStringFromSelector(_cmd));
 }
 
 #pragma mark - Hero avatar/skills touching

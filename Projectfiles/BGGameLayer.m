@@ -89,18 +89,18 @@ static BGGameLayer *instanceOfGameLayer = nil;
 
 - (BGGameState)state
 {
-    if (kGameStateInvalid != _state) {
-        return _state;
-    }
-    
     switch (_action) {
         case kActionChooseCardToCut:
-        case kActionUpdateDeckCuttedCard:
+        case kActionDeckShowAllCuttedCards:
             _state = kGameStateCutting;
             break;
             
-        case kActionChoseCardToExtract:
-            _state = kGameStateExtracting;
+        case kActionPlayerUpdateHand:
+            _state = kGameStateDrawing;
+            break;
+            
+        case kActionChoseCardToGet:
+            _state = kGameStateGetting;
             break;
             
         case kActionChoseCardToGive:
@@ -109,6 +109,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
             
         case kActionChooseCardToDiscard:
             _state = kGameStateDiscarding;
+            break;
+            
+        case kActionChooseCardToUse:
+            _state = kGameStateChoosing;
             break;
             
         default:
@@ -403,10 +407,25 @@ static BGGameLayer *instanceOfGameLayer = nil;
     return players;
 }
 
+- (BGPlayer *)targetPlayer
+{
+    return (_targetPlayerNames.count == 1) ? self.targetPlayers.lastObject : nil;
+}
+
 #pragma mark - Card movement
 /*
  * Move the selected cards on playing deck or other player's hand
  */
+- (void)moveCardWithCardMenu:(CCMenu *)menu toTargerPlayer:(BGPlayer *)player block:(void(^)())block
+{
+    CGPoint targetPos = (player.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : player.position;
+    
+    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menu];
+    [ac runEaseMoveWithTarget:targetPos
+                     duration:DURATION_CARD_MOVE
+                        block:block];
+}
+
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
 {
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -432,9 +451,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
     switch (self.state) {
-        case kGameStateCutting: {
-            self.state = kGameStateInvalid; // Set by default
-            
+        case kGameStateCutting: {            
             NSUInteger rowCount = ceil((double)_allPlayers.count/COUNT_MAX_DECK_CARD);
             NSUInteger colCount = ceil((double)_allPlayers.count/rowCount);
             CGFloat padding = PADDING_CUTTED_CARD;
@@ -449,7 +466,13 @@ static BGGameLayer *instanceOfGameLayer = nil;
             targetPos = ccp(cardPosX, cardPosY);
             break;
         }
+        
+        case kGameStateDrawing:
+        case kGameStateGetting:
+            targetPos = self.currPlayer.position;
+            break;
             
+        case kGameStateChoosing:
         case kGameStatePlaying:
         case kGameStateDiscarding: {
             NSUInteger addedCardCount = _playingDeck.allCardCount - _playingDeck.existingCardCount;
@@ -462,15 +485,19 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
         }
         
-        case kGameStateExtracting:
-            targetPos = (self.currPlayer.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : self.currPlayer.position;
+//        case kGameStateGetting:
+//            targetPos = (self.currPlayer.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : self.currPlayer.position;
+//            if (self.targetPlayer.isSelfPlayer) {   // If is target player, move the drew card to current player
+//                targetPos = self.currPlayer.position;
+//            }
+//            break;
+            
+        case kGameStateGiving:
+            targetPos = (self.targetPlayer.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : self.targetPlayer.position;
             break;
             
-        default: {
-            BGPlayer *player = (self.currPlayer.isSelfPlayer) ? self.targetPlayers.lastObject : self.currPlayer;
-            targetPos = (player.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : player.position;
+        default:
             break;
-        }
     }
     
     return targetPos;
