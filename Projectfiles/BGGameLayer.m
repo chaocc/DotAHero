@@ -95,7 +95,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateCutting;
             break;
             
-        case kActionPlayerUpdateHand:
+        case kActionDrawCard:
             _state = kGameStateDrawing;
             break;
             
@@ -115,10 +115,18 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateChoosing;
             break;
             
-        default:
+        case kActionPlayCard:
+        case kActionChoseCardToUse:
+        case kActionUseHandCard:
+        case kActionUseHeroSkill:
+        case kActionUseEquipment:
             _state = kGameStatePlaying;
+            
+        default:
             break;
     }
+    
+    NSAssert((kGameStateInvalid != _state), @"Invalid state with action: %i", _action);
     
     return _state;
 }
@@ -299,13 +307,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
 }
 
-- (void)setHandCardCountForOtherPlayers
-{
-    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
-        [_allPlayers[i] setHandCardCount:COUNT_INITIAL_HAND_CARD - 1];
-    }
-}
-
 - (void)disablePlayerAreaForOtherPlayers
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
@@ -451,7 +452,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
     switch (self.state) {
-        case kGameStateCutting: {            
+        case kGameStateCutting: {
             NSUInteger rowCount = ceil((double)_allPlayers.count/COUNT_MAX_DECK_CARD);
             NSUInteger colCount = ceil((double)_allPlayers.count/rowCount);
             CGFloat padding = PADDING_CUTTED_CARD;

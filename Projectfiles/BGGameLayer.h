@@ -64,7 +64,6 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 - (BGPlayer *)playerWithName:(NSString *)playerName;
 
 - (void)renderOtherPlayersHeroWithHeroIds:(NSArray *)heroIds;
-- (void)setHandCardCountForOtherPlayers;
 - (void)addProgressBarForOtherPlayers;
 - (void)removeProgressBarForOtherPlayers;
 - (void)disablePlayerAreaForOtherPlayers;

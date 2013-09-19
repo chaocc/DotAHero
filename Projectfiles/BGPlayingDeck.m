@@ -139,7 +139,6 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     
     switch (_gameLayer.action) {
         case kActionDeckShowAllCuttedCards: // Show cutted card on deck
-            [_gameLayer setHandCardCountForOtherPlayers];
             [_gameLayer removeProgressBarForOtherPlayers];
             [self showCuttedCardWithCardIds:cardIds];
             break;
@@ -357,74 +356,6 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     
     [_player addProgressBar];
 }
-
-//#pragma mark - Card movement
-///*
-// * Move the selected cards on playing deck or other player's hand
-// */
-//- (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
-//{
-//    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        CGPoint targetPos = [self cardMoveTargetPositionWithIndex:idx];
-//        
-//        BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
-//        [ac runEaseMoveWithTarget:targetPos
-//                         duration:DURATION_USED_CARD_MOVE
-//                           object:obj
-//                            block:block];
-//    }];
-//}
-//
-///*
-// * Determine target position of selected card movement
-// * Set card move target positon according to different game state
-// * (Move card to playing deck or other player)
-// */
-//- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx
-//{
-//    CGPoint targetPos;
-//    CGFloat cardWidth = PLAYING_CARD_WIDTH;
-//    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
-//    
-//    switch (_gameLayer.state) {
-//        case kGameStateCutting: {            
-//            NSUInteger rowCount = ceil((double)_gameLayer.allPlayers.count/COUNT_MAX_DECK_CARD_NO_OVERLAP);
-//            NSUInteger colCount = ceil((double)_gameLayer.allPlayers.count/rowCount);
-//            CGFloat padding = PADDING_CUTTED_CARD;
-//            
-//            CGFloat startPosX = POSITION_DECK_AREA_CENTER.x - (colCount-1)*cardWidth/2;
-//            CGFloat delta = (idx < colCount) ? idx*(cardWidth+padding) : (idx-colCount)*(cardWidth+padding);
-//            CGFloat cardPosX = startPosX + delta;
-//            
-//            CGFloat startPosY = (1 == rowCount) ? POSITION_DECK_AREA_CENTER.y : POSITION_DECK_AREA_TOP.y;
-//            CGFloat cardPosY = (idx < colCount) ? startPosY : (POSITION_DECK_AREA_TOP.y-cardHeight-padding);
-//            
-//            targetPos = ccp(cardPosX, cardPosY);
-//            break;
-//        }
-//            
-//        case kGameStatePlaying:
-//        case kGameStateDiscarding: {
-//            NSUInteger addedCardCount = _cardMenu.children.count - _existingCardCount;
-//            NSUInteger factor = (_existingCardCount > 0) ? addedCardCount : addedCardCount-1;
-//            factor += _existingCardCount;
-//            CGFloat padding = PLAYING_CARD_PADDING(addedCardCount, COUNT_MAX_DECK_CARD_NO_OVERLAP);
-//            
-//            CGPoint basePos = ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth/2, 0.0f));
-//            
-//            targetPos = ccpAdd(basePos, ccp((cardWidth+padding)*(idx+1), 0.0f));
-//            break;
-//        }
-//            
-//        default: {
-//            BGPlayer *player = (_gameLayer.currPlayer.isSelfPlayer) ? _gameLayer.targetPlayer : _gameLayer.currPlayer;
-//            targetPos = player.position;
-//            break;
-//        }
-//    }
-//    
-//    return targetPos;
-//}
 
 /*
  * Make each card on the deck center alignment

@@ -90,7 +90,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _selectedColor = kCardColorInvalid;
     _selectedSuits = kCardSuitsInvalid;
     _selectedSkillId = kHeroSkillInvalid;
-    _selectedCardIsFacedUp = NO;
 }
 
 #pragma mark - Player area
@@ -193,7 +192,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         [_handArea updateHandCardWithCardIds:cardIds];
     } else {
         [_gameLayer.playingDeck updateWithCardIds:cardIds];
-        [self updateHandCardWithCardCount:-cardIds.count];
     }
 }
 
@@ -239,9 +237,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         return;
     }
     
-//  Reduce hand card count of current player
-    self.handCardCount -= cardIds.count + count;
-    
 //  给牌(明置)
     [self moveCardWithCardIds:cardIds
                  fromPosition:self.position
@@ -263,9 +258,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     if (_gameLayer.targetPlayer.isSelfPlayer) {
         return;
     }
-    
-//  Reduce hand card count of target player
-    _gameLayer.targetPlayer.handCardCount -= cardIdxes.count;
     
 //  抽取装备
     [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
@@ -293,7 +285,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                       toTargerPlayer:player
                                block:^{
                                    [menu removeFromParent];
-                                   player.handCardCount += cardIds.count;
                                }];
 }
 
@@ -316,7 +307,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                       toTargerPlayer:player
                                block:^{
                                    [menu removeFromParent];
-                                   player.handCardCount += count;
                                }];
 }
 
@@ -359,8 +349,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_handCardCount).stringValue
                                                 fontName:@"Arial"
                                                 fontSize:22.0f];
-    countLabel.position = ccp(_position.x-self.size.width*0.07, _position.y-self.size.height*0.23);
-    [self addChild:countLabel z:1 tag:kPlayerTagHandCardCount];
+    countLabel.position = ccp(-_contentSize.width*0.08, -_contentSize.height*0.24);
+    [self addChild:countLabel z:0 tag:kPlayerTagHandCardCount];
 }
 
 #pragma mark - Playing menu
@@ -373,7 +363,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [self removePlayingMenu];
     
     switch (_gameLayer.action) {
-        case kActionPlayingCard:            // 主动使用
+        case kActionPlayCard:               // 主动使用
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypePlaying];
             break;
             
@@ -387,11 +377,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeOkay];
             break;
             
-        case kActionChoosingColor:          // 选择卡牌颜色
+        case kActionChooseColor:            // 选择卡牌颜色
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardColor];
             break;
             
-        case kActionChoosingSuits:          // 选择卡牌花色
+        case kActionChooseSuits:            // 选择卡牌花色
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardSuits];
             break;
             

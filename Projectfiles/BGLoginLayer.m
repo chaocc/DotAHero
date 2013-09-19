@@ -36,10 +36,10 @@ static BGLoginLayer *instanceOfLoginLayer = nil;
 {
     srandom(time(NULL));
     
-    if ([CCDirector sharedDirector].currentDeviceIsIPad) {
-        return [NSString stringWithFormat:@"iPad%li", lrint(1000 * random())];
-    } else if ([CCDirector sharedDirector].currentDeviceIsSimulator) {
+    if ([CCDirector sharedDirector].currentDeviceIsSimulator) {
         return [NSString stringWithFormat:@"Simulator%li", lrint(1000 * random())];
+    } else if ([CCDirector sharedDirector].currentDeviceIsIPad) {
+        return [NSString stringWithFormat:@"iPad%li", lrint(1000 * random())];
     }
     return [NSString stringWithFormat:@"Killua%li", lrint(1000 * random())];
 }

@@ -37,7 +37,6 @@
 @property (nonatomic) NSInteger selectedSkillId;
 @property (nonatomic) BGCardColor selectedColor;
 @property (nonatomic) BGCardSuits selectedSuits;
-@property (nonatomic) BOOL selectedCardIsFacedUp;       // 选中给其他玩家的卡牌是否是明置的
 
 @property (nonatomic) NSUInteger handCardCount;         // 手牌数
 @property (nonatomic) NSUInteger selectableTargetCount; // 可以指定的目标玩家数

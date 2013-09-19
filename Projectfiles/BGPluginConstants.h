@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionCancel = 102,                            // 取消
     kActionDiscard = 103,                           // 确定弃牌
     kActionOkay = 104,                              // 确定
+    kActionUseEquipment = 105,                      // 发动装备
 //    kActionClearDeckCard = 105,                     // 清空桌面
     
     kActionChoseHero = 200,                         // 选择了英雄
@@ -52,17 +53,19 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionPlayerDealCard = 2001,                   // 发初始手牌
     kActionPlayerUpdateHero = 2002,                 // 更新英雄的血量/怒气等信息
     kActionPlayerUpdateHand = 2003,                 // 更新手牌
-    kActionPlayerUpdateHandGetting = 2004,          // 更新手牌-获得
-    kActionPlayerUpdateEquipment = 2005,            // 更新装备区的牌
+    kActionPlayerUpdateHandGetting = 2005,          // 更新手牌: 获得
+    kActionPlayerUpdateEquipment = 2006,            // 更新装备区的牌
     
-    kActionPlayingCard = 3000,                      // 出牌阶段(主动)
+    kActionPlayCard = 3000,                         // 出牌(主动)
     kActionChooseCardToUse = 3001,                  // 选择卡牌: 使用(被动)
     kActionChooseCardToCut = 3002,                  // 选择卡牌: 切牌
     kActionChooseCardToGet = 3003,                  // 选择目标卡牌: 抽取获得
     kActionChooseCardToGive = 3004,                 // 选择卡牌: 交给其他玩家
     kActionChooseCardToDiscard = 3005,              // 选择卡牌: 弃置
-    kActionChoosingColor = 3006,                    // 选择颜色阶段
-    kActionChoosingSuits = 3007,                    // 选择花色阶段
+    kActionChooseColor = 3006,                      // 选择颜色阶段
+    kActionChooseSuits = 3007,                      // 选择花色阶段
+    
+    kActionDrawCard = 4000,                         // 摸牌
 };
 
 // Parameters

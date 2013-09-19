@@ -318,6 +318,7 @@
     
     [_player removePlayingMenu];
     [_player removeProgressBar];
+    [_player.handArea disableAllHandCards];
     [_gameLayer disablePlayerAreaForOtherPlayers];
 }
 
@@ -332,35 +333,33 @@
     
     if (kHeroSkillInvalid == _player.selectedSkillId) {
         [_player.handArea useHandCardWithAnimation:isRunAnimation block:^{
-            
+            switch (_gameLayer.state) {
+                case kGameStateCutting:
+                    _player.comparedCardId = [_player.selectedCardIds.lastObject integerValue];
+                    [[BGClient sharedClient] sendChoseCardToCutRequest];
+                    break;
+                    
+                case kGameStateChoosing:
+                    [[BGClient sharedClient] sendChoseCardToUseRequest];
+                    break;
+                    
+                case kGameStatePlaying:
+                    [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+                    break;
+                    
+                case kGameStateGiving:
+                    [[BGClient sharedClient] sendChoseCardToGiveRequest];
+                    break;
+                    
+                case kGameStateDiscarding:
+                    [[BGClient sharedClient] sendDiscardRequest];
+                    break;
+                    
+                default:
+                    [[BGClient sharedClient] sendChoseCardToUseRequest];
+                    break;
+            }
         }];
-        
-        switch (_gameLayer.state) {
-            case kGameStateCutting:
-                _player.comparedCardId = [_player.selectedCardIds.lastObject integerValue];
-                [[BGClient sharedClient] sendChoseCardToCutRequest];
-                break;
-                
-            case kGameStateChoosing:
-                [[BGClient sharedClient] sendChoseCardToUseRequest];
-                break;
-                
-            case kGameStatePlaying:
-                [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
-                break;
-                
-            case kGameStateGiving:
-                [[BGClient sharedClient] sendChoseCardToGiveRequest];
-                break;
-                
-            case kGameStateDiscarding:
-                [[BGClient sharedClient] sendDiscardRequest];
-                break;
-                
-            default:
-                [[BGClient sharedClient] sendChoseCardToUseRequest];
-                break;
-        }
     }
     else {
         if (0 == _player.selectedCardIds.count) {
