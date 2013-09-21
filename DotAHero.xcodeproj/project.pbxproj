@@ -136,6 +136,8 @@
 		E31BC2ED17AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E31BC2E517AB68F100745E12 /* RestoreBlood-ipadhd.pvr.ccz */; };
 		E31DDB5817811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
 		E31DDB5917811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
+		E336E21C17EDAE9B00957279 /* BGTextPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = E336E21B17EDAE9B00957279 /* BGTextPrompt.m */; };
+		E336E21D17EDAE9B00957279 /* BGTextPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = E336E21B17EDAE9B00957279 /* BGTextPrompt.m */; };
 		E33EADE517565F2500A46952 /* BGHeroArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE417565F2500A46952 /* BGHeroArea.m */; };
 		E33EADE617565F2500A46952 /* BGHeroArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE417565F2500A46952 /* BGHeroArea.m */; };
 		E33EADE917565F3E00A46952 /* BGEquipmentArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE817565F3E00A46952 /* BGEquipmentArea.m */; };
@@ -1183,6 +1185,8 @@
 		E31DDB5617811E1100789EDF /* BGPlayingMenu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingMenu.h; sourceTree = "<group>"; };
 		E31DDB5717811E1100789EDF /* BGPlayingMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingMenu.m; sourceTree = "<group>"; };
 		E320CE071768E3C700A1F32D /* BGPluginConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPluginConstants.h; sourceTree = "<group>"; };
+		E336E21A17EDAE9B00957279 /* BGTextPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGTextPrompt.h; sourceTree = "<group>"; };
+		E336E21B17EDAE9B00957279 /* BGTextPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGTextPrompt.m; sourceTree = "<group>"; };
 		E33EADE317565F2500A46952 /* BGHeroArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGHeroArea.h; sourceTree = "<group>"; };
 		E33EADE417565F2500A46952 /* BGHeroArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHeroArea.m; sourceTree = "<group>"; };
 		E33EADE717565F3E00A46952 /* BGEquipmentArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGEquipmentArea.h; sourceTree = "<group>"; };
@@ -2198,6 +2202,8 @@
 				E396B3BA1781F06100A7A15F /* BGPlayer.m */,
 				E31DDB5617811E1100789EDF /* BGPlayingMenu.h */,
 				E31DDB5717811E1100789EDF /* BGPlayingMenu.m */,
+				E336E21A17EDAE9B00957279 /* BGTextPrompt.h */,
+				E336E21B17EDAE9B00957279 /* BGTextPrompt.m */,
 			);
 			name = Player;
 			sourceTree = "<group>";
@@ -3780,6 +3786,7 @@
 				E3D069A217C2796300B3ADEF /* TSharedProcessorFactory.m in Sources */,
 				E3D069A417C2796300B3ADEF /* TSocketClient.m in Sources */,
 				E3D069A617C2796300B3ADEF /* TTransportException.m in Sources */,
+				E336E21C17EDAE9B00957279 /* BGTextPrompt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4194,6 +4201,7 @@
 				E3D069A317C2796300B3ADEF /* TSharedProcessorFactory.m in Sources */,
 				E3D069A517C2796300B3ADEF /* TSocketClient.m in Sources */,
 				E3D069A717C2796300B3ADEF /* TTransportException.m in Sources */,
+				E336E21D17EDAE9B00957279 /* BGTextPrompt.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

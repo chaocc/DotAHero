@@ -108,6 +108,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         case kActionChooseCardToDiscard:
+        case kActionChoseCardToDiscard:
             _state = kGameStateDiscarding;
             break;
             
@@ -120,13 +121,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
         case kActionUseHandCard:
         case kActionUseHeroSkill:
         case kActionUseEquipment:
+        case kActionPlayerUpdateHand:
             _state = kGameStatePlaying;
+            break;
             
         default:
+            _state = kGameStateInvalid;
             break;
     }
-    
-    NSAssert((kGameStateInvalid != _state), @"Invalid state with action: %i", _action);
     
     return _state;
 }
@@ -307,6 +309,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
     }
 }
 
+- (void)enablePlayerAreaForOtherPlayers
+{
+    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+        [_allPlayers[i] enablePlayerArea];
+        [_allPlayers[i] restoreColor];
+    }
+}
+
 - (void)disablePlayerAreaForOtherPlayers
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
@@ -427,15 +437,28 @@ static BGGameLayer *instanceOfGameLayer = nil;
                         block:block];
 }
 
+//- (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
+//{
+//    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        CGPoint targetPos = [self cardMoveTargetPositionWithIndex:idx];
+//        
+//        BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
+//        [ac runEaseMoveWithTarget:targetPos
+//                         duration:DURATION_CARD_MOVE
+//                           object:obj
+//                            block:block];
+//    }];
+//}
+
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
 {
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CGPoint targetPos = [self cardMoveTargetPositionWithIndex:idx];
+        CGPoint targetPos = [self cardMoveTargetPositionWithIndex:idx count:menuItems.count];
         
         BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
         [ac runEaseMoveWithTarget:targetPos
                          duration:DURATION_CARD_MOVE
-                           object:obj
+                            object:obj
                             block:block];
     }];
 }
@@ -445,7 +468,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
  * Set card move target positon according to different game state
  * (Move card to playing deck or other player)
  */
-- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx
+- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count
 {
     CGPoint targetPos;
     CGFloat cardWidth = PLAYING_CARD_WIDTH;
@@ -467,20 +490,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
             targetPos = ccp(cardPosX, cardPosY);
             break;
         }
-        
-        case kGameStateDrawing:
-        case kGameStateGetting:
-            targetPos = self.currPlayer.position;
-            break;
             
         case kGameStateChoosing:
         case kGameStatePlaying:
         case kGameStateDiscarding: {
             NSUInteger addedCardCount = _playingDeck.allCardCount - _playingDeck.existingCardCount;
             NSUInteger factor = (_playingDeck.existingCardCount > 0) ? addedCardCount : addedCardCount-1;
-            factor += _playingDeck.existingCardCount;
             CGFloat padding = PLAYING_CARD_PADDING(addedCardCount, COUNT_MAX_DECK_CARD);
-            CGPoint basePos = ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth/2, 0.0f));
+            CGPoint basePos = ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth, 0.0f));
             
             targetPos = ccpAdd(basePos, ccp((cardWidth+padding)*idx, 0.0f));
             break;
@@ -493,8 +510,15 @@ static BGGameLayer *instanceOfGameLayer = nil;
 //            }
 //            break;
             
+        case kGameStateDrawing:
+        case kGameStateGetting:
+            targetPos = ccpAdd(self.currPlayer.position, ccp(cardWidth/4*(idx+1-count+idx/2), 0.0f));
+            break;
+            
         case kGameStateGiving:
-            targetPos = (self.targetPlayer.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : self.targetPlayer.position;
+            targetPos = (self.targetPlayer.isSelfPlayer) ?
+                POSITION_HAND_AREA_RIGHT :
+                ccpAdd(self.targetPlayer.position, ccp(cardWidth/4*(idx+1-count+idx/2), 0.0f));
             break;
             
         default:

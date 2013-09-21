@@ -209,14 +209,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         CCMenu *menu = [mf createMenuWithSpriteFrameNames:frameNames];
         menu.enabled = NO;
         menu.position = POSITION_DECK_AREA_CENTER;
-        [menu alignItemsHorizontallyWithPadding:[menu.children.lastObject contentSize].width/2];
-        [self addChild:menu];
+        [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
+        [_gameLayer addChild:menu];
         
         [_gameLayer moveCardWithCardMenu:menu
                           toTargerPlayer:self
                                    block:^{
                                        [menu removeFromParent];
-                                       self.handCardCount += count;
                                    }];
     } else {
         BGActionComponent *ac = [BGActionComponent actionComponentWithNode:self];
@@ -278,8 +277,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCMenu *menu = [[BGMenuFactory menuFactory] createMenuWithCards:cards];
     menu.enabled = NO;
     menu.position = fromPos;
-    [menu alignItemsHorizontallyWithPadding:[menu.children.lastObject contentSize].width/2];
-    [self addChild:menu];
+    [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
+    [_gameLayer addChild:menu];
     
     [_gameLayer moveCardWithCardMenu:menu
                       toTargerPlayer:player
@@ -300,8 +299,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCMenu *menu = [[BGMenuFactory menuFactory] createMenuWithSpriteFrameNames:frameNames];
     menu.enabled = NO;
     menu.position = fromPos;
-    [menu alignItemsHorizontallyWithPadding:[menu.children.lastObject contentSize].width/2];
-    [self addChild:menu];
+    [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
+    [_gameLayer addChild:menu];
     
     [_gameLayer moveCardWithCardMenu:menu
                       toTargerPlayer:player
@@ -424,10 +423,20 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
 //  Run progress bar. If time is up, execute corresponding operation.
     void(^block)() = ^{
-        if (kGameStateCutting == _gameLayer.state) {
-            [_handArea useHandCardAfterTimeIsUp];
-            _comparedCardId = [_selectedCardIds.lastObject integerValue];
-            [[BGClient sharedClient] sendChoseCardToCutRequest];
+        switch (_gameLayer.state) {
+            case kGameStateCutting:
+                [_handArea useHandCardAfterTimeIsUp];
+                _comparedCardId = [_selectedCardIds.lastObject integerValue];
+                [[BGClient sharedClient] sendChoseCardToCutRequest];
+                break;
+                
+            case kGameStateDiscarding:
+                [_handArea useHandCardAfterTimeIsUp];
+                [[BGClient sharedClient] sendChoseCardToDiscardRequest];
+                break;
+                
+            default:
+                break;
         }
         
         [self removePlayingMenu];

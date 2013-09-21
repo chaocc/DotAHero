@@ -35,15 +35,14 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionChoseCardToUse = 201,                    // 选择了卡牌Id/Idx: 使用
     kActionChoseCardToCut = 202,                    // 选择了卡牌: 切牌
     kActionChoseCardToGet = 203,                    // 选择了目标卡牌: 抽取获得
-    kActionChoseCardToDrop = 204,                   // 先择了卡牌: 丢掉
-    kActionChoseCardToGive = 205,                   // 选择了卡牌: 交给其他玩家
-    kActionChoseCardToDiscard = 206,                // 选择了卡牌: 弃置
-    kActionChoseColor = 207,                        // 选择了卡牌颜色
-    kActionChoseSuits = 208,                        // 选择了卡牌花色
-    kActionAssignCard = 209,                        // 分配了卡牌(如能量转移)
+    kActionChoseCardToGive = 204,                   // 选择了卡牌: 交给其他玩家
+    kActionChoseCardToDiscard = 205,                // 选择了卡牌: 弃置
+    kActionChoseColor = 206,                        // 选择了卡牌颜色
+    kActionChoseSuits = 207,                        // 选择了卡牌花色
+    kActionAssignCard = 208,                        // 分配了卡牌(如能量转移)
     
     kActionDeckDealHeros = 1000,                    // 发待选英雄
-    kActionDeckShowDroppedCard = 1001,              // 显示拆除的牌
+//    kActionDeckShowDiscardedCard = 1001,            // 显示弃置的牌
     kActionDeckShowPlayerCard = 1002,               // 显示目标手牌(暗置)和装备
     kActionDeckShowTopPileCard = 1003,              // 显示牌堆顶的牌(如能量转移)
     kActionDeckShowAllSelectedHeros = 1004,         // 显示所有玩家选中的英雄

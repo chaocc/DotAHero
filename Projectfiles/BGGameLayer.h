@@ -66,6 +66,7 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 - (void)renderOtherPlayersHeroWithHeroIds:(NSArray *)heroIds;
 - (void)addProgressBarForOtherPlayers;
 - (void)removeProgressBarForOtherPlayers;
+- (void)enablePlayerAreaForOtherPlayers;
 - (void)disablePlayerAreaForOtherPlayers;
 - (void)setColorWith:(ccColor3B)color ofNode:(CCNode *)node;
 

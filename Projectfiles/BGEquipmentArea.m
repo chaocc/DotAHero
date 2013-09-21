@@ -112,7 +112,6 @@
         }
     }
     
-//  ...TEMP...
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:[NSArray arrayWithObject:card]];
     [self removeEquipmentWithCardMenuItems:menuItems];
 }

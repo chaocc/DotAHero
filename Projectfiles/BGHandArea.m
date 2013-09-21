@@ -176,6 +176,8 @@
  */
 - (void)makeHandCardLeftAlignment
 {
+    if (0 == _handCards.count) return;
+    
     NSMutableArray *actions = [NSMutableArray arrayWithCapacity:_cardMenu.children.count];
     
 //  If card count is great than 6(No overlap), need narrow the padding. But the first card's position unchanged.
@@ -333,12 +335,14 @@
  */
 - (void)checkPlayingMenuAvailabilityWithSelectedCard:(BGPlayingCard *)card
 {
-    CCMenuItem *okayMenu = [_player.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
-    NSAssert(okayMenu, @"okayMenu Nil in %@", NSStringFromSelector(_cmd));
+    CCMenuItem *okayMenu = [_player.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
+    CCMenuItem *strenMenu;
 
 //  No card selected
-    if (!card.isSelected) {
+    if (!card.isSelected && 0 == _selectedCards.count) {
         okayMenu.isEnabled = NO;
+        [_gameLayer.targetPlayerNames removeAllObjects];    // Remove selected target player
+        
         if (_player.playingMenu.menuType == kPlayingMenuItemTagStrengthen) {
             [_player.playingMenu removeFromParent];
             [_player addPlayingMenu];
@@ -355,12 +359,18 @@
     if (card.canBeStrengthened && _player.heroArea.angerPoint > 0) {
         [_player.playingMenu removeFromParent];
         [_player addPlayingMenuOfStrengthen];
+        okayMenu = [_player.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
+        strenMenu = [_player.playingMenu menuItemByTag:kPlayingMenuItemTagStrengthen];
     }
 
     if (card.needSpecifyTarget) {
         okayMenu.isEnabled = (_gameLayer.targetPlayerNames.count == card.targetCount);
     } else {
         okayMenu.isEnabled = YES;
+    }
+    
+    if (strenMenu) {
+        strenMenu.isEnabled = okayMenu.isEnabled;
     }
 }
 
@@ -385,8 +395,14 @@
             [self checkTargetPlayerOfAttack];
             break;
             
+//        case kPlayingCardLagunaBlade:
+//        case kPlayingCardViperRaid:
+//            [_gameLayer enablePlayerAreaForOtherPlayers];
+//            break;
+            
         default:
-            [_gameLayer disablePlayerAreaForOtherPlayers];
+            [_gameLayer enablePlayerAreaForOtherPlayers];
+//            [_gameLayer disablePlayerAreaForOtherPlayers];
             break;
     }
 }
@@ -449,6 +465,7 @@
     }
     
     [self useHandCardWithAnimation:NO block:nil];
+    [self makeHandCardLeftAlignment];
 }
 
 - (void)moveSelectedCardToPlayingDeck
@@ -460,7 +477,7 @@
     [_gameLayer.playingDeck updateWithCardMenuItems:_selectedMenuItems];
     
     [self updateHandCardBuffer];
-    [self makeHandCardLeftAlignment];
+//    [self makeHandCardLeftAlignment];
     [_selectedMenuItems removeAllObjects];
 }
 
@@ -478,7 +495,7 @@
     [_gameLayer moveCardWithCardMenuItems:_selectedCards block:nil];
     
     [self updateHandCardBuffer];
-    [self makeHandCardLeftAlignment];
+//    [self makeHandCardLeftAlignment];
     [_selectedMenuItems removeAllObjects];
 }
 
@@ -489,7 +506,7 @@
 {
     [_player.equipmentArea updateEquipmentWithCard:_selectedCards.lastObject];
     [_selectedMenuItems.lastObject removeFromParent];
-    [self makeHandCardLeftAlignment];
+//    [self makeHandCardLeftAlignment];
 }
 
 /*

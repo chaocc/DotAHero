@@ -268,7 +268,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 
 - (void)updateAngerPointWithCount:(NSInteger)count
 {
-    if (count == 0) return;
+    if (count == 0 || ((NSInteger)_angerPoint+count) < 0) return;
     
     _angerPoint += count;
     [self renderAngerPoint];
@@ -297,8 +297,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)selectTargetPlayerByTouchingMenuItem:(CCMenuItem *)menuItem
 {
     BGPlayer *selfPlayer = _gameLayer.selfPlayer;
-    CCMenuItem *okayMenu = [selfPlayer.playingMenu.menu.children objectAtIndex:kPlayingMenuItemTagOkay];
-    NSAssert(okayMenu, @"okMenu Nil in %@", NSStringFromSelector(_cmd));
+    CCMenuItem *okayMenu = [selfPlayer.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
+    CCMenuItem *strenMenu = [selfPlayer.playingMenu menuItemByTag:kPlayingMenuItemTagStrengthen];
     
     NSMutableArray *tarPlayerNames = _gameLayer.targetPlayerNames;
     NSAssert(tarPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
@@ -314,6 +314,10 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
             [tarPlayerNames removeObjectAtIndex:0];
         }
         okayMenu.isEnabled = (tarPlayerNames.count == selfPlayer.selectableTargetCount);
+    }
+    
+    if (strenMenu) {
+        strenMenu.isEnabled = okayMenu.isEnabled;
     }
 }
 

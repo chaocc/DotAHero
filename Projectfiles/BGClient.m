@@ -431,15 +431,13 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
- * Send game plugin request with kActionChoseCardToDrop.
+ * Send game plugin request with kActionChoseCardToGive.
+ * Check need broadcast gave card ids or card count
  */
-- (void)sendChoseCardToDropRequest
+- (void)sendChoseCardToGiveRequest
 {
     EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionChoseCardToDrop forKey:kAction];
-    if (_player.selectedCardIdxes.count > 0) {
-        [obj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
-    }
+    [obj setInt:kActionChoseCardToGive forKey:kAction];    
     if (_player.selectedCardIds.count > 0) {
         [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
     }
@@ -449,13 +447,15 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
- * Send game plugin request with kActionChoseCardToGive.
- * Check need broadcast gave card ids or card count
+ * Send game plugin request with kActionChoseCardToDiscard.
  */
-- (void)sendChoseCardToGiveRequest
+- (void)sendChoseCardToDiscardRequest
 {
     EsObject *obj = [[EsObject alloc] init];
-    [obj setInt:kActionChoseCardToGive forKey:kAction];    
+    [obj setInt:kActionChoseCardToDiscard forKey:kAction];
+    if (_player.selectedCardIdxes.count > 0) {
+        [obj setIntArray:_player.selectedCardIdxes forKey:kParamCardIndexList];
+    }
     if (_player.selectedCardIds.count > 0) {
         [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
     }
@@ -548,10 +548,6 @@ static BGClient *instanceOfClient = nil;
         
         case kActionDeckShowAllCuttedCards:
             _playingDeck.maxCardId = [obj intWithKey:kParamMaxFigureCardId];
-            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
-            break;
-            
-        case kActionDeckShowDroppedCard:
             [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
@@ -691,7 +687,7 @@ static BGClient *instanceOfClient = nil;
         
         case kActionUseHandCard:
         case kActionChoseCardToUse:
-        case kActionChoseCardToDrop:
+        case kActionChoseCardToDiscard:
             [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             [_player removeProgressBar];
             break;
@@ -706,6 +702,7 @@ static BGClient *instanceOfClient = nil;
                                      cardCount:[obj intWithKey:kParamCardCount]];
             break;
             
+        case kActionDrawCard:
         case kActionPlayerUpdateHand:
             [_player updateHandCardWithCardCount:[obj intWithKey:kParamCardCount]];
             break;
@@ -713,6 +710,7 @@ static BGClient *instanceOfClient = nil;
         case kActionPlayerUpdateHero:
             [_player updateHeroWithBloodPoint:[obj intWithKey:kParamHeroBloodPointChanged]
                                    angerPoint:[obj intWithKey:kParamHeroAngerPointChanged]];
+            [_player removeProgressBar];
             break;
             
         default:

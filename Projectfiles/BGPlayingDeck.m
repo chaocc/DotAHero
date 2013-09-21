@@ -145,8 +145,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         
         case kActionUseHandCard:            // Show used/dropped card on deck
         case kActionChoseCardToUse:
-        case kActionDeckShowDroppedCard:
-        case kActionChoseCardToDrop:
+        case kActionChoseCardToDiscard:
             [self showUsedCardWithCardIds:cardIds];
             break;
             
@@ -362,13 +361,11 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)makeUsedCardCenterAlignment
 {
-    if (kGameStateCutting == _gameLayer.state) {
-        return;
-    }
+    if (0 == _existingCardCount) return;
     
     void(^block)() = ^{
         NSUInteger addedCardCount = _cardMenu.children.count - _existingCardCount;
-        CGPoint deltaPos = (_existingCardCount > 0) ? ccp(addedCardCount*PLAYING_CARD_WIDTH/2, 0.0f) : CGPointZero;
+        CGPoint deltaPos = ccp(addedCardCount*PLAYING_CARD_WIDTH/2, 0.0f);
         
         [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
@@ -459,7 +456,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     [_player.handArea addAndFaceDownOneDrewCardWith:menuItem];
     
 //  The drew card count can't great than all hand card count
-    void(^block)() = ^{
+    void(^block)(id object) = ^(id object){
         [_player.handArea makeHandCardLeftAlignment];
         
         if ([self isDrawingFinished]) {

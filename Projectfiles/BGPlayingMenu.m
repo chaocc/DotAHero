@@ -17,6 +17,8 @@
 @property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic, weak) BGPlayer *player;
 
+@property (nonatomic, strong) CCMenu *menu;
+
 @end
 
 @implementation BGPlayingMenu
@@ -39,6 +41,11 @@
 + (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType
 {
     return [[self alloc] initWithMenuType:menuType];
+}
+
+- (CCMenuItem *)menuItemByTag:(NSInteger)tag
+{
+    return (CCMenuItem *)[_menu getChildByTag:tag];
 }
 
 #pragma mark - Playing menu creation
@@ -319,6 +326,7 @@
     [_player removePlayingMenu];
     [_player removeProgressBar];
     [_player.handArea disableAllHandCards];
+    [_player.handArea makeHandCardLeftAlignment];
     [_gameLayer disablePlayerAreaForOtherPlayers];
 }
 
@@ -352,7 +360,7 @@
                     break;
                     
                 case kGameStateDiscarding:
-                    [[BGClient sharedClient] sendDiscardRequest];
+                    [[BGClient sharedClient] sendChoseCardToDiscardRequest];
                     break;
                     
                 default:
