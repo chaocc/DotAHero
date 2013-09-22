@@ -133,15 +133,16 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         BGHeroSkill *skill = [BGHeroSkill heroSkillWithSkillId:[_heroCard.heroSkills[idx] integerValue]];
         menuItem.tag = skill.skillId;
         
+        CGPoint anchorPoint = ccp(0.5f, 0.0f);
         if ((3 == skillCount) && (skill.skillText.length >= 4)) {
             skill.skillText = [[skill.skillText substringToIndex:2] stringByAppendingFormat:@"\n%@", [skill.skillText substringFromIndex:2]];
+            anchorPoint = ccp(0.5f, 0.3f);
         }
         
-        CCLabelBMFont *label = [CCLabelBMFont labelWithString:skill.skillText
-                                                      fntFile:kFontHeroSkillName];
+        CCLabelBMFont *label = [CCLabelBMFont labelWithString:skill.skillText fntFile:kFontHeroSkillName];
+        label.anchorPoint = anchorPoint;
         label.position = ccp(menuItem.contentSize.width/2, menuItem.contentSize.height/2);
         [menuItem addChild:label];
-        
         menuItem.isEnabled = (kHeroSkillCategoryActive == skill.skillCategory);
     }];
 }

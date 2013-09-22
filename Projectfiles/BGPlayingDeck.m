@@ -280,6 +280,29 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 }
 
 /*
+ * Make each card on the deck center alignment
+ */
+- (void)makeUsedCardCenterAlignment
+{
+    if (0 == _existingCardCount) return;
+    
+    void(^block)() = ^{
+        NSUInteger addedCardCount = _cardMenu.children.count - _existingCardCount;
+        CGPoint deltaPos = ccp(addedCardCount*PLAYING_CARD_WIDTH/2, 0.0f);
+        
+        [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
+            [ac runEaseMoveWithTarget:ccpAdd([obj position], deltaPos)
+                             duration:DURATION_CARD_MOVE
+                                block:nil];
+        }];
+    };
+    
+    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE
+                            WithBlock:block];
+}
+
+/*
  * Show X cards of top pile(牌堆顶) on the deck
  */
 - (void)showXCardsOfTopPileWithCardIds:(NSArray *)cardIds
@@ -303,7 +326,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  * Update deck with hand card count and equipment card
  * Faced down(暗置) all hand cards on the deck for being drew(比如贪婪)
  */
-- (void)updateWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
+- (void)updateWithHandCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
 {
     NSString *frameName = nil;
     if (count > 0 && cardIds.count > 0) {
@@ -354,29 +377,6 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     }
     
     [_player addProgressBar];
-}
-
-/*
- * Make each card on the deck center alignment
- */
-- (void)makeUsedCardCenterAlignment
-{
-    if (0 == _existingCardCount) return;
-    
-    void(^block)() = ^{
-        NSUInteger addedCardCount = _cardMenu.children.count - _existingCardCount;
-        CGPoint deltaPos = ccp(addedCardCount*PLAYING_CARD_WIDTH/2, 0.0f);
-        
-        [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
-            [ac runEaseMoveWithTarget:ccpAdd([obj position], deltaPos)
-                             duration:DURATION_CARD_MOVE
-                                block:nil];
-        }];
-    };
-    
-    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE
-                            WithBlock:block];
 }
 
 #pragma mark - MenuItem touching

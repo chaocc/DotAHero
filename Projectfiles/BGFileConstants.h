@@ -107,7 +107,14 @@
 #define kImagePopupDrewEquipment        @"PopupDrewEquipment.png"
 #define kImagePopupEnergyTransport      @"PopupEnergyTransport"
 
+#define kFontRemainingCardCount         @"RemainingCardCount.fnt"
+#define kFontFactionCount               @"FactionCount.fnt"
+#define kFontHandCardCount              @"HandCardCount.fnt"
+#define kFontHeroName                   @"HeroName.fnt"
+#define kFontPlayingCardName            @"PlayingCardName.fnt"
 #define kFontHeroSkillName              @"HeroSkillName.fnt"
+#define kFontEquipmentName              @"EquipmentName.fnt"
+#define kFontTextPrompt                 @"TextPrompt.fnt"
 
 #define kAudioBackground                @"Background.mp3"
 #define kAudioDamage                    @"Damage.wav"

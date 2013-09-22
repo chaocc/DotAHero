@@ -199,11 +199,15 @@
     [menuItem addChild:suitsSprite];
     
 //  Render equipment name with label text
-//    CCLabelTTF *label = [CCLabelTTF labelWithString:card.cardText
-//                                           fontName:@"Arial"
-//                                           fontSize:14.0f];
-//    label.position = ccp(width*0.90, height/2);
-//    [menuItem addChild:label];
+    NSString *text = [NSString string];
+    for (NSUInteger i = 0; i < card.cardText.length; i++) {
+        text = [text stringByAppendingFormat:@"%@\n", [card.cardText substringWithRange:NSMakeRange(i, 1)]];
+    }
+    
+    CCLabelBMFont *label = [CCLabelBMFont labelWithString:text fntFile:kFontEquipmentName];
+    label.anchorPoint = ccp(0.5f, 0.4f);
+    label.position = ccp(width*0.90, height/2);
+    [menuItem addChild:label];
 }
 
 #pragma mark - Equipment using

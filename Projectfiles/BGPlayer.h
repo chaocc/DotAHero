@@ -17,7 +17,6 @@
 
 @property (nonatomic, copy, readonly) NSString *playerName;
 @property (nonatomic, readonly) BOOL isSelfPlayer;
-//@property (nonatomic, readonly) NSUInteger handSizeLimit;
 
 @property (nonatomic) NSUInteger positiveDistance;  // +1: 其他玩家计算与自己的距离
 @property (nonatomic) NSInteger negativeDistance;   // -1: 自己计算与其他玩家的距离
@@ -41,6 +40,7 @@
 @property (nonatomic) NSUInteger handCardCount;         // 手牌数
 @property (nonatomic) NSUInteger selectableTargetCount; // 可以指定的目标玩家数
 @property (nonatomic) NSUInteger drawableCardCount;     // 可以抽取的牌数
+@property (nonatomic) BOOL isOptionalDiscard;           // 是否非强制的弃牌
 
 - (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
 + (id)playerWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;

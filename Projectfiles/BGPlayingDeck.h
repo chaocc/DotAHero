@@ -20,7 +20,7 @@
 - (void)updateWithHeroIds:(NSArray *)heroIds;
 - (void)updateWithCardIds:(NSArray *)cardIds;
 - (void)updateWithCardMenuItems:(NSArray *)menuItems;
-- (void)updateWithCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
+- (void)updateWithHandCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
 
 - (void)removeResidualNodes;
 - (void)clearExistingUsedCards;

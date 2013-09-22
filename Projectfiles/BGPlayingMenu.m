@@ -257,13 +257,13 @@
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if (0 == idx) {
-            [obj setTag:kPlayingMenuItemTagHearts];
-        } else if (1 == idx) {
-            [obj setTag:kPlayingMenuItemTagDiamonds];
-        } else if (2 == idx) {
             [obj setTag:kPlayingMenuItemTagSpades];
-        } else if (3 == idx) {
+        } else if (1 == idx) {
+            [obj setTag:kPlayingMenuItemTagHearts];
+        } else if (2 == idx) {
             [obj setTag:kPlayingMenuItemTagClubs];
+        } else if (3 == idx) {
+            [obj setTag:kPlayingMenuItemTagDiamonds];
         }
     }];
     

@@ -556,8 +556,8 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionDeckShowPlayerCard:
-            [_playingDeck updateWithCardCount:[obj intWithKey:kParamHandCardCount]
-                                 equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck updateWithHandCardCount:[obj intWithKey:kParamHandCardCount]
+                                     equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionPlayerSelectedHero:
@@ -586,6 +586,7 @@ static BGClient *instanceOfClient = nil;
         case kActionPlayCard:
         case kActionChooseCardToUse:
         case kActionChooseCardToDiscard:
+            _player.isOptionalDiscard = [obj intWithKey:kParamIsOptionalDiscard];
         case kActionChooseColor:
         case kActionChooseSuits:
             [_player addProgressBar];

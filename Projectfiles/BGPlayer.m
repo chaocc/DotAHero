@@ -345,9 +345,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     [[self getChildByTag:kPlayerTagHandCardCount] removeFromParent];
     
-    CCLabelTTF *countLabel = [CCLabelTTF labelWithString:@(_handCardCount).stringValue
-                                                fontName:@"Arial"
-                                                fontSize:22.0f];
+    CCLabelBMFont *countLabel = [CCLabelBMFont labelWithString:@(_handCardCount).stringValue
+                                                       fntFile:kFontHandCardCount];
     countLabel.position = ccp(-_contentSize.width*0.08, -_contentSize.height*0.24);
     [self addChild:countLabel z:0 tag:kPlayerTagHandCardCount];
 }
@@ -370,10 +369,14 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeChoosing];
             break;
             
-        case kActionChooseCardToCut:        // 确定切牌
+        case kActionChooseCardToCut:        // 切牌
         case kActionChooseCardToGive:       // 交给其他玩家
-        case kActionChooseCardToDiscard:    // 确定弃牌
-            _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeOkay];
+        case kActionChooseCardToDiscard:    // 弃牌
+            if (_isOptionalDiscard) {
+                _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeChoosing];
+            } else {
+                _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeOkay];
+            }
             break;
             
         case kActionChooseColor:            // 选择卡牌颜色

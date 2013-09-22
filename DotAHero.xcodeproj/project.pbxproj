@@ -1072,6 +1072,34 @@
 		E3D069A517C2796300B3ADEF /* TSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D066B017C2796200B3ADEF /* TSocketClient.m */; };
 		E3D069A617C2796300B3ADEF /* TTransportException.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D066B117C2796200B3ADEF /* TTransportException.m */; };
 		E3D069A717C2796300B3ADEF /* TTransportException.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D066B117C2796200B3ADEF /* TTransportException.m */; };
+		E3F172C417EF33FA0059314D /* RemainingCardCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C217EF33FA0059314D /* RemainingCardCount.fnt */; };
+		E3F172C517EF33FA0059314D /* RemainingCardCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C217EF33FA0059314D /* RemainingCardCount.fnt */; };
+		E3F172C617EF33FA0059314D /* RemainingCardCount.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C317EF33FA0059314D /* RemainingCardCount.png */; };
+		E3F172C717EF33FA0059314D /* RemainingCardCount.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C317EF33FA0059314D /* RemainingCardCount.png */; };
+		E3F172CA17EF46DE0059314D /* HandCardCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C817EF46DE0059314D /* HandCardCount.fnt */; };
+		E3F172CB17EF46DE0059314D /* HandCardCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C817EF46DE0059314D /* HandCardCount.fnt */; };
+		E3F172CC17EF46DE0059314D /* HandCardCount.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C917EF46DE0059314D /* HandCardCount.png */; };
+		E3F172CD17EF46DE0059314D /* HandCardCount.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C917EF46DE0059314D /* HandCardCount.png */; };
+		E3F172D017EF4A220059314D /* EquipmentName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172CE17EF4A220059314D /* EquipmentName.fnt */; };
+		E3F172D117EF4A220059314D /* EquipmentName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172CE17EF4A220059314D /* EquipmentName.fnt */; };
+		E3F172D217EF4A220059314D /* EquipmentName.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172CF17EF4A220059314D /* EquipmentName.png */; };
+		E3F172D317EF4A220059314D /* EquipmentName.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172CF17EF4A220059314D /* EquipmentName.png */; };
+		E3F172D617EF4FFC0059314D /* FactionCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172D417EF4FFC0059314D /* FactionCount.fnt */; };
+		E3F172D717EF4FFC0059314D /* FactionCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172D417EF4FFC0059314D /* FactionCount.fnt */; };
+		E3F172D817EF4FFC0059314D /* FactionCount.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172D517EF4FFC0059314D /* FactionCount.png */; };
+		E3F172D917EF4FFC0059314D /* FactionCount.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172D517EF4FFC0059314D /* FactionCount.png */; };
+		E3F172DC17EF50EE0059314D /* TextPrompt.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172DA17EF50ED0059314D /* TextPrompt.fnt */; };
+		E3F172DD17EF50EE0059314D /* TextPrompt.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172DA17EF50ED0059314D /* TextPrompt.fnt */; };
+		E3F172DE17EF50EE0059314D /* TextPrompt.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172DB17EF50ED0059314D /* TextPrompt.png */; };
+		E3F172DF17EF50EE0059314D /* TextPrompt.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172DB17EF50ED0059314D /* TextPrompt.png */; };
+		E3F172E417EF563E0059314D /* HeroName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E017EF563E0059314D /* HeroName.fnt */; };
+		E3F172E517EF563E0059314D /* HeroName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E017EF563E0059314D /* HeroName.fnt */; };
+		E3F172E617EF563E0059314D /* HeroName.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E117EF563E0059314D /* HeroName.png */; };
+		E3F172E717EF563E0059314D /* HeroName.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E117EF563E0059314D /* HeroName.png */; };
+		E3F172E817EF563E0059314D /* PlayingCardName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E217EF563E0059314D /* PlayingCardName.fnt */; };
+		E3F172E917EF563E0059314D /* PlayingCardName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E217EF563E0059314D /* PlayingCardName.fnt */; };
+		E3F172EA17EF563E0059314D /* PlayingCardName.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E317EF563E0059314D /* PlayingCardName.png */; };
+		E3F172EB17EF563E0059314D /* PlayingCardName.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172E317EF563E0059314D /* PlayingCardName.png */; };
 		E3F6D317178D23F5001A2372 /* BGAnimationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F6D316178D23F5001A2372 /* BGAnimationComponent.m */; };
 		E3F6D318178D23F5001A2372 /* BGAnimationComponent.m in Sources */ = {isa = PBXBuildFile; fileRef = E3F6D316178D23F5001A2372 /* BGAnimationComponent.m */; };
 		E3FDE38F17663A4D00E39325 /* BGDensity.m in Sources */ = {isa = PBXBuildFile; fileRef = E3FDE38E17663A4D00E39325 /* BGDensity.m */; };
@@ -1949,6 +1977,20 @@
 		E3D066AF17C2796200B3ADEF /* TSharedProcessorFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSharedProcessorFactory.m; sourceTree = "<group>"; };
 		E3D066B017C2796200B3ADEF /* TSocketClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSocketClient.m; sourceTree = "<group>"; };
 		E3D066B117C2796200B3ADEF /* TTransportException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTransportException.m; sourceTree = "<group>"; };
+		E3F172C217EF33FA0059314D /* RemainingCardCount.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RemainingCardCount.fnt; sourceTree = "<group>"; };
+		E3F172C317EF33FA0059314D /* RemainingCardCount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RemainingCardCount.png; sourceTree = "<group>"; };
+		E3F172C817EF46DE0059314D /* HandCardCount.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HandCardCount.fnt; sourceTree = "<group>"; };
+		E3F172C917EF46DE0059314D /* HandCardCount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HandCardCount.png; sourceTree = "<group>"; };
+		E3F172CE17EF4A220059314D /* EquipmentName.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = EquipmentName.fnt; sourceTree = "<group>"; };
+		E3F172CF17EF4A220059314D /* EquipmentName.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = EquipmentName.png; sourceTree = "<group>"; };
+		E3F172D417EF4FFC0059314D /* FactionCount.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = FactionCount.fnt; sourceTree = "<group>"; };
+		E3F172D517EF4FFC0059314D /* FactionCount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = FactionCount.png; sourceTree = "<group>"; };
+		E3F172DA17EF50ED0059314D /* TextPrompt.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TextPrompt.fnt; sourceTree = "<group>"; };
+		E3F172DB17EF50ED0059314D /* TextPrompt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TextPrompt.png; sourceTree = "<group>"; };
+		E3F172E017EF563E0059314D /* HeroName.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeroName.fnt; sourceTree = "<group>"; };
+		E3F172E117EF563E0059314D /* HeroName.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HeroName.png; sourceTree = "<group>"; };
+		E3F172E217EF563E0059314D /* PlayingCardName.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlayingCardName.fnt; sourceTree = "<group>"; };
+		E3F172E317EF563E0059314D /* PlayingCardName.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayingCardName.png; sourceTree = "<group>"; };
 		E3F6D315178D23F5001A2372 /* BGAnimationComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGAnimationComponent.h; sourceTree = "<group>"; };
 		E3F6D316178D23F5001A2372 /* BGAnimationComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGAnimationComponent.m; sourceTree = "<group>"; };
 		E3FDE38D17663A4D00E39325 /* BGDensity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDensity.h; sourceTree = "<group>"; };
@@ -2081,8 +2123,8 @@
 		DCC1A38C13A94F1A005BD75D /* Projectfiles */ = {
 			isa = PBXGroup;
 			children = (
-				E33EADCA1756554800A46952 /* Components */,
 				E395325917566D4600C1FA2C /* Card */,
+				E33EADCA1756554800A46952 /* Components */,
 				E387E6E6178E6D1B003F0DAD /* Include */,
 				E301E12D1770E75500E8C9D0 /* Game */,
 				E33EAE0317566CC900A46952 /* Player */,
@@ -2167,8 +2209,22 @@
 		E3196D8917CD270C00EA6A33 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				E3F172CE17EF4A220059314D /* EquipmentName.fnt */,
+				E3F172CF17EF4A220059314D /* EquipmentName.png */,
+				E3F172D417EF4FFC0059314D /* FactionCount.fnt */,
+				E3F172D517EF4FFC0059314D /* FactionCount.png */,
+				E3F172C817EF46DE0059314D /* HandCardCount.fnt */,
+				E3F172C917EF46DE0059314D /* HandCardCount.png */,
+				E3F172E017EF563E0059314D /* HeroName.fnt */,
+				E3F172E117EF563E0059314D /* HeroName.png */,
 				E3196D8A17CD273100EA6A33 /* HeroSkillName.fnt */,
 				E3196D8B17CD273100EA6A33 /* HeroSkillName.png */,
+				E3F172E217EF563E0059314D /* PlayingCardName.fnt */,
+				E3F172E317EF563E0059314D /* PlayingCardName.png */,
+				E3F172C217EF33FA0059314D /* RemainingCardCount.fnt */,
+				E3F172C317EF33FA0059314D /* RemainingCardCount.png */,
+				E3F172DA17EF50ED0059314D /* TextPrompt.fnt */,
+				E3F172DB17EF50ED0059314D /* TextPrompt.png */,
 			);
 			name = Fonts;
 			sourceTree = "<group>";
@@ -3247,6 +3303,20 @@
 				E3C53CEE17E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz in Resources */,
 				E3C53CF017E03BAE00F684E4 /* CardPopup-ipadhd.plist in Resources */,
 				E3C53CF217E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz in Resources */,
+				E3F172C417EF33FA0059314D /* RemainingCardCount.fnt in Resources */,
+				E3F172C617EF33FA0059314D /* RemainingCardCount.png in Resources */,
+				E3F172CA17EF46DE0059314D /* HandCardCount.fnt in Resources */,
+				E3F172CC17EF46DE0059314D /* HandCardCount.png in Resources */,
+				E3F172D017EF4A220059314D /* EquipmentName.fnt in Resources */,
+				E3F172D217EF4A220059314D /* EquipmentName.png in Resources */,
+				E3F172D617EF4FFC0059314D /* FactionCount.fnt in Resources */,
+				E3F172D817EF4FFC0059314D /* FactionCount.png in Resources */,
+				E3F172DC17EF50EE0059314D /* TextPrompt.fnt in Resources */,
+				E3F172DE17EF50EE0059314D /* TextPrompt.png in Resources */,
+				E3F172E417EF563E0059314D /* HeroName.fnt in Resources */,
+				E3F172E617EF563E0059314D /* HeroName.png in Resources */,
+				E3F172E817EF563E0059314D /* PlayingCardName.fnt in Resources */,
+				E3F172EA17EF563E0059314D /* PlayingCardName.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3369,6 +3439,20 @@
 				E3C53CEF17E03BAE00F684E4 /* CardPopup-ipad.pvr.ccz in Resources */,
 				E3C53CF117E03BAE00F684E4 /* CardPopup-ipadhd.plist in Resources */,
 				E3C53CF317E03BAE00F684E4 /* CardPopup-ipadhd.pvr.ccz in Resources */,
+				E3F172C517EF33FA0059314D /* RemainingCardCount.fnt in Resources */,
+				E3F172C717EF33FA0059314D /* RemainingCardCount.png in Resources */,
+				E3F172CB17EF46DE0059314D /* HandCardCount.fnt in Resources */,
+				E3F172CD17EF46DE0059314D /* HandCardCount.png in Resources */,
+				E3F172D117EF4A220059314D /* EquipmentName.fnt in Resources */,
+				E3F172D317EF4A220059314D /* EquipmentName.png in Resources */,
+				E3F172D717EF4FFC0059314D /* FactionCount.fnt in Resources */,
+				E3F172D917EF4FFC0059314D /* FactionCount.png in Resources */,
+				E3F172DD17EF50EE0059314D /* TextPrompt.fnt in Resources */,
+				E3F172DF17EF50EE0059314D /* TextPrompt.png in Resources */,
+				E3F172E517EF563E0059314D /* HeroName.fnt in Resources */,
+				E3F172E717EF563E0059314D /* HeroName.png in Resources */,
+				E3F172E917EF563E0059314D /* PlayingCardName.fnt in Resources */,
+				E3F172EB17EF563E0059314D /* PlayingCardName.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
