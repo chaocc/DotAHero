@@ -15,11 +15,12 @@
 #define kFileTypePng                    @"png"
 #define kFileTypeJpg                    @"jpg"
 
-#define kPlistPlayingCardText           @"PlayingCardText"
-#define kPlistHeroSkillText             @"HeroSkillText"
-#define kPlistHeroCardText              @"HeroCardText"
-#define kPlistDensityCardText           @"DensityCardText"
-#define kPlistRoleCardText              @"RoleCardText"
+#define kPlistPlayingCardIds            @"PlayingCardIds"
+#define kPlistPlayingCardList           @"PlayingCardList"
+#define kPlistHeroSkillList             @"HeroSkillList"
+#define kPlistHeroCardList              @"HeroCardList"
+#define kPlistDensityCardList           @"DensityCardList"
+#define kPlistRoleCardList              @"RoleCardList"
 #define kPlistCardAnimation             @"CardAnimation"
 
 #define kPlistBackground                @"Background.plist"

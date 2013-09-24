@@ -10,8 +10,6 @@
 
 @interface BGRoleCard ()
 
-@property (nonatomic, strong) NSArray *roleArray;
-
 @end
 
 @implementation BGRoleCard
@@ -19,11 +17,11 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistRoleCardText ofType:kFileTypePlist];
-        self.roleArray = [NSArray arrayWithContentsOfFile:path];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistRoleCardList ofType:kFileTypePlist];
+        NSArray *array = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kRoleCardInvalid) &&
-                 (aCardId < (NSInteger)_roleArray.count), @"Invalid Role card id in %@", NSStringFromSelector(_cmd));
-        NSDictionary *dictionary = _roleArray[aCardId];
+                 (aCardId < (NSInteger)array.count), @"Invalid Role card id in %@", NSStringFromSelector(_cmd));
+        NSDictionary *dictionary = array[aCardId];
         
         _cardEnum = [dictionary[kCardEnum] integerValue];
         _cardName = dictionary[kCardName];

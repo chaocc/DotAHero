@@ -184,19 +184,15 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 /*
- * Update(Draw/Got/Used) hand card for self player
+ * Update(Draw/Used) hand card for self/current player
  */
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds
 {
-    if (_isSelfPlayer) {
-        [_handArea updateHandCardWithCardIds:cardIds];
-    } else {
-        [_gameLayer.playingDeck updateWithCardIds:cardIds];
-    }
+    [_handArea updateHandCardWithCardIds:cardIds];
 }
 
 /*
- * Update hand card count for other player
+ * Update hand card count for current player
  */
 - (void)updateHandCardWithCardCount:(NSInteger)count
 {
@@ -227,9 +223,45 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 /*
- * Update(Give) hand card count for other player after gave target player's cards
+ * Get hand card from playing deck for self/current player
  */
-- (void)updateHandCardWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
+- (void)getCardFromDeckWithCardIds:(NSArray *)cardIds
+{
+    if (_isSelfPlayer) {
+        [_handArea updateHandCardWithCardIds:cardIds];
+    } else {
+        [self moveCardWithCardIds:cardIds
+                     fromPosition:POSITION_DECK_AREA_CENTER
+                   toTargetPlayer:self];
+    }
+}
+
+/*
+ * Draw(抽取) faced down/up card from target player
+ * Current player hand card count increased, target player reduced.
+ */
+- (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
+{
+//  Target player hand card update is informed by sever
+    if (_gameLayer.targetPlayer.isSelfPlayer) {
+        return;
+    }
+    
+//  抽取装备
+    [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
+    [self moveCardWithCardIds:cardIds
+                 fromPosition:_gameLayer.targetPlayer.position
+               toTargetPlayer:self];
+//  抽取手牌
+    [self moveCardWithCardCount:count
+                   fromPosition:_gameLayer.targetPlayer.position
+                 toTargetPlayer:self];
+}
+
+/*
+ * Give faced down/up hand card to target player
+ */
+- (void)giveCardToTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
 {
 //  Target player hand card update is informed by sever
     if (_gameLayer.targetPlayer.isSelfPlayer) {
@@ -245,28 +277,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [self moveCardWithCardCount:count
                    fromPosition:self.position
                  toTargetPlayer:_gameLayer.targetPlayer];
-}
-
-/*
- * Update(Get) hand card count for other player after got target player's cards
- * Current player hand card count increased, target player reduced.
- */
-- (void)updateHandCardWithEquipments:(NSArray *)cardIds cardIdxes:(NSArray *)cardIdxes
-{
-//  Target player hand card update is informed by sever
-    if (_gameLayer.targetPlayer.isSelfPlayer) {
-        return;
-    }
-    
-//  抽取装备
-    [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
-    [self moveCardWithCardIds:cardIds
-                 fromPosition:_gameLayer.targetPlayer.position
-               toTargetPlayer:self];
-//  抽取手牌
-    [self moveCardWithCardCount:cardIdxes.count
-                   fromPosition:_gameLayer.targetPlayer.position
-                 toTargetPlayer:self];
 }
 
 - (void)moveCardWithCardIds:(NSArray *)cardIds fromPosition:(CGPoint)fromPos toTargetPlayer:(BGPlayer *)player

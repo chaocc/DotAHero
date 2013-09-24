@@ -120,7 +120,7 @@
                                                             }];
     menuItem.tag =[card cardId];
     
-//  Render playing card figure and suits
+//  Render playing card figure and suits and card name text
     if ([card isPlayingCard]) {
         CCSprite *figure = [CCSprite spriteWithSpriteFrameName:[card figureImageName]];
         figure.position = ccp(PLAYING_CARD_WIDTH*0.11, PLAYING_CARD_HEIGHT*0.92);
@@ -129,6 +129,10 @@
         CCSprite *suits = [CCSprite spriteWithSpriteFrameName:[card suitsImageName]];
         suits.position = ccp(PLAYING_CARD_WIDTH*0.11, PLAYING_CARD_HEIGHT*0.84);
         [menuItem addChild:suits];
+        
+//        CCLabelBMFont *label = [CCLabelBMFont labelWithString:[card cardText] fntFile:kFontPlayingCardName];
+//        label.position = ccp(PLAYING_CARD_WIDTH*0.5, PLAYING_CARD_HEIGHT*0.85);
+//        [menuItem addChild:label];
     }
     
     return menuItem;

@@ -51,10 +51,12 @@
 - (void)addHandAreaWithCardIds:(NSArray *)cardIds;
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds;
 - (void)updateHandCardWithCardCount:(NSInteger)count;
-- (void)updateHandCardWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
-- (void)updateHandCardWithEquipments:(NSArray *)cardIds cardIdxes:(NSArray *)cardIdxes;
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
+
+- (void)getCardFromDeckWithCardIds:(NSArray *)cardIds;
+- (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
+- (void)giveCardToTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
 
 - (void)enablePlayerArea;
 - (void)disablePlayerArea;

@@ -227,17 +227,8 @@
         } else {
             cardColor = COLOR_DISABLED_CARD;    // Make card figure and suits to gray
         }
-        [self setCardColorWithColor:cardColor ofMenuItem:menuItem];
+        [_gameLayer setColorWith:cardColor ofNode:menuItem];
     }];
-}
-
-- (void)setCardColorWithColor:(ccColor3B)color ofMenuItem:(CCMenuItemSprite *)menuItem
-{
-    menuItem.normalImage.color = color;
-    
-    for (CCSprite *sprite in menuItem.children) {
-        sprite.color = color;
-    }
 }
 
 /*
@@ -247,10 +238,10 @@
 {
     _cardMenu.enabled = YES;
     
-    for (CCMenuItemSprite *item in _cardMenu.children) {
-        if (!item.isEnabled) {
-            item.isEnabled = YES;
-            [self setCardColorWithColor:ccWHITE ofMenuItem:item];
+    for (CCMenuItem *menuItem in _cardMenu.children) {
+        if (!menuItem.isEnabled) {
+            menuItem.isEnabled = YES;
+            [_gameLayer setColorWith:ccWHITE ofNode:menuItem];
         }
     }
 }
@@ -262,9 +253,9 @@
 {
     _cardMenu.enabled = NO;
     
-    for (CCMenuItemSprite *item in _cardMenu.children) {
-        if (!item.isEnabled) {
-            [self setCardColorWithColor:ccWHITE ofMenuItem:item];
+    for (CCMenuItem *menuItem in _cardMenu.children) {
+        if (!menuItem.isEnabled) {
+            [_gameLayer setColorWith:ccWHITE ofNode:menuItem];
         }
     }
 }
@@ -395,14 +386,18 @@
             [self checkTargetPlayerOfAttack];
             break;
             
-//        case kPlayingCardLagunaBlade:
-//        case kPlayingCardViperRaid:
-//            [_gameLayer enablePlayerAreaForOtherPlayers];
-//            break;
+        case kPlayingCardDisarm:
+            [self checkTargetPlayerOfDisarm];
+            break;
+            
+        case kPlayingCardLagunaBlade:
+        case kPlayingCardViperRaid:
+        case kPlayingCardElunesArrow:
+            [_gameLayer enablePlayerAreaForOtherPlayers];
+            break;
             
         default:
-            [_gameLayer enablePlayerAreaForOtherPlayers];
-//            [_gameLayer disablePlayerAreaForOtherPlayers];
+            [_gameLayer disablePlayerAreaForOtherPlayers];
             break;
     }
 }
@@ -417,6 +412,21 @@
         NSInteger distance = (i < halfCount) ? player.positiveDistance+i-1 : player.positiveDistance+playerCount-i-1;
         
         if ((NSInteger)_player.attackRange >= distance) {
+            [player enablePlayerArea];
+        } else {
+            [player setDisabledColor];
+        }
+    }
+}
+
+- (void)checkTargetPlayerOfDisarm
+{
+    NSUInteger playerCount = _gameLayer.allPlayers.count;
+    
+    for (NSUInteger i = 1; i < playerCount; i++) {
+        BGPlayer *player = _gameLayer.allPlayers[i];
+        
+        if (player.equipmentArea.equipmentCards.count > 0) {
             [player enablePlayerArea];
         } else {
             [player setDisabledColor];

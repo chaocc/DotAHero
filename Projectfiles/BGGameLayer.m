@@ -100,6 +100,8 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         case kActionChoseCardToGet:
+        case kActionPlayerGetCard:
+        case kActionPlayerGetDeckCard:
             _state = kGameStateGetting;
             break;
             

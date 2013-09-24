@@ -25,7 +25,7 @@
 		<key>heroName</key>
 		<string>SkeletonKing</string>
 		<key>heroText</key>
-		<string></string>
+		<string>骷髅王</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -44,7 +44,7 @@
 		<key>heroName</key>
 		<string>Bristleback</string>
 		<key>heroText</key>
-		<string></string>
+		<string>刚背兽</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -63,7 +63,7 @@
 		<key>heroName</key>
 		<string>SacredWarrior</string>
 		<key>heroText</key>
-		<string></string>
+		<string>神灵武士</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -82,7 +82,7 @@
 		<key>heroName</key>
 		<string>Omniknight</string>
 		<key>heroText</key>
-		<string></string>
+		<string>全能骑士</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -101,7 +101,7 @@
 		<key>heroName</key>
 		<string>Axe</string>
 		<key>heroText</key>
-		<string></string>
+		<string>斧王</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -120,7 +120,7 @@
 		<key>heroName</key>
 		<string>CentaurWarchief</string>
 		<key>heroText</key>
-		<string></string>
+		<string>半人马酋长</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -138,7 +138,7 @@
 		<key>heroName</key>
 		<string>DragonKnight</string>
 		<key>heroText</key>
-		<string></string>
+		<string>龙骑士</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -157,7 +157,7 @@
 		<key>heroName</key>
 		<string>GuardianKnight</string>
 		<key>heroText</key>
-		<string></string>
+		<string>守护骑士</string>
 		<key>heroAttribute</key>
 		<integer>0</integer>
 		<key>bloodPointLimit</key>
@@ -177,7 +177,7 @@
 		<key>heroName</key>
 		<string>Gorgon</string>
 		<key>heroText</key>
-		<string></string>
+		<string>蛇发女妖</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -196,7 +196,7 @@
 		<key>heroName</key>
 		<string>LightningRevenant</string>
 		<key>heroText</key>
-		<string></string>
+		<string>闪电幽魂</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -215,7 +215,7 @@
 		<key>heroName</key>
 		<string>Juggernaut</string>
 		<key>heroText</key>
-		<string></string>
+		<string>剑圣</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -234,7 +234,7 @@
 		<key>heroName</key>
 		<string>VengefulSpirit</string>
 		<key>heroText</key>
-		<string></string>
+		<string>复仇之魂</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -253,7 +253,7 @@
 		<key>heroName</key>
 		<string>Strygwyr</string>
 		<key>heroText</key>
-		<string></string>
+		<string>血魔</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -273,7 +273,7 @@
 		<key>heroName</key>
 		<string>TrollWarlord</string>
 		<key>heroText</key>
-		<string></string>
+		<string>巨魔战将</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -292,7 +292,7 @@
 		<key>heroName</key>
 		<string>DwarvenSniper</string>
 		<key>heroText</key>
-		<string></string>
+		<string>矮人火枪手</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -312,7 +312,7 @@
 		<key>heroName</key>
 		<string>NerubianAssassin</string>
 		<key>heroText</key>
-		<string></string>
+		<string>地穴刺客</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -332,7 +332,7 @@
 		<key>heroName</key>
 		<string>Antimage</string>
 		<key>heroText</key>
-		<string></string>
+		<string>敌法师</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -352,7 +352,7 @@
 		<key>heroName</key>
 		<string>NerubianWeaver</string>
 		<key>heroText</key>
-		<string></string>
+		<string>地穴编织者</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -371,7 +371,7 @@
 		<key>heroName</key>
 		<string>UrsaWarrior</string>
 		<key>heroText</key>
-		<string></string>
+		<string>熊战士</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -390,7 +390,7 @@
 		<key>heroName</key>
 		<string>ChenYunSheng</string>
 		<key>heroText</key>
-		<string></string>
+		<string>陈云生</string>
 		<key>heroAttribute</key>
 		<integer>1</integer>
 		<key>bloodPointLimit</key>
@@ -409,7 +409,7 @@
 		<key>heroName</key>
 		<string>Slayer</string>
 		<key>heroText</key>
-		<string></string>
+		<string>秀逗魔导师</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -429,7 +429,7 @@
 		<key>heroName</key>
 		<string>Necrolyte</string>
 		<key>heroText</key>
-		<string></string>
+		<string>死灵法师</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -448,7 +448,7 @@
 		<key>heroName</key>
 		<string>TwinHeadDragon</string>
 		<key>heroText</key>
-		<string></string>
+		<string>双头龙</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -467,7 +467,7 @@
 		<key>heroName</key>
 		<string>CrystalMaiden</string>
 		<key>heroText</key>
-		<string></string>
+		<string>水晶室女</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -486,7 +486,7 @@
 		<key>heroName</key>
 		<string>Lich</string>
 		<key>heroText</key>
-		<string></string>
+		<string>巫妖</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -505,7 +505,7 @@
 		<key>heroName</key>
 		<string>ShadowPriest</string>
 		<key>heroText</key>
-		<string></string>
+		<string>暗影牧师</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -524,7 +524,7 @@
 		<key>heroName</key>
 		<string>OrgeMagi</string>
 		<key>heroText</key>
-		<string></string>
+		<string>食人魔法师</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -543,7 +543,7 @@
 		<key>heroName</key>
 		<string>KeeperOfTheLight</string>
 		<key>heroText</key>
-		<string></string>
+		<string>光之守卫</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -563,7 +563,7 @@
 		<key>heroName</key>
 		<string>GoblinTechies</string>
 		<key>heroText</key>
-		<string></string>
+		<string>哥布林工程师</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -583,7 +583,7 @@
 		<key>heroName</key>
 		<string>StormSpirit</string>
 		<key>heroText</key>
-		<string></string>
+		<string>风暴之灵</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -602,7 +602,7 @@
 		<key>heroName</key>
 		<string>Enchantress</string>
 		<key>heroText</key>
-		<string></string>
+		<string>魅惑魔女</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>
@@ -622,7 +622,7 @@
 		<key>heroName</key>
 		<string>ElfLily</string>
 		<key>heroText</key>
-		<string></string>
+		<string>精灵莉莉</string>
 		<key>heroAttribute</key>
 		<integer>2</integer>
 		<key>bloodPointLimit</key>

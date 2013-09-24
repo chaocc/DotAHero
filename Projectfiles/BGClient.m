@@ -569,7 +569,6 @@ static BGClient *instanceOfClient = nil;
             break;
         
         case kActionPlayerUpdateHand:
-//        case kActionPlayerUpdateHandGetting:
             [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
@@ -689,18 +688,23 @@ static BGClient *instanceOfClient = nil;
         case kActionUseHandCard:
         case kActionChoseCardToUse:
         case kActionChoseCardToDiscard:
-            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+        case kActionDeckShowTopPileCard:
+            [_gameLayer.playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             [_player removeProgressBar];
             break;
             
+        case kActionPlayerGetDeckCard:
+            [_player getCardFromDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            break;
+            
         case kActionChoseCardToGet:
-            [_player updateHandCardWithEquipments:[obj intArrayWithKey:kParamCardIdList]
-                                        cardIdxes:[obj intArrayWithKey:kParamCardIndexList]];
+            [_player drawCardFromTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                               cardCount:[obj intWithKey:kParamCardCount]];
             break;
             
         case kActionChoseCardToGive:
-            [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]
-                                     cardCount:[obj intWithKey:kParamCardCount]];
+            [_player giveCardToTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                             cardCount:[obj intWithKey:kParamCardCount]];
             break;
             
         case kActionDrawCard:
@@ -721,7 +725,9 @@ static BGClient *instanceOfClient = nil;
 
 - (BOOL)isNeedSkipSelfPlayer
 {
-    return (_player.isSelfPlayer && (kActionPlayerUpdateHero != _gameLayer.action));
+    return (_player.isSelfPlayer &&
+            (kActionPlayerUpdateHero != _gameLayer.action ||
+             kActionPlayerGetDeckCard != _gameLayer.action));
 }
 
 @end

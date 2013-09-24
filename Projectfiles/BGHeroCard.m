@@ -10,8 +10,6 @@
 
 @interface BGHeroCard ()
 
-@property (nonatomic, strong) NSArray *heroArray;
-
 @end
 
 @implementation BGHeroCard
@@ -19,11 +17,11 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistHeroCardText ofType:kFileTypePlist];
-        self.heroArray = [NSArray arrayWithContentsOfFile:path];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistHeroCardList ofType:kFileTypePlist];
+        NSArray *array = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kHeroCardInvalid) &&
-                 (aCardId < (NSInteger)_heroArray.count), @"Invalid hero card id in %@", NSStringFromSelector(_cmd));
-        NSDictionary *dictionary = _heroArray[aCardId];
+                 (aCardId < (NSInteger)array.count), @"Invalid hero card id in %@", NSStringFromSelector(_cmd));
+        NSDictionary *dictionary = array[aCardId];
         
         _cardEnum = aCardId;
         _cardName = dictionary[kHeroName];

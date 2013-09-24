@@ -138,6 +138,12 @@
 		E31DDB5917811E1100789EDF /* BGPlayingMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E31DDB5717811E1100789EDF /* BGPlayingMenu.m */; };
 		E336E21C17EDAE9B00957279 /* BGTextPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = E336E21B17EDAE9B00957279 /* BGTextPrompt.m */; };
 		E336E21D17EDAE9B00957279 /* BGTextPrompt.m in Sources */ = {isa = PBXBuildFile; fileRef = E336E21B17EDAE9B00957279 /* BGTextPrompt.m */; };
+		E336F94F17F0315B00157268 /* HeroAvatarName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E336F94D17F0315B00157268 /* HeroAvatarName.fnt */; };
+		E336F95017F0315B00157268 /* HeroAvatarName.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E336F94D17F0315B00157268 /* HeroAvatarName.fnt */; };
+		E336F95117F0315B00157268 /* HeroAvatarName.png in Resources */ = {isa = PBXBuildFile; fileRef = E336F94E17F0315B00157268 /* HeroAvatarName.png */; };
+		E336F95217F0315B00157268 /* HeroAvatarName.png in Resources */ = {isa = PBXBuildFile; fileRef = E336F94E17F0315B00157268 /* HeroAvatarName.png */; };
+		E336F95417F04A2500157268 /* PlayingCardIds.plist in Resources */ = {isa = PBXBuildFile; fileRef = E336F95317F04A2500157268 /* PlayingCardIds.plist */; };
+		E336F95517F04A2500157268 /* PlayingCardIds.plist in Resources */ = {isa = PBXBuildFile; fileRef = E336F95317F04A2500157268 /* PlayingCardIds.plist */; };
 		E33EADE517565F2500A46952 /* BGHeroArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE417565F2500A46952 /* BGHeroArea.m */; };
 		E33EADE617565F2500A46952 /* BGHeroArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE417565F2500A46952 /* BGHeroArea.m */; };
 		E33EADE917565F3E00A46952 /* BGEquipmentArea.m in Sources */ = {isa = PBXBuildFile; fileRef = E33EADE817565F3E00A46952 /* BGEquipmentArea.m */; };
@@ -194,8 +200,8 @@
 		E346742D17C210D30039E0E1 /* SangeAndYasha-iphone5hd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E346740D17C210D30039E0E1 /* SangeAndYasha-iphone5hd.pvr.ccz */; };
 		E34D461A17A67077003232C3 /* BGHeroSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = E34D461917A67077003232C3 /* BGHeroSkill.m */; };
 		E34D461B17A67077003232C3 /* BGHeroSkill.m in Sources */ = {isa = PBXBuildFile; fileRef = E34D461917A67077003232C3 /* BGHeroSkill.m */; };
-		E34D462017A6756F003232C3 /* HeroSkillText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461F17A6756F003232C3 /* HeroSkillText.plist */; };
-		E34D462117A6756F003232C3 /* HeroSkillText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461F17A6756F003232C3 /* HeroSkillText.plist */; };
+		E34D462017A6756F003232C3 /* HeroSkillList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461F17A6756F003232C3 /* HeroSkillList.plist */; };
+		E34D462117A6756F003232C3 /* HeroSkillList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E34D461F17A6756F003232C3 /* HeroSkillList.plist */; };
 		E352CB411798F98D001210D9 /* BGCardPile.m in Sources */ = {isa = PBXBuildFile; fileRef = E352CB401798F98D001210D9 /* BGCardPile.m */; };
 		E352CB421798F98D001210D9 /* BGCardPile.m in Sources */ = {isa = PBXBuildFile; fileRef = E352CB401798F98D001210D9 /* BGCardPile.m */; };
 		E35821CD17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */ = {isa = PBXBuildFile; fileRef = E35821CC17A8164200FBFEC7 /* HeroWithSkillIds.txt */; };
@@ -206,18 +212,20 @@
 		E37BFCD7177959B2009C02BB /* BGGameMenu.m in Sources */ = {isa = PBXBuildFile; fileRef = E37BFCD5177959B2009C02BB /* BGGameMenu.m */; };
 		E387E6E9178E73D7003F0DAD /* BGClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E387E6E8178E73D7003F0DAD /* BGClient.m */; };
 		E387E6EA178E73D7003F0DAD /* BGClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E387E6E8178E73D7003F0DAD /* BGClient.m */; };
+		E394AB5017F195A900200204 /* TextPrompt.plist in Resources */ = {isa = PBXBuildFile; fileRef = E394AB4F17F195A900200204 /* TextPrompt.plist */; };
+		E394AB5117F195A900200204 /* TextPrompt.plist in Resources */ = {isa = PBXBuildFile; fileRef = E394AB4F17F195A900200204 /* TextPrompt.plist */; };
 		E395325D17566DCF00C1FA2C /* BGDensityCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325C17566DCF00C1FA2C /* BGDensityCard.m */; };
 		E395326017566E3100C1FA2C /* BGPlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325F17566E3000C1FA2C /* BGPlayingCard.m */; };
 		E395326117566E3100C1FA2C /* BGPlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325F17566E3000C1FA2C /* BGPlayingCard.m */; };
 		E395326217566E7300C1FA2C /* BGDensityCard.m in Sources */ = {isa = PBXBuildFile; fileRef = E395325C17566DCF00C1FA2C /* BGDensityCard.m */; };
-		E395326C17567C5700C1FA2C /* RoleCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326B17567C5700C1FA2C /* RoleCardText.plist */; };
-		E395326D17567C5700C1FA2C /* RoleCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326B17567C5700C1FA2C /* RoleCardText.plist */; };
-		E395326F17567C9100C1FA2C /* PlayingCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326E17567C9100C1FA2C /* PlayingCardText.plist */; };
-		E395327017567C9100C1FA2C /* PlayingCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326E17567C9100C1FA2C /* PlayingCardText.plist */; };
-		E39532721756818600C1FA2C /* HeroCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532711756818600C1FA2C /* HeroCardText.plist */; };
-		E39532731756818600C1FA2C /* HeroCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532711756818600C1FA2C /* HeroCardText.plist */; };
-		E39532751756819400C1FA2C /* DensityCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532741756819400C1FA2C /* DensityCardText.plist */; };
-		E39532761756819400C1FA2C /* DensityCardText.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532741756819400C1FA2C /* DensityCardText.plist */; };
+		E395326C17567C5700C1FA2C /* RoleCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326B17567C5700C1FA2C /* RoleCardList.plist */; };
+		E395326D17567C5700C1FA2C /* RoleCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326B17567C5700C1FA2C /* RoleCardList.plist */; };
+		E395326F17567C9100C1FA2C /* PlayingCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326E17567C9100C1FA2C /* PlayingCardList.plist */; };
+		E395327017567C9100C1FA2C /* PlayingCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E395326E17567C9100C1FA2C /* PlayingCardList.plist */; };
+		E39532721756818600C1FA2C /* HeroCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532711756818600C1FA2C /* HeroCardList.plist */; };
+		E39532731756818600C1FA2C /* HeroCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532711756818600C1FA2C /* HeroCardList.plist */; };
+		E39532751756819400C1FA2C /* DensityCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532741756819400C1FA2C /* DensityCardList.plist */; };
+		E39532761756819400C1FA2C /* DensityCardList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E39532741756819400C1FA2C /* DensityCardList.plist */; };
 		E396B3BB1781F06100A7A15F /* BGPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E396B3BA1781F06100A7A15F /* BGPlayer.m */; };
 		E396B3BC1781F06100A7A15F /* BGPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E396B3BA1781F06100A7A15F /* BGPlayer.m */; };
 		E3988209177D539A00FA0B0A /* BGMenuFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = E3988208177D539A00FA0B0A /* BGMenuFactory.m */; };
@@ -1215,6 +1223,9 @@
 		E320CE071768E3C700A1F32D /* BGPluginConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPluginConstants.h; sourceTree = "<group>"; };
 		E336E21A17EDAE9B00957279 /* BGTextPrompt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGTextPrompt.h; sourceTree = "<group>"; };
 		E336E21B17EDAE9B00957279 /* BGTextPrompt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGTextPrompt.m; sourceTree = "<group>"; };
+		E336F94D17F0315B00157268 /* HeroAvatarName.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeroAvatarName.fnt; sourceTree = "<group>"; };
+		E336F94E17F0315B00157268 /* HeroAvatarName.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = HeroAvatarName.png; sourceTree = "<group>"; };
+		E336F95317F04A2500157268 /* PlayingCardIds.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PlayingCardIds.plist; sourceTree = "<group>"; };
 		E33EADE317565F2500A46952 /* BGHeroArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGHeroArea.h; sourceTree = "<group>"; };
 		E33EADE417565F2500A46952 /* BGHeroArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHeroArea.m; sourceTree = "<group>"; };
 		E33EADE717565F3E00A46952 /* BGEquipmentArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGEquipmentArea.h; sourceTree = "<group>"; };
@@ -1249,7 +1260,7 @@
 		E346740D17C210D30039E0E1 /* SangeAndYasha-iphone5hd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SangeAndYasha-iphone5hd.pvr.ccz"; sourceTree = "<group>"; };
 		E34D461817A67077003232C3 /* BGHeroSkill.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGHeroSkill.h; sourceTree = "<group>"; };
 		E34D461917A67077003232C3 /* BGHeroSkill.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGHeroSkill.m; sourceTree = "<group>"; };
-		E34D461F17A6756F003232C3 /* HeroSkillText.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroSkillText.plist; sourceTree = "<group>"; };
+		E34D461F17A6756F003232C3 /* HeroSkillList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroSkillList.plist; sourceTree = "<group>"; };
 		E352CB3F1798F98D001210D9 /* BGCardPile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGCardPile.h; sourceTree = "<group>"; };
 		E352CB401798F98D001210D9 /* BGCardPile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGCardPile.m; sourceTree = "<group>"; };
 		E35821CC17A8164200FBFEC7 /* HeroWithSkillIds.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HeroWithSkillIds.txt; sourceTree = "<group>"; };
@@ -1260,14 +1271,15 @@
 		E37BFCD5177959B2009C02BB /* BGGameMenu.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGGameMenu.m; sourceTree = "<group>"; };
 		E387E6E7178E73D7003F0DAD /* BGClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGClient.h; sourceTree = "<group>"; };
 		E387E6E8178E73D7003F0DAD /* BGClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGClient.m; sourceTree = "<group>"; };
+		E394AB4F17F195A900200204 /* TextPrompt.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TextPrompt.plist; sourceTree = "<group>"; };
 		E395325B17566DCF00C1FA2C /* BGDensityCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDensityCard.h; sourceTree = "<group>"; };
 		E395325C17566DCF00C1FA2C /* BGDensityCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGDensityCard.m; sourceTree = "<group>"; };
 		E395325E17566E3000C1FA2C /* BGPlayingCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayingCard.h; sourceTree = "<group>"; };
 		E395325F17566E3000C1FA2C /* BGPlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayingCard.m; sourceTree = "<group>"; };
-		E395326B17567C5700C1FA2C /* RoleCardText.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RoleCardText.plist; sourceTree = "<group>"; };
-		E395326E17567C9100C1FA2C /* PlayingCardText.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PlayingCardText.plist; sourceTree = "<group>"; };
-		E39532711756818600C1FA2C /* HeroCardText.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroCardText.plist; sourceTree = "<group>"; };
-		E39532741756819400C1FA2C /* DensityCardText.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DensityCardText.plist; sourceTree = "<group>"; };
+		E395326B17567C5700C1FA2C /* RoleCardList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = RoleCardList.plist; sourceTree = "<group>"; };
+		E395326E17567C9100C1FA2C /* PlayingCardList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PlayingCardList.plist; sourceTree = "<group>"; };
+		E39532711756818600C1FA2C /* HeroCardList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = HeroCardList.plist; sourceTree = "<group>"; };
+		E39532741756819400C1FA2C /* DensityCardList.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = DensityCardList.plist; sourceTree = "<group>"; };
 		E396B3B91781F06100A7A15F /* BGPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGPlayer.h; sourceTree = "<group>"; };
 		E396B3BA1781F06100A7A15F /* BGPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BGPlayer.m; sourceTree = "<group>"; };
 		E396B3BD1781F4C600A7A15F /* BGFileConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGFileConstants.h; sourceTree = "<group>"; };
@@ -2151,15 +2163,17 @@
 			children = (
 				E301B6D817D9A99D00D6CDC0 /* CardAnimation.plist */,
 				DCC1A39513A94F1A005BD75D /* config.lua */,
-				E39532741756819400C1FA2C /* DensityCardText.plist */,
+				E39532741756819400C1FA2C /* DensityCardList.plist */,
 				E3196D8917CD270C00EA6A33 /* Fonts */,
-				E39532711756818600C1FA2C /* HeroCardText.plist */,
-				E34D461F17A6756F003232C3 /* HeroSkillText.plist */,
+				E39532711756818600C1FA2C /* HeroCardList.plist */,
+				E34D461F17A6756F003232C3 /* HeroSkillList.plist */,
 				E3B29B4C177F1F3400C18728 /* Images */,
-				E395326E17567C9100C1FA2C /* PlayingCardText.plist */,
-				E395326B17567C5700C1FA2C /* RoleCardText.plist */,
+				E336F95317F04A2500157268 /* PlayingCardIds.plist */,
+				E395326E17567C9100C1FA2C /* PlayingCardList.plist */,
+				E395326B17567C5700C1FA2C /* RoleCardList.plist */,
 				E3C15A76177084E600869966 /* settings.xml */,
 				E3B9996C17A437820030047F /* Sounds */,
+				E394AB4F17F195A900200204 /* TextPrompt.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -2215,6 +2229,8 @@
 				E3F172D517EF4FFC0059314D /* FactionCount.png */,
 				E3F172C817EF46DE0059314D /* HandCardCount.fnt */,
 				E3F172C917EF46DE0059314D /* HandCardCount.png */,
+				E336F94D17F0315B00157268 /* HeroAvatarName.fnt */,
+				E336F94E17F0315B00157268 /* HeroAvatarName.png */,
 				E3F172E017EF563E0059314D /* HeroName.fnt */,
 				E3F172E117EF563E0059314D /* HeroName.png */,
 				E3196D8A17CD273100EA6A33 /* HeroSkillName.fnt */,
@@ -3154,7 +3170,7 @@
 		DCC1A0D813A94EC0005BD75D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 			};
 			buildConfigurationList = DCC1A0DB13A94EC0005BD75D /* Build configuration list for PBXProject "DotAHero" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -3193,13 +3209,13 @@
 				DC21B88D1511078F00FD4891 /* fps_images.png in Resources */,
 				DC27219F160CADFF00D88944 /* Default-568h@2x.png in Resources */,
 				DC2721A8160CAFA600D88944 /* iTunesArtwork in Resources */,
-				E395326C17567C5700C1FA2C /* RoleCardText.plist in Resources */,
-				E395326F17567C9100C1FA2C /* PlayingCardText.plist in Resources */,
-				E39532721756818600C1FA2C /* HeroCardText.plist in Resources */,
-				E39532751756819400C1FA2C /* DensityCardText.plist in Resources */,
+				E395326C17567C5700C1FA2C /* RoleCardList.plist in Resources */,
+				E395326F17567C9100C1FA2C /* PlayingCardList.plist in Resources */,
+				E39532721756818600C1FA2C /* HeroCardList.plist in Resources */,
+				E39532751756819400C1FA2C /* DensityCardList.plist in Resources */,
 				E3C15A77177084E600869966 /* settings.xml in Resources */,
 				E3B3547A179131B900C07B3F /* PlayingCardIds.txt in Resources */,
-				E34D462017A6756F003232C3 /* HeroSkillText.plist in Resources */,
+				E34D462017A6756F003232C3 /* HeroSkillList.plist in Resources */,
 				E35821CD17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */,
 				E30C01B017AAA1980010034F /* Background.mp3 in Resources */,
 				E3A081F117AAAFEC00DDDEFB /* Damage.wav in Resources */,
@@ -3317,6 +3333,10 @@
 				E3F172E617EF563E0059314D /* HeroName.png in Resources */,
 				E3F172E817EF563E0059314D /* PlayingCardName.fnt in Resources */,
 				E3F172EA17EF563E0059314D /* PlayingCardName.png in Resources */,
+				E336F94F17F0315B00157268 /* HeroAvatarName.fnt in Resources */,
+				E336F95117F0315B00157268 /* HeroAvatarName.png in Resources */,
+				E336F95417F04A2500157268 /* PlayingCardIds.plist in Resources */,
+				E394AB5017F195A900200204 /* TextPrompt.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3329,13 +3349,13 @@
 				DCC1A27013A94EE6005BD75D /* icon.icns in Resources */,
 				DCC1A3B013A94F1A005BD75D /* config.lua in Resources */,
 				DC21B88F1511079900FD4891 /* fps_images.png in Resources */,
-				E395326D17567C5700C1FA2C /* RoleCardText.plist in Resources */,
-				E395327017567C9100C1FA2C /* PlayingCardText.plist in Resources */,
-				E39532731756818600C1FA2C /* HeroCardText.plist in Resources */,
-				E39532761756819400C1FA2C /* DensityCardText.plist in Resources */,
+				E395326D17567C5700C1FA2C /* RoleCardList.plist in Resources */,
+				E395327017567C9100C1FA2C /* PlayingCardList.plist in Resources */,
+				E39532731756818600C1FA2C /* HeroCardList.plist in Resources */,
+				E39532761756819400C1FA2C /* DensityCardList.plist in Resources */,
 				E3C15A78177084E600869966 /* settings.xml in Resources */,
 				E3B3547B179131B900C07B3F /* PlayingCardIds.txt in Resources */,
-				E34D462117A6756F003232C3 /* HeroSkillText.plist in Resources */,
+				E34D462117A6756F003232C3 /* HeroSkillList.plist in Resources */,
 				E35821CE17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */,
 				E30C01B117AAA1980010034F /* Background.mp3 in Resources */,
 				E3A081F217AAAFEC00DDDEFB /* Damage.wav in Resources */,
@@ -3453,6 +3473,10 @@
 				E3F172E717EF563E0059314D /* HeroName.png in Resources */,
 				E3F172E917EF563E0059314D /* PlayingCardName.fnt in Resources */,
 				E3F172EB17EF563E0059314D /* PlayingCardName.png in Resources */,
+				E336F95017F0315B00157268 /* HeroAvatarName.fnt in Resources */,
+				E336F95217F0315B00157268 /* HeroAvatarName.png in Resources */,
+				E336F95517F04A2500157268 /* PlayingCardIds.plist in Resources */,
+				E394AB5117F195A900200204 /* TextPrompt.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4314,12 +4338,15 @@
 		DCC1A0DD13A94EC0005BD75D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
 			};
 			name = Debug;
 		};
 		DCC1A0DE13A94EC0005BD75D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 			};
 			name = Release;
 		};
@@ -4337,6 +4364,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/../__Kobold2D__/libs/iSimulateSDK\"",
 				);
+				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(KOBOLD2D) $(KKSCRIPT) $(CHIPSPACE) $(COCOS2D) $(COCOS2D_REST) $COCOS2D_EXTENSIONS $(COCOS3D) $(COCOSDENSHION) $(CHIPMUNK) $(OBJECTAL) $(VTPG) $(LUA) $(SNEAKYINPUT) $(BITARRAY) $(KAZMATH)";
 			};
 			name = Debug;
@@ -4359,6 +4387,7 @@
 					"$(inherited)",
 					"$(KKFRAMEWORKS_IOS)",
 				);
+				SDKROOT = iphoneos;
 				USER_HEADER_SEARCH_PATHS = "$(inherited) $(KOBOLD2D) $(KKSCRIPT) $(CHIPSPACE) $(COCOS2D) $(COCOS2D_REST) $COCOS2D_EXTENSIONS $(COCOS3D) $(COCOSDENSHION) $(CHIPMUNK) $(OBJECTAL) $(VTPG) $(LUA) $(SNEAKYINPUT) $(BITARRAY) $(KAZMATH)";
 			};
 			name = Release;

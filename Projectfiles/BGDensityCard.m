@@ -10,8 +10,6 @@
 
 @interface BGDensityCard()
 
-@property (nonatomic, strong) NSArray *densityArray;
-
 @end
 
 @implementation BGDensityCard
@@ -19,11 +17,11 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistDensityCardText ofType:kFileTypePlist];
-        self.densityArray = [NSArray arrayWithContentsOfFile:path];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistDensityCardList ofType:kFileTypePlist];
+        NSArray *array = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kDensityCardInvalid) &&
-                 (aCardId < (NSInteger)_densityArray.count), @"Invalid density card id in %@", NSStringFromSelector(_cmd));
-        NSDictionary *dictionary = _densityArray[aCardId];
+                 (aCardId < (NSInteger)array.count), @"Invalid density card id in %@", NSStringFromSelector(_cmd));
+        NSDictionary *dictionary = array[aCardId];
         
         _cardEnum = aCardId;
         _cardName = dictionary[kCardName];

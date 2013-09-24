@@ -11,8 +11,6 @@
 
 @interface BGPlayingCard ()
 
-@property (nonatomic, strong) NSArray *playingCardArray;
-
 @end
 
 @implementation BGPlayingCard
@@ -22,17 +20,24 @@
 - (id)initWithCardId:(NSInteger)aCardId
 {
     if (self = [super initWithCardId:aCardId]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistPlayingCardText ofType:kFileTypePlist];
-        self.playingCardArray = [NSArray arrayWithContentsOfFile:path];
+//      Get playing card enumeration/figure/suits by card id
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistPlayingCardIds ofType:kFileTypePlist];
+        NSArray *array = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aCardId > kPlayingCardInvalid) &&
-                 (aCardId < (NSInteger)_playingCardArray.count), @"Invalid playing card id in %@", NSStringFromSelector(_cmd));
-        NSDictionary *dictionary = _playingCardArray[aCardId];
+                 (aCardId < (NSInteger)array.count), @"Invalid playing card id in %@", NSStringFromSelector(_cmd));
+        NSDictionary *dictionary = array[aCardId];
         
         _cardEnum = [dictionary[kCardEnum] integerValue];
-        _cardName = dictionary[kCardName];
-        _cardText = dictionary[kCardText];
         _cardFigure = [dictionary[kCardFigure] integerValue];
         _cardSuits = [dictionary[kCardSuits] integerValue];
+        
+//      Read playing card detail property by card enumeration
+        path = [[NSBundle mainBundle] pathForResource:kPlistPlayingCardList ofType:kFileTypePlist];
+        array = [NSArray arrayWithContentsOfFile:path];
+        dictionary = array[_cardEnum];
+        
+        _cardName = dictionary[kCardName];
+        _cardText = dictionary[kCardText];
         _cardType = [dictionary[kCardType] integerValue];
         _needSpecifyTarget = [dictionary[kNeedSpecifyTarget] boolValue];
         _targetCount = [dictionary[kTargetCount] integerValue];
@@ -45,7 +50,12 @@
         _canBeUsedActive = [dictionary[kCanBeUsedActive] boolValue];
         _onlyEquipOne = [dictionary[kOnlyEquipOne] boolValue];
         
-        _checkSelector = dictionary[kCheckSelector];
+        _tipText = dictionary[kTipText];
+        _targetTipText = dictionary[kTargetTipText];
+        _dispelTipText = dictionary[kDispelTipText];
+        _equipTipText = dictionary[kEquipTipText];
+        
+        _isVerticalSet = YES;
     }
     return self;
 }
@@ -84,6 +94,7 @@
     return _cardColor;
 }
 
+#pragma mark - Image
 - (NSString *)figureImageName
 {
     return (_cardColor == kCardColorRed) ?
@@ -126,6 +137,20 @@
         return [_cardName stringByAppendingString:@"Avatar_Big.png"];
     }
     return nil;
+}
+
+#pragma mark - Tip text
+- (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params
+{
+    NSString *tipText = [text copy];
+    for (NSString *param in params) {
+        NSRange range = [tipText rangeOfString:@"&"];
+        if (range.length > 0) {
+            tipText = [tipText stringByReplacingCharactersInRange:range withString:param];
+        }
+    }
+    
+    return tipText;
 }
 
 @end

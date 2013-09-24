@@ -19,51 +19,55 @@
 #define kAttackRange            @"attackRange"
 #define kCanBeUsedActive        @"canBeUsedActive"
 #define kOnlyEquipOne           @"onlyEquipOne"
-#define kCheckSelector          @"checkSelector"
+#define kDescription            @"description"
+#define kTipText                @"tipText"
+#define kTargetTipText          @"targetTipText"
+#define kDispelTipText          @"dispelTipText"
+#define kEquipTipText           @"equipTipText"
 
 typedef NS_ENUM(NSInteger, BGPlayingCardEnum) {
     kPlayingCardInvalid = -1,
-    kPlayingCardNormalAttack,           // 普通攻击
-    kPlayingCardFlameAttack,            // 火焰攻击
-    kPlayingCardChaosAttack,            // 混乱攻击
-    kPlayingCardEvasion,                // 闪避
-    kPlayingCardHealingSalve,           // 治疗药膏
+    kPlayingCardNormalAttack = 0,           // 普通攻击
+    kPlayingCardFlameAttack = 1,            // 火焰攻击
+    kPlayingCardChaosAttack = 2,            // 混乱攻击
+    kPlayingCardEvasion = 3,                // 闪避
+    kPlayingCardHealingSalve = 4,           // 治疗药膏
     
-    kPlayingCardFanaticism,             // 狂热
-    kPlayingCardMislead,                // 误导
-    kPlayingCardChakra,                 // 查克拉
-    kPlayingCardWildAxe,                // 野性之斧
-    kPlayingCardDispel,                 // 驱散
-    kPlayingCardDisarm,                 // 缴械
-    kPlayingCardElunesArrow,            // 月神之箭
-    kPlayingCardEnergyTransport,        // 能量转移
-    kPlayingCardGreed,                  // 贪婪
-    kPlayingCardSirenSong,              // 海妖之歌
+    kPlayingCardFanaticism = 5,             // 狂热
+    kPlayingCardMislead = 6,                // 误导
+    kPlayingCardChakra = 7,                 // 查克拉
+    kPlayingCardWildAxe = 8,                // 野性之斧
+    kPlayingCardDispel = 9,                 // 驱散
+    kPlayingCardDisarm  = 10,               // 缴械
+    kPlayingCardElunesArrow = 11,           // 月神之箭
+    kPlayingCardEnergyTransport = 12,       // 能量转移
+    kPlayingCardGreed = 13,                 // 贪婪
+    kPlayingCardSirenSong = 14,             // 海妖之歌
     
-    kPlayingCardGodsStrength,           // 神之力量
-    kPlayingCardViperRaid,              // 蝮蛇突袭
-    kPlayingCardTimeLock,               // 时间静止
-    kPlayingCardSunder,                 // 灵魂隔断
-    kPlayingCardLagunaBlade,            // 神灭斩
+    kPlayingCardGodsStrength = 15,          // 神之力量
+    kPlayingCardViperRaid = 16,             // 蝮蛇突袭
+    kPlayingCardTimeLock = 17,              // 时间静止
+    kPlayingCardSunder = 18,                // 灵魂隔断
+    kPlayingCardLagunaBlade = 19,           // 神灭斩
     
-    kPlayingCardEyeOfSkadi,             // 冰魄之眼
-    kPlayingCardBladesOfAttack,         // 攻击之爪
-    kPlayingCardSacredRelic,            // 圣者遗物
-    kPlayingCardDemonEdge,              // 恶魔刀锋
-    kPlayingCardDiffusalBlade,          // 散失之刃
-    kPlayingCardLotharsEdge,            // 洛萨之锋
-    kPlayingCardStygianDesolator,       // 黯灭之刃
-    kPlayingCardSangeAndYasha,          // 散夜对剑
-    kPlayingCardPlunderAxe,             // 掠夺之斧
-    kPlayingCardMysticStaff,            // 神秘法杖
-    kPlayingCardEaglehorn,              // 鹰角弓
-    kPlayingCardQuellingBlade,          // 补刀斧
+    kPlayingCardEyeOfSkadi = 20,            // 冰魄之眼
+    kPlayingCardBladesOfAttack = 21,        // 攻击之爪
+    kPlayingCardSacredRelic = 22,           // 圣者遗物
+    kPlayingCardDemonEdge = 23,             // 恶魔刀锋
+    kPlayingCardDiffusalBlade = 24,         // 散失之刃
+    kPlayingCardLotharsEdge = 25,           // 洛萨之锋
+    kPlayingCardStygianDesolator = 26,      // 黯灭之刃
+    kPlayingCardSangeAndYasha = 27,         // 散夜对剑
+    kPlayingCardPlunderAxe = 28,            // 掠夺之斧
+    kPlayingCardMysticStaff = 29,           // 神秘法杖
+    kPlayingCardEaglehorn = 30,             // 鹰角弓
+    kPlayingCardQuellingBlade = 31,         // 补刀斧
     
-    kPlayingCardPhyllisRing,            // 菲丽丝之戒
-    kPlayingCardBladeMail,              // 刃甲
-    kPlayingCardBootsOfSpeed,           // 速度之靴
-    kPlayingCardPlaneswalkersCloak,     // 流浪法师斗篷
-    kPlayingCardTalismanOfEvasion       // 闪避护符
+    kPlayingCardPhyllisRing = 32,           // 菲丽丝之戒
+    kPlayingCardBladeMail = 33,             // 刃甲
+    kPlayingCardBootsOfSpeed = 34,          // 速度之靴
+    kPlayingCardPlaneswalkersCloak = 35,    // 流浪法师斗篷
+    kPlayingCardTalismanOfEvasion = 36      // 闪避护符
 };
 
 typedef NS_ENUM(NSInteger, BGCardColor) {
@@ -120,7 +124,11 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, copy, readonly) NSString *suitsImageName;
 @property (nonatomic, readonly) BGCardType cardType;
 @property (nonatomic, readonly) BOOL needSpecifyTarget;     // 使用卡牌是否需要手动指定目标
-@property (nonatomic, readonly) NSUInteger targetCount;     // 需要手动指定的目标数量
+@property (nonatomic, readonly) NSUInteger targetCount;     // 需要指定的目标数量
+@property (nonatomic, copy, readonly) NSString *tipText;
+@property (nonatomic, copy, readonly) NSString *targetTipText;
+@property (nonatomic, copy, readonly) NSString *dispelTipText;
+@property (nonatomic, copy, readonly) NSString *equipTipText;
 
 // Magic
 @property (nonatomic, readonly) BOOL canBeStrengthened;
@@ -136,14 +144,12 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, readonly) BOOL canBeUsedActive;       // 是否可以主动使用
 @property (nonatomic, readonly) BOOL onlyEquipOne;          // 武器和防具是否只能装备一个
 
-// Check selector
-@property (nonatomic, copy, readonly) NSString *checkSelector;
-
-@property (nonatomic) BOOL isVerticalSet;                   // 是否是竖置状态(闪避护符)
-//@property (nonatomic) BOOL canBeUsed;
+@property (nonatomic) BOOL isVerticalSet;   // 是否是竖置状态(闪避护符)
 @property (nonatomic) BOOL isSelected;
 
 + (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds;
 + (NSArray *)playingCardIdsWithCards:(NSArray *)cards;
+
+- (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params;
 
 @end

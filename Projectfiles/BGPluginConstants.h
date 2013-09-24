@@ -29,7 +29,6 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionDiscard = 103,                           // 确定弃牌
     kActionOkay = 104,                              // 确定
     kActionUseEquipment = 105,                      // 发动装备
-//    kActionClearDeckCard = 105,                     // 清空桌面
     
     kActionChoseHero = 200,                         // 选择了英雄
     kActionChoseCardToUse = 201,                    // 选择了卡牌Id/Idx: 使用
@@ -42,9 +41,9 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionAssignCard = 208,                        // 分配了卡牌(如能量转移)
     
     kActionDeckDealHeros = 1000,                    // 发待选英雄
-//    kActionDeckShowDiscardedCard = 1001,            // 显示弃置的牌
+    kActionDeckShowTopPileCard = 1001,              // 显示牌堆顶的牌
     kActionDeckShowPlayerCard = 1002,               // 显示目标手牌(暗置)和装备
-    kActionDeckShowTopPileCard = 1003,              // 显示牌堆顶的牌(如能量转移)
+    kActionDeckShowAssignedCard = 1003,             // 显示待分配的牌(能量转移)
     kActionDeckShowAllSelectedHeros = 1004,         // 显示所有玩家选中的英雄
     kActionDeckShowAllCuttedCards = 1005,           // 显示所有玩家用于切牌拼点的牌
     
@@ -52,8 +51,9 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionPlayerDealCard = 2001,                   // 发初始手牌
     kActionPlayerUpdateHero = 2002,                 // 更新英雄的血量/怒气等信息
     kActionPlayerUpdateHand = 2003,                 // 更新手牌
-    kActionPlayerUpdateHandGetting = 2005,          // 更新手牌: 获得
-    kActionPlayerUpdateEquipment = 2006,            // 更新装备区的牌
+    kActionPlayerUpdateEquipment = 2004,            // 更新装备区的牌
+    kActionPlayerGetCard = 2005,                    // 获得其他玩家的牌
+    kActionPlayerGetDeckCard = 2006,                // 获得牌桌的牌
     
     kActionPlayCard = 3000,                         // 出牌(主动)
     kActionChooseCardToUse = 3001,                  // 选择卡牌: 使用(被动)
@@ -76,7 +76,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
 #define kParamAvailableIdList           @"available_id_list"    // 可以选择使用的卡牌
 #define kParamCardIndexList             @"index_list"           // 选中的哪几张牌
 #define kParamMaxFigureCardId           @"biggest_card_id"      // 最大点数的卡牌
-#define kParamCardCount             @"hand_card_change_amount"  // 牌数(抽取/获得/分配/失去)
+#define kParamCardCount                 @"hand_card_change_amount"  // 牌数(抽取/获得/分配/失去)
 #define kParamHandCardCount             @"hand_card_count"      // 玩家手牌数量
 #define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
 #define kParamExtractableCardCount      @"extractable_count"    // 可抽取目标的卡牌数量

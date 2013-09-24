@@ -11,8 +11,6 @@
 
 @interface BGHeroSkill ()
 
-@property (nonatomic, strong) NSArray *skillArray;
-
 @end
 
 @implementation BGHeroSkill
@@ -20,11 +18,11 @@
 - (id)initWithSkillId:(NSInteger)aSkillId
 {
     if (self = [super init]) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistHeroSkillText ofType:kFileTypePlist];
-        self.skillArray = [NSArray arrayWithContentsOfFile:path];
+        NSString *path = [[NSBundle mainBundle] pathForResource:kPlistHeroSkillList ofType:kFileTypePlist];
+        NSArray *array = [NSArray arrayWithContentsOfFile:path];
         NSAssert((aSkillId > kHeroSkillInvalid) &&
-                 (aSkillId < (NSInteger)_skillArray.count), @"Invalid hero skill id in %@", NSStringFromSelector(_cmd));
-        NSDictionary *dictionary = _skillArray[aSkillId];
+                 (aSkillId < (NSInteger)array.count), @"Invalid hero skill id in %@", NSStringFromSelector(_cmd));
+        NSDictionary *dictionary = array[aSkillId];
         
         _skillId = aSkillId;
         _skillEnum = aSkillId;

@@ -22,11 +22,12 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 typedef NS_ENUM(NSUInteger, BGGameState) {
     kGameStateInvalid = 0,
     kGameStateCutting = 1,      // 切牌阶段
-    kGameStateDrawing,          // 摸排阶段
+    kGameStateDrawing,          // 摸牌阶段
     kGameStatePlaying,          // 出牌阶段
     kGameStateChoosing,         // 被动出牌
     kGameStateGetting,          // 抽牌阶段
-    kGameStateGiving,           // 分牌阶段
+    kGameStateGiving,           // 给牌阶段
+    kGaemStateAssigning,        // 分配卡牌阶段
     kGameStateDiscarding        // 弃牌阶段
 };
 

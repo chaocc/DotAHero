@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string></string>
+	<string>请选择1张卡牌拼点来决定初始玩家</string>
+	<string>出牌阶段请选择要使用的卡牌</string>
+	<string></string>
+	<string></string>
+	<string>请选择你需要的卡牌</string>
+	<string>请选择&amp;张手牌交给目标玩家&amp;</string>
+	<string>请分配每个玩家将要得到的卡牌（通过拖拽的方式）</string>
+	<string>弃牌阶段请弃置多余的手牌</string>
+</array>
+</plist>
