@@ -16,7 +16,7 @@
 		<key>description</key>
 		<string></string>
 		<key>tipText</key>
-		<string>请选择1名玩家作为【普通攻击】的目标</string>
+		<string>请选择1名玩家作为【攻击】的目标</string>
 		<key>targetTipText</key>
 		<string>&amp;对你使用【普通攻击】，是否出【闪避】</string>
 	</dict>
@@ -34,7 +34,7 @@
 		<key>description</key>
 		<string></string>
 		<key>tipText</key>
-		<string>请选择1名玩家作为【火焰攻击】的目标</string>
+		<string>请选择1名玩家作为【攻击】的目标</string>
 		<key>targetTipText</key>
 		<string>&amp;对你使用【火焰攻击】，是否出【闪避】</string>
 	</dict>
@@ -52,7 +52,7 @@
 		<key>description</key>
 		<string></string>
 		<key>tipText</key>
-		<string>请选择1名玩家作为【混乱攻击】的目标</string>
+		<string>请选择1名玩家作为【攻击】的目标</string>
 		<key>targetTipText</key>
 		<string>&amp;对你使用【混乱攻击】，是否出【闪避】</string>
 	</dict>
@@ -232,7 +232,7 @@
 		<key>description</key>
 		<string></string>
 		<key>tipText</key>
-		<string>你查看牌堆顶的X张牌，按行动顺序均分给所有玩家</string>
+		<string>你查看牌堆顶的&amp;张牌，按行动顺序均分给所有玩家</string>
 		<key>dispelTipText</key>
 		<string>&amp;使用【能量转移】，是否出【驱散】？</string>
 	</dict>

@@ -37,6 +37,7 @@
     if (self = [super init]) {
         _gameLayer = [BGGameLayer sharedGameLayer];
         _player = player;
+        
         _actionComp = [BGActionComponent actionComponentWithNode:self];
         
         _handCards = [NSMutableArray array];
@@ -91,7 +92,7 @@
 
 #pragma mark - Hand cards updating
 /*
- * Update(Draw/Got/Lost) hand card with card id list
+ * Update(Draw/Lost) hand card with card id list
  * 
  */
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds
@@ -99,7 +100,8 @@
 //  Add or Remove hand card. If the card id is contained in hand cards, need remove it.
     NSMutableArray *addedCards = [NSMutableArray array];
     NSMutableArray *removedCards = [NSMutableArray array];
-    [[BGPlayingCard playingCardsWithCardIds:cardIds] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([_handCards containsObject:obj]) {
             [removedCards addObject:obj];
         } else {
@@ -113,6 +115,18 @@
     if (removedCards.count > 0) {
         [self removeHandCardWithCards:removedCards];
     }
+}
+
+/*
+ * Add(Got) hand card from deck or target player
+ */
+- (void)addHandCardWithCardMenuItems:(NSArray *)menuItems
+{
+    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [_cardMenu addChild:obj z:_cardMenu.children.count];
+    }];
+    
+    [self disableAllHandCardsWithDarkColor];
 }
 
 /*
@@ -142,6 +156,7 @@
     }
     
     [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
+    [self disableAllHandCardsWithDarkColor];
     [self makeHandCardLeftAlignment];
 }
 
@@ -198,9 +213,7 @@
             BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
             [ac runEaseMoveWithTarget:cardPosition
                              duration:DURATION_HAND_CARD_MOVE
-                                block:^{
-                                    menuItem.position = cardPosition;
-                                }];
+                                block:nil];
         }]];
     }];
 
@@ -223,7 +236,7 @@
         
         ccColor3B cardColor;
         if (menuItem.isEnabled) {
-            cardColor = ccWHITE;                // Restore to bright color
+            cardColor = ccWHITE;                // Restore to normal color
         } else {
             cardColor = COLOR_DISABLED_CARD;    // Make card figure and suits to gray
         }
@@ -249,13 +262,24 @@
 /*
  * Need disable all hand cards menu after use/discard card is over
  */
-- (void)disableAllHandCards
+- (void)disableAllHandCardsWithNormalColor
 {
     _cardMenu.enabled = NO;
     
     for (CCMenuItem *menuItem in _cardMenu.children) {
         if (!menuItem.isEnabled) {
             [_gameLayer setColorWith:ccWHITE ofNode:menuItem];
+        }
+    }
+}
+
+- (void)disableAllHandCardsWithDarkColor
+{
+    _cardMenu.enabled = NO;
+    
+    for (CCMenuItem *menuItem in _cardMenu.children) {
+        if (menuItem.isEnabled) {
+            [_gameLayer setColorWith:COLOR_DISABLED_CARD ofNode:menuItem];
         }
     }
 }
@@ -292,8 +316,9 @@
     }
     
 //  Move card while selecting one. Call below block after movement
-//  If selected cards count great than maximum, deselect and remove the first selected card.
-    void (^block)() = ^{
+//  If selected cards count great than maximum, deselect and remove the first selected card.    
+    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
+    [ac runEaseMoveWithTarget:targetPos duration:DURATION_SELECTED_CARD_MOVE block:^{
         if (_selectedCards.count > _selectableCardCount) {
             @try {
                 for (CCMenuItem *item in _cardMenu.children) {
@@ -311,14 +336,10 @@
             }
         }
         
+        [_player addTextPrompt];
         [self checkPlayingMenuAvailabilityWithSelectedCard:card];
         [self checkTargetPlayerSelectivityWithSelectedCard:card];
-    };
-    
-    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
-    [ac runEaseMoveWithTarget:targetPos
-                     duration:DURATION_SELECTED_CARD_MOVE
-                        block:block];
+    }];
 }
 
 /*
@@ -390,6 +411,10 @@
             [self checkTargetPlayerOfDisarm];
             break;
             
+        case kPlayingCardMislead:
+            [self checkTargetPlayerOfMislead];
+            break;
+            
         case kPlayingCardLagunaBlade:
         case kPlayingCardViperRaid:
         case kPlayingCardElunesArrow:
@@ -404,32 +429,41 @@
 
 - (void)checkTargetPlayerOfAttack
 {
-    NSUInteger playerCount = _gameLayer.allPlayers.count;
-    
-    for (NSUInteger i = 1; i < playerCount; i++) {
+    for (NSUInteger i = 1; i < _gameLayer.playerCount; i++) {
         BGPlayer *player = _gameLayer.allPlayers[i];
-        NSUInteger halfCount = floor(playerCount/2.0);
-        NSInteger distance = (i < halfCount) ? player.positiveDistance+i-1 : player.positiveDistance+playerCount-i-1;
+        NSUInteger halfCount = floor(_gameLayer.playerCount/2.0);
+        NSInteger distance = (i < halfCount) ? player.positiveDistance+i-1 : player.positiveDistance+_gameLayer.playerCount-i-1;
         
         if ((NSInteger)_player.attackRange >= distance) {
             [player enablePlayerArea];
         } else {
-            [player setDisabledColor];
+            [player disablePlayerAreaWithDarkColor];
         }
     }
 }
 
 - (void)checkTargetPlayerOfDisarm
-{
-    NSUInteger playerCount = _gameLayer.allPlayers.count;
-    
-    for (NSUInteger i = 1; i < playerCount; i++) {
+{    
+    for (NSUInteger i = 1; i < _gameLayer.playerCount; i++) {
         BGPlayer *player = _gameLayer.allPlayers[i];
         
         if (player.equipmentArea.equipmentCards.count > 0) {
             [player enablePlayerArea];
         } else {
-            [player setDisabledColor];
+            [player disablePlayerAreaWithDarkColor];
+        }
+    }
+}
+
+- (void)checkTargetPlayerOfMislead
+{
+    for (NSUInteger i = 0; i < _gameLayer.playerCount; i++) {
+        BGPlayer *player = _gameLayer.allPlayers[i];
+        
+        if (player.heroArea.angerPoint > 0) {
+            [player enablePlayerArea];
+        } else {
+            [player disablePlayerAreaWithDarkColor];
         }
     }
 }
@@ -462,7 +496,7 @@
         }
     }
     
-    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE WithBlock:block];
+    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:block];
 }
 
 - (void)useHandCardAfterTimeIsUp
@@ -475,7 +509,6 @@
     }
     
     [self useHandCardWithAnimation:NO block:nil];
-    [self makeHandCardLeftAlignment];
 }
 
 - (void)moveSelectedCardToPlayingDeck
@@ -484,10 +517,9 @@
         [obj removeFromParent];
     }];
     
-    [_gameLayer.playingDeck updateWithCardMenuItems:_selectedMenuItems];
+    [_gameLayer.playingDeck showUsedWithCardMenuItems:_selectedMenuItems];
     
     [self updateHandCardBuffer];
-//    [self makeHandCardLeftAlignment];
     [_selectedMenuItems removeAllObjects];
 }
 
@@ -502,10 +534,9 @@
     menu.position = CGPointZero;
     [self addChild:menu];
     
-    [_gameLayer moveCardWithCardMenuItems:_selectedCards block:nil];
+    [_gameLayer moveCardWithCardMenuItems:_selectedMenuItems block:nil];
     
     [self updateHandCardBuffer];
-//    [self makeHandCardLeftAlignment];
     [_selectedMenuItems removeAllObjects];
 }
 
@@ -516,7 +547,6 @@
 {
     [_player.equipmentArea updateEquipmentWithCard:_selectedCards.lastObject];
     [_selectedMenuItems.lastObject removeFromParent];
-//    [self makeHandCardLeftAlignment];
 }
 
 /*

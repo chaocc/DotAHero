@@ -22,9 +22,12 @@
 + (id)handAreaWithPlayer:(BGPlayer *)player andCardIs:(NSArray *)cardIds;
 
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds;
+- (void)addHandCardWithCardMenuItems:(NSArray *)menuItems;
+
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds;
 - (void)enableAllHandCards;
-- (void)disableAllHandCards;
+- (void)disableAllHandCardsWithDarkColor;
+- (void)disableAllHandCardsWithNormalColor;
 - (void)makeHandCardLeftAlignment;
 
 - (void)useHandCardWithAnimation:(BOOL)isRun block:(void (^)())block;   // 主动|被动使用手牌

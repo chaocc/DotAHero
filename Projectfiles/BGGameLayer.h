@@ -22,12 +22,11 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 typedef NS_ENUM(NSUInteger, BGGameState) {
     kGameStateInvalid = 0,
     kGameStateCutting = 1,      // 切牌阶段
-    kGameStateDrawing,          // 摸牌阶段
-    kGameStatePlaying,          // 出牌阶段
-    kGameStateChoosing,         // 被动出牌
+//    kGameStateDrawing,          // 摸牌阶段
+    kGameStatePlaying,          // 主动出牌阶段
+    kGameStateChoosing,         // 被动出牌阶段
     kGameStateGetting,          // 抽牌阶段
     kGameStateGiving,           // 给牌阶段
-    kGaemStateAssigning,        // 分配卡牌阶段
     kGameStateDiscarding        // 弃牌阶段
 };
 
@@ -57,6 +56,7 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 @property (nonatomic, strong) NSMutableArray *targetPlayerNames;    // 指定的目标玩家们
 
 @property (nonatomic) NSUInteger remainingCardCount;                // 牌堆剩余牌数
+@property (nonatomic, readonly) NSUInteger playerCount;
 @property (nonatomic, readonly) ccTime gameDuration;
 
 + (BGGameLayer *)sharedGameLayer;
@@ -64,11 +64,16 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 
 - (BGPlayer *)playerWithName:(NSString *)playerName;
 
+- (void)mapActionToGameState;
+
 - (void)renderOtherPlayersHeroWithHeroIds:(NSArray *)heroIds;
 - (void)addProgressBarForOtherPlayers;
 - (void)removeProgressBarForOtherPlayers;
 - (void)enablePlayerAreaForOtherPlayers;
 - (void)disablePlayerAreaForOtherPlayers;
+
+- (void)makeBackgroundColorToDark;
+- (void)makeBackgroundColorToNormal;
 - (void)setColorWith:(ccColor3B)color ofNode:(CCNode *)node;
 
 - (void)moveCardWithCardMenu:(CCMenu *)menu toTargerPlayer:(BGPlayer *)player block:(void(^)())block;

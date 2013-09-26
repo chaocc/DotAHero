@@ -72,6 +72,16 @@
     return [CCMenu menuWithArray:menuItems];
 }
 
+- (CCMenu *)createCardBackMenuWithCount:(NSUInteger)count
+{
+    NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:count];
+    for (NSUInteger i = 0; i < count; i++) {
+        [frameNames addObject:kImagePlayingCardBack];
+    }
+    
+    return [self createMenuWithSpriteFrameNames:frameNames];
+}
+
 #pragma mark - Create menu item
 - (CCMenuItem *)createMenuItemWithSpriteFrameName:(NSString *)frameName
 {
@@ -149,6 +159,16 @@
     return menuItems;
 }
 
+- (NSArray *)createCardBackMenuItemsWithCount:(NSUInteger)count
+{
+    NSMutableArray *menuItems = [NSMutableArray array];
+    for (NSUInteger i = 0; i < count; i++) {
+        [menuItems addObject:[self createMenuItemWithSpriteFrameName:kImagePlayingCardBack]];
+    }
+    
+    return menuItems;
+}
+
 - (NSArray *)createMenuitemsWithSpriteFrameNames:(NSArray *)frameNames
 {
     NSMutableArray *menuItems = [NSMutableArray array];
@@ -166,6 +186,16 @@
         NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
         [menu addChild:[self createMenuItemWithPlayingCard:obj] z:menu.children.count];
     }];
+}
+
+- (void)addCardBackMenuItemsWithCount:(NSUInteger)count toMenu:(CCMenu *)menu
+{
+    NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:count];
+    for (NSUInteger i = 0; i < count; i++) {
+        [frameNames addObject:kImagePlayingCardBack];
+    }
+    
+    [self addMenuItemsWithSpriteFrameNames:frameNames toMenu:menu];
 }
 
 - (void)addMenuItemsWithSpriteFrameNames:(NSArray *)frameNames toMenu:(CCMenu *)menu

@@ -12,17 +12,23 @@
 @interface BGPlayingDeck : CCNode <BGMenuFactoryDelegate>
 
 @property (nonatomic) NSInteger maxCardId;  // 最大点数的卡牌
-@property (nonatomic, readonly) NSUInteger allCardCount;
-@property (nonatomic, readonly) NSUInteger existingCardCount;
 
 + (id)sharedPlayingDeck;
 
-- (void)updateWithHeroIds:(NSArray *)heroIds;
-- (void)updateWithCardIds:(NSArray *)cardIds;
-- (void)updateWithCardMenuItems:(NSArray *)menuItems;
-- (void)updateWithHandCardCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
+- (void)showToBeSelectedHerosWithHeroIds:(NSArray *)heroIds;
+- (void)showCuttedCardWithCardIds:(NSArray *)cardIds;
+- (void)showUsedWithCardMenuItems:(NSArray *)menuItems;
+- (void)showUsedCardWithCardIds:(NSArray *)cardIds;
+- (void)showFacedDownCardWithCount:(NSUInteger)count;
+- (void)showTopPileCardWithCardIds:(NSArray *)cardIds;
+- (void)showPlayerHandCardWithCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
+- (void)showAssignedCardsWithCardIds:(NSArray *)cardIds;
+
+- (void)moveCardWithCardMenuItems:(NSArray *)menuItems;
+- (CGPoint)cuttedCardPositionWithIndex:(NSUInteger)idx;
+- (CGPoint)cardPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count;
 
 - (void)removeResidualNodes;
-- (void)clearExistingUsedCards;
+- (void)clearExistingCards;
 
 @end

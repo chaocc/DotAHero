@@ -65,6 +65,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionChooseSuits = 3007,                      // 选择花色阶段
     
     kActionDrawCard = 4000,                         // 摸牌
+    kActionFaceDownPileCard = 4001,                 // 暗置牌堆顶的牌
 };
 
 // Parameters
@@ -76,7 +77,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
 #define kParamAvailableIdList           @"available_id_list"    // 可以选择使用的卡牌
 #define kParamCardIndexList             @"index_list"           // 选中的哪几张牌
 #define kParamMaxFigureCardId           @"biggest_card_id"      // 最大点数的卡牌
-#define kParamCardCount                 @"hand_card_change_amount"  // 牌数(抽取/获得/分配/失去)
+#define kParamCardCount                 @"how_many"             // 卡牌数(抽取/获得/分配/失去)
+#define kParamCardCountChanged          @"hand_card_change_amount"  // 手牌更改的数量
 #define kParamHandCardCount             @"hand_card_count"      // 玩家手牌数量
 #define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
 #define kParamExtractableCardCount      @"extractable_count"    // 可抽取目标的卡牌数量

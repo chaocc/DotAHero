@@ -208,7 +208,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     CGFloat width, height, increment;
     
 //  Remove previous anger sprites
-    for (NSUInteger i = 0; i < _angerPoint; i++) {
+    for (NSUInteger i = 0; i < _heroCard.angerPointLimit; i++) {
         [[_hpSpBatch getChildByTag:kHeroTagAnger+i] removeFromParent];
     }
     
@@ -321,6 +321,19 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         strenMenu.isEnabled = okayMenu.isEnabled;
     }
 }
+
+//- (void)checkTargetPlayerOfMislead
+//{
+//    for (NSUInteger i = 0; i < _gameLayer.playerCount; i++) {
+//        BGPlayer *player = _gameLayer.allPlayers[i];
+//        
+//        if (player.heroArea.angerPoint > 0) {
+//            [player enablePlayerArea];
+//        } else {
+//            [player disablePlayerAreaWithDarkColor];
+//        }
+//    }
+//}
 
 #pragma mark - Gestures
 - (void)update:(ccTime)delta

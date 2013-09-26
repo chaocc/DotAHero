@@ -33,6 +33,7 @@
 @property (nonatomic) NSInteger comparedCardId;
 @property (nonatomic, strong) NSArray *selectedCardIds;
 @property (nonatomic, strong) NSMutableArray *selectedCardIdxes;
+@property (nonatomic) NSInteger selectedEquipment;
 @property (nonatomic) NSInteger selectedSkillId;
 @property (nonatomic) BGCardColor selectedColor;
 @property (nonatomic) BGCardSuits selectedSuits;
@@ -50,7 +51,7 @@
 
 - (void)addHandAreaWithCardIds:(NSArray *)cardIds;
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds;
-- (void)updateHandCardWithCardCount:(NSInteger)count;
+- (void)drawCardWithCardCount:(NSInteger)count;
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
 
@@ -59,17 +60,20 @@
 - (void)giveCardToTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
 
 - (void)enablePlayerArea;
-- (void)disablePlayerArea;
-- (void)setDisabledColor;
-- (void)restoreColor;
+- (void)disablePlayerAreaWithDarkColor;
+- (void)disablePlayerAreaWithNormalColor;
+
 - (void)clearBuffer;
+- (void)reset;
 
 - (void)addPlayingMenu;
 - (void)addPlayingMenuOfStrengthen;
 - (void)removePlayingMenu;
 
-//- (void)addProgressBarWithPosition:(CGPoint)position;
 - (void)addProgressBar;
 - (void)removeProgressBar;
+
+- (void)addTextPrompt;
+- (void)removeTextPrompt;
 
 @end

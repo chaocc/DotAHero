@@ -27,6 +27,7 @@ _Pragma("clang diagnostic pop")                                     \
 //#define POSITION_HERO_SEL_PROGRESS_BAR  ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4)
 #define POSITION_PLYAING_PROGRESS_BAR   ccp(SCREEN_WIDTH * 0.54, SCREEN_HEIGHT * 0.26)
 #define POSITION_PLAYING_MENU           ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.34)
+#define POSITION_TEXT_PROMPT            ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.29)
 #define POSITION_CARD_ANIMATION         ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.35)
 #define POSITION_DECK_AREA_CENTER       ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.60)
 #define POSITION_DECK_AREA_TOP          ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.65)
@@ -47,11 +48,12 @@ _Pragma("clang diagnostic pop")                                     \
 #define COUNT_MAX_DREW_CARD             5
 
 #define DURATION_GAMELAYER_TRANSITION   0.2f
-#define DURATION_HERO_SEL_FADE_IN       0.3f
+//#define DURATION_HERO_SEL_FADE_IN       0.3f
 #define DURATION_SELECTED_HERO_MOVE     0.5f
 #define DURATION_HAND_CARD_MOVE         0.5f
 #define DURATION_SELECTED_CARD_MOVE     0.1f
 #define DURATION_CARD_MOVE              0.8f
+#define DURATION_DECK_CARD_MOVE         0.5f
 #define DURATION_USED_CARD_FADE_OUT     0.5f
 #define DURATION_CARD_FLIP              0.2f
 #define DURATION_CARD_FLIP_INTERVAL     0.05f

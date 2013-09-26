@@ -18,10 +18,10 @@
 - (void)runEaseMoveScaleWithTarget:(CGPoint)target duration:(ccTime)t scale:(float)s block:(void(^)())block;
 
 - (void)runFadeInWithDuration:(ccTime)t block:(void(^)())block;
-- (void)runFadeOutWithDuration:(ccTime)t block:(void(^)())block;
+- (void)runFadeOutWithDuration:(ccTime)t block:(void(^)(CCNode *node))block;
 - (void)runFlipFromLeftWithDuration:(ccTime)t toNode:(CCNode *)tarNode;
 - (void)runScaleUpAndReverseWithDuration:(ccTime)t scale:(float)s block:(void(^)())block;
-- (void)runDelayWithDuration:(ccTime)time WithBlock:(void (^)())block;
+- (void)runDelayWithDuration:(ccTime)time withBlock:(void (^)())block;
 
 - (void)runProgressBarWithDuration:(ccTime)t block:(void(^)())block;
 

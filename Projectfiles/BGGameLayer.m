@@ -17,8 +17,10 @@
 
 @interface BGGameLayer ()
 
-@property (nonatomic, strong, readonly) NSArray *users; // [0] is self user
-@property (nonatomic, strong) NSArray *allHeroIds;      // [0] is selected by self user
+@property (nonatomic, strong) NSArray *users;       // [0] is self user
+@property (nonatomic, strong) NSArray *allHeroIds;  // [0] is selected by self user
+
+@property (nonatomic) BOOL isNormalColor;   // Is background normal color
 
 @end
 
@@ -87,16 +89,12 @@ static BGGameLayer *instanceOfGameLayer = nil;
 	return self;
 }
 
-- (BGGameState)state
+- (void)mapActionToGameState
 {
     switch (_action) {
         case kActionChooseCardToCut:
         case kActionDeckShowAllCuttedCards:
             _state = kGameStateCutting;
-            break;
-            
-        case kActionDrawCard:
-            _state = kGameStateDrawing;
             break;
             
         case kActionChoseCardToGet:
@@ -109,30 +107,27 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateGiving;
             break;
             
+        case kActionPlayCard:
+        case kActionUseHandCard:
+        case kActionUseHeroSkill:
+        case kActionUseEquipment:
+            _state = kGameStatePlaying;
+            break;
+            
+        case kActionChooseCardToUse:
+        case kActionChoseCardToUse:
+            _state = kGameStateChoosing;
+            break;
+            
         case kActionChooseCardToDiscard:
         case kActionChoseCardToDiscard:
             _state = kGameStateDiscarding;
             break;
             
-        case kActionChooseCardToUse:
-            _state = kGameStateChoosing;
-            break;
-            
-        case kActionPlayCard:
-        case kActionChoseCardToUse:
-        case kActionUseHandCard:
-        case kActionUseHeroSkill:
-        case kActionUseEquipment:
-        case kActionPlayerUpdateHand:
-            _state = kGameStatePlaying;
-            break;
-            
         default:
-            _state = kGameStateInvalid;
+//            _state = kGameStateInvalid;
             break;
     }
-    
-    return _state;
 }
 
 #pragma mark - Density
@@ -315,28 +310,46 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         [_allPlayers[i] enablePlayerArea];
-        [_allPlayers[i] restoreColor];
     }
 }
 
 - (void)disablePlayerAreaForOtherPlayers
 {
-    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
-        [_allPlayers[i] disablePlayerArea];
-        [_allPlayers[i] restoreColor];
+    if (_isNormalColor) {
+        for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+            [_allPlayers[i] disablePlayerAreaWithNormalColor];
+        }
     }
 }
 
+#pragma mark - Node Color
 - (void)setColorWith:(ccColor3B)color ofNode:(CCNode *)node
 {
     for (CCNode *subNode in node.children) {
         if ([subNode respondsToSelector:@selector(setColor:)]) {
-            [(CCNodeRGBA *)subNode setColor:color];
+            CCNodeRGBA *nodeRGBA = (CCNodeRGBA *)subNode;
+            if (color.r != nodeRGBA.color.r ||
+                color.g != nodeRGBA.color.g ||
+                color.b != nodeRGBA.color.b) {
+                nodeRGBA.color = color;
+            }
         }
         if (subNode.children.count > 0) {
             [self setColorWith:color ofNode:subNode];
         }
     }
+}
+
+- (void)makeBackgroundColorToDark
+{
+    _isNormalColor = NO;
+    [self setColorWith:COLOR_DISABLED ofNode:self];
+}
+
+- (void)makeBackgroundColorToNormal
+{
+    _isNormalColor = YES;
+    [self setColorWith:ccWHITE ofNode:self];
 }
 
 #pragma mark - Playing deck
@@ -346,7 +359,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (void)addPlayingDeck
 {
     _playingDeck = [BGPlayingDeck sharedPlayingDeck];
-    [self addChild:_playingDeck];
+    [self addChild:_playingDeck z:2];
 }
 
 #pragma mark - Selected heros
@@ -425,6 +438,11 @@ static BGGameLayer *instanceOfGameLayer = nil;
     return (_targetPlayerNames.count == 1) ? self.targetPlayers.lastObject : nil;
 }
 
+- (NSUInteger)playerCount
+{
+    return _allPlayers.count;
+}
+
 #pragma mark - Card movement
 /*
  * Move the selected cards on playing deck or other player's hand
@@ -439,19 +457,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
                         block:block];
 }
 
-//- (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
-//{
-//    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-//        CGPoint targetPos = [self cardMoveTargetPositionWithIndex:idx];
-//        
-//        BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
-//        [ac runEaseMoveWithTarget:targetPos
-//                         duration:DURATION_CARD_MOVE
-//                           object:obj
-//                            block:block];
-//    }];
-//}
-
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
 {
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -460,7 +465,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
         BGActionComponent *ac = [BGActionComponent actionComponentWithNode:obj];
         [ac runEaseMoveWithTarget:targetPos
                          duration:DURATION_CARD_MOVE
-                            object:obj
+                           object:obj
                             block:block];
     }];
 }
@@ -472,49 +477,29 @@ static BGGameLayer *instanceOfGameLayer = nil;
  */
 - (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count
 {
+    NSLog(@"Game state: %i and action: %i", self.state, self.action);
+    
     CGPoint targetPos;
     CGFloat cardWidth = PLAYING_CARD_WIDTH;
-    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
+//    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
     switch (self.state) {
         case kGameStateCutting: {
-            NSUInteger rowCount = ceil((double)_allPlayers.count/COUNT_MAX_DECK_CARD);
-            NSUInteger colCount = ceil((double)_allPlayers.count/rowCount);
-            CGFloat padding = PADDING_CUTTED_CARD;
-            
-            CGFloat startPosX = POSITION_DECK_AREA_CENTER.x - (colCount-1)*cardWidth/2;
-            CGFloat delta = (idx < colCount) ? idx*(cardWidth+padding) : (idx-colCount)*(cardWidth+padding);
-            CGFloat cardPosX = startPosX + delta;
-            
-            CGFloat startPosY = (1 == rowCount) ? POSITION_DECK_AREA_CENTER.y : POSITION_DECK_AREA_TOP.y;
-            CGFloat cardPosY = (idx < colCount) ? startPosY : (POSITION_DECK_AREA_TOP.y-cardHeight-padding);
-            
-            targetPos = ccp(cardPosX, cardPosY);
+            targetPos = [_playingDeck cuttedCardPositionWithIndex:idx];
             break;
         }
             
-        case kGameStateChoosing:
         case kGameStatePlaying:
+        case kGameStateChoosing:
         case kGameStateDiscarding: {
-            NSUInteger addedCardCount = _playingDeck.allCardCount - _playingDeck.existingCardCount;
-            NSUInteger factor = (_playingDeck.existingCardCount > 0) ? addedCardCount : addedCardCount-1;
-            CGFloat padding = PLAYING_CARD_PADDING(addedCardCount, COUNT_MAX_DECK_CARD);
-            CGPoint basePos = ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth, 0.0f));
-            
-            targetPos = ccpAdd(basePos, ccp((cardWidth+padding)*idx, 0.0f));
+            targetPos = [_playingDeck cardPositionWithIndex:idx count:count];
             break;
         }
-        
-//        case kGameStateGetting:
-//            targetPos = (self.currPlayer.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : self.currPlayer.position;
-//            if (self.targetPlayer.isSelfPlayer) {   // If is target player, move the drew card to current player
-//                targetPos = self.currPlayer.position;
-//            }
-//            break;
             
-        case kGameStateDrawing:
         case kGameStateGetting:
-            targetPos = ccpAdd(self.currPlayer.position, ccp(cardWidth/4*(idx+1-count+idx/2), 0.0f));
+            targetPos = (self.currPlayer.isSelfPlayer) ?
+                POSITION_HAND_AREA_RIGHT :
+                ccpAdd(self.currPlayer.position, ccp(cardWidth/4*(idx+1-count+idx/2), 0.0f));
             break;
             
         case kGameStateGiving:
@@ -524,6 +509,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         default:
+            NSLog(@"Invalid game state: %i and action: %i", self.state, self.action);
             break;
     }
     

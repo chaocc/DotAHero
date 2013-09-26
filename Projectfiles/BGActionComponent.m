@@ -69,10 +69,10 @@
     [_node runAction:[CCSequence actions:fade, callBlock, nil]];
 }
 
-- (void)runFadeOutWithDuration:(ccTime)t block:(void (^)())block
+- (void)runFadeOutWithDuration:(ccTime)t block:(void (^)(CCNode *))block
 {
     CCFadeOut *fade = [CCFadeOut actionWithDuration:t];
-    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+    CCCallBlockN *callBlock = (block) ? [CCCallBlockN actionWithBlock:block] : nil;
 
     [_node runAction:[CCSequence actions:fade, callBlock, nil]];
 }
@@ -116,7 +116,7 @@
     [_node runAction:[CCSequence actions:ease, delay, reverse, callBlock, nil]];
 }
 
-- (void)runDelayWithDuration:(ccTime)time WithBlock:(void (^)())block
+- (void)runDelayWithDuration:(ccTime)time withBlock:(void (^)())block
 {
     CCDelayTime *delay = [CCDelayTime actionWithDuration:time];
     CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;

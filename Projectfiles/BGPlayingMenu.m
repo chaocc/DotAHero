@@ -11,6 +11,7 @@
 #import "BGGameLayer.h"
 #import "BGFileConstants.h"
 #import "BGDefines.h"
+#import "BGActionComponent.h"
 
 @interface BGPlayingMenu ()
 
@@ -323,11 +324,7 @@
             break;
     }
     
-    [_player removePlayingMenu];
-    [_player removeProgressBar];
-    [_player.handArea disableAllHandCards];
-    [_player.handArea makeHandCardLeftAlignment];
-    [_gameLayer disablePlayerAreaForOtherPlayers];
+    [_player reset];
 }
 
 /*
@@ -347,12 +344,12 @@
                     [[BGClient sharedClient] sendChoseCardToCutRequest];
                     break;
                     
-                case kGameStateChoosing:
-                    [[BGClient sharedClient] sendChoseCardToUseRequest];
-                    break;
-                    
                 case kGameStatePlaying:
                     [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+                    break;
+                    
+                case kGameStateChoosing:
+                    [[BGClient sharedClient] sendChoseCardToUseRequest];
                     break;
                     
                 case kGameStateGiving:
@@ -364,10 +361,11 @@
                     break;
                     
                 default:
-                    [[BGClient sharedClient] sendChoseCardToUseRequest];
+//                    [[BGClient sharedClient] sendChoseCardToUseRequest];
                     break;
             }
         }];
+
     }
     else {
         if (0 == _player.selectedCardIds.count) {

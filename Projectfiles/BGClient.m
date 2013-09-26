@@ -499,6 +499,7 @@ static BGClient *instanceOfClient = nil;
     [_playingDeck removeResidualNodes];
     [_player removePlayingMenu];
     [_player removeProgressBar];
+    [_player removeTextPrompt];
 }
 
 /*
@@ -512,6 +513,7 @@ static BGClient *instanceOfClient = nil;
     NSInteger action = [obj intWithKey:kAction];
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
     _gameLayer.action = action;
+    [_gameLayer mapActionToGameState];
     
 //  Remove some games nodes(Sprite/Menu) on the screen before handle action
     [self removeGameNodes];
@@ -519,10 +521,7 @@ static BGClient *instanceOfClient = nil;
 //  Remaining card count
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
     
-//  Receive the player name that is current player(出牌的玩家)
-//    NSString *playerName = [obj stringWithKey:kParamPlayerName];
-//    _gameLayer.currPlayerName = playerName;
-//    _player = (_gameLayer && playerName) ? [_gameLayer playerWithName:playerName] : _gameLayer.selfPlayer;
+//  Receive the player name that is self player
     _player = _gameLayer.selfPlayer;
     
 //  Action handling
@@ -539,7 +538,7 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionDeckDealHeros:
-            [_playingDeck updateWithHeroIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck showToBeSelectedHerosWithHeroIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionDeckShowAllSelectedHeros:
@@ -547,17 +546,18 @@ static BGClient *instanceOfClient = nil;
             break;
         
         case kActionDeckShowAllCuttedCards:
+            [_gameLayer removeProgressBarForOtherPlayers];
             _playingDeck.maxCardId = [obj intWithKey:kParamMaxFigureCardId];
-            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck showCuttedCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionDeckShowTopPileCard:
-            [_playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck showTopPileCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionDeckShowPlayerCard:
-            [_playingDeck updateWithHandCardCount:[obj intWithKey:kParamHandCardCount]
-                                     equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck showPlayerHandCardWithCount:[obj intWithKey:kParamHandCardCount]
+                                         equipmentIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionPlayerSelectedHero:
@@ -663,6 +663,7 @@ static BGClient *instanceOfClient = nil;
     NSInteger action = [e.esObject intWithKey:kAction];
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
     _gameLayer.action = action;
+    [_gameLayer mapActionToGameState];
     
 //  Receive the player who send the public message
     _gameLayer.currPlayerName = e.userName;
@@ -671,11 +672,9 @@ static BGClient *instanceOfClient = nil;
     NSArray *array = [obj intArrayWithKey:kParamTargetPlayerList];
     if (array) _gameLayer.targetPlayerNames = [array mutableCopy];
     
-    if (kActionUseHandCard == action) [_playingDeck clearExistingUsedCards];    //清空有问题
-    
-    if ([self isNeedSkipSelfPlayer]) return;
-    
 //  Action handling
+    if ([self isNeedSkipSelfPlayer]) return;
+
     switch (action) {
         case kActionPlayCard:
         case kActionChooseCardToUse:
@@ -685,12 +684,19 @@ static BGClient *instanceOfClient = nil;
             [_player addProgressBar];
             break;
         
-        case kActionUseHandCard:
+        case kActionUseHandCard:            
         case kActionChoseCardToUse:
         case kActionChoseCardToDiscard:
-        case kActionDeckShowTopPileCard:
-            [_gameLayer.playingDeck updateWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [_playingDeck showUsedCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             [_player removeProgressBar];
+            break;
+            
+        case kActionFaceDownPileCard:
+            [_playingDeck showFacedDownCardWithCount:[obj intWithKey:kParamCardCount]];
+            break;
+            
+        case kActionDeckShowTopPileCard:
+            [_playingDeck showTopPileCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionPlayerGetDeckCard:
@@ -708,8 +714,11 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionDrawCard:
+            [_player drawCardWithCardCount:[obj intWithKey:kParamCardCountChanged]];
+            break;
+            
         case kActionPlayerUpdateHand:
-            [_player updateHandCardWithCardCount:[obj intWithKey:kParamCardCount]];
+            _player.handCardCount += [obj intWithKey:kParamCardCountChanged];
             break;
             
         case kActionPlayerUpdateHero:
@@ -726,8 +735,10 @@ static BGClient *instanceOfClient = nil;
 - (BOOL)isNeedSkipSelfPlayer
 {
     return (_player.isSelfPlayer &&
-            (kActionPlayerUpdateHero != _gameLayer.action ||
-             kActionPlayerGetDeckCard != _gameLayer.action));
+            (kActionPlayerUpdateHero    != _gameLayer.action &&
+             kActionPlayerGetDeckCard   != _gameLayer.action &&
+             kActionFaceDownPileCard    != _gameLayer.action &&
+             kActionDeckShowTopPileCard != _gameLayer.action));
 }
 
 @end

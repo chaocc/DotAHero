@@ -39,12 +39,14 @@ typedef NS_ENUM(NSInteger, BGMenuTag) {
 - (CCMenu *)createMenuWithSpriteFrameName:(NSString *)frameName selectedFrameName:(NSString *)selFrameName disabledFrameName:(NSString *)disFrameName;
 - (CCMenu *)createMenuWithSpriteFrameNames:(NSArray *)frameNames selectedFrameNames:(NSArray *)selFrameNames disabledFrameNames:(NSArray *)disFrameNames;
 - (CCMenu *)createMenuWithCards:(NSArray *)cards;
+- (CCMenu *)createCardBackMenuWithCount:(NSUInteger)count;
 
 - (NSArray *)createMenuItemsWithCards:(NSArray *)cards;
+- (NSArray *)createCardBackMenuItemsWithCount:(NSUInteger)count;
 //- (NSArray *)createMenuitemsWithSpriteFrameNames:(NSArray *)frameNames;
-//- (CCMenuItem *)createMenuItemWithSpriteFrameName:(NSString *)frameName;
 
 - (void)addMenuItemsWithCards:(NSArray *)cards toMenu:(CCMenu *)menu;
+- (void)addCardBackMenuItemsWithCount:(NSUInteger)count toMenu:(CCMenu *)menu;
 - (void)addMenuItemsWithSpriteFrameNames:(NSArray *)frameNames toMenu:(CCMenu *)menu;
 - (void)addMenuItemWithSpriteFrameName:(NSString *)frameName isEnabled:(BOOL)isEnabled toMenu:(CCMenu *)menu;
 

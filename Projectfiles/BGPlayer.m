@@ -23,7 +23,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 @property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic) NSUInteger seatIndex;
+
+@property (nonatomic, strong) BGActionComponent *actionComp;
 @property (nonatomic, strong) CCSprite *progressBar;
+@property (nonatomic, strong) CCLabelBMFont *textPrompt;
 
 @end
 
@@ -47,6 +50,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _selectedCardIds = [NSMutableArray array];
         _selectedCardIdxes = [NSMutableArray array];
         _selectedSkillId = kHeroSkillInvalid;
+        
+        _actionComp = [BGActionComponent actionComponentWithNode:self];
         
         [self renderPlayerArea];
     }
@@ -92,6 +97,21 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _selectedSkillId = kHeroSkillInvalid;
 }
 
+- (void)reset
+{
+    [self removePlayingMenu];
+    [self removeProgressBar];
+    [self removeTextPrompt];
+    
+    if (_isSelfPlayer) {
+        [_handArea disableAllHandCardsWithNormalColor];
+        [_handArea makeHandCardLeftAlignment];
+        
+        [self disablePlayerAreaWithNormalColor];
+        [_gameLayer disablePlayerAreaForOtherPlayers];
+    }
+}
+
 #pragma mark - Player area
 /*
  * 1. Self player's position is (0,0) and its sprite anchor point is also (0,0)
@@ -118,30 +138,26 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [_heroArea enableHero];
 }
 
-- (void)disablePlayerArea
+- (void)disablePlayerAreaWithNormalColor
 {
     [_heroArea disableHero];
+    [self setColorWith:ccWHITE];
 }
 
-- (void)setDisabledColor
+- (void)disablePlayerAreaWithDarkColor
+{
+    [_heroArea disableHero];
+    [self setColorWith:COLOR_DISABLED];
+}
+
+- (void)setColorWith:(ccColor3B)color
 {
     if (!_isSelfPlayer) {
         CCSprite *sprite = (CCSprite *)[_gameLayer.gameArtworkBatch getChildByTag:kPlayerTagPlayerArea+_seatIndex];
-        sprite.color = COLOR_DISABLED;
+        sprite.color = color;
         
-        [_gameLayer setColorWith:COLOR_DISABLED ofNode:_heroArea];
-        [_gameLayer setColorWith:COLOR_DISABLED ofNode:_equipmentArea];
-    }
-}
-
-- (void)restoreColor
-{
-    if (!_isSelfPlayer) {
-        CCSprite *sprite = (CCSprite *)[_gameLayer.gameArtworkBatch getChildByTag:kPlayerTagPlayerArea+_seatIndex];
-        sprite.color = ccWHITE;
-        
-        [_gameLayer setColorWith:ccWHITE ofNode:_heroArea];
-        [_gameLayer setColorWith:ccWHITE ofNode:_equipmentArea];
+        [_gameLayer setColorWith:color ofNode:_heroArea];
+        [_gameLayer setColorWith:color ofNode:_equipmentArea];
     }
 }
 
@@ -151,7 +167,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)renderHeroWithHeroId:(NSInteger)heroId
 {
-    [_gameLayer setColorWith:ccWHITE ofNode:_gameLayer];
+    [_gameLayer makeBackgroundColorToNormal];
     
     _selectedHeroId = heroId;
     [_heroArea renderHeroWithHeroId:heroId];
@@ -192,48 +208,48 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 /*
- * Update hand card count for current player
+ * Draw card animation for current player but not self player
  */
-- (void)updateHandCardWithCardCount:(NSInteger)count
+- (void)drawCardWithCardCount:(NSInteger)count
 {
-    if (kGameStateDrawing == _gameLayer.state) {    // 摸牌
-        NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:count];
-        for (NSInteger i = 0; i < count; i++) {
-            [frameNames addObject:kImagePlayingCardBack];
-        }
-        BGMenuFactory *mf = [BGMenuFactory menuFactory];
-        CCMenu *menu = [mf createMenuWithSpriteFrameNames:frameNames];
-        menu.enabled = NO;
-        menu.position = POSITION_DECK_AREA_CENTER;
-        [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
-        [_gameLayer addChild:menu];
-        
-        [_gameLayer moveCardWithCardMenu:menu
-                          toTargerPlayer:self
-                                   block:^{
-                                       [menu removeFromParent];
-                                   }];
-    } else {
-        BGActionComponent *ac = [BGActionComponent actionComponentWithNode:self];
-        [ac runDelayWithDuration:DURATION_CARD_MOVE
-                       WithBlock:^{
-                           self.handCardCount += count;
-                       }];
-    }
+    CCMenu *menu = [[BGMenuFactory menuFactory] createCardBackMenuWithCount:count];
+    menu.enabled = NO;
+    menu.position = POSITION_DECK_AREA_CENTER;
+    [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
+    [_gameLayer addChild:menu];
+    
+    [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:self block:^{
+        [menu removeFromParent];
+    }];
 }
 
 /*
  * Get hand card from playing deck for self/current player
  */
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds
-{
+{    
+    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *menuItems = [[BGMenuFactory menuFactory] createMenuItemsWithCards:cards];
+    CCMenu *menu = nil;
+    
     if (_isSelfPlayer) {
-        [_handArea updateHandCardWithCardIds:cardIds];
+        [_handArea addHandCardWithCardMenuItems:menuItems];
     } else {
-        [self moveCardWithCardIds:cardIds
-                     fromPosition:POSITION_DECK_AREA_CENTER
-                   toTargetPlayer:self];
+        menu = [CCMenu menuWithArray:menuItems];
+        menu.enabled = NO;
+        menu.position = CGPointZero;
+        [_gameLayer addChild:menu];
     }
+    
+    [_gameLayer.playingDeck moveCardWithCardMenuItems:menuItems];
+    
+    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:^{
+        if (_isSelfPlayer) {
+            [_handArea makeHandCardLeftAlignment];
+        } else {
+            [menu removeFromParent];
+        }
+    }];
 }
 
 /*
@@ -290,33 +306,24 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
     [_gameLayer addChild:menu];
     
-    [_gameLayer moveCardWithCardMenu:menu
-                      toTargerPlayer:player
-                               block:^{
-                                   [menu removeFromParent];
-                               }];
+    [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:player block:^{
+       [menu removeFromParent];
+    }];
 }
 
 - (void)moveCardWithCardCount:(NSUInteger)count fromPosition:(CGPoint)fromPos toTargetPlayer:(BGPlayer *)player
 {
     if (count <= 0) return;
     
-    NSMutableArray *frameNames = [NSMutableArray arrayWithCapacity:count];
-    for (NSUInteger i = 0; i < count; i++) {
-        [frameNames addObject:kImagePlayingCardBack];
-    }
-    
-    CCMenu *menu = [[BGMenuFactory menuFactory] createMenuWithSpriteFrameNames:frameNames];
+    CCMenu *menu = [[BGMenuFactory menuFactory] createCardBackMenuWithCount:count];
     menu.enabled = NO;
     menu.position = fromPos;
     [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
     [_gameLayer addChild:menu];
     
-    [_gameLayer moveCardWithCardMenu:menu
-                      toTargerPlayer:player
-                               block:^{
-                                   [menu removeFromParent];
-                               }];
+    [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:player block:^{
+        [menu removeFromParent];
+    }];
 }
 
 /*
@@ -400,7 +407,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         default:
             break;
     }
-
+    
     [self addChild:_playingMenu];
 }
 
@@ -434,8 +441,9 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     timer.anchorPoint = CGPointZero;
     [_progressBar addChild:timer];
     
-//  Run progress bar. If time is up, execute corresponding operation.
-    void(^block)() = ^{
+//  Run progress bar. If time is up, execute corresponding operation.    
+    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:timer];
+    [ac runProgressBarWithDuration:10.0f block:^{
         switch (_gameLayer.state) {
             case kGameStateCutting:
                 [_handArea useHandCardAfterTimeIsUp];
@@ -452,13 +460,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                 break;
         }
         
-        [self removePlayingMenu];
-        [self removeProgressBar];
-    };
-    
-    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:timer];
-    [ac runProgressBarWithDuration:10.0f
-                             block:block];
+        [self reset];
+    }];
 }
 
 - (void)addProgressBar
@@ -470,6 +473,56 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)removeProgressBar
 {
     [_progressBar removeFromParent];
+}
+
+#pragma mark - Text prompt
+/*
+ * Add text prompt for selected card while playing
+ */
+- (void)addTextPromptForSelectedCard
+{
+    if (0 == _handArea.selectedCards.count) {
+        [_textPrompt removeFromParent];
+        return;
+    }
+    
+    NSString *text = nil;
+    NSArray *parameters = nil;
+    
+    BGPlayingCard *card = _handArea.selectedCards.lastObject;
+    switch (card.cardEnum) {
+        case kPlayingCardEnergyTransport:
+            parameters = [NSArray arrayWithObject:@(_gameLayer.playerCount).stringValue];
+            text = [card tipTextWith:card.cardText parameters:parameters];
+            break;
+            
+        default:
+            text = [card tipTextWith:card.tipText parameters:nil];
+            break;
+    }
+    
+    [self addTextPromptLabelWithString:text];
+}
+
+- (void)addTextPromptLabelWithString:(NSString *)string
+{
+    [_textPrompt removeFromParent];
+    
+    _textPrompt = [CCLabelBMFont labelWithString:string fntFile:kFontTextPrompt];
+    _textPrompt.position = POSITION_TEXT_PROMPT;
+    [self addChild:_textPrompt];
+}
+
+- (void)addTextPrompt
+{
+    if (kGameStatePlaying == _gameLayer.state) {
+        [self addTextPromptForSelectedCard];
+    }
+}
+
+- (void)removeTextPrompt
+{
+    [_textPrompt removeFromParent];
 }
 
 @end
