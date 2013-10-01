@@ -40,7 +40,7 @@
 
 @property (nonatomic) NSUInteger handCardCount;         // 手牌数
 @property (nonatomic) NSUInteger selectableTargetCount; // 可以指定的目标玩家数
-@property (nonatomic) NSUInteger drawableCardCount;     // 可以抽取的牌数
+@property (nonatomic) NSUInteger selectableCardCount;   // 可以选择/抽取的牌数
 @property (nonatomic) BOOL isOptionalDiscard;           // 是否非强制的弃牌
 
 - (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
@@ -53,6 +53,7 @@
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds;
 - (void)drawCardWithCardCount:(NSInteger)count;
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count;
+- (void)enableAllHandCardsWithSelectableCount:(NSUInteger)count;
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
 
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds;
@@ -64,7 +65,7 @@
 - (void)disablePlayerAreaWithNormalColor;
 
 - (void)clearBuffer;
-- (void)reset;
+- (void)resetAndRemoveNodes;
 
 - (void)addPlayingMenu;
 - (void)addPlayingMenuOfStrengthen;

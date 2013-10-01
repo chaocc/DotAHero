@@ -97,11 +97,15 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateCutting;
             break;
             
+        case kActionChooseCardToGet:
         case kActionChoseCardToGet:
         case kActionPlayerGetCard:
         case kActionPlayerGetDeckCard:
             _state = kGameStateGetting;
             break;
+            
+        case kActionPlayerLoseCard:
+            _state = kGameStateLosing;
             
         case kActionChoseCardToGive:
             _state = kGameStateGiving;
@@ -479,7 +483,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 {
     NSLog(@"Game state: %i and action: %i", self.state, self.action);
     
-    CGPoint targetPos;
+    CGPoint targetPos = CGPointZero;
     CGFloat cardWidth = PLAYING_CARD_WIDTH;
 //    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
@@ -495,6 +499,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
             targetPos = [_playingDeck cardPositionWithIndex:idx count:count];
             break;
         }
+            
+        case kGameStateLosing:
+            targetPos = self.targetPlayer.position;
+            break;
             
         case kGameStateGetting:
             targetPos = (self.currPlayer.isSelfPlayer) ?

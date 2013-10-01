@@ -137,12 +137,12 @@
     [_handCards addObjectsFromArray:cards];
     
 //  If there is faced down cards, need face up them by flipping.
-    if (0 != _facedDownCardCount) {
+    if (0 != _facedDownCardCount) { 
         for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
             NSUInteger count = _cardMenu.children.count - _facedDownCardCount;
-            CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count+i];
+            CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count];
             
-            [_menuFactory addMenuItemsWithCards:cards[i] toMenu:_cardMenu];
+            [_menuFactory addMenuItemsWithCards:[NSArray arrayWithObject:cards[i]] toMenu:_cardMenu];
             CCMenuItem *newCard = _cardMenu.children.lastObject;
             newCard.visible = NO;
             newCard.position = cardBack.position;
@@ -179,7 +179,7 @@
         }
     }];
     
-    if (kGameStateGetting == _gameLayer.state) {
+    if (kGameStateLosing == _gameLayer.state) {
         [self moveSelectedCardToOtherPlayer];
     } else {
         [self moveSelectedCardToPlayingDeck];
@@ -293,8 +293,7 @@
     NSAssert(_selectedCards, @"_selectedCards Nil in %@", NSStringFromSelector(_cmd));
     NSAssert(_selectedMenuItems, @"_selectedMenuItems Nil in %@", NSStringFromSelector(_cmd));
     
-    NSUInteger idx = [_cardMenu.children indexOfObject:menuItem];
-    BGPlayingCard *card = _handCards[idx];
+    BGPlayingCard *card = _handCards[[_cardMenu.children indexOfObject:menuItem]];
     
 //  Need move up/down while a card is selected/deselected
     CGPoint targetPos;
@@ -391,9 +390,7 @@
  */
 - (void)checkTargetPlayerSelectivityWithSelectedCard:(BGPlayingCard *)card
 {
-    if (kGameStatePlaying != _gameLayer.state || !card.needSpecifyTarget) {
-        return;
-    }
+    if (kGameStatePlaying != _gameLayer.state) return;
     
     if (!card.isSelected) {
         [_gameLayer disablePlayerAreaForOtherPlayers];
@@ -418,6 +415,7 @@
         case kPlayingCardLagunaBlade:
         case kPlayingCardViperRaid:
         case kPlayingCardElunesArrow:
+        case kPlayingCardGreed:
             [_gameLayer enablePlayerAreaForOtherPlayers];
             break;
             

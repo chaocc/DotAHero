@@ -25,6 +25,7 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 //    kGameStateDrawing,          // 摸牌阶段
     kGameStatePlaying,          // 主动出牌阶段
     kGameStateChoosing,         // 被动出牌阶段
+    kGameStateLosing,           // 丢牌阶段
     kGameStateGetting,          // 抽牌阶段
     kGameStateGiving,           // 给牌阶段
     kGameStateDiscarding        // 弃牌阶段

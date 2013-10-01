@@ -324,7 +324,7 @@
             break;
     }
     
-    [_player reset];
+    [_player resetAndRemoveNodes];
 }
 
 /*

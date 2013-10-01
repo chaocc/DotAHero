@@ -54,6 +54,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionPlayerUpdateEquipment = 2004,            // 更新装备区的牌
     kActionPlayerGetCard = 2005,                    // 获得其他玩家的牌
     kActionPlayerGetDeckCard = 2006,                // 获得牌桌的牌
+    kActionPlayerLoseCard = 2007,                   // 失去手牌
     
     kActionPlayCard = 3000,                         // 出牌(主动)
     kActionChooseCardToUse = 3001,                  // 选择卡牌: 使用(被动)
@@ -81,7 +82,6 @@ typedef NS_ENUM(NSInteger, BGAction) {
 #define kParamCardCountChanged          @"hand_card_change_amount"  // 手牌更改的数量
 #define kParamHandCardCount             @"hand_card_count"      // 玩家手牌数量
 #define kParamSelectableCardCount       @"selectable_count"     // 可选择的卡牌数量
-#define kParamExtractableCardCount      @"extractable_count"    // 可抽取目标的卡牌数量
 #define kParamSelectedHeroId            @"id"                   // 选中的英雄
 #define kParamSelectedSkillId           @"selected_skill_id"    // 选中的英雄技能
 #define kParamSelectedColor             @"selected_color"       // 选中的颜色

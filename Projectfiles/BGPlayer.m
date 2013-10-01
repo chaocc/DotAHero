@@ -97,7 +97,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _selectedSkillId = kHeroSkillInvalid;
 }
 
-- (void)reset
+- (void)resetAndRemoveNodes
 {
     [self removePlayingMenu];
     [self removeProgressBar];
@@ -136,6 +136,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)enablePlayerArea
 {
     [_heroArea enableHero];
+    [self setColorWith:ccWHITE];
 }
 
 - (void)disablePlayerAreaWithNormalColor
@@ -335,6 +336,12 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _handArea.selectableCardCount = count;
 }
 
+- (void)enableAllHandCardsWithSelectableCount:(NSUInteger)count
+{
+    [_handArea enableAllHandCards];
+    _handArea.selectableCardCount = count;
+}
+
 #pragma mark - Equipment area
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds
 {
@@ -460,7 +467,9 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                 break;
         }
         
-        [self reset];
+        if (self.isRunning) [self stopAllActions];
+        
+        [self resetAndRemoveNodes];
     }];
 }
 

@@ -4,23 +4,49 @@
     <dict>
         <key>frames</key>
         <dict>
-            <key>PopupExtractedAllCards.png</key>
+            <key>PopupAssignedCard.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{764,2},{966,908}}</string>
+                <key>offset</key>
+                <string>{2,-3}</string>
+                <key>rotated</key>
+                <false/>
+                <key>sourceColorRect</key>
+                <string>{{44,9},{966,908}}</string>
+                <key>sourceSize</key>
+                <string>{1050,920}</string>
+            </dict>
+            <key>PopupCardSlot.png</key>
+            <dict>
+                <key>frame</key>
+                <string>{{764,912},{226,376}}</string>
+                <key>offset</key>
+                <string>{0,0}</string>
+                <key>rotated</key>
+                <true/>
+                <key>sourceColorRect</key>
+                <string>{{0,0},{226,376}}</string>
+                <key>sourceSize</key>
+                <string>{226,376}</string>
+            </dict>
+            <key>PopupDrewAllCards.png</key>
             <dict>
                 <key>frame</key>
                 <string>{{2,2},{1170,760}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{1170,760}}</string>
                 <key>sourceSize</key>
                 <string>{1170,760}</string>
             </dict>
-            <key>PopupExtractedEquipment.png</key>
+            <key>PopupDrewEquipment.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1216},{520,450}}</string>
+                <string>{{1174,912},{520,450}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -30,10 +56,10 @@
                 <key>sourceSize</key>
                 <string>{520,450}</string>
             </dict>
-            <key>PopupExtractedHandCard.png</key>
+            <key>PopupDrewHandCard.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,764},{1170,450}}</string>
+                <string>{{2,1174},{1170,450}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -51,9 +77,9 @@
             <key>realTextureFileName</key>
             <string>CardPopup-ipadhd.pvr.ccz</string>
             <key>size</key>
-            <string>{1174,1668}</string>
+            <string>{1732,1626}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:c9eb205839441660f62bedb36ab5aa88:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:e12c7af8a9900b376d019ca07992404a:1/1$</string>
             <key>textureFileName</key>
             <string>CardPopup-ipadhd.pvr.ccz</string>
         </dict>

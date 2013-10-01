@@ -510,7 +510,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     _equipMenu.enabled = NO;
     _equipMenu.color = COLOR_DISABLED_CARD;
     
-    NSUInteger idx = _gameLayer.targetPlayer.handCardCount - menuItem.tag - 1;
+    NSUInteger idx = _handMenu.children.count - menuItem.tag - 1;
     [_player.selectedCardIdxes addObject:@(idx)];
     [self drawCardByTouchingMenuItem:menuItem];
 }
@@ -522,7 +522,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:menuItem.tag];
     
-    _player.drawableCardCount = 1;
+    _player.selectableCardCount = 1;
     _player.selectedCardIds = [NSArray arrayWithObject:@(menuItem.tag)];
     [self drawCardByTouchingMenuItem:menuItem];
 }
@@ -537,7 +537,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
     [_player.handArea addAndFaceDownOneDrewCardWith:menuItem];
     
-//  The drew card count can't great than all hand card count    
+//  The drew card count can't great than all hand card count
     menuItem.position = _gameLayer.targetPlayer.position;
     [_gameLayer moveCardWithCardMenuItems:[NSArray arrayWithObject:menuItem] block:^(id object) {
         [_player.handArea makeHandCardLeftAlignment];
@@ -546,21 +546,18 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
             [[BGClient sharedClient] sendChoseCardToGetRequest];    // Send plugin reqeust
         }
     }];
-    
+        
     if ([self isDrawingFinished]) {
         [_player removeProgressBar];
         [_handMenu.parent removeFromParent];
         [_equipMenu.parent removeFromParent];
     }
-    
-//  Update target player hand card count
-    _gameLayer.targetPlayer.handCardCount--;
 }
 
 - (BOOL)isDrawingFinished
 {
     return ((_player.selectedCardIdxes.count == _gameLayer.targetPlayer.handCardCount) ||
-            (_player.selectedCardIdxes.count == _player.drawableCardCount));
+            (_player.selectedCardIdxes.count == _player.selectableCardCount));
 }
 
 #pragma mark - Gestures

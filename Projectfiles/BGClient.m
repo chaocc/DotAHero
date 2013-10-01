@@ -516,7 +516,7 @@ static BGClient *instanceOfClient = nil;
     [_gameLayer mapActionToGameState];
     
 //  Remove some games nodes(Sprite/Menu) on the screen before handle action
-    [self removeGameNodes];
+//    [self removeGameNodes];
     
 //  Remaining card count
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
@@ -569,6 +569,7 @@ static BGClient *instanceOfClient = nil;
             break;
         
         case kActionPlayerUpdateHand:
+        case kActionPlayerLoseCard:
             [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
@@ -584,8 +585,6 @@ static BGClient *instanceOfClient = nil;
             
         case kActionPlayCard:
         case kActionChooseCardToUse:
-        case kActionChooseCardToDiscard:
-            _player.isOptionalDiscard = [obj intWithKey:kParamIsOptionalDiscard];
         case kActionChooseColor:
         case kActionChooseSuits:
             [_player addProgressBar];
@@ -595,7 +594,15 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionChooseCardToGet:
-            _player.drawableCardCount = [obj intWithKey:kParamExtractableCardCount];
+            _player.selectableCardCount = [obj intWithKey:kParamSelectableCardCount];
+            [_player addProgressBar];
+            break;
+            
+        case kActionChooseCardToDiscard:
+            _player.isOptionalDiscard = [obj intWithKey:kParamIsOptionalDiscard];
+            [_player enableAllHandCardsWithSelectableCount:[obj intWithKey:kParamSelectableCardCount]];
+            [_player addProgressBar];
+            [_player addPlayingMenu];
             break;
             
         default:
@@ -662,22 +669,22 @@ static BGClient *instanceOfClient = nil;
     EsObject *obj = e.esObject;
     NSInteger action = [e.esObject intWithKey:kAction];
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
+    
+//  Receive the player who send the public message. Set the target player names.
+    _gameLayer.currPlayerName = e.userName;
+    BGPlayer *currPlayer = (_gameLayer) ? _gameLayer.currPlayer : nil;
+    [self setTargetPlayerNames:[obj intArrayWithKey:kParamTargetPlayerList]];
+    
+//  Game state with action
+    if ([self isNeedSkipSelfPlayer]) return;
     _gameLayer.action = action;
     [_gameLayer mapActionToGameState];
     
-//  Receive the player who send the public message
-    _gameLayer.currPlayerName = e.userName;
-    _player = (_gameLayer) ? _gameLayer.currPlayer : nil;
-    
-    NSArray *array = [obj intArrayWithKey:kParamTargetPlayerList];
-    if (array) _gameLayer.targetPlayerNames = [array mutableCopy];
-    
 //  Action handling
-    if ([self isNeedSkipSelfPlayer]) return;
-
     switch (action) {
         case kActionPlayCard:
         case kActionChooseCardToUse:
+        case kActionChooseCardToGet:
         case kActionChooseCardToDiscard:
         case kActionChooseColor:
         case kActionChooseSuits:
@@ -686,9 +693,10 @@ static BGClient *instanceOfClient = nil;
         
         case kActionUseHandCard:            
         case kActionChoseCardToUse:
+        case kActionDiscard:
         case kActionChoseCardToDiscard:
             [_playingDeck showUsedCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
-            [_player removeProgressBar];
+            [currPlayer removeProgressBar];
             break;
             
         case kActionFaceDownPileCard:
@@ -700,31 +708,31 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionPlayerGetDeckCard:
-            [_player getCardFromDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [currPlayer getCardFromDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionChoseCardToGet:
-            [_player drawCardFromTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
-                                               cardCount:[obj intWithKey:kParamCardCount]];
+            [currPlayer drawCardFromTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                                  cardCount:[obj intWithKey:kParamCardCount]];
             break;
             
         case kActionChoseCardToGive:
-            [_player giveCardToTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
-                                             cardCount:[obj intWithKey:kParamCardCount]];
+            [currPlayer giveCardToTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                                cardCount:[obj intWithKey:kParamCardCount]];
             break;
             
         case kActionDrawCard:
-            [_player drawCardWithCardCount:[obj intWithKey:kParamCardCountChanged]];
+            [currPlayer drawCardWithCardCount:[obj intWithKey:kParamCardCountChanged]];
             break;
             
         case kActionPlayerUpdateHand:
-            _player.handCardCount += [obj intWithKey:kParamCardCountChanged];
+            currPlayer.handCardCount += [obj intWithKey:kParamCardCountChanged];
             break;
             
         case kActionPlayerUpdateHero:
-            [_player updateHeroWithBloodPoint:[obj intWithKey:kParamHeroBloodPointChanged]
-                                   angerPoint:[obj intWithKey:kParamHeroAngerPointChanged]];
-            [_player removeProgressBar];
+            [currPlayer updateHeroWithBloodPoint:[obj intWithKey:kParamHeroBloodPointChanged]
+                                      angerPoint:[obj intWithKey:kParamHeroAngerPointChanged]];
+            [currPlayer removeProgressBar];
             break;
             
         default:
@@ -739,6 +747,27 @@ static BGClient *instanceOfClient = nil;
              kActionPlayerGetDeckCard   != _gameLayer.action &&
              kActionFaceDownPileCard    != _gameLayer.action &&
              kActionDeckShowTopPileCard != _gameLayer.action));
+}
+
+/*
+ * For other players(not the public sender player), if other players's target player names is empty, need set it.
+ * If the specified target player is the receiver player, need add sender player as receiver player's target.
+ * Otherwise, set the target player names with received esObj parameter.
+ */
+- (void)setTargetPlayerNames:(NSArray *)playerNames
+{   
+    if (playerNames.count > 0 && 0 == _gameLayer.targetPlayerNames.count) {
+        for (id obj in playerNames) {
+            if ([obj isEqual:_gameLayer.selfPlayer.playerName]) {
+                [_gameLayer.targetPlayerNames addObject:_gameLayer.currPlayerName];
+                break;
+            }
+        }
+        
+        if (0 == _gameLayer.targetPlayerNames.count) {
+            _gameLayer.targetPlayerNames = [playerNames mutableCopy];
+        }
+    }
 }
 
 @end

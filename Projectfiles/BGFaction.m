@@ -59,7 +59,7 @@
 - (void)renderFaction
 {
     CCSpriteBatchNode *spriteBatch = [BGGameLayer sharedGameLayer].gameArtworkBatch;
-    CGFloat increment;
+    CGFloat increment = 0.0f;
     
     for (NSUInteger i = 0; i < 3; i++) {
         CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:kImageFactionFrame];

@@ -154,7 +154,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 {
     NSString *bloodImageName;
     CGPoint basePos = CGPointZero;
-    CGFloat width, height;
+    CGFloat width = 0.0f, height = 0.0f;
     
 //  Remove previous blood sprites
     for (NSInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
@@ -205,7 +205,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 {
     NSString *angerImageName;
     CGPoint basePos = CGPointZero;
-    CGFloat width, height, increment;
+    CGFloat width = 0.0f, height = 0.0f, increment = 0.0f;
     
 //  Remove previous anger sprites
     for (NSUInteger i = 0; i < _heroCard.angerPointLimit; i++) {
@@ -284,7 +284,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     if ([menuItem.parent isEqual:_heroMenu]) {
-        [self selectTargetPlayerByTouchingMenuItem:menuItem];
+        [self selectTargetPlayer];
+        [self checkNextTargetPlayerSelectivity];
+        
     }
     else if ([menuItem.parent isEqual:_skillMenu]) {
         _player.selectedSkillId = menuItem.tag;
@@ -295,7 +297,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  * Select other player as target player
  * First touching is selected, second is removed.
  */
-- (void)selectTargetPlayerByTouchingMenuItem:(CCMenuItem *)menuItem
+- (void)selectTargetPlayer
 {
     BGPlayer *selfPlayer = _gameLayer.selfPlayer;
     CCMenuItem *okayMenu = [selfPlayer.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
@@ -322,18 +324,58 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     }
 }
 
-//- (void)checkTargetPlayerOfMislead
-//{
-//    for (NSUInteger i = 0; i < _gameLayer.playerCount; i++) {
-//        BGPlayer *player = _gameLayer.allPlayers[i];
-//        
-//        if (player.heroArea.angerPoint > 0) {
-//            [player enablePlayerArea];
-//        } else {
-//            [player disablePlayerAreaWithDarkColor];
-//        }
-//    }
-//}
+/*
+ * If selected card need target player count that is equal with already selected target count,
+ * need check which next player can selected while selecting one player
+ */
+- (void)checkNextTargetPlayerSelectivity
+{
+    BGPlayingCard *card = _gameLayer.selfPlayer.handArea.selectedCards.lastObject;
+    
+    if (_gameLayer.targetPlayers.count == card.targetCount) return;
+    
+    switch (card.cardEnum) {
+        case kPlayingCardMislead:
+            [self checkTargetPlayerOfMislead];
+            break;
+            
+        default:
+            break;
+    }
+}
+
+- (void)checkTargetPlayerOfMislead
+{
+    if (0 == _gameLayer.targetPlayers.count ||
+        0 == _gameLayer.targetPlayer.heroArea.angerPoint) {
+        for (NSUInteger i = 0; i < _gameLayer.playerCount; i++) {
+            BGPlayer *player = _gameLayer.allPlayers[i];
+            if (player.heroArea.angerPoint > 0) {
+                [player enablePlayerArea];
+            } else {
+                [player disablePlayerAreaWithDarkColor];
+            }
+        }
+        
+        [_gameLayer.targetPlayerNames removeAllObjects];
+//      TEMP: 删除选中的动画
+//        [_gameLayer.targetPlayer.heroArea stopSelection];
+        return;
+    }
+    
+    for (NSUInteger i = 0; i < _gameLayer.playerCount; i++) {
+        BGPlayer *player = _gameLayer.allPlayers[i];
+        if ([_gameLayer.targetPlayers containsObject:player]) {
+            continue;
+        }
+        
+        if (player.heroArea.angerPoint < player.heroArea.heroCard.angerPointLimit) {
+            [player enablePlayerArea];
+        } else {
+            [player disablePlayerAreaWithDarkColor];
+        }
+    }
+}
 
 #pragma mark - Gestures
 - (void)update:(ccTime)delta
