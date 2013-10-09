@@ -17,6 +17,7 @@
 
 @property (nonatomic, copy, readonly) NSString *playerName;
 @property (nonatomic, readonly) BOOL isSelfPlayer;
+@property (nonatomic, readonly) BOOL isCurrPlayer;
 
 @property (nonatomic) NSUInteger positiveDistance;  // +1: 其他玩家计算与自己的距离
 @property (nonatomic) NSInteger negativeDistance;   // -1: 自己计算与其他玩家的距离
@@ -64,7 +65,6 @@
 - (void)disablePlayerAreaWithDarkColor;
 - (void)disablePlayerAreaWithNormalColor;
 
-- (void)clearBuffer;
 - (void)resetAndRemoveNodes;
 
 - (void)addPlayingMenu;

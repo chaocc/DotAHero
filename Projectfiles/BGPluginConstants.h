@@ -92,6 +92,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
 #define kParamHeroBloodPointChanged     @"hp_changed"           // +|-血量
 #define kParamHeroAngerPoint            @"sp"                   // 怒气值
 #define kParamHeroAngerPointChanged     @"sp_changed"           // +|-怒气
+#define kParamPlayerUpdateReason        @"reason"
 #define kParamPlayerCount               @"player_count"
 
 #endif

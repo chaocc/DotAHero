@@ -25,7 +25,7 @@
 - (void)showAssignedCardsWithCardIds:(NSArray *)cardIds;
 
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems;
-- (CGPoint)cuttedCardPositionWithIndex:(NSUInteger)idx;
+- (CGPoint)cardPositionWithIndex:(NSUInteger)idx;
 - (CGPoint)cardPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count;
 
 - (void)removeResidualNodes;

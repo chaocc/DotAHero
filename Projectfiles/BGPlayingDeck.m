@@ -13,6 +13,10 @@
 #import "BGFileConstants.h"
 #import "BGActionComponent.h"
 
+typedef NS_ENUM(NSInteger, BGPopupTag) {
+    kPopupTagAssignedCard = 100
+};
+
 @interface BGPlayingDeck ()
 
 @property (nonatomic, weak) BGGameLayer *gameLayer;
@@ -25,6 +29,11 @@
 @property (nonatomic, strong) CCMenu *handMenu;     // 目标手牌
 @property (nonatomic, strong) CCMenu *equipMenu;    // 目标装备
 @property (nonatomic, strong) CCMenu *pileMenu;     // 牌堆牌
+
+@property (nonatomic, strong) CCSpriteBatchNode *spriteBatch;
+@property (nonatomic, strong) CCMenuItem *pannedMenuItem;
+@property (nonatomic) CGPoint pannedMenuItemPos;
+@property (nonatomic) NSInteger pannedMenuItemZOrder;
 
 @property (nonatomic) NSUInteger allCardCount;
 @property (nonatomic) NSUInteger addedCardCount;
@@ -227,11 +236,12 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 - (void)showUsedWithCardMenuItems:(NSArray *)menuItems
 {
     [self checkDeckBeforeAddingCardWithCount:menuItems.count];
-    if (kGameStatePlaying == _gameLayer.state) {
+    if (kGameStatePlaying == _gameLayer.state || kGameStateDiscarding == _gameLayer.state) {
         [self clearExistingCards];
     }
     
-    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//  The zOrder determine index of child menu items
+    [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [_cardMenu addChild:obj z:_cardMenu.children.count];
     }];
     
@@ -247,13 +257,14 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 - (void)showUsedCardWithCardIds:(NSArray *)cardIds
 {
     [self checkDeckBeforeAddingCardWithCount:cardIds.count];
-    if (kGameStatePlaying == _gameLayer.state && kActionPlayCard != _gameLayer.action) {
+    if ((kGameStatePlaying == _gameLayer.state || kGameStateDiscarding == _gameLayer.state) &&
+        kActionPlayCard != _gameLayer.action) {
         [self clearExistingCards];
     }
     
     NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
-    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj setPosition:_gameLayer.currPlayer.position];
         [_cardMenu addChild:obj z:_cardMenu.children.count];
     }];
@@ -366,19 +377,53 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)showAssignedCardsWithCardIds:(NSArray *)cardIds
 {
-    NSString *image = [NSString stringWithFormat:@"%@%i", kImagePopupEnergyTransport,_gameLayer.playerCount];
+    _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibCardPopup];
+    [self addChild:_spriteBatch];
+    
+//  Popup window
+//    NSString *image = [NSString stringWithFormat:@"%@%i", kImagePopupAssignedCard,_gameLayer.playerCount];
+    NSString *image = kImagePopupAssignedCard;
     NSString *frameName = [image stringByAppendingPathExtension:kFileTypePng];
     CCSprite *popup = [CCSprite spriteWithSpriteFrameName:frameName];
     CGFloat popupWidth = popup.contentSize.width;
     CGFloat popupHeight = popup.contentSize.height;
     popup.anchorPoint = CGPointZero;
-    popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight/2));
-    [self addChild:popup];
+    popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight*0.58));
+    [_spriteBatch addChild:popup z:0 tag:kPopupTagAssignedCard];
     
+//  Playing card menu
     NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
     _pileMenu = [_menuFactory createMenuWithCards:cards];
-    [_pileMenu alignItemsHorizontallyWithPadding:PADDING_ASSIGNED_CARD];
+    _pileMenu.enabled = NO;
+    _pileMenu.position = CGPointZero;
+    [self addChild:_pileMenu];
     
+//  Card slot and position
+    [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        CCSprite *cardSlot = [CCSprite spriteWithSpriteFrameName:kImagePopupCardSlot];
+        CGFloat slotWidth = cardSlot.contentSize.width;
+        CGFloat slotHeight = cardSlot.contentSize.height;
+        
+        NSUInteger rowCount = ceil((double)_gameLayer.playerCount/COUNT_MAX_DECK_CARD);
+        NSUInteger colCount = ceil((double)_gameLayer.playerCount/rowCount);
+        CGFloat padding = PADDING_ASSIGNED_CARD;
+        
+        CGFloat startPosX = POSITION_DECK_AREA_CENTER.x - (colCount-1)*slotWidth/2;
+        CGFloat delta = (idx < colCount) ? idx*(slotWidth+padding) : (idx-colCount)*(slotWidth+padding);
+        CGFloat slotPosX = startPosX + delta;
+        
+        CGFloat startPosY = (1 == rowCount) ? POSITION_DECK_AREA_CENTER.y : POSITION_DECK_AREA_TOP.y;
+        CGFloat slotPosY = (idx < colCount) ? startPosY : (POSITION_DECK_AREA_TOP.y-slotHeight-padding);
+        
+        cardSlot.position = ccp(slotPosX, slotPosY);
+        [_spriteBatch addChild:cardSlot];
+        
+        // Card menu position
+        CCMenuItem *menuItem = [_pileMenu.children objectAtIndex:idx];
+        menuItem.position = ccpSub(cardSlot.position, ccp(0.0f, PLAYING_CARD_HEIGHT*0.1));
+    }];
+    
+    [_player addProgressBar];
 }
 
 #pragma mark - Card movement
@@ -422,7 +467,10 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     [_gameLayer moveCardWithCardMenuItems:menuItems block:nil];
 }
 
-- (CGPoint)cuttedCardPositionWithIndex:(NSUInteger)idx
+/*
+ * Cutted card position
+ */
+- (CGPoint)cardPositionWithIndex:(NSUInteger)idx
 {
     CGFloat cardWidth = [_cardMenu.children.lastObject contentSize].width;
     CGFloat cardHeight = [_cardMenu.children.lastObject contentSize].height;
@@ -442,6 +490,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 }
 
 /*
+ * Used card position
  * NOTE: If received multiple actions from server sequentially and each action will update the variable "_exisingCardCount",
  *       must handle each action by sequence. The next action can be handled util previous action completed. (By running delay)
  *       (If multiple actions update the variable at the same time, it leads to wrong target position of card movement)
@@ -456,7 +505,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     CGPoint basePos = (_existingCardCount > 0) ?
         [[_cardMenu.children objectAtIndex:_existingCardCount-1] position] :
         ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth/2, 0.0f));
-    CGPoint startPos = ccpSub(basePos, ccp(factor*cardWidth, 0.0f));
+    CGPoint startPos = (_existingCardCount > 0) ? ccpSub(basePos, ccp(factor*cardWidth, 0.0f)) : basePos;
     
     return ccpAdd(startPos, ccp((cardWidth+padding)*idx, 0.0f));
 }
@@ -500,6 +549,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
                                  [menuItem.parent removeFromParent];
                                  [[BGClient sharedClient] sendChoseHeroIdRequest];
                              }];
+    
+//    [self showAssignedCardsWithCardIds:[NSArray arrayWithObjects:@(10), @(20), @(30), @(40), @(50), @(60), nil]];
 }
 
 /*
@@ -510,8 +561,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     _equipMenu.enabled = NO;
     _equipMenu.color = COLOR_DISABLED_CARD;
     
-    NSUInteger idx = _handMenu.children.count - menuItem.tag - 1;
-    [_player.selectedCardIdxes addObject:@(idx)];
+    [_player.selectedCardIdxes addObject:@(menuItem.tag)];
     [self drawCardByTouchingMenuItem:menuItem];
 }
 
@@ -537,23 +587,27 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
     [_player.handArea addAndFaceDownOneDrewCardWith:menuItem];
     
-//  The drew card count can't great than all hand card count
+    _gameLayer.currPlayerName = _player.playerName;
+    _gameLayer.state = kGameStateGetting;
+    
     menuItem.position = _gameLayer.targetPlayer.position;
     [_gameLayer moveCardWithCardMenuItems:[NSArray arrayWithObject:menuItem] block:^(id object) {
         [_player.handArea makeHandCardLeftAlignment];
         
         if ([self isDrawingFinished]) {
             [[BGClient sharedClient] sendChoseCardToGetRequest];    // Send plugin reqeust
+            [_player.selectedCardIdxes removeAllObjects];
         }
     }];
-        
-    if ([self isDrawingFinished]) {
+    
+    if ([self isDrawingFinished]) {        
         [_player removeProgressBar];
         [_handMenu.parent removeFromParent];
         [_equipMenu.parent removeFromParent];
     }
 }
 
+//  The drew card count can't great than all hand card count
 - (BOOL)isDrawingFinished
 {
     return ((_player.selectedCardIdxes.count == _gameLayer.targetPlayer.handCardCount) ||
@@ -575,17 +629,53 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     KKInput *input = [KKInput sharedInput];
     
-    if (![input isAnyTouchOnNode:_heroMenu.children.lastObject touchPhase:KKTouchPhaseAny]) {
-        return;
+//    if ([input isAnyTouchOnNode:_heroMenu.children.lastObject touchPhase:KKTouchPhaseAny]) {
+//        if (input.gestureDoubleTapRecognizedThisFrame || input.gestureLongPressBegan) {
+//
+//        }
+//    }
+    
+//  Pan gesture for "Energy Transport" card
+    if (input.gesturePanBegan) {
+        for (CCMenuItem *menuItem in _pileMenu.children) {
+            if ([input isAnyTouchOnNode:menuItem touchPhase:KKTouchPhaseAny]) {
+                _pannedMenuItem = menuItem;
+                _pannedMenuItemPos = menuItem.position;
+                _pannedMenuItemZOrder = menuItem.zOrder;
+                _pannedMenuItem.zOrder = _pileMenu.children.count;
+                
+                for (CCNode *node in _pileMenu.children) {
+                    if (![node isEqual:menuItem]) {
+                        [_gameLayer setColorWith:COLOR_DISABLED_CARD ofNode:node];
+                    }
+                }
+                break;
+            }
+        }
+        
+        CCNode *popup = [_spriteBatch getChildByTag:kPopupTagAssignedCard];
+        if (input.gesturePanLocation.x-_pannedMenuItem.contentSize.width/2 >= popup.position.x &&
+            input.gesturePanLocation.x+_pannedMenuItem.contentSize.width/2 <= popup.position.x+popup.contentSize.width &&
+            input.gesturePanLocation.y-_pannedMenuItem.contentSize.height/2 >= popup.position.y &&
+            input.gesturePanLocation.y+_pannedMenuItem.contentSize.height/2 <= popup.position.y+popup.contentSize.height) {
+            _pannedMenuItem.position = input.gesturePanLocation;
+        }
     }
     
-    if (input.gestureDoubleTapRecognizedThisFrame || input.gestureLongPressBegan) {
-//        CCSprite *popup = [CCSprite spriteWithSpriteFrameName:kImagePopupDrewAllCards];
-//        CGFloat popupWidth = popup.contentSize.width;
-//        CGFloat popupHeight = popup.contentSize.height;
-//        popup.anchorPoint = CGPointZero;
-//        popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight/2));
-//        [self addChild:popup];
+    if (_pannedMenuItem && input.panGestureRecognizer.state == UIGestureRecognizerStatePossible) {
+        for (CCMenuItem *menuItem in _pileMenu.children) {
+            if (CGRectContainsPoint(menuItem.boundingBox, input.gesturePanLocation)) {
+                // The zOrder determine index of child menu items
+                _pannedMenuItem.zOrder = menuItem.zOrder;
+                menuItem.zOrder = _pannedMenuItemZOrder;
+                _pannedMenuItem.position = menuItem.position;
+                menuItem.position = _pannedMenuItemPos;
+                
+                _pannedMenuItem = nil;
+                [_gameLayer setColorWith:ccWHITE ofNode:_pileMenu];
+                break;
+            }
+        }
     }
 }
 

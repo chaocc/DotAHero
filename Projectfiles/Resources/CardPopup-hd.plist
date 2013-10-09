@@ -7,15 +7,15 @@
             <key>PopupAssignedCard.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{552,215},{452,427}}</string>
+                <string>{{552,215},{453,425}}</string>
                 <key>offset</key>
-                <string>{1,-1}</string>
+                <string>{0,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{21,3},{452,427}}</string>
+                <string>{{0,0},{453,425}}</string>
                 <key>sourceSize</key>
-                <string>{492,431}</string>
+                <string>{453,425}</string>
             </dict>
             <key>PopupCardSlot.png</key>
             <dict>
@@ -77,9 +77,9 @@
             <key>realTextureFileName</key>
             <string>CardPopup-hd.pvr.ccz</string>
             <key>size</key>
-            <string>{1006,644}</string>
+            <string>{1007,642}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:3d838673fbb80a3c47c2858f4e155c1e:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:6d823cfc6d2cd0711c5779113e76b206:1/1$</string>
             <key>textureFileName</key>
             <string>CardPopup-hd.pvr.ccz</string>
         </dict>

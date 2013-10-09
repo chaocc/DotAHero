@@ -7,20 +7,20 @@
             <key>PopupAssignedCard.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{764,2},{966,908}}</string>
+                <string>{{764,2},{964,906}}</string>
                 <key>offset</key>
-                <string>{2,-3}</string>
+                <string>{1,0}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{44,9},{966,908}}</string>
+                <string>{{2,0},{964,906}}</string>
                 <key>sourceSize</key>
-                <string>{1050,920}</string>
+                <string>{966,906}</string>
             </dict>
             <key>PopupCardSlot.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{764,912},{226,376}}</string>
+                <string>{{764,910},{226,376}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -46,7 +46,7 @@
             <key>PopupDrewEquipment.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1174,912},{520,450}}</string>
+                <string>{{1174,910},{520,450}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -77,9 +77,9 @@
             <key>realTextureFileName</key>
             <string>CardPopup-ipadhd.pvr.ccz</string>
             <key>size</key>
-            <string>{1732,1626}</string>
+            <string>{1730,1626}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:e12c7af8a9900b376d019ca07992404a:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:04c300efa05fc1010897f10032054021:1/1$</string>
             <key>textureFileName</key>
             <string>CardPopup-ipadhd.pvr.ccz</string>
         </dict>

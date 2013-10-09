@@ -104,8 +104,11 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateGetting;
             break;
             
-        case kActionPlayerLoseCard:
-            _state = kGameStateLosing;
+        case kActionPlayerUpdateHand:
+            if ([_reason isEqualToString:@"m_greeded"]) {
+                _state = kGameStateLosing;
+            }
+            break;
             
         case kActionChoseCardToGive:
             _state = kGameStateGiving;
@@ -488,17 +491,15 @@ static BGGameLayer *instanceOfGameLayer = nil;
 //    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
     switch (self.state) {
-        case kGameStateCutting: {
-            targetPos = [_playingDeck cuttedCardPositionWithIndex:idx];
+        case kGameStateCutting:
+            targetPos = [_playingDeck cardPositionWithIndex:idx];
             break;
-        }
             
         case kGameStatePlaying:
         case kGameStateChoosing:
-        case kGameStateDiscarding: {
+        case kGameStateDiscarding:
             targetPos = [_playingDeck cardPositionWithIndex:idx count:count];
             break;
-        }
             
         case kGameStateLosing:
             targetPos = self.targetPlayer.position;

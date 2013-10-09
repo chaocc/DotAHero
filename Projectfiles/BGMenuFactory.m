@@ -182,9 +182,11 @@
 #pragma mark - Add menu items
 - (void)addMenuItemsWithCards:(NSArray *)cards toMenu:(CCMenu *)menu
 {
+    __block NSInteger zOrder = [menu.children.lastObject zOrder] + 1;
+    
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         NSAssert([obj isKindOfClass:[BGCard class]], @"Not a BGCard in %@", NSStringFromSelector(_cmd));
-        [menu addChild:[self createMenuItemWithPlayingCard:obj] z:menu.children.count];
+        [menu addChild:[self createMenuItemWithPlayingCard:obj] z:zOrder++];
     }];
 }
 
@@ -200,16 +202,20 @@
 
 - (void)addMenuItemsWithSpriteFrameNames:(NSArray *)frameNames toMenu:(CCMenu *)menu
 {
+    __block NSInteger zOrder = [menu.children.lastObject zOrder] + 1;
+    
     [frameNames enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [menu addChild:[self createMenuItemWithSpriteFrameName:obj] z:menu.children.count];
+        [menu addChild:[self createMenuItemWithSpriteFrameName:obj] z:zOrder++];
     }];
 }
 
 - (void)addMenuItemWithSpriteFrameName:(NSString *)frameName isEnabled:(BOOL)isEnabled toMenu:(CCMenu *)menu
 {
+    __block NSInteger zOrder = [menu.children.lastObject zOrder] + 1;
+    
     CCMenuItem *menuItem = [self createMenuItemWithSpriteFrameName:frameName];
     menuItem.isEnabled = isEnabled;
-    [menu addChild:menuItem z:menu.children.count];
+    [menu addChild:menuItem z:zOrder];
 }
 
 @end

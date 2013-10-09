@@ -106,7 +106,8 @@
 #define kImagePopupDrewAllCards         @"PopupDrewAllCards.png"
 #define kImagePopupDrewHandCard         @"PopupDrewHandCard.png"
 #define kImagePopupDrewEquipment        @"PopupDrewEquipment.png"
-#define kImagePopupEnergyTransport      @"PopupEnergyTransport"
+#define kImagePopupAssignedCard         @"PopupAssignedCard"
+#define kImagePopupCardSlot             @"PopupCardSlot.png"
 
 #define kFontRemainingCardCount         @"RemainingCardCount.fnt"
 #define kFontFactionCount               @"FactionCount.fnt"

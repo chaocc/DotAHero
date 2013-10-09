@@ -68,6 +68,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return [_playerName isEqual:[object playerName]];
 }
 
+- (BOOL)isCurrPlayer
+{
+    return [self isEqual:_gameLayer.currPlayer];
+}
+
 - (void)setPosition:(CGPoint)position
 {
     _position = position;
@@ -82,19 +87,18 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 #pragma mark - Buffer handling
-- (void)clearBuffer
-{
-    [self clearSelectedObjectBuffer];
-    [_gameLayer.targetPlayerNames removeAllObjects];
-}
-
 - (void)clearSelectedObjectBuffer
 {
     _selectedCardIds = nil;
     [_selectedCardIdxes removeAllObjects];
     _selectedColor = kCardColorInvalid;
     _selectedSuits = kCardSuitsInvalid;
+    _selectedEquipment = kPlayingCardInvalid;
     _selectedSkillId = kHeroSkillInvalid;
+    
+    _selectableCardCount = 0;
+    _selectableTargetCount = 0;
+    _isOptionalDiscard = NO;
 }
 
 - (void)resetAndRemoveNodes
@@ -259,10 +263,9 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
 {
-//  Target player hand card update is informed by sever
-    if (_gameLayer.targetPlayer.isSelfPlayer) {
-        return;
-    }
+//  Current player A's target is player B, the player B's target is player A.
+//  Target player hand card update is informed by sever(receive update action)
+    if (_gameLayer.targetPlayer.isCurrPlayer) return;
     
 //  抽取装备
     [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
@@ -416,6 +419,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     }
     
     [self addChild:_playingMenu];
+    [self clearSelectedObjectBuffer];
 }
 
 - (void)addPlayingMenuOfStrengthen

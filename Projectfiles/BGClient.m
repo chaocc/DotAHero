@@ -513,8 +513,10 @@ static BGClient *instanceOfClient = nil;
     NSInteger action = [obj intWithKey:kAction];
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
     _gameLayer.action = action;
+    _gameLayer.reason = [obj stringWithKey:kParamPlayerUpdateReason];
     [_gameLayer mapActionToGameState];
     
+//  ...TEMP...
 //  Remove some games nodes(Sprite/Menu) on the screen before handle action
 //    [self removeGameNodes];
     
@@ -569,7 +571,7 @@ static BGClient *instanceOfClient = nil;
             break;
         
         case kActionPlayerUpdateHand:
-        case kActionPlayerLoseCard:
+//        case kActionPlayerLoseCard:
             [_player updateHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
@@ -587,6 +589,7 @@ static BGClient *instanceOfClient = nil;
         case kActionChooseCardToUse:
         case kActionChooseColor:
         case kActionChooseSuits:
+            [_gameLayer.targetPlayerNames removeAllObjects];
             [_player addProgressBar];
             [_player addPlayingMenu];
             [_player enableHandCardWithCardIds:[obj intArrayWithKey:kParamAvailableIdList]
@@ -608,8 +611,6 @@ static BGClient *instanceOfClient = nil;
         default:
             break;
     }
-    
-    [_player clearBuffer];
 }
 
 /*
@@ -676,8 +677,8 @@ static BGClient *instanceOfClient = nil;
     [self setTargetPlayerNames:[obj intArrayWithKey:kParamTargetPlayerList]];
     
 //  Game state with action
-    if ([self isNeedSkipSelfPlayer]) return;
     _gameLayer.action = action;
+    if ([self isNeedSkipSelfPlayer]) return;
     [_gameLayer mapActionToGameState];
     
 //  Action handling
@@ -688,7 +689,7 @@ static BGClient *instanceOfClient = nil;
         case kActionChooseCardToDiscard:
         case kActionChooseColor:
         case kActionChooseSuits:
-            [_player addProgressBar];
+            [currPlayer addProgressBar];
             break;
         
         case kActionUseHandCard:            
@@ -742,7 +743,7 @@ static BGClient *instanceOfClient = nil;
 
 - (BOOL)isNeedSkipSelfPlayer
 {
-    return (_player.isSelfPlayer &&
+    return (_gameLayer.currPlayer.isSelfPlayer &&
             (kActionPlayerUpdateHero    != _gameLayer.action &&
              kActionPlayerGetDeckCard   != _gameLayer.action &&
              kActionFaceDownPileCard    != _gameLayer.action &&

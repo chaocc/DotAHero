@@ -40,6 +40,7 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 @interface BGGameLayer : CCLayer
 
 @property (nonatomic) BGAction action;
+@property (nonatomic, copy) NSString *reason;
 @property (nonatomic) BGGameState state;
 
 @property (nonatomic, weak) id<BGGameLayerDelegate> delegate;

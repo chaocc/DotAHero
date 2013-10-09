@@ -122,8 +122,9 @@
  */
 - (void)addHandCardWithCardMenuItems:(NSArray *)menuItems
 {
+    NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [_cardMenu addChild:obj z:_cardMenu.children.count];
+        [_cardMenu addChild:obj z:zOrder];
     }];
     
     [self disableAllHandCardsWithDarkColor];
@@ -137,27 +138,27 @@
     [_handCards addObjectsFromArray:cards];
     
 //  If there is faced down cards, need face up them by flipping.
-    if (0 != _facedDownCardCount) { 
-        for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
-            NSUInteger count = _cardMenu.children.count - _facedDownCardCount;
-            CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count];
-            
-            [_menuFactory addMenuItemsWithCards:[NSArray arrayWithObject:cards[i]] toMenu:_cardMenu];
-            CCMenuItem *newCard = _cardMenu.children.lastObject;
-            newCard.visible = NO;
-            newCard.position = cardBack.position;
-            
-            BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:cardBack];
-            [actionComp runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard];
-        }
-        
-        _facedDownCardCount = 0;
-        return;
+    if (_facedDownCardCount > 0) {
+        [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:^{
+            for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
+                NSUInteger count = _cardMenu.children.count - _facedDownCardCount;
+                CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count];
+                
+                [_menuFactory addMenuItemsWithCards:[NSArray arrayWithObject:cards[i]] toMenu:_cardMenu];
+                CCMenuItem *newCard = _cardMenu.children.lastObject;
+                newCard.visible = NO;
+                newCard.position = cardBack.position;
+                
+                BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:cardBack];
+                [actionComp runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard];
+            }
+            _facedDownCardCount = 0;
+        }];
+    } else {
+        [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
+        [self disableAllHandCardsWithDarkColor];
+        [self makeHandCardLeftAlignment];
     }
-    
-    [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
-    [self disableAllHandCardsWithDarkColor];
-    [self makeHandCardLeftAlignment];
 }
 
 /*
@@ -184,6 +185,8 @@
     } else {
         [self moveSelectedCardToPlayingDeck];
     }
+    
+    [self makeHandCardLeftAlignment];
 }
 
 /*
@@ -199,14 +202,14 @@
     CGFloat padding = PLAYING_CARD_PADDING(_cardMenu.children.count, COUNT_MAX_HAND_CARD);
     padding = (padding > -_cardWidth) ? padding : -_cardWidth;
     
-    [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+    [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {        
         CCMenuItem *menuItem = obj;
         if (0.0f == menuItem.position.x && 0.0f == menuItem.position.y) {
             menuItem.position = POSITION_HAND_AREA_RIGHT;
         }
         
-        CGPoint cardPosition = ccpAdd(POSITION_HAND_AREA_LEFT, ccp((_cardWidth+padding)*idx, 0.0f));
 //      Can't exceed hand area's width(Not overlap with equipment area)
+        CGPoint cardPosition = ccpAdd(POSITION_HAND_AREA_LEFT, ccp((_cardWidth+padding)*idx, 0.0f));
         cardPosition = (cardPosition.x < POSITION_HAND_AREA_RIGHT.x) ? cardPosition : POSITION_HAND_AREA_RIGHT;
         
         [actions addObject:[CCCallBlock actionWithBlock:^{
@@ -532,7 +535,9 @@
     menu.position = CGPointZero;
     [self addChild:menu];
     
-    [_gameLayer moveCardWithCardMenuItems:_selectedMenuItems block:nil];
+    [_gameLayer moveCardWithCardMenuItems:_selectedMenuItems block:^(id object) {
+        [menu removeFromParent];
+    }];
     
     [self updateHandCardBuffer];
     [_selectedMenuItems removeAllObjects];
@@ -553,7 +558,8 @@
 - (void)addAndFaceDownOneDrewCardWith:(CCMenuItem *)menuItem
 {
     menuItem.isEnabled = NO;
-    [_cardMenu addChild:menuItem z:_cardMenu.children.count];
+    NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
+    [_cardMenu addChild:menuItem z:zOrder];
     _facedDownCardCount += 1;
 }
 
