@@ -590,6 +590,7 @@ static BGClient *instanceOfClient = nil;
         case kActionChooseColor:
         case kActionChooseSuits:
             [_gameLayer.targetPlayerNames removeAllObjects];
+        case kActionChooseCardToGive:
             [_player addProgressBar];
             [_player addPlayingMenu];
             [_player enableHandCardWithCardIds:[obj intArrayWithKey:kParamAvailableIdList]

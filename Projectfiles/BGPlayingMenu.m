@@ -361,7 +361,6 @@
                     break;
                     
                 default:
-//                    [[BGClient sharedClient] sendChoseCardToUseRequest];
                     break;
             }
         }];

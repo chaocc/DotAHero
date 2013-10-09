@@ -109,7 +109,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     if (_isSelfPlayer) {
         [_handArea disableAllHandCardsWithNormalColor];
-        [_handArea makeHandCardLeftAlignment];
         
         [self disablePlayerAreaWithNormalColor];
         [_gameLayer disablePlayerAreaForOtherPlayers];
@@ -455,25 +454,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 //  Run progress bar. If time is up, execute corresponding operation.    
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:timer];
     [ac runProgressBarWithDuration:10.0f block:^{
-        switch (_gameLayer.state) {
-            case kGameStateCutting:
-                [_handArea useHandCardAfterTimeIsUp];
-                _comparedCardId = [_selectedCardIds.lastObject integerValue];
-                [[BGClient sharedClient] sendChoseCardToCutRequest];
-                break;
-                
-            case kGameStateDiscarding:
-                [_handArea useHandCardAfterTimeIsUp];
-                [[BGClient sharedClient] sendChoseCardToDiscardRequest];
-                break;
-                
-            default:
-                break;
-        }
-        
-        if (self.isRunning) [self stopAllActions];
-        
-        [self resetAndRemoveNodes];
+        [self handlingAfterTimeIsUp];
     }];
 }
 
@@ -486,6 +467,67 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)removeProgressBar
 {
     [_progressBar removeFromParent];
+}
+
+#pragma mark - Time is up
+- (void)handlingAfterTimeIsUp
+{
+    BGPlayingDeck *playingDeck = _gameLayer.playingDeck;
+    
+    switch (_gameLayer.state) {
+        case kGameStateStarting:
+            [playingDeck selectHeroByTouchingMenuItem:[playingDeck.heroMenu.children objectAtIndex:0]];
+            break;
+            
+        case kGameStateCutting:
+            [_handArea useHandCardAfterTimeIsUp];
+            _comparedCardId = [_selectedCardIds.lastObject integerValue];
+            [[BGClient sharedClient] sendChoseCardToCutRequest];
+            break;
+            
+        case kGameStatePlaying:
+            [[BGClient sharedClient] sendDiscardRequest];
+            break;
+            
+        case kGameStateDiscarding:
+            [_handArea useHandCardAfterTimeIsUp];
+            [[BGClient sharedClient] sendChoseCardToDiscardRequest];
+            break;
+            
+        case kGameStateGetting:
+            [self drawCardFromTargetPlayer];
+            break;
+            
+        case kGameStateGiving:
+            [_handArea useHandCardAfterTimeIsUp];
+            [[BGClient sharedClient] sendChoseCardToGiveRequest];
+            break;
+            
+        case kGameStateAssigning:
+            break;
+            
+        default:
+            break;
+    }
+        
+    [self resetAndRemoveNodes];
+}
+
+- (void)drawCardFromTargetPlayer
+{
+    if (_selectableCardCount <= 0) return;
+    
+    NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:_selectableCardCount];
+    
+    if (_gameLayer.targetPlayer.handCardCount > 0) {
+        for (NSUInteger i = 0; i < _selectableCardCount; i++) {
+            [menuItems addObject:[_gameLayer.playingDeck.handMenu.children objectAtIndex:i]];
+        }
+        [_gameLayer.playingDeck drawHandCardWithMenuItems:menuItems];
+    } else {
+        [menuItems addObject:[_gameLayer.playingDeck.equipMenu.children objectAtIndex:0]];
+        [_gameLayer.playingDeck drawEquipmentWithMenuItems:menuItems];
+    }
 }
 
 #pragma mark - Text prompt

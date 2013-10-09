@@ -68,8 +68,8 @@
     [self addChild:_cardMenu];
     _menuFactory.delegate = self;
     
-    _cardWidth = [_cardMenu.children.lastObject contentSize].width;
-    _cardHeight = [_cardMenu.children.lastObject contentSize].height;
+    _cardWidth = PLAYING_CARD_WIDTH;
+    _cardHeight = PLAYING_CARD_HEIGHT;
     
     [self makeHandCardLeftAlignment];
 }
@@ -122,9 +122,9 @@
  */
 - (void)addHandCardWithCardMenuItems:(NSArray *)menuItems
 {
-    NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
+    __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [_cardMenu addChild:obj z:zOrder];
+        [_cardMenu addChild:obj z:zOrder++];
     }];
     
     [self disableAllHandCardsWithDarkColor];
@@ -139,26 +139,59 @@
     
 //  If there is faced down cards, need face up them by flipping.
     if (_facedDownCardCount > 0) {
-        [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:^{
-            for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
-                NSUInteger count = _cardMenu.children.count - _facedDownCardCount;
-                CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count];
-                
-                [_menuFactory addMenuItemsWithCards:[NSArray arrayWithObject:cards[i]] toMenu:_cardMenu];
-                CCMenuItem *newCard = _cardMenu.children.lastObject;
-                newCard.visible = NO;
-                newCard.position = cardBack.position;
-                
-                BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:cardBack];
-                [actionComp runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard];
-            }
-            _facedDownCardCount = 0;
-        }];
-    } else {
-        [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
-        [self disableAllHandCardsWithDarkColor];
-        [self makeHandCardLeftAlignment];
+        [self faceUpCardWithCards:cards];
     }
+    else {
+        if (kGameStateGetting == _gameLayer.state ||
+            kGameStateGiving  == _gameLayer.state) {
+            [self getCardFromOtherPlayerWithCards:cards];
+        } else {
+            [self drawCardFromPileWithCards:cards];
+        }
+    }
+}
+
+- (void)drawCardFromPileWithCards:(NSArray *)cards
+{
+    [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
+    [self disableAllHandCardsWithDarkColor];
+    [self makeHandCardLeftAlignment];
+}
+
+- (void)getCardFromOtherPlayerWithCards:(NSArray *)cards
+{
+    NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
+    __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
+    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [_cardMenu addChild:obj z:zOrder++];
+        
+        NSInteger factor = idx+1 - menuItems.count + idx;
+        [obj setPosition:ccpAdd(_gameLayer.targetPlayer.position, ccp(factor*PLAYING_CARD_WIDTH/4, 0.0f))];
+    }];
+    
+    [_gameLayer moveCardWithCardMenuItems:menuItems block:^(id object) {
+        [self disableAllHandCardsWithNormalColor];
+        [self makeHandCardLeftAlignment];
+    }];
+}
+
+- (void)faceUpCardWithCards:(NSArray *)cards
+{
+    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:^{
+        for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
+            NSUInteger count = _cardMenu.children.count - _facedDownCardCount;
+            CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count];
+            
+            [_menuFactory addMenuItemsWithCards:[NSArray arrayWithObject:cards[i]] toMenu:_cardMenu];
+            CCMenuItem *newCard = _cardMenu.children.lastObject;
+            newCard.visible = NO;
+            newCard.position = cardBack.position;
+            
+            BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:cardBack];
+            [actionComp runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard];
+        }
+        _facedDownCardCount = 0;
+    }];
 }
 
 /*
@@ -194,7 +227,10 @@
  */
 - (void)makeHandCardLeftAlignment
 {
-    if (0 == _handCards.count) return;
+    if (0 == _handCards.count) {
+        _rightMostPosition = POSITION_HAND_AREA_LEFT;
+        return;
+    }
     
     NSMutableArray *actions = [NSMutableArray arrayWithCapacity:_cardMenu.children.count];
     
@@ -218,6 +254,8 @@
                              duration:DURATION_HAND_CARD_MOVE
                                 block:nil];
         }]];
+        
+        if (stop) _rightMostPosition = cardPosition;
     }];
 
     [self runAction:[CCSequence actionWithArray:actions]];
@@ -496,6 +534,7 @@
             [self moveSelectedCardToPlayingDeck];
         }
     }
+    [self makeHandCardLeftAlignment];
     
     [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:block];
 }

@@ -24,11 +24,6 @@ typedef NS_ENUM(NSInteger, BGPopupTag) {
 
 @property (nonatomic, strong) BGActionComponent *actionComp;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
-@property (nonatomic, strong) CCMenu *cardMenu;     // 使用|弃置的牌
-@property (nonatomic, strong) CCMenu *heroMenu;     // 待选的英雄
-@property (nonatomic, strong) CCMenu *handMenu;     // 目标手牌
-@property (nonatomic, strong) CCMenu *equipMenu;    // 目标装备
-@property (nonatomic, strong) CCMenu *pileMenu;     // 牌堆牌
 
 @property (nonatomic, strong) CCSpriteBatchNode *spriteBatch;
 @property (nonatomic, strong) CCMenuItem *pannedMenuItem;
@@ -122,6 +117,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     [_heroMenu removeFromParent];
     [_handMenu.parent removeFromParent];
     [_equipMenu.parent removeFromParent];
+    
+    [_spriteBatch removeFromParent];
+    [_pileMenu removeFromParent];
 }
 
 #pragma mark - Deck card showing
@@ -287,8 +285,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         [self checkDeckBeforeAddingCardWithCount:count];
         
         NSArray *menuItems = [_menuFactory createCardBackMenuItemsWithCount:count];
+        __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
         [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-            [_cardMenu addChild:obj z:_cardMenu.children.count];
+            [_cardMenu addChild:obj z:zOrder++];
             [obj setPosition:[self cardPositionWithIndex:idx count:count]];
         }];
         
@@ -472,8 +471,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (CGPoint)cardPositionWithIndex:(NSUInteger)idx
 {
-    CGFloat cardWidth = [_cardMenu.children.lastObject contentSize].width;
-    CGFloat cardHeight = [_cardMenu.children.lastObject contentSize].height;
+    CGFloat cardWidth = PLAYING_CARD_WIDTH;
+    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
     NSUInteger rowCount = ceil((double)_gameLayer.playerCount/COUNT_MAX_DECK_CARD);
     NSUInteger colCount = ceil((double)_gameLayer.playerCount/rowCount);
@@ -497,7 +496,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (CGPoint)cardPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count
 {    
-    CGFloat cardWidth = [_cardMenu.children.lastObject contentSize].width;
+    CGFloat cardWidth = PLAYING_CARD_WIDTH;
     
     NSUInteger factor = (_existingCardCount > 0) ? count : count-1;
     CGFloat padding = PLAYING_CARD_PADDING(count, COUNT_MAX_DECK_CARD);
@@ -520,10 +519,10 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         [self selectHeroByTouchingMenuItem:menuItem];
     }
     else if ([menuItem.parent isEqual:_handMenu]) {     // 目标手牌
-        [self drawHandCardByTouchingMenuItem:menuItem];
+        [self drawHandCardWithMenuItems:[NSArray arrayWithObject:menuItem]];
     }
     else if ([menuItem.parent isEqual:_equipMenu]) {    // 目标装备
-        [self drawEquipmentByTouchingMenuItem:menuItem];
+        [self drawEquipmentWithMenuItems:[NSArray arrayWithObject:menuItem]];
     }
 }
 
@@ -556,43 +555,53 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 /*
  * Draw(抽取) hand card of target player
  */
-- (void)drawHandCardByTouchingMenuItem:(CCMenuItem *)menuItem
+- (void)drawHandCardWithMenuItems:(NSArray *)menuItems
 {
     _equipMenu.enabled = NO;
     _equipMenu.color = COLOR_DISABLED_CARD;
     
-    [_player.selectedCardIdxes addObject:@(menuItem.tag)];
-    [self drawCardByTouchingMenuItem:menuItem];
+    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [_player.selectedCardIdxes addObject:@([obj tag])];
+    }];
+    [self drawCardWithMenuItems:menuItems];
 }
 
 /*
  * Draw(抽取) equipment of target player
  */
-- (void)drawEquipmentByTouchingMenuItem:(CCMenuItem *)menuItem
+- (void)drawEquipmentWithMenuItems:(NSArray *)menuItems
 {
-    [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:menuItem.tag];
+    [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[menuItems.lastObject tag]];
     
     _player.selectableCardCount = 1;
-    _player.selectedCardIds = [NSArray arrayWithObject:@(menuItem.tag)];
-    [self drawCardByTouchingMenuItem:menuItem];
+    _player.selectedCardIds = [NSArray arrayWithObject:@([menuItems.lastObject tag])];
+    [self drawCardWithMenuItems:menuItems];
 }
 
 /*
  * Draw(抽取) a hand card of target player by touching card menu item
  * If only have one hand card, end directly after drew.
  */
-- (void)drawCardByTouchingMenuItem:(CCMenuItem *)menuItem
-{   
-    [menuItem removeFromParent];
-    [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
-    [_player.handArea addAndFaceDownOneDrewCardWith:menuItem];
+- (void)drawCardWithMenuItems:(NSArray *)menuItems
+{
+    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [obj removeFromParent];
+        _handMenu.enabled = NO;
+        [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
+        [_player.handArea addAndFaceDownOneDrewCardWith:obj];
+        
+        NSInteger factor = idx+1 - menuItems.count + idx;
+        [obj setPosition:ccpAdd(_gameLayer.targetPlayer.position, ccp(factor*PLAYING_CARD_WIDTH/4, 0.0f))];
+    }];
     
     _gameLayer.currPlayerName = _player.playerName;
     _gameLayer.state = kGameStateGetting;
     
-    menuItem.position = _gameLayer.targetPlayer.position;
-    [_gameLayer moveCardWithCardMenuItems:[NSArray arrayWithObject:menuItem] block:^(id object) {
-        [_player.handArea makeHandCardLeftAlignment];
+    [_gameLayer moveCardWithCardMenuItems:menuItems block:^(id object) {
+        if ( [menuItems indexOfObject:object] == menuItems.count-1) {
+            [_player.handArea makeHandCardLeftAlignment];
+            _handMenu.enabled = YES;
+        }
         
         if ([self isDrawingFinished]) {
             [[BGClient sharedClient] sendChoseCardToGetRequest];    // Send plugin reqeust

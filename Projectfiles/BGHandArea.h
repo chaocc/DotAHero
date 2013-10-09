@@ -18,6 +18,8 @@
 @property (nonatomic, strong) NSMutableArray *selectedCards;    // 选中的手牌
 @property (nonatomic) NSUInteger selectableCardCount;           // 最多可以选择几张牌
 
+@property (nonatomic, readonly) CGPoint rightMostPosition;      // 手中卡牌的最右边
+
 - (id)initWithPlayer:(BGPlayer *)player andCardIds:(NSArray *)cardIds;
 + (id)handAreaWithPlayer:(BGPlayer *)player andCardIs:(NSArray *)cardIds;
 

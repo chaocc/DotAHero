@@ -92,6 +92,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (void)mapActionToGameState
 {
     switch (_action) {
+        case kActionDeckDealHeros:
+            _state = kGameStateStarting;
+            break;
+            
         case kActionChooseCardToCut:
         case kActionDeckShowAllCuttedCards:
             _state = kGameStateCutting;
@@ -110,8 +114,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
             }
             break;
             
+        case kActionChooseCardToGive:
         case kActionChoseCardToGive:
             _state = kGameStateGiving;
+            break;
+            
+        case kActionDeckShowAssignedCard:
+        case kActionAssignCard:
+            _state = kGameStateAssigning;
             break;
             
         case kActionPlayCard:
@@ -455,11 +465,9 @@ static BGGameLayer *instanceOfGameLayer = nil;
  * Move the selected cards on playing deck or other player's hand
  */
 - (void)moveCardWithCardMenu:(CCMenu *)menu toTargerPlayer:(BGPlayer *)player block:(void(^)())block
-{
-    CGPoint targetPos = (player.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : player.position;
-    
+{    
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menu];
-    [ac runEaseMoveWithTarget:targetPos
+    [ac runEaseMoveWithTarget:player.position
                      duration:DURATION_CARD_MOVE
                         block:block];
 }
@@ -507,15 +515,18 @@ static BGGameLayer *instanceOfGameLayer = nil;
             
         case kGameStateGetting:
             targetPos = (self.currPlayer.isSelfPlayer) ?
-                POSITION_HAND_AREA_RIGHT :
-                ccpAdd(self.currPlayer.position, ccp(cardWidth/4*(idx+1-count+idx/2), 0.0f));
+                ccpSub(_selfPlayer.handArea.rightMostPosition, ccp((count-idx-1)*cardWidth/2, 0.0f)) :
+//                ccpSub(POSITION_HAND_AREA_RIGHT, ccp((count-idx-1)*cardWidth/2, 0.0f)) :
+                ccpAdd(self.currPlayer.position, ccp((idx+1-count+idx)*cardWidth/4, 0.0f));
             break;
             
-        case kGameStateGiving:
-            targetPos = (self.targetPlayer.isSelfPlayer) ?
-                POSITION_HAND_AREA_RIGHT :
-                ccpAdd(self.targetPlayer.position, ccp(cardWidth/4*(idx+1-count+idx/2), 0.0f));
+        case kGameStateGiving: {
+            // Current player A's target is player B, the player B's target is player A.
+            targetPos = (self.targetPlayer.isCurrPlayer) ?
+                ccpSub(_selfPlayer.handArea.rightMostPosition, ccp((count-idx-1)*cardWidth/2, 0.0f)) :
+                ccpAdd(self.targetPlayer.position, ccp((idx+1-count+idx)*cardWidth/4, 0.0f));
             break;
+        }
             
         default:
             NSLog(@"Invalid game state: %i and action: %i", self.state, self.action);
