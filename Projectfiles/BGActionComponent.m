@@ -77,7 +77,7 @@
     [_node runAction:[CCSequence actions:fade, callBlock, nil]];
 }
 
-- (void)runFlipFromLeftWithDuration:(ccTime)t toNode:(CCNode *)tarNode
+- (void)runFlipFromLeftWithDuration:(ccTime)t toNode:(CCNode *)tarNode block:(void (^)())block
 {
     CCOrbitCamera *orbit = [CCOrbitCamera actionWithDuration:t
                                                       radius:1.0f
@@ -87,8 +87,7 @@
                                                       angleX:0.0f
                                                  deltaAngleX:0.0f];
     
-    NSMutableArray *array = [NSMutableArray arrayWithObject:orbit];
-    [array addObject:[CCCallBlock actionWithBlock:^{
+    CCCallBlock *orbitBlock = [CCCallBlock actionWithBlock:^{
         [_node removeFromParent];
         tarNode.visible = YES;
         
@@ -100,9 +99,11 @@
                                                           angleX:0.0f
                                                      deltaAngleX:0.0f];
         [tarNode runAction:orbit];
-    }]];
+    }];
     
-    [_node runAction:[CCSequence actionWithArray:array]];
+    CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+    
+    [_node runAction:[CCSequence actions:orbit, orbitBlock, callBlock, nil]];
 }
 
 - (void)runScaleUpAndReverseWithDuration:(ccTime)t scale:(float)s block:(void (^)())block
@@ -116,10 +117,18 @@
     [_node runAction:[CCSequence actions:ease, delay, reverse, callBlock, nil]];
 }
 
-- (void)runDelayWithDuration:(ccTime)time withBlock:(void (^)())block
+- (void)runDelayWithDuration:(ccTime)time block:(void (^)())block
 {
     CCDelayTime *delay = [CCDelayTime actionWithDuration:time];
     CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
+    
+    [_node runAction:[CCSequence actions:delay, callBlock, nil]];
+}
+
+- (void)runDelayWithDuration:(ccTime)time object:(id)obj block:(void (^)(id))block
+{
+    CCDelayTime *delay = [CCDelayTime actionWithDuration:time];
+    CCCallBlockO *callBlock = (block) ? [CCCallBlockO actionWithBlock:block object:obj] : nil;
     
     [_node runAction:[CCSequence actions:delay, callBlock, nil]];
 }

@@ -19,9 +19,9 @@
 
 - (void)runFadeInWithDuration:(ccTime)t block:(void(^)())block;
 - (void)runFadeOutWithDuration:(ccTime)t block:(void(^)(CCNode *node))block;
-- (void)runFlipFromLeftWithDuration:(ccTime)t toNode:(CCNode *)tarNode;
+- (void)runFlipFromLeftWithDuration:(ccTime)t toNode:(CCNode *)tarNode block:(void(^)())block;
 - (void)runScaleUpAndReverseWithDuration:(ccTime)t scale:(float)s block:(void(^)())block;
-- (void)runDelayWithDuration:(ccTime)time withBlock:(void (^)())block;
+- (void)runDelayWithDuration:(ccTime)time block:(void (^)())block;
 
 - (void)runProgressBarWithDuration:(ccTime)t block:(void(^)())block;
 

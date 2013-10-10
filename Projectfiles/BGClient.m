@@ -693,7 +693,7 @@ static BGClient *instanceOfClient = nil;
         case kActionChooseSuits:
             [currPlayer addProgressBar];
             break;
-        
+            
         case kActionUseHandCard:            
         case kActionChoseCardToUse:
         case kActionDiscard:
@@ -751,7 +751,8 @@ static BGClient *instanceOfClient = nil;
             (kActionPlayerUpdateHero    != _gameLayer.action &&
              kActionPlayerGetDeckCard   != _gameLayer.action &&
              kActionFaceDownPileCard    != _gameLayer.action &&
-             kActionDeckShowTopPileCard != _gameLayer.action));
+             kActionDeckShowTopPileCard != _gameLayer.action &&
+             kActionDiscard             != _gameLayer.action));
 }
 
 /*

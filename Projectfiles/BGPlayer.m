@@ -247,7 +247,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     [_gameLayer.playingDeck moveCardWithCardMenuItems:menuItems];
     
-    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:^{
+    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE block:^{
         if (_isSelfPlayer) {
             [_handArea makeHandCardLeftAlignment];
         } else {
@@ -563,11 +563,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 - (void)addTextPromptLabelWithString:(NSString *)string
 {
-    [_textPrompt removeFromParent];
-    
-    _textPrompt = [CCLabelBMFont labelWithString:string fntFile:kFontTextPrompt];
-    _textPrompt.position = POSITION_TEXT_PROMPT;
-    [self addChild:_textPrompt];
+    if (string) {
+        [_textPrompt removeFromParent];
+        
+        _textPrompt = [CCLabelBMFont labelWithString:string fntFile:kFontTextPrompt];
+        _textPrompt.position = POSITION_TEXT_PROMPT;
+        [self addChild:_textPrompt];
+    }
 }
 
 - (void)addTextPrompt

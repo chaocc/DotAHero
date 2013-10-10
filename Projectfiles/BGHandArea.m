@@ -27,6 +27,7 @@
 @property (nonatomic) CGFloat cardWidth;
 @property (nonatomic) CGFloat cardHeight;
 @property (nonatomic) NSUInteger facedDownCardCount;    // 暗置的牌数
+@property (nonatomic) NSUInteger movedCardCount;        // Alignment card count
 
 @end
 
@@ -173,11 +174,11 @@
 }
 
 - (void)faceUpCardWithCards:(NSArray *)cards
-{    
-    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:^{
+{   
+    [_actionComp runDelayWithDuration:2*DURATION_HAND_CARD_MOVE block:^{
         for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
-            NSUInteger count = _handCards.count - _facedDownCardCount + i;
-            CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count];
+            NSUInteger idx = _handCards.count - _facedDownCardCount + i;
+            CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:idx];
             
             [_menuFactory addMenuItemsWithCards:[NSArray arrayWithObject:cards[i]] toMenu:_cardMenu];
             CCMenuItem *newCard = _cardMenu.children.lastObject;
@@ -185,9 +186,10 @@
             newCard.position = cardBack.position;
             
             BGActionComponent *ac = [BGActionComponent actionComponentWithNode:cardBack];
-            [ac runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard];
+            [ac runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard block:^{
+                _facedDownCardCount--;
+            }];
         }
-        _facedDownCardCount = 0;
     }];
 }
 
@@ -219,6 +221,7 @@
 
 /*
  * Make all hand cards left aligment
+ * If one card move multiple times at the same time, need wait one by one(by sequence).
  */
 - (void)makeHandCardLeftAlignment
 {
@@ -229,6 +232,7 @@
     
     void(^block)() = ^() {
         NSMutableArray *actions = [NSMutableArray array];
+        _movedCardCount = 0;
         
 //      If card count is great than 6(No overlap), need narrow the padding. But the first card's position unchanged.
         CGFloat padding = PLAYING_CARD_PADDING(_cardMenu.children.count, COUNT_MAX_HAND_CARD);
@@ -240,25 +244,32 @@
                 menuItem.position = POSITION_HAND_AREA_RIGHT;
             }
             
-//          Can't exceed hand area's width(Not overlap with equipment area)
-            CGPoint cardPosition = ccpAdd(POSITION_HAND_AREA_LEFT, ccp((_cardWidth+padding)*idx, 0.0f));
-            cardPosition = (cardPosition.x < POSITION_HAND_AREA_RIGHT.x) ? cardPosition : POSITION_HAND_AREA_RIGHT;
+            // Can't exceed hand area's width(Not overlap with equipment area)
+            CGPoint targetPos = ccpAdd(POSITION_HAND_AREA_LEFT, ccp((_cardWidth+padding)*idx, 0.0f));
+            targetPos = (targetPos.x < POSITION_HAND_AREA_RIGHT.x) ? targetPos : POSITION_HAND_AREA_RIGHT;
+            
+            if (stop) _rightMostPosition = targetPos;
+            if (menuItem.position.x == targetPos.x) return; // No need move
             
             [actions addObject:[CCCallBlock actionWithBlock:^{
                 BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
-                [ac runEaseMoveWithTarget:cardPosition
+                [ac runEaseMoveWithTarget:targetPos
                                  duration:DURATION_HAND_CARD_MOVE
                                     block:nil];
             }]];
             
-            if (stop) _rightMostPosition = cardPosition;
+            _movedCardCount++;
         }];
         
-        [self runAction:[CCSequence actionWithArray:actions]];
+        if (actions.count > 0) {
+            [self runAction:[CCSequence actionWithArray:actions]];
+        }
     };
     
+//  If has card movement action is running, need wait until finished, then run next.
+//  The waiting time is calculated by "DURATION_HAND_CARD_MOVE*_movedCardCount"
     if (self.numberOfRunningActions > 0) {
-        [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:block];
+        [_actionComp runDelayWithDuration:DURATION_HAND_CARD_MOVE*_movedCardCount block:block];
     } else {
         [self runAction:[CCCallBlock actionWithBlock:block]];
     }
@@ -393,6 +404,12 @@
     CCMenuItem *okayMenu = [_player.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
     CCMenuItem *strenMenu;
 
+//  Card is selected, check if only has one "Okay" menu
+    if (1 == _player.playingMenu.menuItemCount) {
+        okayMenu.isEnabled = (card.isSelected || _selectedCards.count > 0);
+        return;
+    }
+    
 //  No card selected
     if (!card.isSelected && 0 == _selectedCards.count) {
         okayMenu.isEnabled = NO;
@@ -402,12 +419,6 @@
             [_player.playingMenu removeFromParent];
             [_player addPlayingMenu];
         }
-        return;
-    }
-
-//  Card is selected
-    if (kGameStateCutting == _gameLayer.state || kGameStateDiscarding == _gameLayer.state) {
-        okayMenu.isEnabled = YES;
         return;
     }
 
@@ -538,7 +549,7 @@
         }
     }
     
-    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:block];
+    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE block:block];
 }
 
 - (void)useHandCardAfterTimeIsUp

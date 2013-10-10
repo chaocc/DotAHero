@@ -169,7 +169,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     ccTime duration = (self.numberOfRunningActions > 0) ? DURATION_CARD_MOVE : 0.0f;
     
-    [_actionComp runDelayWithDuration:duration withBlock:^{
+    [_actionComp runDelayWithDuration:duration block:^{
 //      Face down the cutted card of other player first
         [_menuFactory addCardBackMenuItemsWithCount:cardIds.count-1 toMenu:_cardMenu];
         
@@ -197,12 +197,12 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 //          2. Face up the card
             BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:object];
             ccTime duration = DURATION_CARD_FLIP+(idx-1)*DURATION_CARD_FLIP_INTERVAL;
-            [actionComp runFlipFromLeftWithDuration:duration toNode:menuItem];
+            [actionComp runFlipFromLeftWithDuration:duration toNode:menuItem block:nil];
             
             if (++idx != cardIds.count) return;
             
 //          3. If it is the last cutted card, scale up it.
-            [_actionComp runDelayWithDuration:duration+DURATION_CARD_MOVE withBlock:^{
+            [_actionComp runDelayWithDuration:duration+DURATION_CARD_MOVE block:^{
                 NSUInteger *index = [arrangedCardIds indexOfObject:@(_maxCardId)];
                 CCMenuItem *menuItem = [_cardMenu.children objectAtIndex:index];
                 menuItem.zOrder += 2*cardIds.count; // Scale up at the foremost screen
@@ -283,7 +283,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     ccTime duration = (self.numberOfRunningActions > 0) ? DURATION_CARD_MOVE : 0.0f;
     
-    [_actionComp runDelayWithDuration:duration withBlock:^{
+    [_actionComp runDelayWithDuration:duration block:^{
         [self checkDeckBeforeAddingCardWithCount:count];
         
         NSArray *menuItems = [_menuFactory createCardBackMenuItemsWithCount:count];
@@ -316,8 +316,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         [_cardMenu addChild:obj z:zOrder++];
         
         BGActionComponent *ac = [BGActionComponent actionComponentWithNode:cardBack];
-        [ac runFlipFromLeftWithDuration:DURATION_CARD_FLIP
-                                 toNode:obj];
+        [ac runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:obj block:nil];
     }];
 }
 
@@ -449,7 +448,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     ccTime duration = (self.numberOfRunningActions > 0) ? DURATION_CARD_MOVE : 0.0f;
     
-    [_actionComp runDelayWithDuration:duration withBlock:^{
+    [_actionComp runDelayWithDuration:duration block:^{
         [self makeUsedCardCenterAlignment];
     }];
 }

@@ -44,6 +44,11 @@
     return [[self alloc] initWithMenuType:menuType];
 }
 
+- (NSUInteger)menuItemCount
+{
+    return _menu.children.count;
+}
+
 - (CCMenuItem *)menuItemByTag:(NSInteger)tag
 {
     return (CCMenuItem *)[_menu getChildByTag:tag];
