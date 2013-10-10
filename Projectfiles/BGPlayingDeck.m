@@ -167,9 +167,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)showCuttedCardWithCardIds:(NSArray *)cardIds
 {
-    ccTime duraiton = (self.isRunning) ? DURATION_CARD_MOVE : 0.0f;
+    ccTime duration = (self.numberOfRunningActions > 0) ? DURATION_CARD_MOVE : 0.0f;
     
-    [_actionComp runDelayWithDuration:duraiton withBlock:^{
+    [_actionComp runDelayWithDuration:duration withBlock:^{
 //      Face down the cutted card of other player first
         [_menuFactory addCardBackMenuItemsWithCount:cardIds.count-1 toMenu:_cardMenu];
         
@@ -239,8 +239,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     }
     
 //  The zOrder determine index of child menu items
+    __block NSInteger zOrder = _cardMenu.children.count;
     [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [_cardMenu addChild:obj z:_cardMenu.children.count];
+        [_cardMenu addChild:obj z:zOrder++];    // cardMenu children order changed, but menuItems not changed.
     }];
     
     [_gameLayer moveCardWithCardMenuItems:menuItems block:nil];
@@ -262,9 +263,10 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     
     NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
+    __block NSInteger zOrder = _cardMenu.children.count;
     [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [obj setPosition:_gameLayer.currPlayer.position];
-        [_cardMenu addChild:obj z:_cardMenu.children.count];
+        [obj setPosition:CARD_MOVE_POSITION(_gameLayer.currPlayer.position, idx, menuItems.count)];
+        [_cardMenu addChild:obj z:zOrder++];
     }];
     
     [_gameLayer moveCardWithCardMenuItems:menuItems block:nil];
@@ -279,14 +281,14 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)showFacedDownCardWithCount:(NSUInteger)count
 {
-    ccTime duration = (self.isRunning) ? DURATION_CARD_MOVE : 0.0f;
+    ccTime duration = (self.numberOfRunningActions > 0) ? DURATION_CARD_MOVE : 0.0f;
     
     [_actionComp runDelayWithDuration:duration withBlock:^{
         [self checkDeckBeforeAddingCardWithCount:count];
         
         NSArray *menuItems = [_menuFactory createCardBackMenuItemsWithCount:count];
         __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
-        [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [_cardMenu addChild:obj z:zOrder++];
             [obj setPosition:[self cardPositionWithIndex:idx count:count]];
         }];
@@ -305,12 +307,13 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     
     __block NSUInteger index = self.allCardCount - 1;
+    __block NSInteger zOrder = _cardMenu.children.count;
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:index--];
         
         [obj setVisible:NO];
         [obj setPosition:cardBack.position];
-        [_cardMenu addChild:obj z:_cardMenu.children.count];
+        [_cardMenu addChild:obj z:zOrder++];
         
         BGActionComponent *ac = [BGActionComponent actionComponentWithNode:cardBack];
         [ac runFlipFromLeftWithDuration:DURATION_CARD_FLIP
@@ -444,7 +447,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 
 - (void)makeUsedCardCenterAlignmentDelay
 {
-    ccTime duration = (self.isRunning) ? DURATION_CARD_MOVE : 0.0f;
+    ccTime duration = (self.numberOfRunningActions > 0) ? DURATION_CARD_MOVE : 0.0f;
     
     [_actionComp runDelayWithDuration:duration withBlock:^{
         [self makeUsedCardCenterAlignment];
@@ -584,19 +587,19 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)drawCardWithMenuItems:(NSArray *)menuItems
 {
+    NSUInteger count = _handMenu.children.count;
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromParent];
         _handMenu.enabled = NO;
-        [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
+        [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(count, COUNT_MAX_DREW_CARD)];
+        [obj setPosition:CARD_MOVE_POSITION(_gameLayer.targetPlayer.position, idx, menuItems.count)];
         [_player.handArea addAndFaceDownOneDrewCardWith:obj];
-        
-        NSInteger factor = idx+1 - menuItems.count + idx;
-        [obj setPosition:ccpAdd(_gameLayer.targetPlayer.position, ccp(factor*PLAYING_CARD_WIDTH/4, 0.0f))];
     }];
     
     _gameLayer.currPlayerName = _player.playerName;
     _gameLayer.state = kGameStateGetting;
     
+//  If menuItems count is great than 0, only call "makeHandCardLeftAlignment" at the last time.
     [_gameLayer moveCardWithCardMenuItems:menuItems block:^(id object) {
         if ( [menuItems indexOfObject:object] == menuItems.count-1) {
             [_player.handArea makeHandCardLeftAlignment];
@@ -638,20 +641,15 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     KKInput *input = [KKInput sharedInput];
     
-//    if ([input isAnyTouchOnNode:_heroMenu.children.lastObject touchPhase:KKTouchPhaseAny]) {
-//        if (input.gestureDoubleTapRecognizedThisFrame || input.gestureLongPressBegan) {
-//
-//        }
-//    }
-    
 //  Pan gesture for "Energy Transport" card
     if (input.gesturePanBegan) {
+        NSUInteger count = _pileMenu.children.count;
         for (CCMenuItem *menuItem in _pileMenu.children) {
             if ([input isAnyTouchOnNode:menuItem touchPhase:KKTouchPhaseAny]) {
                 _pannedMenuItem = menuItem;
                 _pannedMenuItemPos = menuItem.position;
                 _pannedMenuItemZOrder = menuItem.zOrder;
-                _pannedMenuItem.zOrder = _pileMenu.children.count;
+                _pannedMenuItem.zOrder = count;
                 
                 for (CCNode *node in _pileMenu.children) {
                     if (![node isEqual:menuItem]) {

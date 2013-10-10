@@ -598,6 +598,7 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionChooseCardToGet:
+            [_player clearSelectedObjectBuffer];
             _player.selectableCardCount = [obj intWithKey:kParamSelectableCardCount];
             [_player addProgressBar];
             break;
@@ -716,11 +717,13 @@ static BGClient *instanceOfClient = nil;
         case kActionChoseCardToGet:
             [currPlayer drawCardFromTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
                                                   cardCount:[obj intWithKey:kParamCardCount]];
+            [currPlayer removeProgressBar];
             break;
             
         case kActionChoseCardToGive:
             [currPlayer giveCardToTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
                                                 cardCount:[obj intWithKey:kParamCardCount]];
+            [currPlayer removeProgressBar];
             break;
             
         case kActionDrawCard:

@@ -142,8 +142,7 @@
         [self faceUpCardWithCards:cards];
     }
     else {
-        if (kGameStateGetting == _gameLayer.state ||
-            kGameStateGiving  == _gameLayer.state) {
+        if (kGameStateGetting == _gameLayer.state) {
             [self getCardFromOtherPlayerWithCards:cards];
         } else {
             [self drawCardFromPileWithCards:cards];
@@ -163,10 +162,8 @@
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [obj setPosition:CARD_MOVE_POSITION(_gameLayer.targetPlayer.position, idx, menuItems.count)];
         [_cardMenu addChild:obj z:zOrder++];
-        
-        NSInteger factor = idx+1 - menuItems.count + idx;
-        [obj setPosition:ccpAdd(_gameLayer.targetPlayer.position, ccp(factor*PLAYING_CARD_WIDTH/4, 0.0f))];
     }];
     
     [_gameLayer moveCardWithCardMenuItems:menuItems block:^(id object) {
@@ -176,10 +173,10 @@
 }
 
 - (void)faceUpCardWithCards:(NSArray *)cards
-{
+{    
     [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:^{
         for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
-            NSUInteger count = _cardMenu.children.count - _facedDownCardCount;
+            NSUInteger count = _handCards.count - _facedDownCardCount + i;
             CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:count];
             
             [_menuFactory addMenuItemsWithCards:[NSArray arrayWithObject:cards[i]] toMenu:_cardMenu];
@@ -187,8 +184,8 @@
             newCard.visible = NO;
             newCard.position = cardBack.position;
             
-            BGActionComponent *actionComp = [BGActionComponent actionComponentWithNode:cardBack];
-            [actionComp runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard];
+            BGActionComponent *ac = [BGActionComponent actionComponentWithNode:cardBack];
+            [ac runFlipFromLeftWithDuration:DURATION_CARD_FLIP toNode:newCard];
         }
         _facedDownCardCount = 0;
     }];
@@ -218,8 +215,6 @@
     } else {
         [self moveSelectedCardToPlayingDeck];
     }
-    
-    [self makeHandCardLeftAlignment];
 }
 
 /*
@@ -232,33 +227,41 @@
         return;
     }
     
-    NSMutableArray *actions = [NSMutableArray arrayWithCapacity:_cardMenu.children.count];
+    void(^block)() = ^() {
+        NSMutableArray *actions = [NSMutableArray array];
+        
+//      If card count is great than 6(No overlap), need narrow the padding. But the first card's position unchanged.
+        CGFloat padding = PLAYING_CARD_PADDING(_cardMenu.children.count, COUNT_MAX_HAND_CARD);
+        padding = (padding > -_cardWidth) ? padding : -_cardWidth;
+        
+        [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            CCMenuItem *menuItem = obj;
+            if (0.0f == menuItem.position.x && 0.0f == menuItem.position.y) {
+                menuItem.position = POSITION_HAND_AREA_RIGHT;
+            }
+            
+//          Can't exceed hand area's width(Not overlap with equipment area)
+            CGPoint cardPosition = ccpAdd(POSITION_HAND_AREA_LEFT, ccp((_cardWidth+padding)*idx, 0.0f));
+            cardPosition = (cardPosition.x < POSITION_HAND_AREA_RIGHT.x) ? cardPosition : POSITION_HAND_AREA_RIGHT;
+            
+            [actions addObject:[CCCallBlock actionWithBlock:^{
+                BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
+                [ac runEaseMoveWithTarget:cardPosition
+                                 duration:DURATION_HAND_CARD_MOVE
+                                    block:nil];
+            }]];
+            
+            if (stop) _rightMostPosition = cardPosition;
+        }];
+        
+        [self runAction:[CCSequence actionWithArray:actions]];
+    };
     
-//  If card count is great than 6(No overlap), need narrow the padding. But the first card's position unchanged.
-    CGFloat padding = PLAYING_CARD_PADDING(_cardMenu.children.count, COUNT_MAX_HAND_CARD);
-    padding = (padding > -_cardWidth) ? padding : -_cardWidth;
-    
-    [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {        
-        CCMenuItem *menuItem = obj;
-        if (0.0f == menuItem.position.x && 0.0f == menuItem.position.y) {
-            menuItem.position = POSITION_HAND_AREA_RIGHT;
-        }
-        
-//      Can't exceed hand area's width(Not overlap with equipment area)
-        CGPoint cardPosition = ccpAdd(POSITION_HAND_AREA_LEFT, ccp((_cardWidth+padding)*idx, 0.0f));
-        cardPosition = (cardPosition.x < POSITION_HAND_AREA_RIGHT.x) ? cardPosition : POSITION_HAND_AREA_RIGHT;
-        
-        [actions addObject:[CCCallBlock actionWithBlock:^{
-            BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
-            [ac runEaseMoveWithTarget:cardPosition
-                             duration:DURATION_HAND_CARD_MOVE
-                                block:nil];
-        }]];
-        
-        if (stop) _rightMostPosition = cardPosition;
-    }];
-
-    [self runAction:[CCSequence actionWithArray:actions]];
+    if (self.numberOfRunningActions > 0) {
+        [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:block];
+    } else {
+        [self runAction:[CCCallBlock actionWithBlock:block]];
+    }
 }
 
 #pragma mark - Hand cards availability
@@ -534,7 +537,6 @@
             [self moveSelectedCardToPlayingDeck];
         }
     }
-    [self makeHandCardLeftAlignment];
     
     [_actionComp runDelayWithDuration:DURATION_CARD_MOVE withBlock:block];
 }
@@ -561,6 +563,8 @@
     
     [self updateHandCardBuffer];
     [_selectedMenuItems removeAllObjects];
+    
+    [self makeHandCardLeftAlignment];
 }
 
 - (void)moveSelectedCardToOtherPlayer
@@ -580,6 +584,8 @@
     
     [self updateHandCardBuffer];
     [_selectedMenuItems removeAllObjects];
+    
+    [self makeHandCardLeftAlignment];
 }
 
 /*

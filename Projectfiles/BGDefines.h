@@ -24,7 +24,6 @@ _Pragma("clang diagnostic pop")                                     \
 #define PLAYING_CARD_HEIGHT             PLAYING_CARD_SIZE.height
 
 #define POSITION_TO_BE_SELECTED_HERO    ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.6)
-//#define POSITION_HERO_SEL_PROGRESS_BAR  ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.4)
 #define POSITION_PLYAING_PROGRESS_BAR   ccp(SCREEN_WIDTH * 0.54, SCREEN_HEIGHT * 0.26)
 #define POSITION_PLAYING_MENU           ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.34)
 #define POSITION_TEXT_PROMPT            ccp(SCREEN_WIDTH / 2, SCREEN_HEIGHT * 0.29)
@@ -48,7 +47,6 @@ _Pragma("clang diagnostic pop")                                     \
 #define COUNT_MAX_DREW_CARD             5
 
 #define DURATION_GAMELAYER_TRANSITION   0.2f
-//#define DURATION_HERO_SEL_FADE_IN       0.3f
 #define DURATION_SELECTED_HERO_MOVE     0.5f
 #define DURATION_HAND_CARD_MOVE         0.5f
 #define DURATION_SELECTED_CARD_MOVE     0.1f
@@ -75,6 +73,9 @@ _Pragma("clang diagnostic pop")                                     \
 #define PADDING_TWO_BUTTONS             40.0f
 #define PADDING_THREE_BUTTONS           20.0f
 #define PADDING_SUITS_BUTTON            0.0f
-#define PLAYING_CARD_PADDING(x, max)    (x > max) ? -(PLAYING_CARD_WIDTH*(x-max) / (x-1)) : 0.0f
+
+
+#define PLAYING_CARD_PADDING(x, max)        (x > max) ? -(PLAYING_CARD_WIDTH*(x-max) / (x-1)) : 0.0f
+#define CARD_MOVE_POSITION(pos, x, count)   ccpAdd(pos, ccp((NSInteger)(x+1-count+x)*PLAYING_CARD_WIDTH/4, 0.0f))
 
 #endif

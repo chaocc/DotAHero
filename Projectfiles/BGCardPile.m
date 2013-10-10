@@ -43,7 +43,7 @@ typedef NS_ENUM(NSInteger, BGCardPileTag) {
 {
     CCNode *cardPile = [[BGGameLayer sharedGameLayer].gameArtworkBatch getChildByTag:kCardPileTagFrame];
     
-    [self removeAllChildrenWithCleanup:YES];
+    [self removeAllChildren];
     CCLabelBMFont *label = [CCLabelBMFont labelWithString:@(count).stringValue fntFile:kFontRemainingCardCount];
     label.position = ccpAdd(cardPile.position, ccp(cardPile.contentSize.width*0.2, 0.0f));
     [self addChild:label];

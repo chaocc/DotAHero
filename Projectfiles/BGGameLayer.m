@@ -510,26 +510,22 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         case kGameStateLosing:
-            targetPos = self.targetPlayer.position;
+        case kGameStateGiving:
+            targetPos = CARD_MOVE_POSITION(self.targetPlayer.position, idx, count);
             break;
             
         case kGameStateGetting:
-            targetPos = (self.currPlayer.isSelfPlayer) ?
-                ccpSub(_selfPlayer.handArea.rightMostPosition, ccp((count-idx-1)*cardWidth/2, 0.0f)) :
-//                ccpSub(POSITION_HAND_AREA_RIGHT, ccp((count-idx-1)*cardWidth/2, 0.0f)) :
-                ccpAdd(self.currPlayer.position, ccp((idx+1-count+idx)*cardWidth/4, 0.0f));
+            if (self.currPlayer.isSelfPlayer) {
+                targetPos = ccpAdd(_selfPlayer.handArea.rightMostPosition, ccp((idx+1)*cardWidth, 0.0f));
+                if (targetPos.x > POSITION_HAND_AREA_RIGHT.x) {
+                    targetPos = ccpSub(_selfPlayer.handArea.rightMostPosition, ccp((count-idx-1)*cardWidth/2, 0.0f));
+                }
+            } else {
+                targetPos = CARD_MOVE_POSITION(self.currPlayer.position, idx, count);
+            }
             break;
-            
-        case kGameStateGiving: {
-            // Current player A's target is player B, the player B's target is player A.
-            targetPos = (self.targetPlayer.isCurrPlayer) ?
-                ccpSub(_selfPlayer.handArea.rightMostPosition, ccp((count-idx-1)*cardWidth/2, 0.0f)) :
-                ccpAdd(self.targetPlayer.position, ccp((idx+1-count+idx)*cardWidth/4, 0.0f));
-            break;
-        }
             
         default:
-            NSLog(@"Invalid game state: %i and action: %i", self.state, self.action);
             break;
     }
     
@@ -538,12 +534,13 @@ static BGGameLayer *instanceOfGameLayer = nil;
 
 - (void)transferRoleCardToNextPlayer
 {
+//    CCSprite *lastSprite = _spriteBatch.children.lastObject;
 //    [[_spriteBatch.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
 //        CCSprite *nextSprite = nil;
-//        if (![obj isEqual:_spriteBatch.children.lastObject]) {
-//            nextSprite = [_spriteBatch.children objectAtIndex:idx + 1];
-//        } else {
+//        if ([obj isEqual:lastSprite]) {
 //            nextSprite = [_spriteBatch.children objectAtIndex:0];
+//        } else {
+//            nextSprite = [_spriteBatch.children objectAtIndex:idx + 1];
 //        }
 //        
 //        BGMoveComponent *moveComp = [BGMoveComponent moveWithTarget:nextSprite.position ofNode:obj];

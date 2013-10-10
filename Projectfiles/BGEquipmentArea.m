@@ -172,6 +172,7 @@
                                           toMenu:_equipMenu];
     CCMenuItem *menuItem = _equipMenu.children.lastObject;
     menuItem.tag = card.cardId;
+    
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
             menuItem.position = (_player.isSelfPlayer) ?

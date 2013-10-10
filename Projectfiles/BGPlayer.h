@@ -65,6 +65,7 @@
 - (void)disablePlayerAreaWithDarkColor;
 - (void)disablePlayerAreaWithNormalColor;
 
+- (void)clearSelectedObjectBuffer;
 - (void)resetAndRemoveNodes;
 
 - (void)addPlayingMenu;

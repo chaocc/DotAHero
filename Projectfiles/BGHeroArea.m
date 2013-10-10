@@ -392,7 +392,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 {
     KKInput *input = [KKInput sharedInput];
     
-    if (![input isAnyTouchOnNode:_heroMenu.children.lastObject touchPhase:KKTouchPhaseAny]) {
+    CCMenuItem *menuItem = [_heroMenu.children objectAtIndex:0];
+    if (![input isAnyTouchOnNode:menuItem touchPhase:KKTouchPhaseAny]) {
         return;
     }
     

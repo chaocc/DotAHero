@@ -4,7 +4,7 @@ Plugin Constants - BGPluginConstants.h
 
 
 
-"menu.children" performance is bad
+"menu.children.lastObject and menu.children.count" performance is bad
 
 
 Effect: the sound file in your bundle you want to play.

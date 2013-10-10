@@ -219,7 +219,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCMenu *menu = [[BGMenuFactory menuFactory] createCardBackMenuWithCount:count];
     menu.enabled = NO;
     menu.position = POSITION_DECK_AREA_CENTER;
-    [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
+    [menu alignItemsHorizontallyWithPadding:-PLAYING_CARD_WIDTH/2];
     [_gameLayer addChild:menu];
     
     [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:self block:^{
@@ -306,7 +306,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCMenu *menu = [[BGMenuFactory menuFactory] createMenuWithCards:cards];
     menu.enabled = NO;
     menu.position = fromPos;
-    [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
+    [menu alignItemsHorizontallyWithPadding:-PLAYING_CARD_WIDTH/2];
     [_gameLayer addChild:menu];
     
     [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:player block:^{
@@ -321,7 +321,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     CCMenu *menu = [[BGMenuFactory menuFactory] createCardBackMenuWithCount:count];
     menu.enabled = NO;
     menu.position = fromPos;
-    [menu alignItemsHorizontallyWithPadding:-[menu.children.lastObject contentSize].width/2];
+    [menu alignItemsHorizontallyWithPadding:-PLAYING_CARD_WIDTH/2];
     [_gameLayer addChild:menu];
     
     [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:player block:^{
@@ -454,7 +454,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 //  Run progress bar. If time is up, execute corresponding operation.    
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:timer];
     [ac runProgressBarWithDuration:10.0f block:^{
-        [self handlingAfterTimeIsUp];
+        if (_isSelfPlayer) {
+            [self handlingAfterTimeIsUp];
+        }
+        [self resetAndRemoveNodes];
     }];
 }
 
@@ -494,6 +497,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             [[BGClient sharedClient] sendChoseCardToDiscardRequest];
             break;
             
+        case kGameStateLosing:
         case kGameStateGetting:
             [self drawCardFromTargetPlayer];
             break;
@@ -509,8 +513,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         default:
             break;
     }
-        
-    [self resetAndRemoveNodes];
 }
 
 - (void)drawCardFromTargetPlayer

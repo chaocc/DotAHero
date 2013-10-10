@@ -98,8 +98,9 @@
                                       selectedFrameName:kImageOkaySelected
                                       disabledFrameName:kImageOkayDisabled];
     _menu.position = POSITION_PLAYING_MENU;
-    [_menu.children.lastObject setTag:kPlayingMenuItemTagOkay];
-    [_menu.children.lastObject setIsEnabled:NO];
+    CCMenuItem *menuItem = [_menu.children objectAtIndex:0];
+    menuItem.tag = kPlayingMenuItemTagOkay;
+    menuItem.isEnabled = NO;
     
     [self addChild:_menu];
 }
