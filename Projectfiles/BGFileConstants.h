@@ -119,8 +119,11 @@
 #define kFontTextPrompt                 @"TextPrompt.fnt"
 
 #define kAudioBackground                @"Background.mp3"
+#define kButtonClick                    @"ButtonClick.wav"
+#define kPlayerSelect                   @"PlayerSelect.wav"
+#define kSkillSelect                    @"SkillSelect.wav"
 #define kAudioDamage                    @"Damage.wav"
-#define kAudioEquipCard                 @"EquipCard.wav"
-#define kAudioRestoreBlood              @"RestoreBlood.wav"
+#define kAudioCardEquip                 @"CardEquip.wav"
+#define kAudioBloodRestore              @"BloodRestore.wav"
 
 #endif

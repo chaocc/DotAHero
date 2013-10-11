@@ -108,12 +108,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateGetting;
             break;
             
-        case kActionPlayerUpdateHand:
-            if ([_reason isEqualToString:@"m_greeded"]) {
-                _state = kGameStateLosing;
-            }
-            break;
-            
         case kActionChooseCardToGive:
         case kActionChoseCardToGive:
             _state = kGameStateGiving;
@@ -142,7 +136,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         default:
-//            _state = kGameStateInvalid;
             break;
     }
 }
@@ -493,36 +486,45 @@ static BGGameLayer *instanceOfGameLayer = nil;
 - (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count
 {
     NSLog(@"Game state: %i and action: %i", self.state, self.action);
-    
     CGPoint targetPos = CGPointZero;
-    CGFloat cardWidth = PLAYING_CARD_WIDTH;
-//    CGFloat cardHeight = PLAYING_CARD_HEIGHT;
     
+//  If action is kActionPlayerUpdateHand, set the target position and return.
+    if (kActionPlayerUpdateHand == _action) {
+        if ([_reason isEqualToString:@"m_greeded"]) {
+            targetPos = (kHandCardUpdateTypeAdd == _selfPlayer.handArea.updateType) ?
+                [_selfPlayer.handArea cardMoveTargetPositionWithIndex:idx count:count] :
+                CARD_MOVE_POSITION(self.targetPlayer.position, idx, count);
+        } else {
+            targetPos = [_playingDeck cardMoveTargetPositionWithIndex:idx count:count];
+        }
+        
+        return targetPos;
+    }
+    
+//  Calculate card movement target position according to game state
     switch (self.state) {
         case kGameStateCutting:
-            targetPos = [_playingDeck cardPositionWithIndex:idx];
+            targetPos = [_playingDeck cardMoveTargetPositionWithIndex:idx];
             break;
             
         case kGameStatePlaying:
         case kGameStateChoosing:
         case kGameStateDiscarding:
-            targetPos = [_playingDeck cardPositionWithIndex:idx count:count];
+            targetPos = [_playingDeck cardMoveTargetPositionWithIndex:idx count:count];
             break;
             
-        case kGameStateLosing:
+        case kGameStateGetting:
+            targetPos = (self.currPlayer.isSelfPlayer) ?
+                [_selfPlayer.handArea cardMoveTargetPositionWithIndex:idx count:count] :
+                CARD_MOVE_POSITION(self.currPlayer.position, idx, count);
+            break;
+            
         case kGameStateGiving:
             targetPos = CARD_MOVE_POSITION(self.targetPlayer.position, idx, count);
             break;
             
-        case kGameStateGetting:
-            if (self.currPlayer.isSelfPlayer) {
-                targetPos = ccpAdd(_selfPlayer.handArea.rightMostPosition, ccp((idx+1)*cardWidth, 0.0f));
-                if (targetPos.x > POSITION_HAND_AREA_RIGHT.x) {
-                    targetPos = ccpSub(_selfPlayer.handArea.rightMostPosition, ccp((count-idx-1)*cardWidth/2, 0.0f));
-                }
-            } else {
-                targetPos = CARD_MOVE_POSITION(self.currPlayer.position, idx, count);
-            }
+        case kGameStateAssigning:
+            
             break;
             
         default:

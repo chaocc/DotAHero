@@ -27,18 +27,19 @@
 - (void)showUsedCardWithCardIds:(NSArray *)cardIds;
 - (void)showFacedDownCardWithCount:(NSUInteger)count;
 - (void)showTopPileCardWithCardIds:(NSArray *)cardIds;
-- (void)showPlayerHandCardWithCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
-- (void)showAssignedCardsWithCardIds:(NSArray *)cardIds;
+- (void)showPopupWithHandCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds;
+- (void)showPopupWithAssignedCardIds:(NSArray *)cardIds;
 
 - (void)selectHeroByTouchingMenuItem:(CCMenuItem *)menuItem;
 - (void)drawHandCardWithMenuItems:(NSArray *)menuItems;
 - (void)drawEquipmentWithMenuItems:(NSArray *)menuItems;
 
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems;
-- (CGPoint)cardPositionWithIndex:(NSUInteger)idx;
-- (CGPoint)cardPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count;
+- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx;
+- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count;
 
 - (void)removeResidualNodes;
-- (void)clearExistingCards;
+- (void)clearAllExistingCards;
+- (void)removePopupAssignedCard;
 
 @end

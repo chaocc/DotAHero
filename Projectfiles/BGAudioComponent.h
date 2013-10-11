@@ -14,8 +14,11 @@
 + (id)sharedAudioComponent;
 
 - (void)playBackgroundAndLoop;
+- (void)playButtonClick;
+- (void)playPlayerSelect;
+- (void)playSkillSelect;
 - (void)playDamage;
-- (void)playEquipCard;
-- (void)playRestoreBlood;
+- (void)playCardEquip;
+- (void)playBloodRestore;
 
 @end

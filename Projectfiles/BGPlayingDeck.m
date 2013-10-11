@@ -109,6 +109,12 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     }
 }
 
+- (void)clearAllExistingCards
+{
+    _existingCardCount = self.allCardCount;
+    [self clearExistingCards];
+}
+
 /*
  * Since some nodes can't be removed if make game running in the background
  */
@@ -120,6 +126,12 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     
     [_spriteBatch removeFromParent];
     [_pileMenu removeFromParent];
+}
+
+- (void)removePopupAssignedCard
+{
+    [_pileMenu removeFromParent];
+    [_spriteBatch removeFromParent];
 }
 
 #pragma mark - Deck card showing
@@ -290,7 +302,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
         [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             [_cardMenu addChild:obj z:zOrder++];
-            [obj setPosition:[self cardPositionWithIndex:idx count:count]];
+            [obj setPosition:[self cardMoveTargetPositionWithIndex:idx count:count]];
         }];
         
         _addedCardCount = count;
@@ -324,8 +336,10 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  * Show target player hand card(暗置的) and equipment card
  * Faced down(暗置) all hand cards on the deck for being drew(比如贪婪)
  */
-- (void)showPlayerHandCardWithCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
+- (void)showPopupWithHandCount:(NSUInteger)count equipmentIds:(NSArray *)cardIds
 {
+    [_gameLayer makeBackgroundColorToDark];
+    
     NSString *frameName = nil;
     if (count > 0 && cardIds.count > 0) {
         frameName = kImagePopupDrewAllCards;
@@ -376,8 +390,10 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 /*
  * Show assigned(待分配的) cards on the deck
  */
-- (void)showAssignedCardsWithCardIds:(NSArray *)cardIds
+- (void)showPopupWithAssignedCardIds:(NSArray *)cardIds
 {
+    [_gameLayer makeBackgroundColorToDark];
+    
     _spriteBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibCardPopup];
     [self addChild:_spriteBatch];
     
@@ -423,6 +439,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         CCMenuItem *menuItem = [_pileMenu.children objectAtIndex:idx];
         menuItem.position = ccpSub(cardSlot.position, ccp(0.0f, PLAYING_CARD_HEIGHT*0.1));
     }];
+    
+    _player.playingMenu.zOrder = _spriteBatch.zOrder + 1;
+    _player.playingMenu.menuPosition = ccpAdd(popup.position, ccp(popupWidth/2, 0.0f));
     
     [_player addProgressBar];
 }
@@ -471,7 +490,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 /*
  * Cutted card position
  */
-- (CGPoint)cardPositionWithIndex:(NSUInteger)idx
+- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx
 {
     CGFloat cardWidth = PLAYING_CARD_WIDTH;
     CGFloat cardHeight = PLAYING_CARD_HEIGHT;
@@ -496,7 +515,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  *       must handle each action by sequence. The next action can be handled util previous action completed. (By running delay)
  *       (If multiple actions update the variable at the same time, it leads to wrong target position of card movement)
  */
-- (CGPoint)cardPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count
+- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count
 {    
     CGFloat cardWidth = PLAYING_CARD_WIDTH;
     
@@ -551,7 +570,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
                                  [[BGClient sharedClient] sendChoseHeroIdRequest];
                              }];
     
-//    [self showAssignedCardsWithCardIds:[NSArray arrayWithObjects:@(10), @(20), @(30), @(40), @(50), @(60), nil]];
+//    [self showPopupWithAssignedCardIds:[NSArray arrayWithObjects:@(10), @(20), nil]];
 }
 
 /*
@@ -586,17 +605,15 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)drawCardWithMenuItems:(NSArray *)menuItems
 {
-    NSUInteger count = _handMenu.children.count;
+    _gameLayer.currPlayerName = _player.playerName;
+    
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromParent];
         _handMenu.enabled = NO;
-        [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(count, COUNT_MAX_DREW_CARD)];
+        [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
         [obj setPosition:CARD_MOVE_POSITION(_gameLayer.targetPlayer.position, idx, menuItems.count)];
         [_player.handArea addAndFaceDownOneDrewCardWith:obj];
     }];
-    
-    _gameLayer.currPlayerName = _player.playerName;
-    _gameLayer.state = kGameStateGetting;
     
 //  If menuItems count is great than 0, only call "makeHandCardLeftAlignment" at the last time.
     [_gameLayer moveCardWithCardMenuItems:menuItems block:^(id object) {
@@ -611,10 +628,12 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         }
     }];
     
-    if ([self isDrawingFinished]) {        
+    if ([self isDrawingFinished]) {
         [_player removeProgressBar];
         [_handMenu.parent removeFromParent];
         [_equipMenu.parent removeFromParent];
+        [_gameLayer makeBackgroundColorToNormal];
+        [self clearAllExistingCards];
     }
 }
 
@@ -648,7 +667,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
                 _pannedMenuItem = menuItem;
                 _pannedMenuItemPos = menuItem.position;
                 _pannedMenuItemZOrder = menuItem.zOrder;
-                _pannedMenuItem.zOrder = count;
+                _pannedMenuItem.zOrder = count; // Make the panned card at the foremost
                 
                 for (CCNode *node in _pileMenu.children) {
                     if (![node isEqual:menuItem]) {

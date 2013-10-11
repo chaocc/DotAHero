@@ -377,6 +377,54 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [self addChild:countLabel z:0 tag:kPlayerTagHandCardCount];
 }
 
+#pragma mark - Use hand card
+- (void)useHandCard
+{
+    BOOL isRunAnimation = (kGameStatePlaying == _gameLayer.state);
+    
+    [_handArea useHandCardWithAnimation:isRunAnimation block:^{
+        switch (_gameLayer.state) {
+            case kGameStateCutting:
+                _comparedCardId = [_selectedCardIds.lastObject integerValue];
+                [[BGClient sharedClient] sendChoseCardToCutRequest];
+                break;
+                
+            case kGameStatePlaying:
+                [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+                break;
+                
+            case kGameStateChoosing:
+                [[BGClient sharedClient] sendChoseCardToUseRequest];
+                break;
+                
+            case kGameStateGiving:
+                [[BGClient sharedClient] sendChoseCardToGiveRequest];
+                break;
+                
+            case kGameStateDiscarding:
+                [[BGClient sharedClient] sendChoseCardToDiscardRequest];
+                break;
+                
+            default:
+                break;
+        }
+    }];
+}
+
+- (void)useHandCardWithHeroSkill
+{
+    [_handArea useHandCardWithAnimation:NO block:^{
+        [[BGClient sharedClient] sendUseHeroSkillRequest];
+    }];
+}
+
+- (void)useHandCardWithStrengthen
+{
+    [_handArea useHandCardWithAnimation:YES block:^{
+        [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:YES];
+    }];
+}
+
 #pragma mark - Playing menu
 /*
  * Add playing menu items according to different action
@@ -411,6 +459,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             
         case kActionChooseSuits:            // 选择卡牌花色
             _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeCardSuits];
+            break;
+            
+        case kActionDeckShowAssignedCard:
+            _playingMenu = [BGPlayingMenu playingMenuWithMenuType:kPlayingMenuTypeOkay];
             break;
             
         default:
@@ -497,7 +549,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             [[BGClient sharedClient] sendChoseCardToDiscardRequest];
             break;
             
-        case kGameStateLosing:
         case kGameStateGetting:
             [self drawCardFromTargetPlayer];
             break;
@@ -517,7 +568,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 - (void)drawCardFromTargetPlayer
 {
-    if (_selectableCardCount <= 0) return;
+    if (0 == _selectableCardCount) return;
     
     NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:_selectableCardCount];
     

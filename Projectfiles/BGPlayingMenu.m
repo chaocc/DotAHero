@@ -12,6 +12,7 @@
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 #import "BGActionComponent.h"
+#import "BGAudioComponent.h"
 
 @interface BGPlayingMenu ()
 
@@ -47,6 +48,11 @@
 - (NSUInteger)menuItemCount
 {
     return _menu.children.count;
+}
+
+- (void)setMenuPosition:(CGPoint)menuPosition
+{
+    _menu.position = menuPosition;
 }
 
 - (CCMenuItem *)menuItemByTag:(NSInteger)tag
@@ -92,6 +98,8 @@
         default:
             break;
     }
+    
+    _menu.position = POSITION_PLAYING_MENU;
 }
 
 /*
@@ -102,7 +110,6 @@
     _menu = [_menuFactory createMenuWithSpriteFrameName:kImageOkay
                                       selectedFrameName:kImageOkaySelected
                                       disabledFrameName:kImageOkayDisabled];
-    _menu.position = POSITION_PLAYING_MENU;
     CCMenuItem *menuItem = [_menu.children objectAtIndex:0];
     menuItem.tag = kPlayingMenuItemTagOkay;
     menuItem.isEnabled = NO;
@@ -122,7 +129,6 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = POSITION_PLAYING_MENU;
     [_menu alignItemsHorizontallyWithPadding:PADDING_TWO_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -149,7 +155,6 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = POSITION_PLAYING_MENU;
     [_menu alignItemsHorizontallyWithPadding:PADDING_TWO_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -176,7 +181,6 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = POSITION_PLAYING_MENU;
     [_menu alignItemsHorizontallyWithPadding:PADDING_THREE_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -206,7 +210,6 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:disFrameNames];
-    _menu.position = POSITION_PLAYING_MENU;
     [_menu alignItemsHorizontallyWithPadding:PADDING_THREE_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -234,7 +237,6 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:nil];
-    _menu.position = POSITION_PLAYING_MENU;
     [_menu alignItemsHorizontallyWithPadding:PADDING_TWO_BUTTONS];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -259,7 +261,6 @@
     _menu = [_menuFactory createMenuWithSpriteFrameNames:spriteFrameNames
                                       selectedFrameNames:selFrameNames
                                       disabledFrameNames:nil];
-    _menu.position = POSITION_PLAYING_MENU;
     [_menu alignItemsHorizontallyWithPadding:PADDING_SUITS_BUTTON];
     
     [[_menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -283,6 +284,9 @@
  */
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
+    menuItem.visible = NO;
+    [[BGAudioComponent sharedAudioComponent] playButtonClick];
+    
     switch (menuItem.tag) {
         case kPlayingMenuItemTagOkay:
             [self touchOkayMenuItem];
@@ -293,9 +297,7 @@
             break;
             
         case kPlayingMenuItemTagStrengthen:
-            [_player.handArea useHandCardWithAnimation:YES block:^{
-                [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:YES];
-            }];
+            [_player useHandCardWithStrengthen];
             break;
             
         case kPlayingMenuItemTagDiscard:
@@ -340,45 +342,23 @@
  */
 - (void)touchOkayMenuItem
 {
-    BOOL isRunAnimation = (kGameStatePlaying == _gameLayer.state);
+//  Energy transport
+    if (kGameStateAssigning == _gameLayer.state) {
+        _player.selectedCardIds = [BGPlayingCard playingCardIdsWithMenu:_gameLayer.playingDeck.pileMenu];
+        [[BGClient sharedClient] sendAsignCardRequest];
+        [_gameLayer.playingDeck removePopupAssignedCard];
+        [_gameLayer.playingDeck clearAllExistingCards];
+        return;
+    }
     
     if (kHeroSkillInvalid == _player.selectedSkillId) {
-        [_player.handArea useHandCardWithAnimation:isRunAnimation block:^{
-            switch (_gameLayer.state) {
-                case kGameStateCutting:
-                    _player.comparedCardId = [_player.selectedCardIds.lastObject integerValue];
-                    [[BGClient sharedClient] sendChoseCardToCutRequest];
-                    break;
-                    
-                case kGameStatePlaying:
-                    [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
-                    break;
-                    
-                case kGameStateChoosing:
-                    [[BGClient sharedClient] sendChoseCardToUseRequest];
-                    break;
-                    
-                case kGameStateGiving:
-                    [[BGClient sharedClient] sendChoseCardToGiveRequest];
-                    break;
-                    
-                case kGameStateDiscarding:
-                    [[BGClient sharedClient] sendChoseCardToDiscardRequest];
-                    break;
-                    
-                default:
-                    break;
-            }
-        }];
-
+        [_player useHandCard];
     }
     else {
         if (0 == _player.selectedCardIds.count) {
             [[BGClient sharedClient] sendUseHeroSkillRequest];
         } else {
-            [_player.handArea useHandCardWithAnimation:NO block:^{
-                [[BGClient sharedClient] sendUseHeroSkillRequest];
-            }];
+            [_player useHandCardWithHeroSkill];
         }
     }
 }

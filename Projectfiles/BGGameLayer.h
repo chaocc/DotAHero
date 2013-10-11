@@ -21,11 +21,10 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 
 typedef NS_ENUM(NSUInteger, BGGameState) {
     kGameStateInvalid = 0,
-    kGameStateStarting = 1,     // 开始阶段-选择英雄
+    kGameStateStarting = 1,     // 游戏开始阶段-选择英雄
     kGameStateCutting,          // 切牌阶段
     kGameStatePlaying,          // 主动出牌阶段
     kGameStateChoosing,         // 被动出牌阶段
-    kGameStateLosing,           // 丢牌阶段
     kGameStateGetting,          // 抽牌阶段
     kGameStateGiving,           // 给牌阶段
     kGameStateAssigning,        // 分牌阶段
@@ -41,8 +40,8 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 @interface BGGameLayer : CCLayer
 
 @property (nonatomic) BGAction action;
-@property (nonatomic, copy) NSString *reason;
 @property (nonatomic) BGGameState state;
+@property (nonatomic, copy) NSString *reason;
 
 @property (nonatomic, weak) id<BGGameLayerDelegate> delegate;
 

@@ -37,8 +37,8 @@ static BGAudioComponent *instanceOfClient = nil;
         
         [_audioEngine preloadBackgroundMusic:kAudioBackground];
         [_audioEngine preloadEffect:kAudioDamage];
-        [_audioEngine preloadEffect:kAudioEquipCard];
-        [_audioEngine preloadEffect:kAudioRestoreBlood];
+        [_audioEngine preloadEffect:kAudioCardEquip];
+        [_audioEngine preloadEffect:kAudioBloodRestore];
     }
     return self;
 }
@@ -50,19 +50,34 @@ static BGAudioComponent *instanceOfClient = nil;
     _audioManager.backgroundMusic.volume = 0.5f;
 }
 
+- (void)playButtonClick
+{
+    [_audioEngine playEffect:kButtonClick];
+}
+
+- (void)playPlayerSelect
+{
+    [_audioEngine playEffect:kPlayerSelect];
+}
+
+- (void)playSkillSelect
+{
+    [_audioEngine playEffect:kSkillSelect];
+}
+
 - (void)playDamage
 {
     [_audioEngine playEffect:kAudioDamage];
 }
 
-- (void)playEquipCard
+- (void)playCardEquip
 {
-    [_audioEngine playEffect:kAudioEquipCard];
+    [_audioEngine playEffect:kAudioCardEquip];
 }
 
-- (void)playRestoreBlood
+- (void)playBloodRestore
 {
-    [_audioEngine playEffect:kAudioRestoreBlood];
+    [_audioEngine playEffect:kAudioBloodRestore];
 }
 
 @end

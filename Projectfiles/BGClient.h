@@ -39,6 +39,7 @@
 - (void)sendChoseCardToDiscardRequest;
 - (void)sendChoseColorRequest;
 - (void)sendChoseSuitsRequest;
+- (void)sendAsignCardRequest;
 
 - (void)addPublicMessageEventListener;
 

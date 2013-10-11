@@ -69,8 +69,7 @@
 {
     NSMutableArray *cards = [NSMutableArray arrayWithCapacity:cardIds.count];
     [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        BGCard *card = [BGPlayingCard cardWithCardId:[obj integerValue]];
-        [cards addObject:card];
+        [cards addObject:[BGPlayingCard cardWithCardId:[obj integerValue]]];
     }];
     return cards;
 }
@@ -81,6 +80,16 @@
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [cardIds addObject:@([obj cardId])];
     }];
+    return cardIds;
+}
+
++ (NSArray *)playingCardIdsWithMenu:(CCMenu *)menu
+{
+    NSMutableArray *cardIds = [NSMutableArray array];
+    [[menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        [cardIds addObject:@([obj tag])];
+    }];
+    
     return cardIds;
 }
 

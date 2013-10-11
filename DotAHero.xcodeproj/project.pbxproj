@@ -292,10 +292,10 @@
 		E39BD1C117C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz in Resources */ = {isa = PBXBuildFile; fileRef = E39BD18517C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz */; };
 		E3A081F117AAAFEC00DDDEFB /* Damage.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damage.wav */; };
 		E3A081F217AAAFEC00DDDEFB /* Damage.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EE17AAAFEC00DDDEFB /* Damage.wav */; };
-		E3A081F317AAAFEC00DDDEFB /* EquipCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */; };
-		E3A081F417AAAFEC00DDDEFB /* EquipCard.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */; };
-		E3A081F517AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */; };
-		E3A081F617AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */; };
+		E3A081F317AAAFEC00DDDEFB /* CardEquip.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* CardEquip.wav */; };
+		E3A081F417AAAFEC00DDDEFB /* CardEquip.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081EF17AAAFEC00DDDEFB /* CardEquip.wav */; };
+		E3A081F517AAAFEC00DDDEFB /* BloodRestore.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* BloodRestore.wav */; };
+		E3A081F617AAAFEC00DDDEFB /* BloodRestore.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3A081F017AAAFEC00DDDEFB /* BloodRestore.wav */; };
 		E3B3547A179131B900C07B3F /* PlayingCardIds.txt in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds.txt */; };
 		E3B3547B179131B900C07B3F /* PlayingCardIds.txt in Resources */ = {isa = PBXBuildFile; fileRef = E3B35479179131B900C07B3F /* PlayingCardIds.txt */; };
 		E3B951DA17AEC2BE0004BECC /* NormalAttack-ipad.plist in Resources */ = {isa = PBXBuildFile; fileRef = E3B951D617AEC2BE0004BECC /* NormalAttack-ipad.plist */; };
@@ -1080,6 +1080,12 @@
 		E3D069A517C2796300B3ADEF /* TSocketClient.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D066B017C2796200B3ADEF /* TSocketClient.m */; };
 		E3D069A617C2796300B3ADEF /* TTransportException.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D066B117C2796200B3ADEF /* TTransportException.m */; };
 		E3D069A717C2796300B3ADEF /* TTransportException.m in Sources */ = {isa = PBXBuildFile; fileRef = E3D066B117C2796200B3ADEF /* TTransportException.m */; };
+		E3E4D3801807D59900D97898 /* PlayerSelect.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3E4D37D1807D59900D97898 /* PlayerSelect.wav */; };
+		E3E4D3811807D59900D97898 /* PlayerSelect.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3E4D37D1807D59900D97898 /* PlayerSelect.wav */; };
+		E3E4D3831807D6E000D97898 /* SkillSelect.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3E4D3821807D6E000D97898 /* SkillSelect.wav */; };
+		E3E4D3841807D6E000D97898 /* SkillSelect.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3E4D3821807D6E000D97898 /* SkillSelect.wav */; };
+		E3E4D3861807D97200D97898 /* ButtonClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3E4D3851807D97200D97898 /* ButtonClick.wav */; };
+		E3E4D3871807D97200D97898 /* ButtonClick.wav in Resources */ = {isa = PBXBuildFile; fileRef = E3E4D3851807D97200D97898 /* ButtonClick.wav */; };
 		E3F172C417EF33FA0059314D /* RemainingCardCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C217EF33FA0059314D /* RemainingCardCount.fnt */; };
 		E3F172C517EF33FA0059314D /* RemainingCardCount.fnt in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C217EF33FA0059314D /* RemainingCardCount.fnt */; };
 		E3F172C617EF33FA0059314D /* RemainingCardCount.png in Resources */ = {isa = PBXBuildFile; fileRef = E3F172C317EF33FA0059314D /* RemainingCardCount.png */; };
@@ -1316,8 +1322,8 @@
 		E39BD18417C0FD0A0012A867 /* SangeAndYasha-ipadhd.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "SangeAndYasha-ipadhd.plist"; sourceTree = "<group>"; };
 		E39BD18517C0FD0A0012A867 /* SangeAndYasha-ipadhd.pvr.ccz */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SangeAndYasha-ipadhd.pvr.ccz"; sourceTree = "<group>"; };
 		E3A081EE17AAAFEC00DDDEFB /* Damage.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Damage.wav; sourceTree = "<group>"; };
-		E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = EquipCard.wav; sourceTree = "<group>"; };
-		E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = RestoreBlood.wav; sourceTree = "<group>"; };
+		E3A081EF17AAAFEC00DDDEFB /* CardEquip.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = CardEquip.wav; sourceTree = "<group>"; };
+		E3A081F017AAAFEC00DDDEFB /* BloodRestore.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = BloodRestore.wav; sourceTree = "<group>"; };
 		E3B29B5F177F349600C18728 /* BGDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BGDefines.h; sourceTree = "<group>"; };
 		E3B35479179131B900C07B3F /* PlayingCardIds.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = PlayingCardIds.txt; sourceTree = "<group>"; };
 		E3B951D617AEC2BE0004BECC /* NormalAttack-ipad.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "NormalAttack-ipad.plist"; sourceTree = "<group>"; };
@@ -1989,6 +1995,9 @@
 		E3D066AF17C2796200B3ADEF /* TSharedProcessorFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSharedProcessorFactory.m; sourceTree = "<group>"; };
 		E3D066B017C2796200B3ADEF /* TSocketClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TSocketClient.m; sourceTree = "<group>"; };
 		E3D066B117C2796200B3ADEF /* TTransportException.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TTransportException.m; sourceTree = "<group>"; };
+		E3E4D37D1807D59900D97898 /* PlayerSelect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = PlayerSelect.wav; sourceTree = "<group>"; };
+		E3E4D3821807D6E000D97898 /* SkillSelect.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SkillSelect.wav; sourceTree = "<group>"; };
+		E3E4D3851807D97200D97898 /* ButtonClick.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ButtonClick.wav; sourceTree = "<group>"; };
 		E3F172C217EF33FA0059314D /* RemainingCardCount.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = RemainingCardCount.fnt; sourceTree = "<group>"; };
 		E3F172C317EF33FA0059314D /* RemainingCardCount.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RemainingCardCount.png; sourceTree = "<group>"; };
 		E3F172C817EF46DE0059314D /* HandCardCount.fnt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = HandCardCount.fnt; sourceTree = "<group>"; };
@@ -2433,9 +2442,12 @@
 			isa = PBXGroup;
 			children = (
 				E30C01AB17AAA1980010034F /* Background.mp3 */,
+				E3A081F017AAAFEC00DDDEFB /* BloodRestore.wav */,
+				E3E4D3851807D97200D97898 /* ButtonClick.wav */,
+				E3A081EF17AAAFEC00DDDEFB /* CardEquip.wav */,
 				E3A081EE17AAAFEC00DDDEFB /* Damage.wav */,
-				E3A081EF17AAAFEC00DDDEFB /* EquipCard.wav */,
-				E3A081F017AAAFEC00DDDEFB /* RestoreBlood.wav */,
+				E3E4D37D1807D59900D97898 /* PlayerSelect.wav */,
+				E3E4D3821807D6E000D97898 /* SkillSelect.wav */,
 			);
 			name = Sounds;
 			sourceTree = "<group>";
@@ -3219,8 +3231,8 @@
 				E35821CD17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */,
 				E30C01B017AAA1980010034F /* Background.mp3 in Resources */,
 				E3A081F117AAAFEC00DDDEFB /* Damage.wav in Resources */,
-				E3A081F317AAAFEC00DDDEFB /* EquipCard.wav in Resources */,
-				E3A081F517AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */,
+				E3A081F317AAAFEC00DDDEFB /* CardEquip.wav in Resources */,
+				E3A081F517AAAFEC00DDDEFB /* BloodRestore.wav in Resources */,
 				E31BC25017AB3D9200745E12 /* Damage-ipad.plist in Resources */,
 				E31BC25217AB3D9200745E12 /* Damage-ipad.pvr.ccz in Resources */,
 				E31BC25417AB3D9200745E12 /* Damage-ipadhd.plist in Resources */,
@@ -3337,6 +3349,9 @@
 				E336F95117F0315B00157268 /* HeroAvatarName.png in Resources */,
 				E336F95417F04A2500157268 /* PlayingCardIds.plist in Resources */,
 				E394AB5017F195A900200204 /* TextPrompt.plist in Resources */,
+				E3E4D3801807D59900D97898 /* PlayerSelect.wav in Resources */,
+				E3E4D3831807D6E000D97898 /* SkillSelect.wav in Resources */,
+				E3E4D3861807D97200D97898 /* ButtonClick.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3359,8 +3374,8 @@
 				E35821CE17A8164200FBFEC7 /* HeroWithSkillIds.txt in Resources */,
 				E30C01B117AAA1980010034F /* Background.mp3 in Resources */,
 				E3A081F217AAAFEC00DDDEFB /* Damage.wav in Resources */,
-				E3A081F417AAAFEC00DDDEFB /* EquipCard.wav in Resources */,
-				E3A081F617AAAFEC00DDDEFB /* RestoreBlood.wav in Resources */,
+				E3A081F417AAAFEC00DDDEFB /* CardEquip.wav in Resources */,
+				E3A081F617AAAFEC00DDDEFB /* BloodRestore.wav in Resources */,
 				E31BC25117AB3D9200745E12 /* Damage-ipad.plist in Resources */,
 				E31BC25317AB3D9200745E12 /* Damage-ipad.pvr.ccz in Resources */,
 				E31BC25517AB3D9200745E12 /* Damage-ipadhd.plist in Resources */,
@@ -3477,6 +3492,9 @@
 				E336F95217F0315B00157268 /* HeroAvatarName.png in Resources */,
 				E336F95517F04A2500157268 /* PlayingCardIds.plist in Resources */,
 				E394AB5117F195A900200204 /* TextPrompt.plist in Resources */,
+				E3E4D3811807D59900D97898 /* PlayerSelect.wav in Resources */,
+				E3E4D3841807D6E000D97898 /* SkillSelect.wav in Resources */,
+				E3E4D3871807D97200D97898 /* ButtonClick.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

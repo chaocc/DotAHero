@@ -26,6 +26,7 @@
 
 @property (nonatomic) CGFloat cardWidth;
 @property (nonatomic) CGFloat cardHeight;
+@property (nonatomic) CGPoint rightMostPosition;        // 手中卡牌的最右边
 @property (nonatomic) NSUInteger facedDownCardCount;    // 暗置的牌数
 @property (nonatomic) NSUInteger movedCardCount;        // Alignment card count
 
@@ -136,6 +137,7 @@
  */
 - (void)addHandCardWithCards:(NSArray *)cards
 {
+    _updateType = kHandCardUpdateTypeAdd;
     [_handCards addObjectsFromArray:cards];
     
 //  If there is faced down cards, need face up them by flipping.
@@ -174,8 +176,9 @@
 }
 
 - (void)faceUpCardWithCards:(NSArray *)cards
-{   
-    [_actionComp runDelayWithDuration:2*DURATION_HAND_CARD_MOVE block:^{
+{
+//  ...TEMP...
+    [_actionComp runDelayWithDuration:DURATION_HAND_CARD_MOVE*2 block:^{
         for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
             NSUInteger idx = _handCards.count - _facedDownCardCount + i;
             CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:idx];
@@ -198,6 +201,7 @@
  */
 - (void)removeHandCardWithCards:(NSArray *)cards
 {
+    _updateType = kHandCardUpdateTypeRemove;
     _cardMenu.enabled = NO;
     [self clearSelectedCardBuffer];
     
@@ -212,7 +216,7 @@
         }
     }];
     
-    if (kGameStateLosing == _gameLayer.state) {
+    if (kGameStateGetting == _gameLayer.state) {
         [self moveSelectedCardToOtherPlayer];
     } else {
         [self moveSelectedCardToPlayingDeck];
@@ -396,6 +400,7 @@
     }];
 }
 
+#pragma mark - Playing menu enablement
 /*
  * Check playing menu item availability while selecting a hand card
  */
@@ -423,6 +428,10 @@
     }
 
     if (card.canBeStrengthened && _player.heroArea.angerPoint > 0) {
+        if (kPlayingCardGreed == card.cardEnum)
+            if (1 == _handCards.count)
+                return; // The last card is greed, can't strengthen.
+        
         [_player.playingMenu removeFromParent];
         [_player addPlayingMenuOfStrengthen];
         okayMenu = [_player.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
@@ -440,6 +449,7 @@
     }
 }
 
+#pragma mark - Target player selection
 /*
  * Check which player can be selected as target while selecting a hand card
  */
@@ -467,10 +477,13 @@
             [self checkTargetPlayerOfMislead];
             break;
             
+        case kPlayingCardGreed:
+            [self checkTargetPlayerOfGreed];
+            break;
+            
         case kPlayingCardLagunaBlade:
         case kPlayingCardViperRaid:
         case kPlayingCardElunesArrow:
-        case kPlayingCardGreed:
             [_gameLayer enablePlayerAreaForOtherPlayers];
             break;
             
@@ -480,6 +493,9 @@
     }
 }
 
+/*
+ * Check by attack range and distance
+ */
 - (void)checkTargetPlayerOfAttack
 {
     for (NSUInteger i = 1; i < _gameLayer.playerCount; i++) {
@@ -495,6 +511,9 @@
     }
 }
 
+/*
+ * Target player's equipment card count must be great than 0
+ */
 - (void)checkTargetPlayerOfDisarm
 {    
     for (NSUInteger i = 1; i < _gameLayer.playerCount; i++) {
@@ -508,6 +527,10 @@
     }
 }
 
+/*
+ * Target player A's anger point must be great than 0
+ * Target player B is checked while selecting the player A(in BGHeroArea)
+ */
 - (void)checkTargetPlayerOfMislead
 {
     for (NSUInteger i = 0; i < _gameLayer.playerCount; i++) {
@@ -517,6 +540,24 @@
             [player enablePlayerArea];
         } else {
             [player disablePlayerAreaWithDarkColor];
+        }
+    }
+}
+
+/*
+ * The greed card can't be last one card for current player
+ * Target player hand&equipment card count can't be all empty
+ */
+- (void)checkTargetPlayerOfGreed
+{
+    [_gameLayer enablePlayerAreaForOtherPlayers];
+    
+    if (1 == _handCards.count) {
+        for (NSUInteger i = 1; i < _gameLayer.playerCount; i++) {
+            BGPlayer *player = _gameLayer.allPlayers[i];
+            if (0 == player.handCardCount && 0 == player.equipmentArea.equipmentCards.count) {
+                [player disablePlayerAreaWithDarkColor];
+            }
         }
     }
 }
@@ -617,6 +658,17 @@
     NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
     [_cardMenu addChild:menuItem z:zOrder];
     _facedDownCardCount += 1;
+}
+
+#pragma mark - Card move position
+- (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count
+{
+    CGPoint targetPos = ccpAdd(_rightMostPosition, ccp((idx+1)*_cardWidth, 0.0f));
+    if (targetPos.x > POSITION_HAND_AREA_RIGHT.x) {
+        targetPos = ccpSub(_rightMostPosition, ccp((count-idx-1)*_cardWidth/2, 0.0f));
+    }
+    
+    return targetPos;
 }
 
 @end

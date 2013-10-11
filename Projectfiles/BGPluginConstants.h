@@ -54,7 +54,6 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionPlayerUpdateEquipment = 2004,            // 更新装备区的牌
     kActionPlayerGetCard = 2005,                    // 获得其他玩家的牌
     kActionPlayerGetDeckCard = 2006,                // 获得牌桌的牌
-    kActionPlayerLoseCard = 2007,                   // 失去手牌
     
     kActionPlayCard = 3000,                         // 出牌(主动)
     kActionChooseCardToUse = 3001,                  // 选择卡牌: 使用(被动)
@@ -64,6 +63,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionChooseCardToDiscard = 3005,              // 选择卡牌: 弃置
     kActionChooseColor = 3006,                      // 选择颜色阶段
     kActionChooseSuits = 3007,                      // 选择花色阶段
+    kActionChooseCardToAssign = 3008,               // 选择卡牌: 分配给每个玩家 
     
     kActionDrawCard = 4000,                         // 摸牌
     kActionFaceDownPileCard = 4001,                 // 暗置牌堆顶的牌

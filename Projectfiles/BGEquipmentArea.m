@@ -59,7 +59,7 @@
         [self addEquipmentWithCard:card];
     }
     
-    [[BGAudioComponent sharedAudioComponent] playEquipCard];
+    [[BGAudioComponent sharedAudioComponent] playCardEquip];
 }
 
 - (void)updateEquipmentWithCardId:(NSInteger)cardId

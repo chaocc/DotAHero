@@ -149,6 +149,7 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 
 + (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds;
 + (NSArray *)playingCardIdsWithCards:(NSArray *)cards;
++ (NSArray *)playingCardIdsWithMenu:(CCMenu *)menu;
 
 - (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params;
 

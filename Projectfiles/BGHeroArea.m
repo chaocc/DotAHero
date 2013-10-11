@@ -11,6 +11,7 @@
 #import "BGHeroSkill.h"
 #import "BGFileConstants.h"
 #import "BGAnimationComponent.h"
+#import "BGAudioComponent.h"
 #import "BGDefines.h"
 
 typedef NS_ENUM(NSInteger, BGHeroTag) {
@@ -23,10 +24,13 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 @property (nonatomic, weak) BGGameLayer *gameLayer;
 @property (nonatomic, weak) BGPlayer *player;
 @property (nonatomic) CGFloat playerAreaWidth, playerAreaHeight;
+
 @property (nonatomic, strong) CCSpriteBatchNode *hpSpBatch;
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
 @property (nonatomic, strong) CCMenu *heroMenu;
 @property (nonatomic, strong) CCMenu *skillMenu;
+
+@property (nonatomic, strong) BGAnimationComponent *aniComp;
 
 @end
 
@@ -46,6 +50,8 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         
         _hpSpBatch = [CCSpriteBatchNode batchNodeWithFile:kZlibGameArtwork];
         [self addChild:_hpSpBatch];
+        
+        _aniComp = [BGAnimationComponent animationComponentWithNode:self];
         
         [self scheduleUpdate];
     }
@@ -257,8 +263,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     CGPoint position = (_player.isSelfPlayer) ?
         ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
         ccp(-_playerAreaWidth*0.2, _playerAreaHeight*0.1);
-    BGAnimationComponent *aniComp = [BGAnimationComponent animationComponentWithNode:self];
-    [aniComp runWithAnimationType:type atPosition:position];
+    [_aniComp runWithAnimationType:type atPosition:position];
     
 //  Re-render blood point
     _bloodPoint += count;
@@ -284,11 +289,12 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)menuItemTouched:(CCMenuItem *)menuItem
 {
     if ([menuItem.parent isEqual:_heroMenu]) {
+        [[BGAudioComponent sharedAudioComponent] playPlayerSelect];
         [self selectTargetPlayer];
         [self checkNextTargetPlayerSelectivity];
-        
     }
     else if ([menuItem.parent isEqual:_skillMenu]) {
+        [[BGAudioComponent sharedAudioComponent] playSkillSelect];
         _player.selectedSkillId = menuItem.tag;
     }
 }
@@ -330,7 +336,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)checkNextTargetPlayerSelectivity
 {
-    BGPlayingCard *card = _gameLayer.selfPlayer.handArea.selectedCards.lastObject;
+    BGPlayingCard *card = _player.handArea.selectedCards.lastObject;
     
     if (_gameLayer.targetPlayers.count == card.targetCount) return;
     
@@ -358,7 +364,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         }
         
         [_gameLayer.targetPlayerNames removeAllObjects];
-//      TEMP: 删除选中的动画
+//      TEMP: 删除选中英雄头像的动画
 //        [_gameLayer.targetPlayer.heroArea stopSelection];
         return;
     }

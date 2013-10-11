@@ -57,6 +57,10 @@
 - (void)enableAllHandCardsWithSelectableCount:(NSUInteger)count;
 - (void)updateEquipmentWithCardIds:(NSArray *)cardIds;
 
+- (void)useHandCard;
+- (void)useHandCardWithHeroSkill;
+- (void)useHandCardWithStrengthen;
+
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds;
 - (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
 - (void)giveCardToTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;

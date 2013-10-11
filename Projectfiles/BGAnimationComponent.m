@@ -75,7 +75,7 @@
             break;
             
         case kAnimationTypeRestoreBlood:
-            [[BGAudioComponent sharedAudioComponent] playRestoreBlood];
+            [[BGAudioComponent sharedAudioComponent] playBloodRestore];
             break;
             
         default:

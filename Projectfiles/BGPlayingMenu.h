@@ -41,6 +41,8 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
 @property (nonatomic, readonly) BGPlayingMenuType menuType;
 @property (nonatomic, readonly) NSUInteger menuItemCount;
 
+@property (nonatomic) CGPoint menuPosition;
+
 - (id)initWithMenuType:(BGPlayingMenuType)menuType;
 + (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType;
 
