@@ -60,6 +60,7 @@
 - (void)useHandCard;
 - (void)useHandCardWithHeroSkill;
 - (void)useHandCardWithStrengthen;
+- (void)useHandCardWithCardIds:(NSArray *)cardIds;
 
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds;
 - (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;

@@ -611,7 +611,7 @@
         [obj removeFromParent];
     }];
     
-    [_gameLayer.playingDeck showUsedWithCardMenuItems:_selectedMenuItems];
+    [_gameLayer.playingDeck showUsedCardWithCardMenuItems:_selectedMenuItems];
     
     [self updateHandCardBuffer];
     [_selectedMenuItems removeAllObjects];

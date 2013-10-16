@@ -8,10 +8,9 @@
 
 #import "CCNode.h"
 #import "BGMenuFactory.h"
+#import "BGPlayingMenu.h"
 
-@interface BGPlayingDeck : CCNode <BGMenuFactoryDelegate>
-
-@property (nonatomic) NSInteger maxCardId;  // 最大点数的卡牌
+@interface BGPlayingDeck : CCNode <BGMenuFactoryDelegate, BGPlayingMenuDelegate>
 
 @property (nonatomic, strong, readonly) CCMenu *heroMenu;   // 待选的英雄
 @property (nonatomic, strong, readonly) CCMenu *cardMenu;   // 使用|弃置的牌
@@ -22,8 +21,8 @@
 + (id)sharedPlayingDeck;
 
 - (void)showToBeSelectedHerosWithHeroIds:(NSArray *)heroIds;
-- (void)showCuttedCardWithCardIds:(NSArray *)cardIds;
-- (void)showUsedWithCardMenuItems:(NSArray *)menuItems;
+- (void)showCuttedCardWithCardIds:(NSArray *)cardIds maxCardId:(NSInteger)maxCardId;
+- (void)showUsedCardWithCardMenuItems:(NSArray *)menuItems;
 - (void)showUsedCardWithCardIds:(NSArray *)cardIds;
 - (void)showFacedDownCardWithCount:(NSUInteger)count;
 - (void)showTopPileCardWithCardIds:(NSArray *)cardIds;
@@ -40,6 +39,5 @@
 
 - (void)removeResidualNodes;
 - (void)clearAllExistingCards;
-- (void)removePopupAssignedCard;
 
 @end

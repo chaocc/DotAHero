@@ -304,14 +304,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
 
 - (void)addProgressBarForOtherPlayers
 {
-    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+    for (NSUInteger i = 0; i < _allPlayers.count; i++) {
         [_allPlayers[i] addProgressBar];
     }
 }
 
 - (void)removeProgressBarForOtherPlayers
 {
-    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
+    for (NSUInteger i = 0; i < _allPlayers.count; i++) {
         [_allPlayers[i] removeProgressBar];
     }
 }

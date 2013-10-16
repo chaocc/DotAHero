@@ -12,6 +12,7 @@
 #import "BGFileConstants.h"
 #import "BGDefines.h"
 #import "BGActionComponent.h"
+#import "BGAnimationComponent.h"
 
 typedef NS_ENUM(NSInteger, BGPlayerTag) {
     kPlayerTagPlayerArea = 100,
@@ -334,12 +335,20 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count
 {
+    [self addProgressBar];
+    [self addPlayingMenu];
+    [self addTextPrompt];
+    
     [_handArea enableHandCardWithCardIds:cardIds];
     _handArea.selectableCardCount = count;
 }
 
 - (void)enableAllHandCardsWithSelectableCount:(NSUInteger)count
 {
+    [self addProgressBar];
+    [self addPlayingMenu];
+    [self addTextPrompt];
+    
     [_handArea enableAllHandCards];
     _handArea.selectableCardCount = count;
 }
@@ -378,9 +387,12 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 #pragma mark - Use hand card
+/*
+ * Current player(self player) use hand card
+ */
 - (void)useHandCard
 {
-    BOOL isRunAnimation = (kGameStatePlaying == _gameLayer.state);
+    BOOL isRunAnimation = (kGameStatePlaying == _gameLayer.state && 1 == _handArea.selectedCards.count);
     
     [_handArea useHandCardWithAnimation:isRunAnimation block:^{
         switch (_gameLayer.state) {
@@ -423,6 +435,24 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [_handArea useHandCardWithAnimation:YES block:^{
         [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:YES];
     }];
+}
+
+/*
+ * Current player(not self) use hand card
+ */
+- (void)useHandCardWithCardIds:(NSArray *)cardIds
+{
+    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    if (kGameStatePlaying == _gameLayer.state && 1 == cardIds.count) {
+        BGAnimationComponent *aniComp = [BGAnimationComponent animationComponentWithNode:self];
+        [aniComp runWithCard:cards.lastObject atPosition:ccp(0.0f, -_contentSize.height/2)];
+    }
+    
+    if (1 == cards.count && kCardTypeEquipment == [cards.lastObject cardType]) {    // 穿装备
+        [_equipmentArea updateEquipmentWithCard:cards.lastObject];
+    } else {
+        [_gameLayer.playingDeck showUsedCardWithCardIds:cardIds];
+    }
 }
 
 #pragma mark - Playing menu
@@ -585,12 +615,26 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 #pragma mark - Text prompt
 /*
- * Add text prompt for selected card while playing
+ * 1. Add text prompt for selected card while playing
+ * 2. Add text prompt according to different game state(action)
  */
+- (void)addTextPrompt
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:kPlistTextPrompt ofType:kFileTypePlist];
+    NSArray *array = [NSArray arrayWithContentsOfFile:path];
+    
+    if (kGameStatePlaying == _gameLayer.state) {
+        [self addTextPromptLabelWithString:array[_gameLayer.state]];
+        [self addTextPromptForSelectedCard];
+    } else {
+        [self addTextPromptLabelWithString:array[_gameLayer.state]];
+    }
+}
+
 - (void)addTextPromptForSelectedCard
 {
     if (0 == _handArea.selectedCards.count) {
-        [_textPrompt removeFromParent];
+//        [_textPrompt removeFromParent];
         return;
     }
     
@@ -620,13 +664,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _textPrompt = [CCLabelBMFont labelWithString:string fntFile:kFontTextPrompt];
         _textPrompt.position = POSITION_TEXT_PROMPT;
         [self addChild:_textPrompt];
-    }
-}
-
-- (void)addTextPrompt
-{
-    if (kGameStatePlaying == _gameLayer.state) {
-        [self addTextPromptForSelectedCard];
     }
 }
 

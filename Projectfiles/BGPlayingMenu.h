@@ -33,9 +33,17 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
     kPlayingMenuItemTagClubs        // 梅花
 };
 
+@protocol BGPlayingMenuDelegate <NSObject>
+
+- (void)playingMenuItemTouched:(CCMenuItem *)menuItem;
+
+@end
+
 @class BGPlayer;
 
 @interface BGPlayingMenu : CCNode <BGMenuFactoryDelegate>
+
+@property (nonatomic, weak) id<BGPlayingMenuDelegate> delegate;
 
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
 @property (nonatomic, readonly) BGPlayingMenuType menuType;

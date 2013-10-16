@@ -287,6 +287,8 @@
     menuItem.visible = NO;
     [[BGAudioComponent sharedAudioComponent] playButtonClick];
     
+    [_delegate playingMenuItemTouched:menuItem];
+    
     switch (menuItem.tag) {
         case kPlayingMenuItemTagOkay:
             [self touchOkayMenuItem];
@@ -341,16 +343,7 @@
  * 2. Use hero skill and/or hand card.
  */
 - (void)touchOkayMenuItem
-{
-//  Energy transport
-    if (kGameStateAssigning == _gameLayer.state) {
-        _player.selectedCardIds = [BGPlayingCard playingCardIdsWithMenu:_gameLayer.playingDeck.pileMenu];
-        [[BGClient sharedClient] sendAsignCardRequest];
-        [_gameLayer.playingDeck removePopupAssignedCard];
-        [_gameLayer.playingDeck clearAllExistingCards];
-        return;
-    }
-    
+{    
     if (kHeroSkillInvalid == _player.selectedSkillId) {
         [_player useHandCard];
     }

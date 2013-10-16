@@ -122,7 +122,7 @@
  */
 - (void)removeEquipmentWithCardMenuItems:(NSArray *)menuItems
 {
-    [_gameLayer.playingDeck showUsedWithCardMenuItems:menuItems];
+    [_gameLayer.playingDeck showUsedCardWithCardMenuItems:menuItems];
 }
 
 /*
