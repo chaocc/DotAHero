@@ -299,7 +299,8 @@
             break;
             
         case kPlayingMenuItemTagStrengthen:
-            [_player useHandCardWithStrengthen];
+            _player.isStrengthened = YES;
+            [_player useHandCard];
             break;
             
         case kPlayingMenuItemTagDiscard:

@@ -65,7 +65,7 @@
     return [[self alloc]initWithCardId:aCardId];
 }
 
-+ (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds
++ (NSArray *)playingCardsByCardIds:(NSArray *)cardIds
 {
     NSMutableArray *cards = [NSMutableArray arrayWithCapacity:cardIds.count];
     [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -74,7 +74,7 @@
     return cards;
 }
 
-+ (NSArray *)playingCardIdsWithCards:(NSArray *)cards
++ (NSArray *)playingCardIdsByCards:(NSArray *)cards
 {
     NSMutableArray *cardIds = [NSMutableArray arrayWithCapacity:cards.count];
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -83,7 +83,7 @@
     return cardIds;
 }
 
-+ (NSArray *)playingCardIdsWithMenu:(CCMenu *)menu
++ (NSArray *)playingCardIdsByMenu:(CCMenu *)menu
 {
     NSMutableArray *cardIds = [NSMutableArray array];
     [[menu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -91,6 +91,20 @@
     }];
     
     return cardIds;
+}
+
++ (NSString *)colorTextByColorId:(NSInteger)colorId
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:kPlistColorText ofType:kFileTypePlist];
+    NSArray *array = [NSArray arrayWithContentsOfFile:path];
+    return array[colorId];
+}
+
++ (NSString *)suitsTextBySuitsId:(NSInteger)suitsId
+{
+    NSString *path = [[NSBundle mainBundle] pathForResource:kPlistSuitsText ofType:kFileTypePlist];
+    NSArray *array = [NSArray arrayWithContentsOfFile:path];
+    return array[suitsId];
 }
 
 - (BGCardColor)cardColor
@@ -149,7 +163,7 @@
 }
 
 #pragma mark - Tip text
-- (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params
++ (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params
 {
     NSString *tipText = [text copy];
     for (NSString *param in params) {

@@ -101,6 +101,28 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateCutting;
             break;
             
+        case kActionPlayCard:
+        case kActionUseHandCard:
+        case kActionUseHeroSkill:
+        case kActionUseEquipment:
+            _state = kGameStatePlaying;
+            break;
+            
+        case kActionChooseCardToUse:
+        case kActionChoseCardToUse:
+            _state = kGameStateChoosingCard;
+            break;
+            
+        case kActionChooseColor:
+        case kActionChoseColor:
+            _state = kGameStateChoosingColor;
+            break;
+            
+        case kActionChooseSuits:
+        case kActionChoseSuits:
+            _state = kGameStateChoosingSuits;
+            break;
+            
         case kActionChooseCardToGet:
         case kActionChoseCardToGet:
         case kActionPlayerGetCard:
@@ -116,18 +138,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
         case kActionDeckShowAssignedCard:
         case kActionAssignCard:
             _state = kGameStateAssigning;
-            break;
-            
-        case kActionPlayCard:
-        case kActionUseHandCard:
-        case kActionUseHeroSkill:
-        case kActionUseEquipment:
-            _state = kGameStatePlaying;
-            break;
-            
-        case kActionChooseCardToUse:
-        case kActionChoseCardToUse:
-            _state = kGameStateChoosing;
             break;
             
         case kActionChooseCardToDiscard:
@@ -508,7 +518,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         case kGameStatePlaying:
-        case kGameStateChoosing:
+        case kGameStateChoosingCard:
         case kGameStateDiscarding:
             targetPos = [_playingDeck cardMoveTargetPositionWithIndex:idx count:count];
             break;

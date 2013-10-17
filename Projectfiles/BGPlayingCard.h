@@ -120,11 +120,13 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, readonly) BGCardFigure cardFigure;
 @property (nonatomic, readonly) BGCardSuits cardSuits;
 @property (nonatomic, readonly) BGCardColor cardColor;
-@property (nonatomic, copy, readonly) NSString *figureImageName;
-@property (nonatomic, copy, readonly) NSString *suitsImageName;
 @property (nonatomic, readonly) BGCardType cardType;
 @property (nonatomic, readonly) BOOL needSpecifyTarget;     // 使用卡牌是否需要手动指定目标
 @property (nonatomic, readonly) NSUInteger targetCount;     // 需要指定的目标数量
+
+@property (nonatomic, copy, readonly) NSString *figureImageName;
+@property (nonatomic, copy, readonly) NSString *suitsImageName;
+
 @property (nonatomic, copy, readonly) NSString *tipText;
 @property (nonatomic, copy, readonly) NSString *targetTipText;
 @property (nonatomic, copy, readonly) NSString *dispelTipText;
@@ -147,10 +149,13 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic) BOOL isVerticalSet;   // 是否是竖置状态(闪避护符)
 @property (nonatomic) BOOL isSelected;
 
-+ (NSArray *)playingCardsWithCardIds:(NSArray *)cardIds;
-+ (NSArray *)playingCardIdsWithCards:(NSArray *)cards;
-+ (NSArray *)playingCardIdsWithMenu:(CCMenu *)menu;
++ (NSArray *)playingCardsByCardIds:(NSArray *)cardIds;
++ (NSArray *)playingCardIdsByCards:(NSArray *)cards;
++ (NSArray *)playingCardIdsByMenu:(CCMenu *)menu;
 
-- (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params;
++ (NSString *)colorTextByColorId:(NSInteger)colorId;
++ (NSString *)suitsTextBySuitsId:(NSInteger)suitsId;
+
++ (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params;
 
 @end

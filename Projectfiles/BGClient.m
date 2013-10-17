@@ -324,12 +324,12 @@ static BGClient *instanceOfClient = nil;
 /*
  * Send game plugin request with kActionUseHandCard, kParamCardIdList and kParamTargetPlayerList.
  */
-- (void)sendUseHandCardRequestWithIsStrengthened:(BOOL)isStrengthened
+- (void)sendUseHandCardRequest
 {
     EsObject *obj = [[EsObject alloc] init];
     [obj setInt:kActionUseHandCard forKey:kAction];
     [obj setIntArray:_player.selectedCardIds forKey:kParamCardIdList];
-    [obj setBool:isStrengthened forKey:kParamIsStrengthened];
+    [obj setBool:_player.isStrengthened forKey:kParamIsStrengthened];
     if (_gameLayer.targetPlayerNames.count > 0) {
         [obj setStringArray:_gameLayer.targetPlayerNames forKey:kParamTargetPlayerList];
     }
@@ -712,17 +712,26 @@ static BGClient *instanceOfClient = nil;
     switch (action) {
         case kActionPlayCard:
         case kActionChooseCardToUse:
-        case kActionChooseCardToGet:
-        case kActionChooseCardToDiscard:
         case kActionChooseColor:
         case kActionChooseSuits:
+        case kActionChooseCardToGet:
         case kActionChooseCardToAssign:
+        case kActionChooseCardToDiscard:
             [currPlayer addProgressBar];
             break;
             
         case kActionUseHandCard:
         case kActionChoseCardToUse:
-            [currPlayer useHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [currPlayer useHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                isStrengthened:[obj boolWithKey:kParamIsStrengthened]];
+            break;
+            
+        case kActionChoseColor:
+            currPlayer.selectedColor = [obj intWithKey:kParamSelectedColor];
+            break;
+            
+        case kActionChoseSuits:
+            currPlayer.selectedSuits = [obj intWithKey:kParamSelectedSuits];
             break;
             
         case kActionDiscard:

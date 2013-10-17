@@ -42,7 +42,11 @@
 @property (nonatomic) NSUInteger handCardCount;         // 手牌数
 @property (nonatomic) NSUInteger selectableTargetCount; // 可以指定的目标玩家数
 @property (nonatomic) NSUInteger selectableCardCount;   // 可以选择/抽取的牌数
+
+@property (nonatomic) BOOL isStrengthened;              // 是否强化使用卡牌
 @property (nonatomic) BOOL isOptionalDiscard;           // 是否非强制的弃牌
+@property (nonatomic) BOOL isWaitingDispel;             // 是否等待驱散
+//@property (nonatomic) BOOL isIgnoreDispel;              // 是否忽略驱散
 
 - (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
 + (id)playerWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex;
@@ -59,8 +63,7 @@
 
 - (void)useHandCard;
 - (void)useHandCardWithHeroSkill;
-- (void)useHandCardWithStrengthen;
-- (void)useHandCardWithCardIds:(NSArray *)cardIds;
+- (void)useHandCardWithCardIds:(NSArray *)cardIds isStrengthened:(BOOL)isStrengthened;
 
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds;
 - (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;

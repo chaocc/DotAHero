@@ -88,6 +88,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
 #define kParamSelectedSuits             @"selected_suits"       // 选中的花色
 #define kParamIsStrengthened            @"is_strengthened"      // 是否被强化
 #define kParamIsOptionalDiscard         @"is_optional_discard"  // 是否非强制的弃牌
+#define kParamIsWaitingDispel           @"is_waiting_dispel"    // 是否等待驱散
+//#define kParamIsIgnoreDispel            @"is_ignore_dispel"     // 是否忽略驱散
 #define kParamHeroBloodPoint            @"hp"                   // 血量值
 #define kParamHeroBloodPointChanged     @"hp_changed"           // +|-血量
 #define kParamHeroAngerPoint            @"sp"                   // 怒气值

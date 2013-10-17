@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<string>无效的卡牌花色</string>
+	<string>红桃</string>
+	<string>方块</string>
+	<string>黑桃</string>
+	<string>梅花</string>
+</array>
+</plist>

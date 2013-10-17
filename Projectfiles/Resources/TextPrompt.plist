@@ -2,14 +2,17 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <array>
-	<string></string>
+	<string>---根据不同的game_state值决定显示的文本提示内容(&quot;0&quot;表示无效的game_state)---</string>
 	<string>请选择1张卡牌作为自己的英雄</string>
 	<string>请选择1张卡牌拼点，以此来决定初始玩家</string>
 	<string>出牌阶段请选择要使用的卡牌</string>
-	<string></string>
+	<string>(被动出牌阶段: 文本提示内容根据当前玩家使用的不同卡牌/技能决定)......</string>
+	<string>请选择一种颜色</string>
+	<string>请选择一种花色</string>
 	<string>请选择你需要的卡牌</string>
 	<string>请选择&amp;张手牌交给目标玩家&amp;</string>
 	<string>请分配每个玩家将要得到的卡牌（通过拖拽的方式）</string>
 	<string>弃牌阶段请弃置多余的手牌</string>
+	<string>&amp;处于濒死状态，需要&amp;张【治疗药膏】，是否解救?</string>
 </array>
 </plist>

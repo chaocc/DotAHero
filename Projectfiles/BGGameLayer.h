@@ -21,14 +21,17 @@ typedef NS_ENUM(NSUInteger, BGPlayerCount) {
 
 typedef NS_ENUM(NSUInteger, BGGameState) {
     kGameStateInvalid = 0,
-    kGameStateStarting = 1,     // 游戏开始阶段-选择英雄
-    kGameStateCutting = 2,      // 切牌阶段
-    kGameStatePlaying = 3,      // 主动出牌阶段
-    kGameStateChoosing = 4,     // 被动出牌阶段
-    kGameStateGetting = 5,      // 抽牌阶段
-    kGameStateGiving = 6,       // 给牌阶段
-    kGameStateAssigning = 7,    // 分牌阶段
-    kGameStateDiscarding = 8    // 弃牌阶段
+    kGameStateStarting = 1,         // 游戏开始阶段-选择英雄
+    kGameStateCutting = 2,          // 切牌阶段
+    kGameStatePlaying = 3,          // 主动出牌阶段
+    kGameStateChoosingCard = 4,     // 被动出牌阶段
+    kGameStateChoosingColor = 5,    // 选择颜色阶段
+    kGameStateChoosingSuits = 6,    // 选择花色阶段
+    kGameStateGetting = 7,          // 抽牌阶段
+    kGameStateGiving = 8,           // 给牌阶段
+    kGameStateAssigning = 9,        // 分牌阶段
+    kGameStateDiscarding = 10,      // 弃牌阶段
+    kGameStateDying = 11            // 濒死阶段
 };
 
 @protocol BGGameLayerDelegate <NSObject>

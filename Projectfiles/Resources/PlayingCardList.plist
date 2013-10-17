@@ -81,8 +81,6 @@
 		<string></string>
 		<key>tipText</key>
 		<string>使用【治疗药膏】你可以回复1点血量</string>
-		<key>targetTipText</key>
-		<string>&amp;处于濒死状态，需要&amp;张【治疗药膏】，是否解救?</string>
 	</dict>
 	<dict>
 		<key>cardName</key>
@@ -215,6 +213,8 @@
 		<string></string>
 		<key>tipText</key>
 		<string>请选择1名玩家作为目标，该玩家需弃1张由你指定的颜色的手牌</string>
+		<key>targetTipText</key>
+		<string>&amp;对你使用【月神之箭】，你需要弃置1张&amp;手牌</string>
 		<key>dispelTipText</key>
 		<string>&amp;对&amp;使用【月神之箭】，是否出【驱散】？</string>
 	</dict>
@@ -290,7 +290,7 @@
 		<key>description</key>
 		<string></string>
 		<key>tipText</key>
-		<string>摸1张牌，本回合你使用【攻击】造成的伤害+1</string>
+		<string>先摸1张牌，本回合你使用【攻击】造成的伤害+1</string>
 	</dict>
 	<dict>
 		<key>cardName</key>

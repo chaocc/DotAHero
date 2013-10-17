@@ -7,20 +7,20 @@
             <key>PopupAssignedCard.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{764,2},{964,906}}</string>
+                <string>{{2,764},{964,1038}}</string>
                 <key>offset</key>
-                <string>{1,0}</string>
+                <string>{1,1}</string>
                 <key>rotated</key>
                 <false/>
                 <key>sourceColorRect</key>
-                <string>{{2,0},{964,906}}</string>
+                <string>{{2,0},{964,1038}}</string>
                 <key>sourceSize</key>
-                <string>{966,906}</string>
+                <string>{966,1040}</string>
             </dict>
             <key>PopupCardSlot.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{764,910},{226,376}}</string>
+                <string>{{968,1626},{226,376}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -37,7 +37,7 @@
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <true/>
+                <false/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{1170,760}}</string>
                 <key>sourceSize</key>
@@ -46,7 +46,7 @@
             <key>PopupDrewEquipment.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{1174,910},{520,450}}</string>
+                <string>{{968,1174},{520,450}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
@@ -59,11 +59,11 @@
             <key>PopupDrewHandCard.png</key>
             <dict>
                 <key>frame</key>
-                <string>{{2,1174},{1170,450}}</string>
+                <string>{{1174,2},{1170,450}}</string>
                 <key>offset</key>
                 <string>{0,0}</string>
                 <key>rotated</key>
-                <false/>
+                <true/>
                 <key>sourceColorRect</key>
                 <string>{{0,0},{1170,450}}</string>
                 <key>sourceSize</key>
@@ -77,9 +77,9 @@
             <key>realTextureFileName</key>
             <string>CardPopup-ipadhd.pvr.ccz</string>
             <key>size</key>
-            <string>{1730,1626}</string>
+            <string>{1626,1854}</string>
             <key>smartupdate</key>
-            <string>$TexturePacker:SmartUpdate:91da3a16aaf1b7ecfe5e0b8fb3d32112:1/1$</string>
+            <string>$TexturePacker:SmartUpdate:e0e92031d034f4f015df56675a45f43d:1/1$</string>
             <key>textureFileName</key>
             <string>CardPopup-ipadhd.pvr.ccz</string>
         </dict>

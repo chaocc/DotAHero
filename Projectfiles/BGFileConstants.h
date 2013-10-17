@@ -21,6 +21,8 @@
 #define kPlistHeroCardList              @"HeroCardList"
 #define kPlistDensityCardList           @"DensityCardList"
 #define kPlistRoleCardList              @"RoleCardList"
+#define kPlistColorText                 @"ColorText"
+#define kPlistSuitsText                 @"SuitsText"
 #define kPlistTextPrompt                @"TextPrompt"
 #define kPlistCardAnimation             @"CardAnimation"
 

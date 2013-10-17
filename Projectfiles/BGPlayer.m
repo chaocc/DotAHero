@@ -99,6 +99,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     _selectableCardCount = 0;
     _selectableTargetCount = 0;
+    _isStrengthened = NO;
     _isOptionalDiscard = NO;
 }
 
@@ -233,7 +234,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds
 {    
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     NSArray *menuItems = [[BGMenuFactory menuFactory] createMenuItemsWithCards:cards];
     CCMenu *menu = nil;
     
@@ -303,7 +304,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     if (cardIds.count <= 0) return;
     
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     CCMenu *menu = [[BGMenuFactory menuFactory] createMenuWithCards:cards];
     menu.enabled = NO;
     menu.position = fromPos;
@@ -402,10 +403,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                 break;
                 
             case kGameStatePlaying:
-                [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:NO];
+                [[BGClient sharedClient] sendUseHandCardRequest];
                 break;
                 
-            case kGameStateChoosing:
+            case kGameStateChoosingCard:
                 [[BGClient sharedClient] sendChoseCardToUseRequest];
                 break;
                 
@@ -430,19 +431,15 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     }];
 }
 
-- (void)useHandCardWithStrengthen
-{
-    [_handArea useHandCardWithAnimation:YES block:^{
-        [[BGClient sharedClient] sendUseHandCardRequestWithIsStrengthened:YES];
-    }];
-}
-
 /*
  * Current player(not self) use hand card
  */
-- (void)useHandCardWithCardIds:(NSArray *)cardIds
+- (void)useHandCardWithCardIds:(NSArray *)cardIds isStrengthened:(BOOL)isStrengthened
 {
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    _selectedCardIds = cardIds;
+    _isStrengthened = isStrengthened;
+    
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     if (kGameStatePlaying == _gameLayer.state && 1 == cardIds.count) {
         BGAnimationComponent *aniComp = [BGAnimationComponent animationComponentWithNode:self];
         [aniComp runWithCard:cards.lastObject atPosition:ccp(0.0f, -_contentSize.height/2)];
@@ -574,9 +571,18 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             [[BGClient sharedClient] sendDiscardRequest];
             break;
             
-        case kGameStateDiscarding:
-            [_handArea useHandCardAfterTimeIsUp];
-            [[BGClient sharedClient] sendChoseCardToDiscardRequest];
+        case kGameStateChoosingCard:
+            [[BGClient sharedClient] sendCancelRequest];
+            break;
+            
+        case kGameStateChoosingColor:
+            _selectedColor = kCardColorRed;
+            [[BGClient sharedClient] sendChoseColorRequest];
+            break;
+            
+        case kGameStateChoosingSuits:
+            _selectedSuits = kCardSuitsHearts;
+            [[BGClient sharedClient] sendChoseSuitsRequest];
             break;
             
         case kGameStateGetting:
@@ -589,6 +595,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             break;
             
         case kGameStateAssigning:
+            break;
+            
+        case kGameStateDiscarding:
+            [_handArea useHandCardAfterTimeIsUp];
+            [[BGClient sharedClient] sendChoseCardToDiscardRequest];
             break;
             
         default:
@@ -617,20 +628,41 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 /*
  * 1. Add text prompt for selected card while playing
  * 2. Add text prompt according to different game state(action)
+ *    (If "kGameStateChoosingCard", add text according to the used card/skill of current player)
  */
 - (void)addTextPrompt
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:kPlistTextPrompt ofType:kFileTypePlist];
     NSArray *array = [NSArray arrayWithContentsOfFile:path];
     
-    if (kGameStatePlaying == _gameLayer.state) {
-        [self addTextPromptLabelWithString:array[_gameLayer.state]];
-        [self addTextPromptForSelectedCard];
-    } else {
-        [self addTextPromptLabelWithString:array[_gameLayer.state]];
+    switch (_gameLayer.state) {
+        case kGameStatePlaying:
+            [self addTextPromptLabelWithString:array[_gameLayer.state]];
+            [self addTextPromptForSelectedCard];
+            break;
+            
+        case kGameStateChoosingCard:
+            [self addTextPromptAccordingToUsedCard];
+            break;
+            
+        case kGameStateDying: {
+            BGPlayer *player = _gameLayer.currPlayer;
+            NSUInteger count = abs(player.heroArea.bloodPoint);  // 需要几张治疗药膏
+            NSArray *parameters = [NSArray arrayWithObjects:player.heroArea.heroCard.cardText, @(count), nil];
+            NSString *text = array[_gameLayer.state];
+            [self addTextPromptLabelWithString:[BGPlayingCard tipTextWith:text parameters:parameters]];
+            break;
+        }
+            
+        default:
+            [self addTextPromptLabelWithString:array[_gameLayer.state]];
+            break;
     }
 }
 
+/*
+ * Add text prompt while player selecting a card
+ */
 - (void)addTextPromptForSelectedCard
 {
     if (0 == _handArea.selectedCards.count) {
@@ -645,14 +677,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     switch (card.cardEnum) {
         case kPlayingCardEnergyTransport:
             parameters = [NSArray arrayWithObject:@(_gameLayer.playerCount).stringValue];
-            text = [card tipTextWith:card.cardText parameters:parameters];
             break;
             
         default:
-            text = [card tipTextWith:card.tipText parameters:nil];
             break;
     }
     
+    text = [BGPlayingCard tipTextWith:card.tipText parameters:parameters];
     [self addTextPromptLabelWithString:text];
 }
 
@@ -665,6 +696,36 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _textPrompt.position = POSITION_TEXT_PROMPT;
         [self addChild:_textPrompt];
     }
+}
+
+/*
+ * Add text prompt while the player is specified as target(by attack/magic)
+ * (According to the used card/skill of current player)
+ */
+- (void)addTextPromptAccordingToUsedCard
+{
+    BGPlayer *player = _gameLayer.currPlayer;
+    NSString *text = nil;
+    NSArray *parameters = nil;
+    
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:player.selectedCardIds];
+    BGPlayingCard *card = cards.lastObject; // Used card of current player
+    switch (card.cardEnum) {
+        case kPlayingCardElunesArrow: {
+            NSString *text = (player.isStrengthened) ?
+                [BGPlayingCard colorTextByColorId:player.selectedSuits] :   // 花色
+                [BGPlayingCard suitsTextBySuitsId:player.selectedColor];    // 颜色
+            parameters = [NSArray arrayWithObjects:player.heroArea.heroCard.cardText, text, nil];
+            break;
+        }
+            
+        default:
+            parameters = [NSArray arrayWithObject:player.heroArea.heroCard.cardText];
+            break;
+    }
+    
+    text = [BGPlayingCard tipTextWith:card.targetTipText parameters:parameters];
+    [self addTextPromptLabelWithString:text];
 }
 
 - (void)removeTextPrompt

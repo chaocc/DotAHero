@@ -61,7 +61,7 @@
  */
 - (void)initializeHandCardsWithCardIds:(NSArray *)cardIds
 {
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     [_handCards addObjectsFromArray:cards];
     
     _menuFactory = [BGMenuFactory menuFactory];
@@ -102,7 +102,7 @@
 //  Add or Remove hand card. If the card id is contained in hand cards, need remove it.
     NSMutableArray *addedCards = [NSMutableArray array];
     NSMutableArray *removedCards = [NSMutableArray array];
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     [cards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         if ([_handCards containsObject:obj]) {
             [removedCards addObject:obj];
@@ -287,7 +287,7 @@
 {
     _cardMenu.enabled = YES;
     
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     [_handCards enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         CCMenuItemSprite *menuItem = (CCMenuItemSprite *)[_cardMenu getChildByTag:[obj cardId]];
 //      Check if hand card id is contained in available card id list
@@ -576,7 +576,7 @@
         [aniComp runWithCard:_selectedCards.lastObject atPosition:POSITION_CARD_ANIMATION];
     }
     
-    _player.selectedCardIds = [BGPlayingCard playingCardIdsWithCards:_selectedCards];
+    _player.selectedCardIds = [BGPlayingCard playingCardIdsByCards:_selectedCards];
     
     if (kGameStatePlaying == _gameLayer.state && 1 == _selectableCardCount &&
         kCardTypeEquipment == [_selectedCards.lastObject cardType]) {   // 装备牌

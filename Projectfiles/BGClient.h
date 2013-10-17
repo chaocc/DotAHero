@@ -26,7 +26,7 @@
 - (void)sendStartGameRequest;
 - (void)sendStartRoundRequest;
 
-- (void)sendUseHandCardRequestWithIsStrengthened:(BOOL)isStrengthened;
+- (void)sendUseHandCardRequest;
 - (void)sendUseEquipmentRequest;
 - (void)sendUseHeroSkillRequest;
 - (void)sendCancelRequest;

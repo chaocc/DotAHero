@@ -189,7 +189,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         }];
         
         NSArray *arrangedCardIds = [self arrangedCuttedCardIdsWithIds:cardIds];
-        NSArray *cards = [BGPlayingCard playingCardsWithCardIds:arrangedCardIds];
+        NSArray *cards = [BGPlayingCard playingCardsByCardIds:arrangedCardIds];
         
 //      1. Move the card to deck
         [_gameLayer moveCardWithCardMenuItems:[_cardMenu.children getNSArray] block:^(id object) {
@@ -270,7 +270,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         [self clearExistingCards];
     }
     
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     __block NSInteger zOrder = _cardMenu.children.count;
     [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -312,7 +312,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
  */
 - (void)showTopPileCardWithCardIds:(NSArray *)cardIds
 {
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     
     __block NSUInteger index = self.allCardCount - 1;
@@ -376,7 +376,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     
 //  Add equipment cards of target player on the deck if equipped
     if (cardIds.count > 0) {
-        NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+        NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
         _equipMenu = [_menuFactory createMenuWithCards:cards];
         [_equipMenu alignItemsHorizontallyWithPadding:PADDING_DREW_CARD];
         _equipMenu.position = equipMenuPos;
@@ -405,11 +405,11 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     CGFloat popupWidth = popup.contentSize.width;
     CGFloat popupHeight = popup.contentSize.height;
     popup.anchorPoint = CGPointZero;
-    popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight*0.58));
+    popup.position = ccpSub(POSITION_DECK_AREA_CENTER, ccp(popupWidth/2, popupHeight*0.45));
     [_spriteBatch addChild:popup z:0 tag:kPopupTagAssignedCard];
     
 //  Playing card menu
-    NSArray *cards = [BGPlayingCard playingCardsWithCardIds:cardIds];
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
     _pileMenu = [_menuFactory createMenuWithCards:cards];
     _pileMenu.enabled = NO;
     _pileMenu.position = CGPointZero;
@@ -521,9 +521,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     NSUInteger factor = (_existingCardCount > 0) ? count : count-1;
     CGFloat padding = PLAYING_CARD_PADDING(count, COUNT_MAX_DECK_CARD);
     
-    CCMenuItem *menuItem = [_cardMenu.children objectAtIndex:_existingCardCount-1];
     CGPoint basePos = (_existingCardCount > 0) ?
-        menuItem.position :
+        [(CCMenuItem *)[_cardMenu.children objectAtIndex:_existingCardCount-1] position] :
         ccpSub(POSITION_DECK_AREA_CENTER, ccp(factor*cardWidth/2, 0.0f));
     CGPoint startPos = (_existingCardCount > 0) ? ccpSub(basePos, ccp(factor*cardWidth, 0.0f)) : basePos;
     
@@ -657,7 +656,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
             
             if (stop) {
                 [_gameLayer moveCardWithCardMenuItems:menuItems block:^(id object) {
-                    _player.selectedCardIds = [BGPlayingCard playingCardIdsWithMenu:_pileMenu];
+                    _player.selectedCardIds = [BGPlayingCard playingCardIdsByMenu:_pileMenu];
                     [[BGClient sharedClient] sendAsignCardRequest];
                     [_pileMenu removeFromParent];
                 }];
