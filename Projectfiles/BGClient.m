@@ -701,7 +701,8 @@ static BGClient *instanceOfClient = nil;
 //  Receive the player who send the public message. Set the target player names.
     _gameLayer.currPlayerName = e.userName;
     BGPlayer *currPlayer = (_gameLayer) ? _gameLayer.currPlayer : nil;
-    [self setTargetPlayerNames:[obj intArrayWithKey:kParamTargetPlayerList]];
+//    [self setTargetPlayerNames:[obj intArrayWithKey:kParamTargetPlayerList]];
+    [_gameLayer.targetPlayerNames addObjectsFromArray:[obj intArrayWithKey:kParamTargetPlayerList]];
     
 //  Game state with action
     _gameLayer.action = action;
@@ -793,25 +794,25 @@ static BGClient *instanceOfClient = nil;
              kActionDiscard             != _gameLayer.action));
 }
 
-/*
- * For other players(not the public sender player), if other players's target player names is empty, need set it.
- * If the specified target player is the receiver player, need add sender player as receiver player's target.
- * Otherwise, set the target player names with received esObj parameter.
- */
-- (void)setTargetPlayerNames:(NSArray *)playerNames
-{   
-    if (playerNames.count > 0 && 0 == _gameLayer.targetPlayerNames.count) {
-        for (id obj in playerNames) {
-            if ([obj isEqual:_gameLayer.selfPlayer.playerName]) {
-                [_gameLayer.targetPlayerNames addObject:_gameLayer.currPlayerName];
-                break;
-            }
-        }
-        
-        if (0 == _gameLayer.targetPlayerNames.count) {
-            _gameLayer.targetPlayerNames = [playerNames mutableCopy];
-        }
-    }
-}
+///*
+// * For other players(not the public sender player), if other players's target player names is empty, need set it.
+// * If the specified target player is the receiver player, need add sender player as receiver player's target.
+// * Otherwise, set the target player names with received esObj parameter.
+// */
+//- (void)setTargetPlayerNames:(NSArray *)playerNames
+//{   
+//    if (playerNames.count > 0 && 0 == _gameLayer.targetPlayerNames.count) {
+//        for (id obj in playerNames) {
+//            if ([obj isEqual:_gameLayer.selfPlayer.playerName]) {
+//                [_gameLayer.targetPlayerNames addObject:_gameLayer.currPlayerName];
+//                break;
+//            }
+//        }
+//        
+//        if (0 == _gameLayer.targetPlayerNames.count) {
+//            _gameLayer.targetPlayerNames = [playerNames mutableCopy];
+//        }
+//    }
+//}
 
 @end

@@ -160,12 +160,17 @@
     [self makeHandCardLeftAlignment];
 }
 
+/*
+ * If self player is target player, the "fromOtherPlayer" is current player.
+ */
 - (void)getCardFromOtherPlayerWithCards:(NSArray *)cards
 {
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [obj setPosition:CARD_MOVE_POSITION(_gameLayer.targetPlayer.position, idx, menuItems.count)];
+        CGPoint pos = (_gameLayer.targetPlayer.isSelfPlayer) ?
+            _gameLayer.currPlayer.position : _gameLayer.targetPlayer.position;
+        [obj setPosition:CARD_MOVE_POSITION(pos, idx, menuItems.count)];
         [_cardMenu addChild:obj z:zOrder++];
     }];
     

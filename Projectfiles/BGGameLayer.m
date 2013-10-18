@@ -501,9 +501,12 @@ static BGGameLayer *instanceOfGameLayer = nil;
 //  If action is kActionPlayerUpdateHand, set the target position and return.
     if (kActionPlayerUpdateHand == _action) {
         if ([_reason isEqualToString:@"m_greeded"]) {
+            // If self player is target player, set the target position with current player's position.
+            CGPoint pos = (self.targetPlayer.isSelfPlayer) ?
+                self.currPlayer.position : self.targetPlayer.position;
             targetPos = (kHandCardUpdateTypeAdd == _selfPlayer.handArea.updateType) ?
                 [_selfPlayer.handArea cardMoveTargetPositionWithIndex:idx count:count] :
-                CARD_MOVE_POSITION(self.targetPlayer.position, idx, count);
+                CARD_MOVE_POSITION(pos, idx, count);
         } else {
             targetPos = [_playingDeck cardMoveTargetPositionWithIndex:idx count:count];
         }

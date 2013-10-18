@@ -264,9 +264,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
 {
-//  Current player A's target is player B, the player B's target is player A.
 //  Target player hand card update is informed by sever(receive update action)
-    if (_gameLayer.targetPlayer.isCurrPlayer) return;
+    if (_gameLayer.targetPlayer.isSelfPlayer) return;
     
 //  抽取装备
     [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
@@ -285,9 +284,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)giveCardToTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
 {
 //  Target player hand card update is informed by sever
-    if (_gameLayer.targetPlayer.isSelfPlayer) {
-        return;
-    }
+    if (_gameLayer.targetPlayer.isSelfPlayer) return;
     
 //  给牌(明置)
     [self moveCardWithCardIds:cardIds
@@ -705,27 +702,45 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)addTextPromptAccordingToUsedCard
 {
     BGPlayer *player = _gameLayer.currPlayer;
-    NSString *text = nil;
-    NSArray *parameters = nil;
+    NSString *heroName = player.heroArea.heroCard.cardText;
+    NSMutableArray *parameters = [NSMutableArray arrayWithObject:heroName];
     
     NSArray *cards = [BGPlayingCard playingCardsByCardIds:player.selectedCardIds];
     BGPlayingCard *card = cards.lastObject; // Used card of current player
+    NSString *tipText = card.targetTipText;
+    
     switch (card.cardEnum) {
-        case kPlayingCardElunesArrow: {
-            NSString *text = (player.isStrengthened) ?
-                [BGPlayingCard colorTextByColorId:player.selectedSuits] :   // 花色
-                [BGPlayingCard suitsTextBySuitsId:player.selectedColor];    // 颜色
-            parameters = [NSArray arrayWithObjects:player.heroArea.heroCard.cardText, text, nil];
+        case kPlayingCardMislead: {
+            BGPlayer *playerA = _gameLayer.targetPlayers[0];
+            BGPlayer *playerB = _gameLayer.targetPlayers[1];
+            [parameters addObject:playerA.heroArea.heroCard.cardText];
+            [parameters addObject:playerB.heroArea.heroCard.cardText];
             break;
         }
             
+        case kPlayingCardDisarm:
+        case kPlayingCardGreed:
+            [parameters addObject:_gameLayer.targetPlayer.heroArea.heroCard.cardText];
+            break;
+            
+        case kPlayingCardElunesArrow:
+            if (_isWaitingDispel) {     // dispel text prompt
+                [parameters addObject:_gameLayer.targetPlayer.heroArea.heroCard.cardText];
+            } else {                    // target text prompt
+                NSString *text = (player.isStrengthened) ?
+                [BGPlayingCard colorTextByColorId:player.selectedSuits] :   // 花色
+                [BGPlayingCard suitsTextBySuitsId:player.selectedColor];    // 颜色
+                [parameters addObject:text];
+                tipText = card.targetTipText;
+            }
+            break;
+            
         default:
-            parameters = [NSArray arrayWithObject:player.heroArea.heroCard.cardText];
             break;
     }
     
-    text = [BGPlayingCard tipTextWith:card.targetTipText parameters:parameters];
-    [self addTextPromptLabelWithString:text];
+    tipText = [BGPlayingCard tipTextWith:tipText parameters:parameters];
+    [self addTextPromptLabelWithString:tipText];
 }
 
 - (void)removeTextPrompt

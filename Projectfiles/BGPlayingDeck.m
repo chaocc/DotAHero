@@ -603,6 +603,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 /*
  * Draw(抽取) a hand card of target player by touching card menu item
  * If only have one hand card, end directly after drew.
+ * (If self player is target player, set the start position with current player's position)
  */
 - (void)drawCardWithMenuItems:(NSArray *)menuItems
 {
@@ -612,7 +613,9 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         [obj removeFromParent];
         _handMenu.enabled = NO;
         [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
-        [obj setPosition:CARD_MOVE_POSITION(_gameLayer.targetPlayer.position, idx, menuItems.count)];
+        CGPoint pos = (_gameLayer.targetPlayer.isSelfPlayer) ?
+            _gameLayer.currPlayer.position : _gameLayer.targetPlayer.position;
+        [obj setPosition:CARD_MOVE_POSITION(pos, idx, menuItems.count)];
         [_player.handArea addAndFaceDownOneDrewCardWith:obj];
     }];
     
