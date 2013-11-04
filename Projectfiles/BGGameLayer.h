@@ -29,9 +29,10 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
     kGameStateChoosingSuits = 6,    // 选择花色阶段
     kGameStateGetting = 7,          // 抽牌阶段
     kGameStateGiving = 8,           // 给牌阶段
-    kGameStateAssigning = 9,        // 分牌阶段
-    kGameStateDiscarding = 10,      // 弃牌阶段
-    kGameStateDying = 11            // 濒死阶段
+    kGameStateRemoving = 9,         // 拆牌阶段
+    kGameStateAssigning = 10,       // 分牌阶段
+    kGameStateDiscarding = 11,      // 弃牌阶段
+    kGameStateDying = 12            // 濒死阶段
 };
 
 @protocol BGGameLayerDelegate <NSObject>
@@ -50,9 +51,10 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 
 @property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
 
-@property (nonatomic, strong, readonly) NSMutableArray *allPlayers; // Player instances
-@property (nonatomic, strong, readonly) BGPlayer *selfPlayer;       // Self player
-@property (nonatomic, strong, readonly) BGPlayer *currPlayer;
+@property (nonatomic, strong, readonly) NSMutableArray *allPlayers;
+@property (nonatomic, strong, readonly) BGPlayer *turnOwner;        // 回合开始的玩家
+@property (nonatomic, strong, readonly) BGPlayer *selfPlayer;       // 玩家自己
+@property (nonatomic, strong, readonly) BGPlayer *currPlayer;       // 当前玩家
 @property (nonatomic, strong, readonly) NSArray *targetPlayers;
 @property (nonatomic, strong, readonly) BGPlayer *targetPlayer;
 @property (nonatomic, strong, readonly) BGPlayingDeck *playingDeck;
@@ -82,6 +84,7 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 - (void)setColorWith:(ccColor3B)color ofNode:(CCNode *)node;
 
 - (void)moveCardWithCardMenu:(CCMenu *)menu toTargerPlayer:(BGPlayer *)player block:(void(^)())block;
+- (void)moveCardWithCardMenuItem:(CCMenuItem *)menuItem toPlayer:(BGPlayer *)player block:(void(^)())block;
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block;
 
 @end

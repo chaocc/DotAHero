@@ -53,6 +53,8 @@
  */
 - (void)updateEquipmentWithCard:(BGPlayingCard *)card
 {
+//    [_gameLayer.playingDeck clearAllExistingCards];
+    
     if ([_equipmentCards containsObject:card]) {
         [self removeEquipmentWithCard:card];
     } else {
@@ -75,15 +77,21 @@
 {
     [self updateEquipmentBufferWithCard:card];
     
-    NSArray *menuItems = nil;
+    NSArray *menuItems, *existingMenuItems;
+    
     if (card.onlyEquipOne) {    // 圣者遗物(不能装备防具)
-        [_equipMenu removeAllChildren];
-        menuItems = [_menuFactory createMenuItemsWithCards:_equipmentCards];
-    } else {
+        NSMutableArray *existingCards = [NSMutableArray array];
+        for (CCMenuItem *menuItem in _equipMenu.children) {
+            [existingCards addObject:[BGPlayingCard cardWithCardId:menuItem.tag]];
+        }
+        existingMenuItems = [_equipMenu.children getNSArray];
+        menuItems = [_menuFactory createMenuItemsWithCards:existingCards];
+    }
+    else {
         for (CCMenuItem *menuItem in _equipMenu.children) {
             BGPlayingCard *existingCard = [BGPlayingCard cardWithCardId:menuItem.tag];
             if (existingCard.equipmentType == card.equipmentType) {
-                [menuItem removeFromParent];
+                existingMenuItems = [NSArray arrayWithObject:menuItem];
                 menuItems = [_menuFactory createMenuItemsWithCards:[NSArray arrayWithObject:existingCard]];
                 break;
             }
@@ -92,6 +100,11 @@
     
 //  Remove existing weapon/armor, show it on on the deck.
     if (menuItems) {
+        [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+            CCMenuItem *existingMenuItem = existingMenuItems[idx];
+            [obj setPosition:ccpAdd(_player.position, existingMenuItem.position)];
+            [_equipMenu removeChild:existingMenuItem];
+        }];
         [self removeEquipmentWithCardMenuItems:menuItems];
     }
     
@@ -107,13 +120,16 @@
     
     for (CCMenuItem *menuItem in _equipMenu.children) {
         if (menuItem.tag == card.cardId) {
+            if (![_gameLayer.reason isEqualToString:@"m_greeded"]) {
+                NSArray *menuItems = [_menuFactory createMenuItemsWithCards:[NSArray arrayWithObject:card]];
+                CCNode *node = menuItems.lastObject;
+                node.position = ccpAdd(_player.position, menuItem.position);
+                [self removeEquipmentWithCardMenuItems:menuItems];
+            }
             [menuItem removeFromParent];
             break;
         }
     }
-    
-    NSArray *menuItems = [_menuFactory createMenuItemsWithCards:[NSArray arrayWithObject:card]];
-    [self removeEquipmentWithCardMenuItems:menuItems];
 }
 
 /*
@@ -136,7 +152,7 @@
         return;
     }
     
-    NSUInteger idx;
+    NSUInteger idx = 0;
     BOOL isExisting = NO;
     for (id obj in _equipmentCards) {
         if ([obj equipmentType] == card.equipmentType) {

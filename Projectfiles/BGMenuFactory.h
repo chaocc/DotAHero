@@ -43,7 +43,10 @@ typedef NS_ENUM(NSInteger, BGMenuTag) {
 
 - (NSArray *)createMenuItemsWithCards:(NSArray *)cards;
 - (NSArray *)createCardBackMenuItemsWithCount:(NSUInteger)count;
-//- (NSArray *)createMenuitemsWithSpriteFrameNames:(NSArray *)frameNames;
+- (NSArray *)createMenuitemsWithSpriteFrameNames:(NSArray *)frameNames;
+
+- (CCMenuItem *)createMenuItemWithPlayingCard:(id)card;
+- (CCMenuItem *)createMenuItemWithSpriteFrameName:(NSString *)frameName;
 
 - (void)addMenuItemsWithCards:(NSArray *)cards toMenu:(CCMenu *)menu;
 - (void)addCardBackMenuItemsWithCount:(NSUInteger)count toMenu:(CCMenu *)menu;

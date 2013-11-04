@@ -83,7 +83,6 @@
 - (void)updateHandCardBuffer
 {
     [_handCards removeObjectsInArray:_selectedCards];
-    [_selectedCards removeAllObjects];
 }
 
 - (void)clearSelectedCardBuffer
@@ -129,7 +128,7 @@
         [_cardMenu addChild:obj z:zOrder++];
     }];
     
-    [self disableAllHandCardsWithDarkColor];
+//    [self disableAllHandCardsWithDarkColor];
 }
 
 /*
@@ -156,7 +155,7 @@
 - (void)drawCardFromPileWithCards:(NSArray *)cards
 {
     [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
-    [self disableAllHandCardsWithDarkColor];
+//    [self disableAllHandCardsWithDarkColor];
     [self makeHandCardLeftAlignment];
 }
 
@@ -183,7 +182,7 @@
 - (void)faceUpCardWithCards:(NSArray *)cards
 {
 //  ...TEMP...
-    [_actionComp runDelayWithDuration:DURATION_HAND_CARD_MOVE*2 block:^{
+    [_actionComp runDelayWithDuration:DURATION_HAND_CARD_MOVE block:^{
         for (NSUInteger i = 0; i < _facedDownCardCount; i++) {
             NSUInteger idx = _handCards.count - _facedDownCardCount + i;
             CCMenuItem *cardBack = [_cardMenu.children objectAtIndex:idx];
@@ -226,6 +225,10 @@
     } else {
         [self moveSelectedCardToPlayingDeck];
     }
+    
+    [self updateHandCardBuffer];
+    [self clearSelectedCardBuffer];
+    [self makeHandCardLeftAlignment];
 }
 
 /*
@@ -270,9 +273,8 @@
             _movedCardCount++;
         }];
         
-        if (actions.count > 0) {
-            [self runAction:[CCSequence actionWithArray:actions]];
-        }
+        if (block) [actions addObject:[CCCallBlock actionWithBlock:block]];
+        if (actions.count > 0) [self runAction:[CCSequence actionWithArray:actions]];
     };
     
 //  If has card movement action is running, need wait until finished, then run next.
@@ -595,6 +597,10 @@
         }
     }
     
+    [self updateHandCardBuffer];
+    [self clearSelectedCardBuffer];
+    [self makeHandCardLeftAlignment];
+    
     [_actionComp runDelayWithDuration:DURATION_CARD_MOVE block:block];
 }
 
@@ -617,11 +623,6 @@
     }];
     
     [_gameLayer.playingDeck showUsedCardWithCardMenuItems:_selectedMenuItems];
-    
-    [self updateHandCardBuffer];
-    [_selectedMenuItems removeAllObjects];
-    
-    [self makeHandCardLeftAlignment];
 }
 
 - (void)moveSelectedCardToOtherPlayer
@@ -638,11 +639,6 @@
     [_gameLayer moveCardWithCardMenuItems:_selectedMenuItems block:^(id object) {
         [menu removeFromParent];
     }];
-    
-    [self updateHandCardBuffer];
-    [_selectedMenuItems removeAllObjects];
-    
-    [self makeHandCardLeftAlignment];
 }
 
 /*

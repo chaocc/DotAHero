@@ -32,8 +32,8 @@
 - (void)selectHeroByTouchingMenuItem:(CCMenuItem *)menuItem;
 - (void)drawHandCardWithMenuItems:(NSArray *)menuItems;
 - (void)drawEquipmentWithMenuItems:(NSArray *)menuItems;
+- (void)assignCardToEachPlayer;
 
-- (void)moveCardWithCardMenuItems:(NSArray *)menuItems;
 - (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx;
 - (CGPoint)cardMoveTargetPositionWithIndex:(NSUInteger)idx count:(NSUInteger)count;
 

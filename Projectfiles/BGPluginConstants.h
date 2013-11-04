@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionChoseColor = 206,                        // 选择了卡牌颜色
     kActionChoseSuits = 207,                        // 选择了卡牌花色
     kActionAssignCard = 208,                        // 分配了卡牌(如能量转移)
+    kActionChoseCardToRemove = 209,                 // 选择了卡牌: 移除
     
     kActionDeckDealHeros = 1000,                    // 发待选英雄
     kActionDeckShowTopPileCard = 1001,              // 显示牌堆顶的牌
@@ -63,7 +64,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
     kActionChooseCardToDiscard = 3005,              // 选择卡牌: 弃置
     kActionChooseColor = 3006,                      // 选择颜色阶段
     kActionChooseSuits = 3007,                      // 选择花色阶段
-    kActionChooseCardToAssign = 3008,               // 选择卡牌: 分配给每个玩家 
+    kActionChooseCardToAssign = 3008,               // 选择卡牌: 分配给每个玩家
+    kActionChooseCardToRemove = 3009,               // 选择卡牌: 移除
     
     kActionDrawCard = 4000,                         // 摸牌
     kActionFaceDownPileCard = 4001,                 // 暗置牌堆顶的牌

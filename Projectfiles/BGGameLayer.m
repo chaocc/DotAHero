@@ -135,6 +135,11 @@ static BGGameLayer *instanceOfGameLayer = nil;
             _state = kGameStateGiving;
             break;
             
+        case kActionChooseCardToRemove:
+        case kActionChoseCardToRemove:
+            _state = kGameStateRemoving;
+            break;
+            
         case kActionDeckShowAssignedCard:
         case kActionAssignCard:
             _state = kGameStateAssigning;
@@ -475,6 +480,15 @@ static BGGameLayer *instanceOfGameLayer = nil;
                         block:block];
 }
 
+- (void)moveCardWithCardMenuItem:(CCMenuItem *)menuItem toPlayer:(BGPlayer *)player block:(void (^)())block
+{
+    CGPoint targetPos = (player.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : CARD_MOVE_POSITION(player.position, 0, 1);
+    BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
+    [ac runEaseMoveWithTarget:targetPos
+                     duration:DURATION_CARD_MOVE
+                        block:block];
+}
+
 - (void)moveCardWithCardMenuItems:(NSArray *)menuItems block:(void(^)(id object))block
 {
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
@@ -522,6 +536,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             
         case kGameStatePlaying:
         case kGameStateChoosingCard:
+        case kGameStateRemoving:
         case kGameStateDiscarding:
             targetPos = [_playingDeck cardMoveTargetPositionWithIndex:idx count:count];
             break;
@@ -534,10 +549,6 @@ static BGGameLayer *instanceOfGameLayer = nil;
             
         case kGameStateGiving:
             targetPos = CARD_MOVE_POSITION(self.targetPlayer.position, idx, count);
-            break;
-            
-        case kGameStateAssigning:
-            
             break;
             
         default:

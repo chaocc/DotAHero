@@ -20,6 +20,7 @@
 @property (nonatomic, weak) BGPlayer *player;
 
 @property (nonatomic, strong) CCMenu *menu;
+@property (nonatomic) BOOL isEnabled;
 
 @end
 
@@ -40,9 +41,20 @@
     return self;
 }
 
+- (id)initWithMenuType:(BGPlayingMenuType)menuType isEnabled:(BOOL)isEnabled
+{
+    _isEnabled = isEnabled;
+    return [self initWithMenuType:menuType];
+}
+
 + (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType
 {
     return [[self alloc] initWithMenuType:menuType];
+}
+
++ (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType isEnabled:(BOOL)isEnabled
+{
+    return [[self alloc] initWithMenuType:menuType isEnabled:isEnabled];
 }
 
 - (NSUInteger)menuItemCount
@@ -112,7 +124,7 @@
                                       disabledFrameName:kImageOkayDisabled];
     CCMenuItem *menuItem = [_menu.children objectAtIndex:0];
     menuItem.tag = kPlayingMenuItemTagOkay;
-    menuItem.isEnabled = NO;
+    menuItem.isEnabled = _isEnabled;
     
     [self addChild:_menu];
 }
@@ -287,7 +299,10 @@
     menuItem.visible = NO;
     [[BGAudioComponent sharedAudioComponent] playButtonClick];
     
-    [_delegate playingMenuItemTouched:menuItem];
+    if (_delegate) {
+        [_delegate playingMenuItemTouched:menuItem];
+        return;
+    }
     
     switch (menuItem.tag) {
         case kPlayingMenuItemTagOkay:

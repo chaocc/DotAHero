@@ -37,6 +37,7 @@
 - (void)sendChoseCardToUseRequest;
 - (void)sendChoseCardToGetRequest;
 - (void)sendChoseCardToGiveRequest;
+- (void)sendChoseCardToRemoveRequest;
 - (void)sendChoseCardToDiscardRequest;
 - (void)sendChoseColorRequest;
 - (void)sendChoseSuitsRequest;

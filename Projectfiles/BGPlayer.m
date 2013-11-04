@@ -230,7 +230,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 /*
- * Get hand card from playing deck for self/current player
+ * Get hand card from playing deck for self(current) player
  */
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds
 {    
@@ -247,15 +247,21 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         [_gameLayer addChild:menu];
     }
     
-    [_gameLayer.playingDeck moveCardWithCardMenuItems:menuItems];
-    
-    [_actionComp runDelayWithDuration:DURATION_CARD_MOVE block:^{
-        if (_isSelfPlayer) {
-            [_handArea makeHandCardLeftAlignment];
-        } else {
-            [menu removeFromParent];
+//  Set menu item position and make the deck card with dark color
+    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        for (CCMenuItem *menuItem in _gameLayer.playingDeck.cardMenu.children) {
+            if ([obj tag] == menuItem.tag) {
+                [_gameLayer setColorWith:COLOR_DISABLED_CARD ofNode:menuItem];
+                [obj setPosition:menuItem.position];
+            }
         }
     }];
+    
+    if (_isSelfPlayer) {
+        [_handArea makeHandCardLeftAlignment];
+    } else {
+        [menu removeFromParent];
+    }
 }
 
 /*
@@ -268,14 +274,18 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     if (_gameLayer.targetPlayer.isSelfPlayer) return;
     
 //  抽取装备
-    [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
-    [self moveCardWithCardIds:cardIds
-                 fromPosition:_gameLayer.targetPlayer.position
-               toTargetPlayer:self];
+    if (cardIds) {
+        [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
+        [self moveCardWithCardIds:cardIds
+                     fromPosition:_gameLayer.targetPlayer.position
+                   toTargetPlayer:_gameLayer.currPlayer];
+    }
 //  抽取手牌
-    [self moveCardWithCardCount:count
-                   fromPosition:_gameLayer.targetPlayer.position
-                 toTargetPlayer:self];
+    if (count > 0) {
+        [self moveCardWithCardCount:count
+                       fromPosition:_gameLayer.targetPlayer.position
+                     toTargetPlayer:_gameLayer.currPlayer];
+    }
 }
 
 /*
@@ -288,12 +298,12 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
 //  给牌(明置)
     [self moveCardWithCardIds:cardIds
-                 fromPosition:self.position
+                 fromPosition:_gameLayer.currPlayer.position
                toTargetPlayer:_gameLayer.targetPlayer];
     
 //  给牌(暗置)
     [self moveCardWithCardCount:count
-                   fromPosition:self.position
+                   fromPosition:_gameLayer.currPlayer.position
                  toTargetPlayer:_gameLayer.targetPlayer];
 }
 
@@ -326,6 +336,20 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:player block:^{
         [menu removeFromParent];
     }];
+}
+
+- (void)removeCardToDeckWithCardIds:(NSArray *)cardIds
+{
+//  Target player hand card update is informed by sever(receive update action)
+//    if (_gameLayer.targetPlayer.isSelfPlayer) return;
+    
+//  移除装备(比如缴械)
+    BGPlayingCard *card = [BGPlayingCard cardWithCardId:[cardIds.lastObject integerValue]];
+    if ([_gameLayer.targetPlayer.equipmentArea.equipmentCards containsObject:card]) {
+        [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCard:card];
+    } else {
+        [_gameLayer.playingDeck showUsedCardWithCardIds:cardIds];
+    }
 }
 
 /*
@@ -447,6 +471,12 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     } else {
         [_gameLayer.playingDeck showUsedCardWithCardIds:cardIds];
     }
+}
+
+- (BGPlayingCard *)usedCard
+{
+    NSArray *cards = [BGPlayingCard playingCardsByCardIds:_selectedCardIds];
+    return cards.lastObject;
 }
 
 #pragma mark - Playing menu
@@ -592,11 +622,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             break;
             
         case kGameStateAssigning:
+            [_gameLayer.playingDeck assignCardToEachPlayer];
             break;
             
         case kGameStateDiscarding:
-            [_handArea useHandCardAfterTimeIsUp];
-            [[BGClient sharedClient] sendChoseCardToDiscardRequest];
+            if (_isOptionalDiscard) {
+                [[BGClient sharedClient] sendCancelRequest];
+            } else {
+                [_handArea useHandCardAfterTimeIsUp];
+                [[BGClient sharedClient] sendChoseCardToDiscardRequest];
+            }
             break;
             
         default:
@@ -608,10 +643,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     if (0 == _selectableCardCount) return;
     
-    NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:_selectableCardCount];
+    NSMutableArray *menuItems = [NSMutableArray array];
     
     if (_gameLayer.targetPlayer.handCardCount > 0) {
-        for (NSUInteger i = 0; i < _selectableCardCount; i++) {
+        for (NSUInteger i = 0; i < _selectableCardCount-_selectedCardIdxes.count; i++) {
             [menuItems addObject:[_gameLayer.playingDeck.handMenu.children objectAtIndex:i]];
         }
         [_gameLayer.playingDeck drawHandCardWithMenuItems:menuItems];
@@ -634,8 +669,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     switch (_gameLayer.state) {
         case kGameStatePlaying:
-            [self addTextPromptLabelWithString:array[_gameLayer.state]];
-            [self addTextPromptForSelectedCard];
+            if (0 == _handArea.selectedCards.count) {
+                [self addTextPromptLabelWithString:array[_gameLayer.state]];
+            } else {
+                [self addTextPromptForSelectedCard];
+            }
             break;
             
         case kGameStateChoosingCard:
@@ -662,11 +700,6 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)addTextPromptForSelectedCard
 {
-    if (0 == _handArea.selectedCards.count) {
-//        [_textPrompt removeFromParent];
-        return;
-    }
-    
     NSString *text = nil;
     NSArray *parameters = nil;
     
@@ -704,12 +737,9 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     BGPlayer *player = _gameLayer.currPlayer;
     NSString *heroName = player.heroArea.heroCard.cardText;
     NSMutableArray *parameters = [NSMutableArray arrayWithObject:heroName];
+    NSString *tipText = player.usedCard.dispelTipText;  // Used card of current player
     
-    NSArray *cards = [BGPlayingCard playingCardsByCardIds:player.selectedCardIds];
-    BGPlayingCard *card = cards.lastObject; // Used card of current player
-    NSString *tipText = card.targetTipText;
-    
-    switch (card.cardEnum) {
+    switch (player.usedCard.cardEnum) {
         case kPlayingCardMislead: {
             BGPlayer *playerA = _gameLayer.targetPlayers[0];
             BGPlayer *playerB = _gameLayer.targetPlayers[1];
@@ -731,7 +761,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                 [BGPlayingCard colorTextByColorId:player.selectedSuits] :   // 花色
                 [BGPlayingCard suitsTextBySuitsId:player.selectedColor];    // 颜色
                 [parameters addObject:text];
-                tipText = card.targetTipText;
+                tipText = player.usedCard.targetTipText;
             }
             break;
             

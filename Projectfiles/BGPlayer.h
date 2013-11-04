@@ -26,9 +26,11 @@
 //@property (nonatomic) BOOL isDead;
 
 @property (nonatomic, strong, readonly) BGHeroArea *heroArea;
-@property (nonatomic, strong, readonly) BGHandArea *handArea;   // Only current player have
+@property (nonatomic, strong, readonly) BGHandArea *handArea;       // Only current player have
 @property (nonatomic, strong, readonly) BGEquipmentArea *equipmentArea;
 @property (nonatomic, strong, readonly) BGPlayingMenu *playingMenu;
+
+@property (nonatomic, strong, readonly) BGPlayingCard *usedCard;    // Used card of current player
 
 @property (nonatomic) NSInteger selectedHeroId;
 @property (nonatomic) NSInteger comparedCardId;
@@ -68,6 +70,7 @@
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds;
 - (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
 - (void)giveCardToTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count;
+- (void)removeCardToDeckWithCardIds:(NSArray *)cardIds;
 
 - (void)enablePlayerArea;
 - (void)disablePlayerAreaWithDarkColor;

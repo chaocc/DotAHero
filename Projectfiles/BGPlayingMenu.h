@@ -52,7 +52,10 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
 @property (nonatomic) CGPoint menuPosition;
 
 - (id)initWithMenuType:(BGPlayingMenuType)menuType;
+- (id)initWithMenuType:(BGPlayingMenuType)menuType isEnabled:(BOOL)isEnabled;
+
 + (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType;
++ (id)playingMenuWithMenuType:(BGPlayingMenuType)menuType isEnabled:(BOOL)isEnabled;
 
 - (CCMenuItem *)menuItemByTag:(NSInteger)tag;
 
