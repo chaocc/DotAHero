@@ -145,6 +145,7 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 @property (nonatomic, readonly) NSUInteger attackRange;
 @property (nonatomic, readonly) BOOL canBeUsedActive;       // 是否可以主动使用
 @property (nonatomic, readonly) BOOL onlyEquipOne;          // 武器和防具是否只能装备一个
+@property (nonatomic, readonly) BOOL isEquipment;
 
 @property (nonatomic) BOOL isVerticalSet;   // 是否是竖置状态(闪避护符)
 @property (nonatomic) BOOL isSelected;
@@ -153,8 +154,8 @@ typedef NS_ENUM(NSInteger, BGEquipmentType) {
 + (NSArray *)playingCardIdsByCards:(NSArray *)cards;
 + (NSArray *)playingCardIdsByMenu:(CCMenu *)menu;
 
-+ (NSString *)colorTextByColorId:(NSInteger)colorId;
-+ (NSString *)suitsTextBySuitsId:(NSInteger)suitsId;
++ (NSString *)colorTextByCardColor:(BGCardColor)color;
++ (NSString *)suitsTextByCardSuits:(BGCardSuits)suits;
 
 + (NSString *)tipTextWith:(NSString *)text parameters:(NSArray *)params;
 

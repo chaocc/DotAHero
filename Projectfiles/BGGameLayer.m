@@ -146,8 +146,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         case kActionChooseCardToDiscard:
-        case kActionChoseCardToDiscard:
-            _state = kGameStateDiscarding;
+            _state = (_selfPlayer.isOptionalDiscard) ? kGameStateChoosingCard : kGameStateDiscarding;
             break;
             
         default:
@@ -319,14 +318,14 @@ static BGGameLayer *instanceOfGameLayer = nil;
 
 - (void)addProgressBarForOtherPlayers
 {
-    for (NSUInteger i = 0; i < _allPlayers.count; i++) {
+    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         [_allPlayers[i] addProgressBar];
     }
 }
 
 - (void)removeProgressBarForOtherPlayers
 {
-    for (NSUInteger i = 0; i < _allPlayers.count; i++) {
+    for (NSUInteger i = 1; i < _allPlayers.count; i++) {
         [_allPlayers[i] removeProgressBar];
     }
 }
@@ -353,9 +352,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     for (CCNode *subNode in node.children) {
         if ([subNode respondsToSelector:@selector(setColor:)]) {
             CCNodeRGBA *nodeRGBA = (CCNodeRGBA *)subNode;
-            if (color.r != nodeRGBA.color.r ||
-                color.g != nodeRGBA.color.g ||
-                color.b != nodeRGBA.color.b) {
+            if (!ccc3BEqual(color, nodeRGBA.color)) {
                 nodeRGBA.color = color;
             }
         }
@@ -460,7 +457,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 
 - (BGPlayer *)targetPlayer
 {
-    return (_targetPlayerNames.count == 1) ? self.targetPlayers.lastObject : nil;
+    return (1 == _targetPlayerNames.count) ? self.targetPlayers.lastObject : nil;
 }
 
 - (NSUInteger)playerCount

@@ -31,6 +31,8 @@
 @property (nonatomic, strong, readonly) BGPlayingMenu *playingMenu;
 
 @property (nonatomic, strong, readonly) BGPlayingCard *usedCard;    // Used card of current player
+@property (nonatomic, readonly) BOOL canBeDisarmed;
+@property (nonatomic, readonly) BOOL canBeGreeded;
 
 @property (nonatomic) NSInteger selectedHeroId;
 @property (nonatomic) NSInteger comparedCardId;

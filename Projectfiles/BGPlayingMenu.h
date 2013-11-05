@@ -46,8 +46,8 @@ typedef NS_ENUM(NSInteger, BGPlayingMenuItemTag) {
 @property (nonatomic, weak) id<BGPlayingMenuDelegate> delegate;
 
 @property (nonatomic, strong) BGMenuFactory *menuFactory;
-@property (nonatomic, readonly) BGPlayingMenuType menuType;
 @property (nonatomic, readonly) NSUInteger menuItemCount;
+@property (nonatomic, readonly) BOOL isStrengthening;   // 是否有"强化"按钮
 
 @property (nonatomic) CGPoint menuPosition;
 

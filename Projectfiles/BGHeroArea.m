@@ -114,7 +114,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         BGHeroSkill *skill = [BGHeroSkill heroSkillWithSkillId:[obj integerValue]];
         
         NSString *frameName, *selFrameName;
-        if (kHeroSkillCategoryActive == skill.skillCategory) {
+        if (skill.isActive) {
             frameName = [NSString stringWithFormat:@"ActiveSkill%i.png", skillCount];
             selFrameName = [NSString stringWithFormat:@"ActiveSkill%i_Selected.png", skillCount];
         } else {
@@ -149,7 +149,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
         label.anchorPoint = anchorPoint;
         label.position = ccp(menuItem.contentSize.width/2, menuItem.contentSize.height/2);
         [menuItem addChild:label];
-        menuItem.isEnabled = (kHeroSkillCategoryActive == skill.skillCategory);
+        menuItem.isEnabled = skill.isActive;
     }];
 }
 
@@ -257,7 +257,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 #pragma mark - Hero updating
 - (void)updateBloodPointWithCount:(NSInteger)count
 {
-    if (count == 0) return;
+    if (0 == count) return;
     
     BGAnimationType type = (count < 0) ? kAnimationTypeDamaged : kAnimationTypeRestoreBlood;
     CGPoint position = (_player.isSelfPlayer) ?
@@ -274,7 +274,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 
 - (void)updateAngerPointWithCount:(NSInteger)count
 {
-    if (count == 0 || ((NSInteger)_angerPoint+count) < 0) return;
+    if (0 == count || ((NSInteger)_angerPoint+count) < 0) return;
     
     _angerPoint += count;
     [self renderAngerPoint];

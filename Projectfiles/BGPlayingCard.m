@@ -93,18 +93,18 @@
     return cardIds;
 }
 
-+ (NSString *)colorTextByColorId:(NSInteger)colorId
++ (NSString *)colorTextByCardColor:(BGCardColor)color
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:kPlistColorText ofType:kFileTypePlist];
     NSArray *array = [NSArray arrayWithContentsOfFile:path];
-    return array[colorId];
+    return array[color];
 }
 
-+ (NSString *)suitsTextBySuitsId:(NSInteger)suitsId
++ (NSString *)suitsTextByCardSuits:(BGCardSuits)suits
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:kPlistSuitsText ofType:kFileTypePlist];
     NSArray *array = [NSArray arrayWithContentsOfFile:path];
-    return array[suitsId];
+    return array[suits];
 }
 
 - (BGCardColor)cardColor
@@ -115,6 +115,11 @@
         _cardColor = kCardColorBlack;
     }
     return _cardColor;
+}
+
+- (BOOL)isEquipment
+{
+    return (kCardTypeEquipment == _cardType);
 }
 
 #pragma mark - Image

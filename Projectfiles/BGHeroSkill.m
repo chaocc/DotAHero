@@ -28,7 +28,7 @@
         _skillEnum = aSkillId;
         _skillCategory = [dictionary[kHeroSkillCategory] integerValue];
         _skillType = [dictionary[kHeroSkillType] integerValue];
-        _isMandatorySkill = [dictionary[kIsMandatorySkill] boolValue];
+        _isMandatory = [dictionary[kIsMandatorySkill] boolValue];
         _canBeDispeled = [dictionary[kCanBeDispelled] boolValue];
         _skillText = dictionary[kHeroSkillText];
     }
@@ -38,6 +38,11 @@
 + (id)heroSkillWithSkillId:(NSInteger)aSkillId
 {
     return [[self alloc] initWithSkillId:aSkillId];
+}
+
+- (BOOL)isActive
+{
+    return (kHeroSkillCategoryActive == _skillCategory);
 }
 
 @end

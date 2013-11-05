@@ -692,11 +692,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 //      Self(Current) player need add the card to his hand
         if (player.isSelfPlayer) {
             menuItem.visible = NO;
-            BGPlayingCard *card = [BGPlayingCard cardWithCardId:menuItem.tag];
-            CCMenuItem *newMenuItem = [[BGMenuFactory menuFactory] createMenuItemWithPlayingCard:card];
-            newMenuItem.position = menuItem.position;
-            [player.handArea addHandCardWithCardMenuItems:[NSArray arrayWithObject:newMenuItem]];
-            [player.handArea makeHandCardLeftAlignment];
+            [player.handArea addHandCardWithCardMenuItems:[NSArray arrayWithObject:menuItem]];
         }
 //      Send request if loop is stop ("stop" parameter doesn't work)
         else {
@@ -710,6 +706,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         }
     }];
     
+    [_player removeProgressBar];
+    [_player removeTextPrompt];
     [_popupNode removeFromParent];
     [self clearAllExistingCards];
 }

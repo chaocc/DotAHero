@@ -69,6 +69,8 @@ typedef NS_ENUM(NSInteger, BGAction) {
     
     kActionDrawCard = 4000,                         // 摸牌
     kActionFaceDownPileCard = 4001,                 // 暗置牌堆顶的牌
+    kActionWaitingDispel = 4002,                    // 等待驱散
+    kActionCancelWaiting = 4003                     // 取消等待
 };
 
 // Parameters

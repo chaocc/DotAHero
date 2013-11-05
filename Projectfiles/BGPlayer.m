@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 @implementation BGPlayer
 
 @synthesize handCardCount = _handCardCount;
+@synthesize usedCard = _usedCard;
 
 - (id)initWithUserName:(NSString *)name seatIndex:(NSUInteger)seatIndex
 {
@@ -41,7 +42,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _gameLayer = [BGGameLayer sharedGameLayer];
         _playerName = name;
         _seatIndex = seatIndex;
-        _isSelfPlayer = (seatIndex == 0);   // First index is self player
+        _isSelfPlayer = (0 == seatIndex);   // First index is self player
         
         _positiveDistance = 1;
         _negativeDistance = -1;
@@ -85,6 +86,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (NSUInteger)attackRange
 {
     return (_attackRange - _negativeDistance - 1);
+}
+
+- (BOOL)canBeDisarmed
+{
+    return (_equipmentArea.equipmentCards.count > 0);
+}
+
+- (BOOL)canBeGreeded
+{
+    return (self.handCardCount > 0 || _equipmentArea.equipmentCards.count > 0);
 }
 
 #pragma mark - Buffer handling
@@ -224,7 +235,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [menu alignItemsHorizontallyWithPadding:-PLAYING_CARD_WIDTH/2];
     [_gameLayer addChild:menu];
     
-    [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:self block:^{
+    [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:_gameLayer.currPlayer block:^{
         [menu removeFromParent];
     }];
 }
@@ -233,34 +244,29 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  * Get hand card from playing deck for self(current) player
  */
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds
-{    
-    NSArray *cards = [BGPlayingCard playingCardsByCardIds:cardIds];
-    NSArray *menuItems = [[BGMenuFactory menuFactory] createMenuItemsWithCards:cards];
-    CCMenu *menu = nil;
-    
-    if (_isSelfPlayer) {
-        [_handArea addHandCardWithCardMenuItems:menuItems];
-    } else {
-        menu = [CCMenu menuWithArray:menuItems];
-        menu.enabled = NO;
-        menu.position = CGPointZero;
-        [_gameLayer addChild:menu];
-    }
-    
-//  Set menu item position and make the deck card with dark color
-    [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+{
+//  Make the deck card with dark color
+    NSMutableArray *menuItems = [NSMutableArray arrayWithCapacity:cardIds.count];
+    [cardIds enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         for (CCMenuItem *menuItem in _gameLayer.playingDeck.cardMenu.children) {
-            if ([obj tag] == menuItem.tag) {
+            if ([obj integerValue] == menuItem.tag) {
                 [_gameLayer setColorWith:COLOR_DISABLED_CARD ofNode:menuItem];
-                [obj setPosition:menuItem.position];
+                [menuItems addObject:menuItem];
             }
         }
     }];
     
     if (_isSelfPlayer) {
-        [_handArea makeHandCardLeftAlignment];
+        [_handArea addHandCardWithCardMenuItems:menuItems];
     } else {
-        [menu removeFromParent];
+        CCMenu *menu = [CCMenu menuWithArray:menuItems];
+        menu.enabled = NO;
+        menu.position = CGPointZero;
+        [_gameLayer addChild:menu];
+        
+        [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:_gameLayer.currPlayer block:^{
+            [menu removeFromParent];
+        }];
     }
 }
 
@@ -358,8 +364,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)enableHandCardWithCardIds:(NSArray *)cardIds selectableCardCount:(NSUInteger)count
 {
     [self addProgressBar];
-    [self addPlayingMenu];
     [self addTextPrompt];
+    [self addPlayingMenu];
     
     [_handArea enableHandCardWithCardIds:cardIds];
     _handArea.selectableCardCount = count;
@@ -368,8 +374,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)enableAllHandCardsWithSelectableCount:(NSUInteger)count
 {
     [self addProgressBar];
-    [self addPlayingMenu];
     [self addTextPrompt];
+    [self addPlayingMenu];
     
     [_handArea enableAllHandCards];
     _handArea.selectableCardCount = count;
@@ -466,7 +472,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         [aniComp runWithCard:cards.lastObject atPosition:ccp(0.0f, -_contentSize.height/2)];
     }
     
-    if (1 == cards.count && kCardTypeEquipment == [cards.lastObject cardType]) {    // 穿装备
+    if (1 == cards.count && [cards.lastObject isEquipment]) {   // 穿装备
         [_equipmentArea updateEquipmentWithCard:cards.lastObject];
     } else {
         [_gameLayer.playingDeck showUsedCardWithCardIds:cardIds];
@@ -475,8 +481,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 - (BGPlayingCard *)usedCard
 {
-    NSArray *cards = [BGPlayingCard playingCardsByCardIds:_selectedCardIds];
-    return cards.lastObject;
+    if (_selectedCardIds) {
+        NSArray *cards = [BGPlayingCard playingCardsByCardIds:_selectedCardIds];
+        _usedCard = cards.lastObject;
+    }
+    return _usedCard;
 }
 
 #pragma mark - Playing menu
@@ -747,7 +756,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             [parameters addObject:playerB.heroArea.heroCard.cardText];
             break;
         }
-            
+        
         case kPlayingCardDisarm:
         case kPlayingCardGreed:
             [parameters addObject:_gameLayer.targetPlayer.heroArea.heroCard.cardText];
@@ -758,8 +767,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
                 [parameters addObject:_gameLayer.targetPlayer.heroArea.heroCard.cardText];
             } else {                    // target text prompt
                 NSString *text = (player.isStrengthened) ?
-                [BGPlayingCard colorTextByColorId:player.selectedSuits] :   // 花色
-                [BGPlayingCard suitsTextBySuitsId:player.selectedColor];    // 颜色
+                [BGPlayingCard suitsTextByCardSuits:player.selectedSuits] : // 花色
+                [BGPlayingCard colorTextByCardColor:player.selectedColor];  // 颜色
                 [parameters addObject:text];
                 tipText = player.usedCard.targetTipText;
             }

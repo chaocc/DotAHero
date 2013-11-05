@@ -20,6 +20,7 @@
 @property (nonatomic, weak) BGPlayer *player;
 
 @property (nonatomic, strong) CCMenu *menu;
+@property (nonatomic) BGPlayingMenuType menuType;
 @property (nonatomic) BOOL isEnabled;
 
 @end
@@ -70,6 +71,11 @@
 - (CCMenuItem *)menuItemByTag:(NSInteger)tag
 {
     return (CCMenuItem *)[_menu getChildByTag:tag];
+}
+
+- (BOOL)isStrengthening
+{
+    return (kPlayingMenuItemTagStrengthen == _menuType);
 }
 
 #pragma mark - Playing menu creation

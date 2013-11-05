@@ -144,8 +144,9 @@ typedef NS_ENUM(NSInteger, BGHeroSkillType) {
 @property (nonatomic, readonly) BGHeroSkillCategory skillCategory;
 @property (nonatomic, readonly) BGHeroSkillType skillType;
 @property (nonatomic, copy) NSString *skillText;
-@property (nonatomic, readonly) BOOL isMandatorySkill;
+@property (nonatomic, readonly) BOOL isMandatory;
 @property (nonatomic, readonly) BOOL canBeDispeled;
+@property (nonatomic, readonly) BOOL isActive;
 
 - (id)initWithSkillId:(NSInteger)aSkillId;
 + (id)heroSkillWithSkillId:(NSInteger)aSkillId;

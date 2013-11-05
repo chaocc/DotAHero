@@ -124,9 +124,17 @@
 - (void)addHandCardWithCardMenuItems:(NSArray *)menuItems
 {
     __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
+    
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [_cardMenu addChild:obj z:zOrder++];
+        BGPlayingCard *card = [BGPlayingCard cardWithCardId:[obj tag]];
+        [_handCards addObject:card];    // Add to card buffer
+        
+        CCMenuItem *menuItem = [_menuFactory createMenuItemWithPlayingCard:card];
+        menuItem.position = [obj position];
+        [_cardMenu addChild:menuItem z:zOrder++];
     }];
+    
+    [self makeHandCardLeftAlignment];
     
 //    [self disableAllHandCardsWithDarkColor];
 }
@@ -137,7 +145,7 @@
 - (void)addHandCardWithCards:(NSArray *)cards
 {
     _updateType = kHandCardUpdateTypeAdd;
-    [_handCards addObjectsFromArray:cards];
+    [_handCards addObjectsFromArray:cards]; // Add to card buffer
     
 //  If there is faced down cards, need face up them by flipping.
     if (_facedDownCardCount > 0) {
@@ -147,12 +155,12 @@
         if (kGameStateGetting == _gameLayer.state) {
             [self getCardFromOtherPlayerWithCards:cards];
         } else {
-            [self drawCardFromPileWithCards:cards];
+            [self drawCardFromDeckWithCards:cards];
         }
     }
 }
 
-- (void)drawCardFromPileWithCards:(NSArray *)cards
+- (void)drawCardFromDeckWithCards:(NSArray *)cards
 {
     [_menuFactory addMenuItemsWithCards:cards toMenu:_cardMenu];
 //    [self disableAllHandCardsWithDarkColor];
@@ -252,7 +260,7 @@
         
         [[_cardMenu.children getNSArray] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
             CCMenuItem *menuItem = obj;
-            if (0.0f == menuItem.position.x && 0.0f == menuItem.position.y) {
+            if (CGPointEqualToPoint(menuItem.position, CGPointZero)) {
                 menuItem.position = POSITION_HAND_AREA_RIGHT;
             }
             
@@ -261,7 +269,7 @@
             targetPos = (targetPos.x < POSITION_HAND_AREA_RIGHT.x) ? targetPos : POSITION_HAND_AREA_RIGHT;
             
             if (stop) _rightMostPosition = targetPos;
-            if (menuItem.position.x == targetPos.x) return; // No need move
+            if (CGPointEqualToPoint(menuItem.position, targetPos)) return;  // No need move
             
             [actions addObject:[CCCallBlock actionWithBlock:^{
                 BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
@@ -427,7 +435,7 @@
         okayMenu.isEnabled = NO;
         [_gameLayer.targetPlayerNames removeAllObjects];    // Remove selected target player
         
-        if (_player.playingMenu.menuType == kPlayingMenuItemTagStrengthen) {
+        if (_player.playingMenu.isStrengthening) {
             [_player.playingMenu removeFromParent];
             [_player addPlayingMenu];
         }
@@ -435,9 +443,8 @@
     }
 
     if (card.canBeStrengthened && _player.heroArea.angerPoint > 0) {
-        if (kPlayingCardGreed == card.cardEnum)
-            if (1 == _handCards.count)
-                return; // The last card is greed, can't strengthen.
+        // The last card is greed, can't strengthen.
+        if ((kPlayingCardGreed == card.cardEnum) && (1 == _handCards.count)) return; 
         
         [_player.playingMenu removeFromParent];
         [_player addPlayingMenuOfStrengthen];
@@ -526,7 +533,7 @@
     for (NSUInteger i = 1; i < _gameLayer.playerCount; i++) {
         BGPlayer *player = _gameLayer.allPlayers[i];
         
-        if (player.equipmentArea.equipmentCards.count > 0) {
+        if (player.canBeDisarmed) {
             [player enablePlayerArea];
         } else {
             [player disablePlayerAreaWithDarkColor];
@@ -562,7 +569,7 @@
     if (1 == _handCards.count) {
         for (NSUInteger i = 1; i < _gameLayer.playerCount; i++) {
             BGPlayer *player = _gameLayer.allPlayers[i];
-            if (0 == player.handCardCount && 0 == player.equipmentArea.equipmentCards.count) {
+            if (!player.canBeGreeded) {
                 [player disablePlayerAreaWithDarkColor];
             }
         }
@@ -586,7 +593,7 @@
     _player.selectedCardIds = [BGPlayingCard playingCardIdsByCards:_selectedCards];
     
     if (kGameStatePlaying == _gameLayer.state && 1 == _selectableCardCount &&
-        kCardTypeEquipment == [_selectedCards.lastObject cardType]) {   // 装备牌
+        [_selectedCards.lastObject isEquipment]) {  // 装备牌
         [self equipEquipmentCard];
     }
     else {

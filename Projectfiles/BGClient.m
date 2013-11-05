@@ -557,6 +557,7 @@ static BGClient *instanceOfClient = nil;
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
     _gameLayer.action = action;
     _gameLayer.reason = [obj stringWithKey:kParamPlayerUpdateReason];
+    _gameLayer.selfPlayer.isOptionalDiscard = [obj intWithKey:kParamIsOptionalDiscard];
     [_gameLayer mapActionToGameState];
     
 //  ...TEMP...
@@ -631,16 +632,16 @@ static BGClient *instanceOfClient = nil;
             
         case kActionChooseCardToCut:
             [_player addProgressBar];
-            [_player addPlayingMenu];
             [_player addTextPrompt];
+            [_player addPlayingMenu];
             [_gameLayer addProgressBarForOtherPlayers];
             break;
             
         case kActionPlayCard:
+            [_gameLayer.targetPlayerNames removeAllObjects];
         case kActionChooseCardToUse:
         case kActionChooseColor:
         case kActionChooseSuits:
-            [_gameLayer.targetPlayerNames removeAllObjects];
         case kActionChooseCardToGive:
             [_player enableHandCardWithCardIds:[obj intArrayWithKey:kParamAvailableIdList]
                            selectableCardCount:[obj intWithKey:kParamSelectableCardCount]];
@@ -655,8 +656,20 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionChooseCardToDiscard:
-            _player.isOptionalDiscard = [obj intWithKey:kParamIsOptionalDiscard];
-            [_player enableAllHandCardsWithSelectableCount:[obj intWithKey:kParamSelectableCardCount]];
+            if (_player.isOptionalDiscard) {
+                [_player enableHandCardWithCardIds:[obj intArrayWithKey:kParamAvailableIdList]
+                               selectableCardCount:[obj intWithKey:kParamSelectableCardCount]];
+            } else {
+                [_player enableAllHandCardsWithSelectableCount:[obj intWithKey:kParamSelectableCardCount]];
+            }
+            break;
+            
+        case kActionWaitingDispel:
+            [_gameLayer addProgressBarForOtherPlayers];
+            break;
+            
+        case kActionCancelWaiting:
+            [_gameLayer removeProgressBarForOtherPlayers];
             break;
             
         default:
@@ -726,19 +739,17 @@ static BGClient *instanceOfClient = nil;
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
 
 //  Receive the player who send the public message. Set the target player names.
-    BGPlayer *currPlayer = [_gameLayer playerWithName:e.userName];
+//  ...TEMP...
+    NSString *turnPlayerName = _gameLayer.currPlayerName;
+    _gameLayer.currPlayerName = e.userName;
+    BGPlayer *currPlayer = _gameLayer.currPlayer;
     [self setTargetPlayerNames:[obj intArrayWithKey:kParamTargetPlayerList]];
-
-//  There are 2 active players while using "Greed Card". Need check which active player is the current player.
-    if (![e.userName isEqual:_gameLayer.targetPlayer.playerName]) {     // Not greeded player
-        _gameLayer.currPlayerName = e.userName;     // Greed player
-    }
     
 //  Game state with action
     _gameLayer.action = action;
     if ([self isNeedSkipSelfPlayer]) return;
     [_gameLayer mapActionToGameState];
-        
+    
 //  Action handling
     switch (action) {
         case kActionPlayCard:
@@ -799,6 +810,9 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionChoseCardToGet:
+//          ...TEMP...
+//          There are 2 active players while using "Greed Card". Need check which active player is the current player.
+            _gameLayer.currPlayerName = turnPlayerName;
             [currPlayer drawCardFromTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
                                                   cardCount:[obj intWithKey:kParamCardCount]];
             break;
