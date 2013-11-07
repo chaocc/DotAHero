@@ -96,7 +96,7 @@
     sprite.position = position;
     
     BGGameLayer *gameLayer = [BGGameLayer sharedGameLayer];
-    float scale = (gameLayer.currPlayer.isSelfPlayer) ? SCALE_SELF_PLAYER_ANIMATION : SCALE_OTHER_PLAYER_ANIMATION;
+    float scale = (gameLayer.turnOwner.isSelf) ? SCALE_SELF_PLAYER_ANIMATION : SCALE_OTHER_PLAYER_ANIMATION;
     CCScaleTo *scaleTo = [CCScaleTo actionWithDuration:DURATION_CARD_ANIMATION_SCALE scale:scale];
     
     NSString *cacheName = frame;

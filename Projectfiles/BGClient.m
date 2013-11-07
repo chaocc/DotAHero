@@ -534,7 +534,7 @@ static BGClient *instanceOfClient = nil;
 }
 
 /*
- * Remove some games nodes(Sprite/Menu) of previous current player on the screen
+ * Remove some games nodes(Sprite/Menu) of previous turn owner on the screen
  * (Since some nodes can't be removed if make game running in the background)
  */
 - (void)removeGameNodes
@@ -557,7 +557,7 @@ static BGClient *instanceOfClient = nil;
     NSAssert(kActionInvalid != action, @"Invalid action in %@", NSStringFromSelector(_cmd));
     _gameLayer.action = action;
     _gameLayer.reason = [obj stringWithKey:kParamPlayerUpdateReason];
-    _gameLayer.selfPlayer.isOptionalDiscard = [obj intWithKey:kParamIsOptionalDiscard];
+    _gameLayer.player.isOptionalDiscard = [obj intWithKey:kParamIsOptionalDiscard];
     [_gameLayer mapActionToGameState];
     
 //  ...TEMP...
@@ -565,7 +565,7 @@ static BGClient *instanceOfClient = nil;
 //    [self removeGameNodes];
     
 //  Receive the player name that is self player
-    _player = _gameLayer.selfPlayer;
+    _player = _gameLayer.player;
     
 //  Action handling
     switch (action) {
@@ -739,10 +739,7 @@ static BGClient *instanceOfClient = nil;
     _gameLayer.remainingCardCount = [obj intWithKey:kParamRemainingCardCount];
 
 //  Receive the player who send the public message. Set the target player names.
-//  ...TEMP...
-    NSString *turnPlayerName = _gameLayer.currPlayerName;
-    _gameLayer.currPlayerName = e.userName;
-    BGPlayer *currPlayer = _gameLayer.currPlayer;
+    BGPlayer *activePlayer = [_gameLayer playerWithName:e.userName];
     [self setTargetPlayerNames:[obj intArrayWithKey:kParamTargetPlayerList]];
     
 //  Game state with action
@@ -753,6 +750,7 @@ static BGClient *instanceOfClient = nil;
 //  Action handling
     switch (action) {
         case kActionPlayCard:
+            _gameLayer.turnOwnerName = e.userName;  // Turn Owner
         case kActionChooseCardToUse:
         case kActionChooseColor:
         case kActionChooseSuits:
@@ -760,21 +758,21 @@ static BGClient *instanceOfClient = nil;
         case kActionChooseCardToRemove:
         case kActionChooseCardToAssign:
         case kActionChooseCardToDiscard:
-            [currPlayer addProgressBar]; return;
+            [activePlayer addProgressBar]; return;
             break;
             
         case kActionUseHandCard:
         case kActionChoseCardToUse:
-            [currPlayer useHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]
-                                isStrengthened:[obj boolWithKey:kParamIsStrengthened]];
+            [activePlayer useHandCardWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                  isStrengthened:[obj boolWithKey:kParamIsStrengthened]];
             break;
             
         case kActionChoseColor:
-            currPlayer.selectedColor = [obj intWithKey:kParamSelectedColor];
+            activePlayer.selectedColor = [obj intWithKey:kParamSelectedColor];
             break;
             
         case kActionChoseSuits:
-            currPlayer.selectedSuits = [obj intWithKey:kParamSelectedSuits];
+            activePlayer.selectedSuits = [obj intWithKey:kParamSelectedSuits];
             break;
             
         case kActionDiscard:
@@ -785,16 +783,16 @@ static BGClient *instanceOfClient = nil;
         case kActionAssignCard:
             [_playingDeck clearAllExistingCards];
         case kActionDrawCard:
-            [currPlayer drawCardWithCardCount:[obj intWithKey:kParamCardCountChanged]]; // kParamCardCount
+            [activePlayer drawCardWithCardCount:[obj intWithKey:kParamCardCountChanged]]; // kParamCardCount
             break;
             
         case kActionPlayerUpdateHand:
-            currPlayer.handCardCount += [obj intWithKey:kParamCardCountChanged]; return;
+            activePlayer.handCardCount += [obj intWithKey:kParamCardCountChanged]; return;
             break;
             
         case kActionPlayerUpdateHero:
-            [currPlayer updateHeroWithBloodPoint:[obj intWithKey:kParamHeroBloodPointChanged]
-                                      angerPoint:[obj intWithKey:kParamHeroAngerPointChanged]];
+            [activePlayer updateHeroWithBloodPoint:[obj intWithKey:kParamHeroBloodPointChanged]
+                                        angerPoint:[obj intWithKey:kParamHeroAngerPointChanged]];
             break;
             
         case kActionFaceDownPileCard:
@@ -806,24 +804,21 @@ static BGClient *instanceOfClient = nil;
             break;
             
         case kActionPlayerGetDeckCard:
-            [currPlayer getCardFromDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [activePlayer getCardFromDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionChoseCardToGet:
-//          ...TEMP...
-//          There are 2 active players while using "Greed Card". Need check which active player is the current player.
-            _gameLayer.currPlayerName = turnPlayerName;
-            [currPlayer drawCardFromTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
-                                                  cardCount:[obj intWithKey:kParamCardCount]];
+            [activePlayer drawCardFromTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                                    cardCount:[obj intWithKey:kParamCardCount]];
             break;
             
         case kActionChoseCardToRemove:
-            [currPlayer removeCardToDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
+            [activePlayer removeCardToDeckWithCardIds:[obj intArrayWithKey:kParamCardIdList]];
             break;
             
         case kActionChoseCardToGive:
-            [currPlayer giveCardToTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
-                                                cardCount:[obj intWithKey:kParamCardCount]];
+            [activePlayer giveCardToTargetPlayerWithCardIds:[obj intArrayWithKey:kParamCardIdList]
+                                                  cardCount:[obj intWithKey:kParamCardCount]];
 //            [_playingDeck clearAllExistingCards];
             break;
             
@@ -831,12 +826,12 @@ static BGClient *instanceOfClient = nil;
             break;
     }
     
-    [currPlayer removeProgressBar];
+    [activePlayer removeProgressBar];
 }
 
 - (BOOL)isNeedSkipSelfPlayer
 {
-    return (_gameLayer.currPlayer.isSelfPlayer &&
+    return (_gameLayer.turnOwner.isSelf &&
             (kActionPlayerUpdateHero    != _gameLayer.action &&
              kActionPlayerGetDeckCard   != _gameLayer.action &&
              kActionFaceDownPileCard    != _gameLayer.action &&

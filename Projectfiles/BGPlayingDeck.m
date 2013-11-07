@@ -52,7 +52,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 {
     if (self = [super init]) {
         _gameLayer = [BGGameLayer sharedGameLayer];
-        _player = _gameLayer.selfPlayer;
+        _player = _gameLayer.player;
         
         _actionComp = [BGActionComponent actionComponentWithNode:self];
         
@@ -260,7 +260,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 }
 
 /*
- * Show the used/discarded hand card of current player
+ * Show the used/discarded hand card of turn owner
  */
 - (void)showUsedCardWithCardIds:(NSArray *)cardIds
 {
@@ -274,7 +274,7 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     __block NSInteger zOrder = _cardMenu.children.count;
     [menuItems enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        [obj setPosition:CARD_MOVE_POSITION(_gameLayer.currPlayer.position, idx, menuItems.count)];
+        [obj setPosition:CARD_MOVE_POSITION(_gameLayer.turnOwner.position, idx, menuItems.count)];
         [_cardMenu addChild:obj z:zOrder++];
     }];
     
@@ -609,15 +609,14 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
 /*
  * Greed a hand card of target player by touching card menu item
  * If only have one hand card, finish drawing directly after drew.
- * (If self player is target player, set the start position with current player's position)
+ * (If self player is target player, set the start position with turn owner's position)
  */
 - (void)greedCardWithMenuItems:(NSArray *)menuItems
 {
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
         [obj removeFromParent];
         [_handMenu alignItemsHorizontallyWithPadding:PLAYING_CARD_PADDING(_handMenu.children.count, COUNT_MAX_DREW_CARD)];
-        CGPoint pos = (_gameLayer.targetPlayer.isSelfPlayer) ?
-            _gameLayer.currPlayer.position : _gameLayer.targetPlayer.position;
+        CGPoint pos = (_gameLayer.targetPlayer.isSelf) ? _gameLayer.turnOwner.position : _gameLayer.targetPlayer.position;
         [obj setPosition:CARD_MOVE_POSITION(pos, idx, menuItems.count)];
         [_player.handArea addAndFaceDownOneDrewCardWith:obj];
     }];
@@ -689,8 +688,8 @@ static BGPlayingDeck *instanceOfPlayingDeck = nil;
         BGPlayer *player = obj;
         CCMenuItem *menuItem = [_pileMenu.children objectAtIndex:idx];
         
-//      Self(Current) player need add the card to his hand
-        if (player.isSelfPlayer) {
+//      Self player(turn owner) need add the card to his hand
+        if (player.isSelf) {
             menuItem.visible = NO;
             [player.handArea addHandCardWithCardMenuItems:[NSArray arrayWithObject:menuItem]];
         }

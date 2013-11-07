@@ -37,6 +37,7 @@
     CCActionEase *ease = [CCEaseExponentialOut actionWithAction:move];
     CCCallBlock *callBlock = (block) ? [CCCallBlock actionWithBlock:block] : nil;
     
+    [_node stopAllActions];
     [_node runAction:[CCSequence actions:ease, callBlock, nil]];
 }
 

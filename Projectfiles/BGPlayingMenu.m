@@ -32,7 +32,7 @@
     if (self = [super init]) {
         _menuType = menuType;
         _gameLayer = [BGGameLayer sharedGameLayer];
-        _player = _gameLayer.selfPlayer;
+        _player = _gameLayer.player;
         
         _menuFactory = [BGMenuFactory menuFactory];
         _menuFactory.delegate = self;

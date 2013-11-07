@@ -52,14 +52,13 @@ typedef NS_ENUM(NSUInteger, BGGameState) {
 @property (nonatomic, strong, readonly) CCSpriteBatchNode *gameArtworkBatch;
 
 @property (nonatomic, strong, readonly) NSMutableArray *allPlayers;
-@property (nonatomic, strong, readonly) BGPlayer *turnOwner;        // 回合开始的玩家
-@property (nonatomic, strong, readonly) BGPlayer *selfPlayer;       // 玩家自己
-@property (nonatomic, strong, readonly) BGPlayer *currPlayer;       // 当前玩家
 @property (nonatomic, strong, readonly) NSArray *targetPlayers;
+@property (nonatomic, strong, readonly) BGPlayer *player;           // 玩家自己
+@property (nonatomic, strong, readonly) BGPlayer *turnOwner;        // 回合开始的玩家
 @property (nonatomic, strong, readonly) BGPlayer *targetPlayer;
 @property (nonatomic, strong, readonly) BGPlayingDeck *playingDeck;
 
-@property (nonatomic, copy) NSString *currPlayerName;               // 回合开始/伤害来源/出牌的玩家
+@property (nonatomic, copy) NSString *turnOwnerName;                // 回合开始/伤害来源的玩家
 @property (nonatomic, strong) NSMutableArray *targetPlayerNames;    // 指定的目标玩家们
 
 @property (nonatomic) NSUInteger remainingCardCount;                // 牌堆剩余牌数

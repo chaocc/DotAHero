@@ -42,7 +42,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         _gameLayer = [BGGameLayer sharedGameLayer];
         _playerName = name;
         _seatIndex = seatIndex;
-        _isSelfPlayer = (0 == seatIndex);   // First index is self player
+        _isSelf = (0 == seatIndex); // First index is self player
         
         _positiveDistance = 1;
         _negativeDistance = -1;
@@ -70,9 +70,9 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     return [_playerName isEqual:[object playerName]];
 }
 
-- (BOOL)isCurrPlayer
+- (BOOL)isTurnOwner
 {
-    return [self isEqual:_gameLayer.currPlayer];
+    return [self isEqual:_gameLayer.turnOwner];
 }
 
 - (void)setPosition:(CGPoint)position
@@ -120,7 +120,8 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [self removeProgressBar];
     [self removeTextPrompt];
     
-    if (_isSelfPlayer) {
+    if (_isSelf) {
+        [_handArea makeHandCardLeftAlignment];  // 选中了卡牌，但点了取消/弃牌按钮，卡牌需要重新排列
         [_handArea disableAllHandCardsWithNormalColor];
         
         [self disablePlayerAreaWithNormalColor];
@@ -135,10 +136,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
  */
 - (void)renderPlayerArea
 {
-    NSString *spriteFrameName = (_isSelfPlayer) ? kImageSelfPlayerArea : kImageOtherPlayerArea;
+    NSString *spriteFrameName = (_isSelf) ? kImageSelfPlayerArea : kImageOtherPlayerArea;
     CCSprite *sprite = [CCSprite spriteWithSpriteFrameName:spriteFrameName];
     self.contentSize = sprite.contentSize;
-    sprite.anchorPoint = (_isSelfPlayer) ? CGPointZero : sprite.anchorPoint;
+    sprite.anchorPoint = (_isSelf) ? CGPointZero : sprite.anchorPoint;
     [_gameLayer.gameArtworkBatch addChild:sprite z:0 tag:(kPlayerTagPlayerArea+_seatIndex)];
     
 //  Add hero and equipment area for all players
@@ -169,7 +170,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 - (void)setColorWith:(ccColor3B)color
 {
-    if (!_isSelfPlayer) {
+    if (!_isSelf) {
         CCSprite *sprite = (CCSprite *)[_gameLayer.gameArtworkBatch getChildByTag:kPlayerTagPlayerArea+_seatIndex];
         sprite.color = color;
         
@@ -189,7 +190,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     _selectedHeroId = heroId;
     [_heroArea renderHeroWithHeroId:heroId];
     
-    if (!_isSelfPlayer) {
+    if (!_isSelf) {
         self.handCardCount = COUNT_INITIAL_HAND_CARD;   // 5 cards for each player, use 1 for cutting.
     }
 }
@@ -217,7 +218,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 /*
- * Update(Draw/Used) hand card for self/current player
+ * Update(Draw/Used) hand card for self player
  */
 - (void)updateHandCardWithCardIds:(NSArray *)cardIds
 {
@@ -225,7 +226,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 /*
- * Draw card animation for current player but not self player
+ * Draw card animation for turn owner that is not self player
  */
 - (void)drawCardWithCardCount:(NSInteger)count
 {
@@ -235,13 +236,13 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     [menu alignItemsHorizontallyWithPadding:-PLAYING_CARD_WIDTH/2];
     [_gameLayer addChild:menu];
     
-    [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:_gameLayer.currPlayer block:^{
+    [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:_gameLayer.turnOwner block:^{
         [menu removeFromParent];
     }];
 }
 
 /*
- * Get hand card from playing deck for self(current) player
+ * Get hand card from playing deck for turn owner
  */
 - (void)getCardFromDeckWithCardIds:(NSArray *)cardIds
 {
@@ -256,7 +257,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         }
     }];
     
-    if (_isSelfPlayer) {
+    if (_isSelf) {
         [_handArea addHandCardWithCardMenuItems:menuItems];
     } else {
         CCMenu *menu = [CCMenu menuWithArray:menuItems];
@@ -264,7 +265,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
         menu.position = CGPointZero;
         [_gameLayer addChild:menu];
         
-        [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:_gameLayer.currPlayer block:^{
+        [_gameLayer moveCardWithCardMenu:menu toTargerPlayer:_gameLayer.turnOwner block:^{
             [menu removeFromParent];
         }];
     }
@@ -272,25 +273,25 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 /*
  * Draw(抽取) faced down/up card from target player
- * Current player hand card count increased, target player reduced.
+ * Turn owner hand card count increased, target player reduced.
  */
 - (void)drawCardFromTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
 {
 //  Target player hand card update is informed by sever(receive update action)
-    if (_gameLayer.targetPlayer.isSelfPlayer) return;
+    if (_gameLayer.targetPlayer.isSelf) return;
     
 //  抽取装备
     if (cardIds) {
         [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCardId:[cardIds.lastObject integerValue]];
         [self moveCardWithCardIds:cardIds
                      fromPosition:_gameLayer.targetPlayer.position
-                   toTargetPlayer:_gameLayer.currPlayer];
+                   toTargetPlayer:_gameLayer.turnOwner];
     }
 //  抽取手牌
     if (count > 0) {
         [self moveCardWithCardCount:count
                        fromPosition:_gameLayer.targetPlayer.position
-                     toTargetPlayer:_gameLayer.currPlayer];
+                     toTargetPlayer:_gameLayer.turnOwner];
     }
 }
 
@@ -300,16 +301,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)giveCardToTargetPlayerWithCardIds:(NSArray *)cardIds cardCount:(NSUInteger)count
 {
 //  Target player hand card update is informed by sever
-    if (_gameLayer.targetPlayer.isSelfPlayer) return;
+    if (_gameLayer.targetPlayer.isSelf) return;
     
 //  给牌(明置)
     [self moveCardWithCardIds:cardIds
-                 fromPosition:_gameLayer.currPlayer.position
+                 fromPosition:_gameLayer.turnOwner.position
                toTargetPlayer:_gameLayer.targetPlayer];
     
 //  给牌(暗置)
     [self moveCardWithCardCount:count
-                   fromPosition:_gameLayer.currPlayer.position
+                   fromPosition:_gameLayer.turnOwner.position
                  toTargetPlayer:_gameLayer.targetPlayer];
 }
 
@@ -344,12 +345,11 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     }];
 }
 
+/*
+ * Remove hand/equipment card of target player(e.g. Disarm)
+ */
 - (void)removeCardToDeckWithCardIds:(NSArray *)cardIds
 {
-//  Target player hand card update is informed by sever(receive update action)
-//    if (_gameLayer.targetPlayer.isSelfPlayer) return;
-    
-//  移除装备(比如缴械)
     BGPlayingCard *card = [BGPlayingCard cardWithCardId:[cardIds.lastObject integerValue]];
     if ([_gameLayer.targetPlayer.equipmentArea.equipmentCards containsObject:card]) {
         [_gameLayer.targetPlayer.equipmentArea updateEquipmentWithCard:card];
@@ -391,14 +391,14 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 - (void)setHandCardCount:(NSUInteger)handCardCount
 {
     _handCardCount = handCardCount;
-    if (!_isSelfPlayer) {
+    if (!_isSelf) {
         [self renderHandCardCount];
     }
 }
 
 - (NSUInteger)handCardCount
 {
-    return (_isSelfPlayer) ? _handArea.handCards.count : _handCardCount;
+    return (_isSelf) ? _handArea.handCards.count : _handCardCount;
 }
 
 /*
@@ -416,7 +416,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 #pragma mark - Use hand card
 /*
- * Current player(self player) use hand card
+ * Turn owner(self player) use hand card
  */
 - (void)useHandCard
 {
@@ -459,7 +459,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 }
 
 /*
- * Current player(not self) use hand card
+ * Turn owner(not self) use hand card
  */
 - (void)useHandCardWithCardIds:(NSArray *)cardIds isStrengthened:(BOOL)isStrengthened
 {
@@ -552,12 +552,12 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 {
     [self removeProgressBar];
     
-    NSString *frameImageName = (_isSelfPlayer) ? kImageProgressBarFrameBig : kImageProgressBarFrame;
+    NSString *frameImageName = (_isSelf) ? kImageProgressBarFrameBig : kImageProgressBarFrame;
     _progressBar = [CCSprite spriteWithSpriteFrameName:frameImageName];
     _progressBar.position = position;
     [self addChild:_progressBar];
     
-    NSString *barImageName = (_isSelfPlayer) ? kImageProgressBarBig : kImageProgressBar;
+    NSString *barImageName = (_isSelf) ? kImageProgressBarBig : kImageProgressBar;
     CCSprite *bar = [CCSprite spriteWithSpriteFrameName:barImageName];
     CCProgressTimer *timer = [CCProgressTimer progressWithSprite:bar];
     timer.type = kCCProgressTimerTypeBar;
@@ -569,7 +569,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 //  Run progress bar. If time is up, execute corresponding operation.    
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:timer];
     [ac runProgressBarWithDuration:10.0f block:^{
-        if (_isSelfPlayer) {
+        if (_isSelf) {
             [self handlingAfterTimeIsUp];
         }
         [self resetAndRemoveNodes];
@@ -578,7 +578,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 - (void)addProgressBar
 {
-    CGPoint barPosition = (_isSelfPlayer) ? POSITION_PLYAING_PROGRESS_BAR : ccp(0.0f, -_contentSize.height/2);
+    CGPoint barPosition = (_isSelf) ? POSITION_PLYAING_PROGRESS_BAR : ccp(0.0f, -_contentSize.height/2);
     [self addProgressBarWithPosition:barPosition];
 }
 
@@ -604,6 +604,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             break;
             
         case kGameStatePlaying:
+            [_handArea makeHandCardLeftAlignment];
             [[BGClient sharedClient] sendDiscardRequest];
             break;
             
@@ -669,7 +670,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 /*
  * 1. Add text prompt for selected card while playing
  * 2. Add text prompt according to different game state(action)
- *    (If "kGameStateChoosingCard", add text according to the used card/skill of current player)
+ * (If "kGameStateChoosingCard", add text according to the used card/skill by turn owner)
  */
 - (void)addTextPrompt
 {
@@ -678,10 +679,10 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
     
     switch (_gameLayer.state) {
         case kGameStatePlaying:
-            if (0 == _handArea.selectedCards.count) {
-                [self addTextPromptLabelWithString:array[_gameLayer.state]];
-            } else {
+            if (_handArea.selectedCards.count > 0) {
                 [self addTextPromptForSelectedCard];
+            } else {
+                [self addTextPromptLabelWithString:array[_gameLayer.state]];
             }
             break;
             
@@ -690,7 +691,7 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             break;
             
         case kGameStateDying: {
-            BGPlayer *player = _gameLayer.currPlayer;
+            BGPlayer *player = _gameLayer.turnOwner;
             NSUInteger count = abs(player.heroArea.bloodPoint);  // 需要几张治疗药膏
             NSArray *parameters = [NSArray arrayWithObjects:player.heroArea.heroCard.cardText, @(count), nil];
             NSString *text = array[_gameLayer.state];
@@ -739,16 +740,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
 
 /*
  * Add text prompt while the player is specified as target(by attack/magic)
- * (According to the used card/skill of current player)
+ * (According to the used card or skill by turn owner)
  */
 - (void)addTextPromptAccordingToUsedCard
 {
-    BGPlayer *player = _gameLayer.currPlayer;
-    NSString *heroName = player.heroArea.heroCard.cardText;
+    BGPlayer *turnOwner = _gameLayer.turnOwner;
+    NSString *heroName = turnOwner.heroArea.heroCard.cardText;
     NSMutableArray *parameters = [NSMutableArray arrayWithObject:heroName];
-    NSString *tipText = player.usedCard.dispelTipText;  // Used card of current player
+    NSString *tipText = turnOwner.usedCard.dispelTipText;  // Used card of turn owner
     
-    switch (player.usedCard.cardEnum) {
+    switch (turnOwner.usedCard.cardEnum) {
         case kPlayingCardMislead: {
             BGPlayer *playerA = _gameLayer.targetPlayers[0];
             BGPlayer *playerB = _gameLayer.targetPlayers[1];
@@ -766,15 +767,16 @@ typedef NS_ENUM(NSInteger, BGPlayerTag) {
             if (_isWaitingDispel) {     // dispel text prompt
                 [parameters addObject:_gameLayer.targetPlayer.heroArea.heroCard.cardText];
             } else {                    // target text prompt
-                NSString *text = (player.isStrengthened) ?
-                [BGPlayingCard suitsTextByCardSuits:player.selectedSuits] : // 花色
-                [BGPlayingCard colorTextByCardColor:player.selectedColor];  // 颜色
+                NSString *text = (turnOwner.isStrengthened) ?
+                [BGPlayingCard suitsTextByCardSuits:turnOwner.selectedSuits] : // 花色
+                [BGPlayingCard colorTextByCardColor:turnOwner.selectedColor];  // 颜色
                 [parameters addObject:text];
-                tipText = player.usedCard.targetTipText;
+                tipText = turnOwner.usedCard.targetTipText;
             }
             break;
             
-        default:
+        default:    // 使用不能被驱散的牌时的文字提示
+            tipText = turnOwner.usedCard.targetTipText;
             break;
     }
     

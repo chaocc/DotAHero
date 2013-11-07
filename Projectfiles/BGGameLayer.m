@@ -146,7 +146,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         case kActionChooseCardToDiscard:
-            _state = (_selfPlayer.isOptionalDiscard) ? kGameStateChoosingCard : kGameStateDiscarding;
+            _state = (_player.isOptionalDiscard) ? kGameStateChoosingCard : kGameStateDiscarding;
             break;
             
         default:
@@ -227,7 +227,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 //        BGPlayer *player = [BGPlayer playerWithUserName:[_users[0] userName] seatIndex:0];
         [self addChild:player z:1];
         
-        _selfPlayer = player;
+        _player = player;
         [_allPlayers addObject:player];
     }
     @catch (NSException *exception) {
@@ -414,7 +414,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
     NSUInteger idx = 0;
     
     for (id obj in allHeroIds) {
-        if ([obj integerValue] == _selfPlayer.selectedHeroId) {
+        if ([obj integerValue] == _player.selectedHeroId) {
             [mutableHeroIds removeObjectsAtIndexes:idxSet];
             [mutableHeroIds addObjectsFromArray:[allHeroIds objectsAtIndexes:idxSet]];
             _allHeroIds = mutableHeroIds;
@@ -425,10 +425,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
 }
 
 #pragma mark - Player and name
-- (BGPlayer *)currPlayer
+- (BGPlayer *)turnOwner
 {
     for (BGPlayer *player in _allPlayers) {
-        if ([player.playerName isEqualToString:_currPlayerName]) {
+        if ([player.playerName isEqualToString:_turnOwnerName]) {
             return player;
         }
     }
@@ -479,7 +479,7 @@ static BGGameLayer *instanceOfGameLayer = nil;
 
 - (void)moveCardWithCardMenuItem:(CCMenuItem *)menuItem toPlayer:(BGPlayer *)player block:(void (^)())block
 {
-    CGPoint targetPos = (player.isSelfPlayer) ? POSITION_HAND_AREA_RIGHT : CARD_MOVE_POSITION(player.position, 0, 1);
+    CGPoint targetPos = (player.isSelf) ? POSITION_HAND_AREA_RIGHT : CARD_MOVE_POSITION(player.position, 0, 1);
     BGActionComponent *ac = [BGActionComponent actionComponentWithNode:menuItem];
     [ac runEaseMoveWithTarget:targetPos
                      duration:DURATION_CARD_MOVE
@@ -512,11 +512,10 @@ static BGGameLayer *instanceOfGameLayer = nil;
 //  If action is kActionPlayerUpdateHand, set the target position and return.
     if (kActionPlayerUpdateHand == _action) {
         if ([_reason isEqualToString:@"m_greeded"]) {
-            // If self player is target player, set the target position with current player's position.
-            CGPoint pos = (self.targetPlayer.isSelfPlayer) ?
-                self.currPlayer.position : self.targetPlayer.position;
-            targetPos = (kHandCardUpdateTypeAdd == _selfPlayer.handArea.updateType) ?
-                [_selfPlayer.handArea cardMoveTargetPositionWithIndex:idx count:count] :
+            // If self player is target player, set the target position with turn owner's position.
+            CGPoint pos = (self.targetPlayer.isSelf) ? self.turnOwner.position : self.targetPlayer.position;
+            targetPos = (kHandCardUpdateTypeAdd == _player.handArea.updateType) ?
+                [_player.handArea cardMoveTargetPositionWithIndex:idx count:count] :
                 CARD_MOVE_POSITION(pos, idx, count);
         } else {
             targetPos = [_playingDeck cardMoveTargetPositionWithIndex:idx count:count];
@@ -539,9 +538,9 @@ static BGGameLayer *instanceOfGameLayer = nil;
             break;
             
         case kGameStateGetting:
-            targetPos = (self.currPlayer.isSelfPlayer) ?
-                [_selfPlayer.handArea cardMoveTargetPositionWithIndex:idx count:count] :
-                CARD_MOVE_POSITION(self.currPlayer.position, idx, count);
+            targetPos = (self.turnOwner.isSelf) ?
+                [_player.handArea cardMoveTargetPositionWithIndex:idx count:count] :
+                CARD_MOVE_POSITION(self.turnOwner.position, idx, count);
             break;
             
         case kGameStateGiving:

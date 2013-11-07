@@ -168,15 +168,15 @@
 }
 
 /*
- * If self player is target player, the "fromOtherPlayer" is current player.
+ * If self player is target player, the "fromOtherPlayer" is turn owner.
  */
 - (void)getCardFromOtherPlayerWithCards:(NSArray *)cards
 {
     NSArray *menuItems = [_menuFactory createMenuItemsWithCards:cards];
     __block NSInteger zOrder = [_cardMenu.children.lastObject zOrder] + 1;
     [menuItems enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        CGPoint pos = (_gameLayer.targetPlayer.isSelfPlayer) ?
-            _gameLayer.currPlayer.position : _gameLayer.targetPlayer.position;
+        CGPoint pos = (_gameLayer.targetPlayer.isSelf) ?
+            _gameLayer.turnOwner.position : _gameLayer.targetPlayer.position;
         [obj setPosition:CARD_MOVE_POSITION(pos, idx, menuItems.count)];
         [_cardMenu addChild:obj z:zOrder++];
     }];
@@ -559,7 +559,7 @@
 }
 
 /*
- * The greed card can't be last one card for current player
+ * If the last one card is greed, it can't be used by turn owner.
  * Target player hand&equipment card count can't be all empty
  */
 - (void)checkTargetPlayerOfGreed

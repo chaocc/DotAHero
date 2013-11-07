@@ -13,7 +13,7 @@
 
 @property (strong, nonatomic, readonly) ElectroServer *es;
 @property (nonatomic, strong, readonly) EsRoom *room;
-@property (nonatomic, strong) NSArray *users;     // [0] is current user
+@property (nonatomic, strong) NSArray *users;     // [0] is self user
 
 + (BGClient *)sharedClient;
 

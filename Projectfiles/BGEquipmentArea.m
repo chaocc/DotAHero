@@ -182,7 +182,7 @@
     CGFloat playerAreaWidth = _player.contentSize.width;
     CGFloat playerAreaHeight = _player.contentSize.height;
     
-    NSString *imageName = (_player.isSelfPlayer) ? card.bigEquipImageName : card.equipImageName;
+    NSString *imageName = (_player.isSelf) ? card.bigEquipImageName : card.equipImageName;
     [_menuFactory addMenuItemWithSpriteFrameName:imageName
                                        isEnabled:card.canBeUsedActive
                                           toMenu:_equipMenu];
@@ -191,13 +191,13 @@
     
     switch (card.equipmentType) {
         case kEquipmentTypeWeapon:
-            menuItem.position = (_player.isSelfPlayer) ?
+            menuItem.position = (_player.isSelf) ?
                 ccp(playerAreaWidth*0.93, playerAreaHeight*0.57) :
                 ccp(playerAreaWidth*0.25, playerAreaHeight*0.177);
             break;
             
         case kEquipmentTypeArmor:
-            menuItem.position = (_player.isSelfPlayer) ?
+            menuItem.position = (_player.isSelf) ?
                 ccp(playerAreaWidth*0.93, playerAreaHeight*0.21) :
                 ccp(playerAreaWidth*0.25, -playerAreaHeight*0.222);
             break;

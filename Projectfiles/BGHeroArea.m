@@ -81,12 +81,12 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
 - (void)renderSelectedHero
 {
 //  Render hero avatar
-    NSString *avatarName =( _player.isSelfPlayer) ? _heroCard.bigAvatarName : _heroCard.avatarName;
+    NSString *avatarName =( _player.isSelf) ? _heroCard.bigAvatarName : _heroCard.avatarName;
     _heroMenu = [_menuFactory createMenuWithSpriteFrameName:avatarName
                                           selectedFrameName:nil
                                           disabledFrameName:nil];
     _heroMenu.enabled = NO;
-    _heroMenu.position = (_player.isSelfPlayer) ?
+    _heroMenu.position = (_player.isSelf) ?
         ccp(_playerAreaWidth*0.09, _playerAreaHeight*0.65) :
         ccp(-_playerAreaWidth*0.26, _playerAreaHeight*0.03);
     [_heroMenu.children.lastObject setTag:_heroCard.cardId];
@@ -96,7 +96,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     [self renderBloodPoint];
     
 //  Render hero skills if self player
-    if (_player.isSelfPlayer) {
+    if (_player.isSelf) {
         [self renderHeroSkills];
     }
 }
@@ -168,7 +168,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     }
     
 //  Render
-    if (_player.isSelfPlayer) {
+    if (_player.isSelf) {
         if (1 == _bloodPoint) {
             bloodImageName = kImageBloodRedBig;
         } else if (2 == _bloodPoint) {
@@ -195,7 +195,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     
     for (NSInteger i = 0; i < _heroCard.bloodPointLimit; i++) {
         if ((NSInteger)i >= _bloodPoint) {
-            bloodImageName = (_player.isSelfPlayer) ? kImageBloodEmptyBig : kImageBloodEmpty;
+            bloodImageName = (_player.isSelf) ? kImageBloodEmptyBig : kImageBloodEmpty;
         }
         
         CCSprite *bloodSprite = [CCSprite spriteWithSpriteFrameName:bloodImageName];
@@ -219,7 +219,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     }
     
 //  Render
-    if (_player.isSelfPlayer) {
+    if (_player.isSelf) {
         angerImageName = kImageAngerBig;
         width = _playerAreaWidth*0.195;
         increment = _playerAreaHeight*0.83 / (_angerPoint + 1);
@@ -260,7 +260,7 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     if (0 == count) return;
     
     BGAnimationType type = (count < 0) ? kAnimationTypeDamaged : kAnimationTypeRestoreBlood;
-    CGPoint position = (_player.isSelfPlayer) ?
+    CGPoint position = (_player.isSelf) ?
         ccp(_playerAreaWidth*0.1, _playerAreaHeight*0.67) :
         ccp(-_playerAreaWidth*0.2, _playerAreaHeight*0.1);
     [_aniComp runWithAnimationType:type atPosition:position];
@@ -305,9 +305,9 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
  */
 - (void)selectTargetPlayer
 {
-    BGPlayer *selfPlayer = _gameLayer.selfPlayer;
-    CCMenuItem *okayMenu = [selfPlayer.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
-    CCMenuItem *strenMenu = [selfPlayer.playingMenu menuItemByTag:kPlayingMenuItemTagStrengthen];
+//  _gameLayer.player is self player, also turn owner.
+    CCMenuItem *okayMenu = [_gameLayer.player.playingMenu menuItemByTag:kPlayingMenuItemTagOkay];
+    CCMenuItem *strenMenu = [_gameLayer.player.playingMenu menuItemByTag:kPlayingMenuItemTagStrengthen];
     
     NSMutableArray *tarPlayerNames = _gameLayer.targetPlayerNames;
     NSAssert(tarPlayerNames, @"targetPlayerNames Nil in %@", NSStringFromSelector(_cmd));
@@ -319,10 +319,10 @@ typedef NS_ENUM(NSInteger, BGHeroTag) {
     else {
         [tarPlayerNames addObject:_player.playerName];
 //      If great than selectable target count, need remove the first selected target player.
-        if (tarPlayerNames.count > selfPlayer.selectableTargetCount) {
+        if (tarPlayerNames.count > _gameLayer.player.selectableTargetCount) {
             [tarPlayerNames removeObjectAtIndex:0];
         }
-        okayMenu.isEnabled = (tarPlayerNames.count == selfPlayer.selectableTargetCount);
+        okayMenu.isEnabled = (tarPlayerNames.count == _gameLayer.player.selectableTargetCount);
     }
     
     if (strenMenu) {

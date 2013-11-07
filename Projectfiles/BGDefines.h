@@ -49,7 +49,7 @@ _Pragma("clang diagnostic pop")                                     \
 #define DURATION_GAMELAYER_TRANSITION   0.2f
 #define DURATION_SELECTED_HERO_MOVE     0.5f
 #define DURATION_HAND_CARD_MOVE         0.5f
-#define DURATION_SELECTED_CARD_MOVE     0.1f
+#define DURATION_SELECTED_CARD_MOVE     0.05f
 #define DURATION_CARD_MOVE              0.8f
 #define DURATION_DECK_CARD_MOVE         0.5f
 #define DURATION_USED_CARD_FADE_OUT     0.5f

@@ -16,8 +16,8 @@
 @interface BGPlayer : CCNode
 
 @property (nonatomic, copy, readonly) NSString *playerName;
-@property (nonatomic, readonly) BOOL isSelfPlayer;
-@property (nonatomic, readonly) BOOL isCurrPlayer;
+@property (nonatomic, readonly) BOOL isSelf;
+@property (nonatomic, readonly) BOOL isTurnOwner;
 
 @property (nonatomic) NSUInteger positiveDistance;  // +1: 其他玩家计算与自己的距离
 @property (nonatomic) NSInteger negativeDistance;   // -1: 自己计算与其他玩家的距离
@@ -26,11 +26,11 @@
 //@property (nonatomic) BOOL isDead;
 
 @property (nonatomic, strong, readonly) BGHeroArea *heroArea;
-@property (nonatomic, strong, readonly) BGHandArea *handArea;       // Only current player have
+@property (nonatomic, strong, readonly) BGHandArea *handArea;       // Only self player have
 @property (nonatomic, strong, readonly) BGEquipmentArea *equipmentArea;
 @property (nonatomic, strong, readonly) BGPlayingMenu *playingMenu;
 
-@property (nonatomic, strong, readonly) BGPlayingCard *usedCard;    // Used card of current player
+@property (nonatomic, strong, readonly) BGPlayingCard *usedCard;    // Used card of turn owner
 @property (nonatomic, readonly) BOOL canBeDisarmed;
 @property (nonatomic, readonly) BOOL canBeGreeded;
 
